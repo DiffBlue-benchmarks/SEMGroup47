@@ -18,8 +18,8 @@ public class ProjectileTest {
 	@Before
 	public void setUp() throws IOException {
 		tileMap = new TileMap(tileSize);
-		tileMap.loadTiles("/Test/Test_Tile.gif");
-		tileMap.loadMap("/Test/Test_Map.map");
+		tileMap.loadTiles("/test/Test_Tile.gif");
+		tileMap.loadMap("/test/Test_Map.map");
 	}
 	
 	@Test
