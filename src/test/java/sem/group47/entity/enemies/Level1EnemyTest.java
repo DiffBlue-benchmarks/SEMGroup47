@@ -24,8 +24,8 @@ public class Level1EnemyTest {
 	@Before
 	public void setUp() throws IOException {
 		tileMap = new TileMap(tileSize);
-		tileMap.loadTiles("src/main/resources/test/Test_Tile.gif");
-		tileMap.loadMap("src/main/resources/test/Test_Map.map");
+		tileMap.loadTiles("rtest/Test_Tile.gif");
+		tileMap.loadMap("test/Test_Map.map");
 	}
 	
 	@Test 

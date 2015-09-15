@@ -51,7 +51,7 @@ public class Projectile extends MapObject {
 		// Load sprite
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("src/main/resources/player/bubbles.png"));
+					.getResourceAsStream("/player/bubbles.png"));
 			sprite = spritesheet.getSubimage(96, 0, 32, 32);
 		}
 
