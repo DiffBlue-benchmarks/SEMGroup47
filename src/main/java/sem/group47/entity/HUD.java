@@ -32,7 +32,7 @@ public class HUD {
 		this.player = p;
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(
-					"/HUD/Bubble_Heart.png"));
+					"/hud/Bubble_Heart.png"));
 			font = new Font("Arial", Font.PLAIN, 28);
 		} catch (IOException e) {
 			e.printStackTrace();
