@@ -1,4 +1,4 @@
-package sem.sem_group47.tilemap;
+package sem.group47.tilemap;
 
 import java.awt.image.BufferedImage;
 

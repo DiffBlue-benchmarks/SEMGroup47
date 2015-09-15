@@ -1,7 +1,8 @@
-package sem.sem_group47.entity;
+package sem.group47.entity;
 
 import static org.junit.Assert.*;
-import sem.sem_group47.tilemap.TileMap;
+import sem.group47.entity.Projectile;
+import sem.group47.tilemap.TileMap;
 
 import java.io.IOException;
 

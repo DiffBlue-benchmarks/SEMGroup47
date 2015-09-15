@@ -1,4 +1,4 @@
-package sem.sem_group47.gamestate;
+package sem.group47.gamestate;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import sem.group47.gamestate.GameStateManager;
 
 public class GameStateManagerTest {
 	

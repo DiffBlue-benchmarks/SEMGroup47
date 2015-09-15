@@ -1,6 +1,6 @@
-package sem.sem_group47.entity;
+package sem.group47.entity;
 
-import sem.sem_group47.tilemap.TileMap;
+import sem.group47.tilemap.TileMap;
 
 /**
  * The Class Enemy.

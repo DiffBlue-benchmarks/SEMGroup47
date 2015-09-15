@@ -1,4 +1,4 @@
-package sem.sem_group47.entity;
+package sem.group47.entity;
 
 import java.awt.Color;
 import java.awt.Font;

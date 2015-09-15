@@ -1,4 +1,4 @@
-package sem.sem_group47.gamestate;
+package sem.group47.gamestate;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package sem.sem_group47.tilemap;
+package sem.group47.tilemap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import sem.group47.tilemap.TileMap;
 
 /**
  * The Class TileMapTest.

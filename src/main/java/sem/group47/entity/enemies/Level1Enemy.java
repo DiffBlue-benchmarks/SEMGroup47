@@ -1,7 +1,7 @@
-package sem.sem_group47.entity.enemies;
+package sem.group47.entity.enemies;
 
-import sem.sem_group47.entity.Enemy;
-import sem.sem_group47.tilemap.TileMap;
+import sem.group47.entity.Enemy;
+import sem.group47.tilemap.TileMap;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

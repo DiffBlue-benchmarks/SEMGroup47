@@ -1,4 +1,4 @@
-package sem.sem_group47.main;
+package sem.group47.main;
 
 import javax.swing.JFrame;
 

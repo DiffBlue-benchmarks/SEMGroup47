@@ -1,4 +1,4 @@
-package sem.sem_group47.gamestate;
+package sem.group47.gamestate;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import sem.sem_group47.main.GamePanel;
+import sem.group47.main.GamePanel;
 
 /**
  * The Class MenuState, which extends the super class GameState.

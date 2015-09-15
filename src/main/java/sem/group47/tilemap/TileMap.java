@@ -1,4 +1,4 @@
-package sem.sem_group47.tilemap;
+package sem.group47.tilemap;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import sem.sem_group47.main.GamePanel;
+import sem.group47.main.GamePanel;
 
 /**
  * The Class TileMap. Loads the Tiles and the TileMap and draws it.

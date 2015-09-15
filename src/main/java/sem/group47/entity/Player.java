@@ -1,4 +1,4 @@
-package sem.sem_group47.entity;
+package sem.group47.entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import sem.sem_group47.tilemap.TileMap;
+import sem.group47.tilemap.TileMap;
 
 /**
  * The Class Player.
@@ -74,7 +74,7 @@ public class Player extends MapObject {
 		// Load sprite
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/Player/player.png"));
+					.getResourceAsStream("/player/player.png"));
 			sprite = spritesheet.getSubimage(0, 0, 38, 32);
 		}
 

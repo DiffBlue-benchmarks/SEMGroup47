@@ -1,11 +1,11 @@
-package sem.sem_group47.entity;
+package sem.group47.entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import sem.sem_group47.tilemap.TileMap;
+import sem.group47.tilemap.TileMap;
 
 /**
  * The Class Projectile.
@@ -51,7 +51,7 @@ public class Projectile extends MapObject {
 		// Load sprite
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/Player/bubbles.png"));
+					.getResourceAsStream("/player/bubbles.png"));
 			sprite = spritesheet.getSubimage(96, 0, 32, 32);
 		}
 

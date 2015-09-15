@@ -1,4 +1,4 @@
-package sem.sem_group47.main;
+package sem.group47.main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import sem.sem_group47.gamestate.GameStateManager;
+import sem.group47.gamestate.GameStateManager;
 
 /**
  * The Class GamePanel, which extends the super class JPanel and implements the

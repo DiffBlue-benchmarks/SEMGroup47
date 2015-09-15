@@ -1,4 +1,4 @@
-package sem.sem_group47.gamestate;
+package sem.group47.gamestate;
 
 /**
  * The Class GameState. Acts as a Superclass for the separate gamestates e.g.

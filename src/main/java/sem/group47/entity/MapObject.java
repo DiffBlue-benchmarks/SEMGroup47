@@ -1,11 +1,11 @@
-package sem.sem_group47.entity;
+package sem.group47.entity;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import sem.sem_group47.tilemap.Tile;
-import sem.sem_group47.tilemap.TileMap;
+import sem.group47.tilemap.Tile;
+import sem.group47.tilemap.TileMap;
 
 /**
  * MapObject, SuperClass for all movable and interactable objects inside the

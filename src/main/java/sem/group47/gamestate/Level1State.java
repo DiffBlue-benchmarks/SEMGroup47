@@ -1,16 +1,16 @@
-package sem.sem_group47.gamestate;
+package sem.group47.gamestate;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import sem.sem_group47.entity.Enemy;
-import sem.sem_group47.entity.HUD;
-import sem.sem_group47.entity.Player;
-import sem.sem_group47.entity.enemies.Level1Enemy;
-import sem.sem_group47.main.GamePanel;
-import sem.sem_group47.tilemap.TileMap;
+import sem.group47.entity.Enemy;
+import sem.group47.entity.HUD;
+import sem.group47.entity.Player;
+import sem.group47.entity.enemies.Level1Enemy;
+import sem.group47.main.GamePanel;
+import sem.group47.tilemap.TileMap;
 
 /**
  * The Class Level1State.
@@ -43,8 +43,8 @@ public class Level1State extends GameState {
 
 		// tile width/ height of 30px
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tiles/Bubble_Tile2.gif");
-		tileMap.loadMap("/Maps/level1-2.map");
+		tileMap.loadTiles("/tiles/Bubble_Tile2.gif");
+		tileMap.loadMap("/maps/level1-2.map");
 		player = new Player(tileMap);
 		player.setPosition(100d, 100d);
 

@@ -1,8 +1,9 @@
-package sem.sem_group47.entity.enemies;
+package sem.group47.entity.enemies;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import sem.sem_group47.tilemap.TileMap;
+import sem.group47.entity.enemies.Level1Enemy;
+import sem.group47.tilemap.TileMap;
 
 import java.awt.Rectangle;
 import java.io.IOException;
@@ -23,8 +24,8 @@ public class Level1EnemyTest {
 	@Before
 	public void setUp() throws IOException {
 		tileMap = new TileMap(tileSize);
-		tileMap.loadTiles("/Test/Test_Tile.gif");
-		tileMap.loadMap("/Test/Test_Map.map");
+		tileMap.loadTiles("/test/Test_Tile.gif");
+		tileMap.loadMap("/test/Test_Map.map");
 	}
 	
 	@Test 
