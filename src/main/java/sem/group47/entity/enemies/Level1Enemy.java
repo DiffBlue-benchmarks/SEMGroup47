@@ -50,7 +50,7 @@ public class Level1Enemy extends Enemy {
 
 		try {
 			spritesheet = ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/Level1.gif"));
+					"/enemies/level1.gif"));
 			sprite = spritesheet.getSubimage(0, 0, 30, 30);
 		}
 
