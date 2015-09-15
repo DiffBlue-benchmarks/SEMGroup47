@@ -25,7 +25,7 @@ public class GameOverState extends GameState {
 	private String[] options = { "Restart", "Main Menu" };
 
 	// ** The Background */
-	private String bg = "/Backgrounds/BubbleBobble_Logo.gif";
+	private String bg = "/backgrounds/BubbleBobble_Logo.gif";
 
 	/** The image. */
 	private BufferedImage image;
