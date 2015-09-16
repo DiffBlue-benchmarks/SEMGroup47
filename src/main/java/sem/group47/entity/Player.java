@@ -114,7 +114,7 @@ public class Player extends MapObject {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
 				lastFireTime = System.currentTimeMillis();
 				Projectile projectile = new Projectile(tileMap);
-				projectile.setPosition(x, y);
+				projectile.setPosition(xpos, ypos);
 				if (!facingRight)
 					projectile.dx *= -1;
 				projectiles.add(projectile);

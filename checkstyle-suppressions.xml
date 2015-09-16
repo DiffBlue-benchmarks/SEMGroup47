@@ -7,4 +7,6 @@
 <suppressions>
   <suppress checks="FileTabCharacter"
              files="[a-zA-Z0-9]*"/>
+  <suppress checks="MagicNumber"
+             files="GamePanel.java*"/>
 </suppressions>
