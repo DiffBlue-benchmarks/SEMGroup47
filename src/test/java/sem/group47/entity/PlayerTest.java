@@ -2,14 +2,13 @@ package sem.group47.entity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import sem.group47.entity.Player;
-import sem.group47.entity.Projectile;
-import sem.group47.tilemap.TileMap;
 
 import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import sem.group47.tilemap.TileMap;
 
 /**
  * The Class PlayerTest.
@@ -109,7 +108,7 @@ public class PlayerTest {
 		player.setLeft(true);
 		player.setMovSpeed(3.0);
 		player.setMaxSpeed(2.0);
-		player.getNextPosition();
+		player.getNextXPosition();
 		assertEquals(player.getDx(), -2.0, 0.1);
 	}
 
@@ -121,7 +120,7 @@ public class PlayerTest {
 		player.setRight(true);
 		player.setMovSpeed(3.0);
 		player.setMaxSpeed(2.0);
-		player.getNextPosition();
+		player.getNextXPosition();
 		assertEquals(player.getDx(), 2.0, 0.1);
 	}
 
@@ -132,7 +131,7 @@ public class PlayerTest {
 	public void nextPositionStopTest() {
 		player.setRight(false);
 		player.setLeft(false);
-		player.getNextPosition();
+		player.getNextXPosition();
 		assertEquals(player.getDx(), 0, 0);
 	}
 
@@ -142,7 +141,7 @@ public class PlayerTest {
 	@Test
 	public void nextPositionUpTest() {
 		player.setUp(true);
-		player.getNextPosition();
+		player.getNextYPosition();
 		assertTrue(player.getJumping());
 	}
 
@@ -153,7 +152,7 @@ public class PlayerTest {
 	public void nextPositionFallingTest() {
 		player.setFallSpeed(1);
 		player.setFalling(true);
-		player.getNextPosition();
+		player.getNextYPosition();
 		assertTrue(!player.getJumping());
 	}
 }

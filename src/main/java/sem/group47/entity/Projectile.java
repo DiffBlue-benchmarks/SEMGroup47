@@ -1,6 +1,5 @@
 package sem.group47.entity;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -48,7 +47,6 @@ public class Projectile extends MapObject {
 		floating = false;
 		floatSpeed = .1;
 
-		// Load sprite
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/player/bubbles.png"));
@@ -78,7 +76,7 @@ public class Projectile extends MapObject {
 		}
 
 		checkTileMapCollision();
-		setPosition(xtemp, ytemp);
+		setPosition(xposNew, yposNew);
 	}
 
 }

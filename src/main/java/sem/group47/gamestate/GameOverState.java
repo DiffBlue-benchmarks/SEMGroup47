@@ -20,7 +20,7 @@ public class GameOverState extends GameState {
 
 	/** The font. */
 	private Font font;
-	
+
 	/** The options. */
 	private String[] options = { "Restart", "Main Menu" };
 
@@ -63,7 +63,6 @@ public class GameOverState extends GameState {
 	 */
 	@Override
 	public void update() {
-		// bg.update();
 	}
 
 	/*
@@ -73,18 +72,15 @@ public class GameOverState extends GameState {
 	public void draw(Graphics2D g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-		
-		// draw the background image
+
 		int x = (GamePanel.WIDTH - image.getWidth(null)) / 2;
 		int y = (GamePanel.HEIGHT - image.getHeight(null)) / 5;
 		g.drawImage(image, x, y, null);
 
-		// draw game over options
 		g.setFont(font);
 		g.setColor(Color.RED);
 		g.drawString("GAME OVER", 320, 420);
-		
-		// draw menu options
+
 		g.setFont(font);
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentChoice) {

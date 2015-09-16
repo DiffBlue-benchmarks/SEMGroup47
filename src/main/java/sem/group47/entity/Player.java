@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.gamestate.GameStateManager;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -49,8 +50,6 @@ public class Player extends MapObject {
 	public Player(TileMap tm) {
 		super(tm);
 		width = 38;
-		// height of player must be bigger than tile height, else the player can
-		// come stuck between platform tiles
 		height = 32;
 		cwidth = 38;
 		cheight = 32;
@@ -71,7 +70,6 @@ public class Player extends MapObject {
 
 		projectiles = new ArrayList<Projectile>();
 
-		// Load sprite
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/player/player.png"));
@@ -97,6 +95,19 @@ public class Player extends MapObject {
 	 * and then puts the player in the new position
 	 */
 	public void update() {
+		updateProjectiles();
+		getNextXPosition();
+		getNextYPosition();
+		checkTileMapCollision();
+		setPosition(xposNew, yposNew);
+		fireProjectile();
+		flinching();
+	}
+
+	/**
+	 * Update projectiles.
+	 */
+	public void updateProjectiles() {
 		for (int i = 0; i < projectiles.size(); i++) {
 			if (projectiles.get(i).getIsAlive()) {
 				projectiles.get(i).update();
@@ -105,11 +116,12 @@ public class Player extends MapObject {
 				i--;
 			}
 		}
+	}
 
-		getNextPosition();
-		checkTileMapCollision();
-		setPosition(xtemp, ytemp);
-
+	/**
+	 * Fire projectile.
+	 */
+	public void fireProjectile() {
 		if (down) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
 				lastFireTime = System.currentTimeMillis();
@@ -120,8 +132,57 @@ public class Player extends MapObject {
 				projectiles.add(projectile);
 			}
 		}
+	}
 
-		// check done flinching
+	/**
+	 * checks what happens when the player directly collides with an enemy
+	 * 
+	 * @param enemies
+	 */
+	public void directEnemyCollision(ArrayList<Enemy> enemies,
+			GameStateManager gsm) {
+		for (int i = 0; i < enemies.size(); i++) {
+			if (intersects(enemies.get(i))) {
+				if (enemies.get(i).isCaught()) {
+
+					setScore(enemies.get(i).getScorePoints());
+					enemies.remove(i);
+				} else if (getLives() > 1) {
+					hit(1);
+				} else {
+
+					gsm.setState(GameStateManager.GAMEOVER);
+					return;
+
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * checks what happens when the player indirectly (projectile) collides with
+	 * an enemy
+	 * 
+	 * @param enemies
+	 */
+	public void indirectEnemyCollision(ArrayList<Enemy> enemies) {
+		for (int i = 0; i < enemies.size(); i++) {
+			for (int j = 0; j < getProjectiles().size(); j++) {
+				if (getProjectiles().get(j).intersects(enemies.get(i))) {
+					getProjectiles().remove(j);
+					j--;
+					enemies.get(i).setCaught();
+
+				}
+			}
+		}
+	}
+
+	/**
+	 * Flinching.
+	 */
+	public void flinching() {
 		if (flinching) {
 			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
 			if (elapsed > 1000) {
@@ -156,71 +217,170 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Gets the next position. Applies all movement logic based on gravity and
-	 * key input
+	 * Gets the next x position.
 	 *
-	 * @return the next position
+	 * @return the next x position
 	 */
-	public void getNextPosition() {
-		if (left) { // If move left is pressed
+	public void getNextXPosition() {
+		if (left) {
 			dx -= movSpeed;
 			if (dx < -maxSpeed)
 				dx = -maxSpeed;
-		} else if (right) { // If move right is pressed
+		} else if (right) {
 			dx += movSpeed;
 			if (dx > maxSpeed)
 				dx = maxSpeed;
-		}
-
-		else {
+		} else {
 			dx = 0;
-
-			// FOR FUTURE SLIDING CONTROLS
-
-			// if (dx > 0) {
-			// dx -= stopSpeed;
-			// if (dx < 0)
-			// dx = 0;
-			// } else if (dx < 0) {
-			// dx += stopSpeed;
-			// if (dx > 0)
-			// dx = 0;
-			// }
 		}
-
-		if (dx > 0)
+		if (dx > 0) {
 			facingRight = true;
-		else if (dx < 0)
+		} else if (dx < 0) {
 			facingRight = false;
+		}
+	}
 
-		if (up)
-			jumping = true; // If jump is pressed
-
+	/**
+	 * Gets the next y position.
+	 *
+	 * @return the next y position
+	 */
+	public void getNextYPosition() {
+		if (up) {
+			jumping = true;
+		}
 		if (jumping && !falling) {
 			dy = jumpStart;
 			falling = true;
 		}
-
 		if (falling) {
 			dy += fallSpeed;
-			if (dy > 0)
+			if (dy > 0) {
 				jumping = false;
-			if (dy < 0 && !jumping)
+			}
+			if (dy < 0 && !jumping) {
 				dy += stopJumpSpeed;
-			if (dy > maxFallSpeed)
+			}
+			if (dy > maxFallSpeed) {
 				dy = maxFallSpeed;
+			}
 		}
 	}
 
 	/*
 	 * Draws the player
 	 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sem.group47.entity.MapObject#draw(java.awt.Graphics2D)
+	 */
 	@Override
 	public void draw(Graphics2D g) {
-		// draw player
 		super.draw(g);
-		for (int i = 0; i < projectiles.size(); i++)
+		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).draw(g);
+		}
+	}
+
+	/**
+	 * Sets the score.
+	 *
+	 * @param points
+	 *            the new score
+	 */
+	public void setScore(int points) {
+		score += points;
+		if (score == extraLive) {
+			lives++;
+			extraLive = 600;
+		}
+	}
+
+	/**
+	 * Gets the extra live.
+	 *
+	 * @return the extra live
+	 */
+	public int getExtraLive() {
+		return extraLive;
+	}
+
+	/**
+	 * Sets the flinch.
+	 *
+	 * @param b
+	 *            the new flinch
+	 */
+	public void setFlinch(boolean b) {
+		flinching = b;
+	}
+
+	/**
+	 * Gets the mov speed.
+	 *
+	 * @return the mov speed
+	 */
+	public double getMovSpeed() {
+		return movSpeed;
+	}
+
+	/**
+	 * Sets the mov speed.
+	 *
+	 * @param movSpeed
+	 *            the new mov speed
+	 */
+	public void setMovSpeed(double movSpeed) {
+		this.movSpeed = movSpeed;
+	}
+
+	/**
+	 * Gets the max speed.
+	 *
+	 * @return the max speed
+	 */
+	public double getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	/**
+	 * Sets the max speed.
+	 *
+	 * @param maxSpeed
+	 *            the new max speed
+	 */
+	public void setMaxSpeed(double maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+
+	/**
+	 * Sets the fall speed.
+	 *
+	 * @param fallSpeed
+	 *            the new fall speed
+	 */
+	public void setFallSpeed(double fallSpeed) {
+		this.fallSpeed = fallSpeed;
+	}
+
+	/**
+	 * Gets the jumping.
+	 *
+	 * @return the jumping
+	 */
+	public boolean getJumping() {
+		return jumping;
+	}
+
+	/**
+	 * Sets the falling.
+	 *
+	 * @param fall
+	 *            the new falling
+	 */
+	public void setFalling(boolean fall) {
+		falling = fall;
 	}
 
 	/**
@@ -248,61 +408,6 @@ public class Player extends MapObject {
 	 */
 	public int getScore() {
 		return score;
-	}
-
-	/**
-	 * Sets the score.
-	 *
-	 * @param points
-	 *            the new score
-	 */
-	public void setScore(int points) {
-		score += points;
-		if (score == extraLive) {
-			lives++;
-			extraLive = 600;
-		}
-	}
-
-	/**
-	 * Gets the extra live.
-	 *
-	 * @return the extra live
-	 */
-	public int getExtraLive() {
-		return extraLive;
-	}
-
-	public void setFlinch(boolean b) {
-		flinching = b;
-	}
-
-	public double getMovSpeed() {
-		return movSpeed;
-	}
-
-	public void setMovSpeed(double movSpeed) {
-		this.movSpeed = movSpeed;
-	}
-
-	public double getMaxSpeed() {
-		return maxSpeed;
-	}
-
-	public void setMaxSpeed(double maxSpeed) {
-		this.maxSpeed = maxSpeed;
-	}
-
-	public void setFallSpeed(double fallSpeed) {
-		this.fallSpeed = fallSpeed;
-	}
-
-	public boolean getJumping() {
-		return jumping;
-	}
-
-	public void setFalling(boolean fall) {
-		falling = fall;
 	}
 
 }

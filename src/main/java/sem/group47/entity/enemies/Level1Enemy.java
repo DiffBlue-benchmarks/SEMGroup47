@@ -1,12 +1,12 @@
 package sem.group47.entity.enemies;
 
-import sem.group47.entity.Enemy;
-import sem.group47.tilemap.TileMap;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+
+import sem.group47.entity.Enemy;
+import sem.group47.tilemap.TileMap;
 
 /**
  * The Class Level1Enemy.
@@ -39,22 +39,19 @@ public class Level1Enemy extends Enemy {
 		maxFallSpeed = 6.0;
 		jumpStart = -10.0;
 		stopJumpSpeed = .3;
-
 		facingRight = true;
-		if (Math.round(Math.random()) == 0)
-			left = true;
-		else
-			right = true;
 
-		// Load sprite
+		if (Math.round(Math.random()) == 0) {
+			left = true;
+		} else {
+			right = true;
+		}
 
 		try {
 			spritesheet = ImageIO.read(getClass().getResourceAsStream(
 					"/enemies/level1.gif"));
 			sprite = spritesheet.getSubimage(0, 0, 30, 30);
-		}
-
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -65,27 +62,12 @@ public class Level1Enemy extends Enemy {
 	 *
 	 * @return the next position
 	 */
-	private void getNextPosition() {
-		double dice = Math.random() * 1000;
-		if (dice < 5) {
-			up = true;
-		} else if (dice < 15) {
-			left = true;
-			right = false;
-			up = false;
-		} else if (dice < 25) {
-			left = false;
-			right = true;
-			up = false;
-		} else {
-			up = false;
-		}
-
-		if (left) { // If move left is pressed
+	private void getNextXPosition() {
+		if (left) {
 			dx -= movSpeed;
 			if (dx < -maxSpeed)
 				dx = -maxSpeed;
-		} else if (right) { // If move right is pressed
+		} else if (right) {
 			dx += movSpeed;
 			if (dx > maxSpeed)
 				dx = maxSpeed;
@@ -106,14 +88,20 @@ public class Level1Enemy extends Enemy {
 		else if (dx < 0)
 			facingRight = false;
 
-		if (up)
-			jumping = true; // If jump is pressed
+	}
 
+	/**
+	 * Gets the next y position.
+	 *
+	 * @return the next y position
+	 */
+	private void getNextYPosition() {
+		if (up)
+			jumping = true;
 		if (jumping && !falling) {
 			dy = jumpStart;
 			falling = true;
 		}
-
 		if (caught) {
 			dy -= floatSpeed;
 			dx = 0;
@@ -130,17 +118,36 @@ public class Level1Enemy extends Enemy {
 		}
 	}
 
+	/**
+	 * Movement dice.
+	 */
+	private void movementDice() {
+		double dice = Math.random() * 1000;
+		if (dice < 5) {
+			up = true;
+		} else if (dice < 15) {
+			left = true;
+			right = false;
+			up = false;
+		} else if (dice < 25) {
+			left = false;
+			right = true;
+			up = false;
+		} else {
+			up = false;
+		}
+	}
+
 	/*
 	 * Update
 	 */
 	@Override
 	public void update() {
-
-		// update position
-		getNextPosition();
+		movementDice();
+		getNextXPosition();
+		getNextYPosition();
 		checkTileMapCollision();
-		setPosition(xtemp, ytemp);
-
+		setPosition(xposNew, yposNew);
 	}
 
 	/*

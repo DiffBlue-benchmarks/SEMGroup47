@@ -2,6 +2,7 @@ package sem.group47.gamestate;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -40,85 +41,53 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public void init() {
-
-		// tile width/ height of 30px
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile2.gif");
 		tileMap.loadMap("/maps/level1-2.map");
 		player = new Player(tileMap);
 		player.setPosition(100d, 100d);
 
-		enemies = new ArrayList<Enemy>();
-		Level1Enemy e1;
-		Level1Enemy e2;
-		Level1Enemy e3;
-		Level1Enemy e4;
-		Level1Enemy e5;
-		e1 = new Level1Enemy(tileMap);
-		e2 = new Level1Enemy(tileMap);
-		e3 = new Level1Enemy(tileMap);
-		e4 = new Level1Enemy(tileMap);
-		e5 = new Level1Enemy(tileMap);
-		e1.setPosition(300d, 100d);
-		e2.setPosition(500d, 100d);
-		e3.setPosition(300d, 250d);
-		e4.setPosition(500d, 400d);
-		e5.setPosition(100d, 550d);
-		enemies.add(e1);
-		enemies.add(e2);
-		enemies.add(e3);
-		enemies.add(e4);
-		enemies.add(e5);
-
-		// initialize HUD
+		populateEnemies();
 		hud = new HUD(player);
 	}
 
+	/**
+	 * populate the game with enemies
+	 */
+	private void populateEnemies() {
+		enemies = new ArrayList<Enemy>();
+		Point[] points = new Point[] { new Point(300, 100),
+				new Point(500, 100), new Point(300, 250), new Point(500, 400),
+				new Point(100, 550) };
+		Level1Enemy e;
+		for (int i = 0; i < points.length; i++) {
+			e = new Level1Enemy(tileMap);
+			e.setPosition(points[i].x, points[i].y);
+			enemies.add(e);
+		}
+	}
+
 	/*
-	 * Update
+	 * Update the player and enemies
 	 */
 	@Override
 	public void update() {
 		player.update();
+		player.directEnemyCollision(enemies, gsm);
+		player.indirectEnemyCollision(enemies);
 
-		// update all enemies
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 		}
 
-		// collision check between player and enemies
-		for (int i = 0; i < enemies.size(); i++) {
-			if (player.intersects(enemies.get(i))) {
-				if (enemies.get(i).isCaught()) {
-					// kill enemy
-					player.setScore(enemies.get(i).getScorePoints());
-					enemies.remove(i);
-				} else if (player.getLives() > 1) {
+		nextLevel();
+	}
 
-					// player loses a life
-					player.hit(1);
-
-				} else {
-					// kill player
-
-					gsm.setState(GameStateManager.GAMEOVER);
-					return;
-
-				}
-			}
+	public void nextLevel() {
+		if (enemies.size() == 0) {
+			// gsm.setState(GameStateManager.Level2State);
+			System.out.println("goto next level!");
 		}
-		// collision check between projectiles and enemies
-		for (int i = 0; i < enemies.size(); i++) {
-			for (int j = 0; j < player.getProjectiles().size(); j++) {
-				if (player.getProjectiles().get(j).intersects(enemies.get(i))) {
-					player.getProjectiles().remove(j);
-					j--;
-					enemies.get(i).setCaught();
-
-				}
-			}
-		}
-
 	}
 
 	/*
@@ -127,27 +96,21 @@ public class Level1State extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 
-		// set background color of a clear screen
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
-		// draw tilemap
 		tileMap.draw(g);
 		player.draw(g);
 
-		// draw all enemies
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(g);
 		}
 
-		// draw hud
 		hud.draw(g);
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see GameState.GameState#keyPressed(int)
+	 * keyPressed
 	 */
 	@Override
 	public void keyPressed(int k) {
@@ -162,9 +125,7 @@ public class Level1State extends GameState {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see GameState.GameState#keyReleased(int)
+	 * keyReleased
 	 */
 	@Override
 	public void keyReleased(int k) {
