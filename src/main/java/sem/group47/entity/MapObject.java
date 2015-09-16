@@ -1,11 +1,12 @@
 package sem.group47.entity;
 
+import sem.group47.tilemap.Tile;
+import sem.group47.tilemap.TileMap;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import sem.group47.tilemap.Tile;
-import sem.group47.tilemap.TileMap;
 
 /**
  * MapObject, SuperClass for all movable and interactable objects inside the
@@ -25,10 +26,10 @@ public abstract class MapObject {
 	// POSITION AND VECTOR
 
 	/** The actual x position. */
-	protected double x;
+	protected double xpos;
 
 	/** The actual y position. */
-	protected double y;
+	protected double ypos;
 
 	/** Vector in x direction. */
 	protected double dx;
@@ -171,8 +172,8 @@ public abstract class MapObject {
 	 *            the other MapObject
 	 * @return true if they intersect
 	 */
-	public boolean intersects(MapObject o) {
-		return this.getRectangle().intersects(o.getRectangle());
+	public boolean intersects(MapObject obj) {
+		return this.getRectangle().intersects(obj.getRectangle());
 	}
 
 	/**
@@ -181,7 +182,7 @@ public abstract class MapObject {
 	 * @return Rectangle
 	 */
 	public Rectangle getRectangle() {
-		return new Rectangle((int) x - cwidth / 2, (int) y - cheight / 2,
+		return new Rectangle((int) xpos - cwidth / 2, (int) ypos - cheight / 2,
 				cwidth, cheight);
 	}
 
@@ -190,18 +191,18 @@ public abstract class MapObject {
 	 */
 	public void checkTileMapCollision() {
 		// Determine current column and row
-		currCol = (int) x / tileSize;
-		currRow = (int) y / tileSize;
+		currCol = (int) xpos / tileSize;
+		currRow = (int) ypos / tileSize;
 
 		// Destination coordinates
-		xdest = x + dx;
-		ydest = y + dy;
+		xdest = xpos + dx;
+		ydest = ypos + dy;
 
 		// Temporary coordinates
-		xtemp = x;
-		ytemp = y;
+		xtemp = xpos;
+		ytemp = ypos;
 
-		calculateCorners(x, ydest);
+		calculateCorners(xpos, ydest);
 
 		// If we are moving upwards
 		if (dy < 0) {
@@ -214,18 +215,11 @@ public abstract class MapObject {
 				// Our new position becomes just below the tile above we are
 				// colliding with
 				ytemp = currRow * tileSize + cheight / 2;
-
-			}
-
-			// If we are not colliding
-			else {
+			} else { // If we are not colliding
 				// Our y vector is added to our temporary y position
 				ytemp += dy;
 			}
-
-		}
-		// If we are moving downwards
-		else if (dy > 0) {
+		} else if (dy > 0) { // If we are moving downwards
 			// And our bottomLeft or bottomRight corner is colliding with a
 			// 'BLOCKED' or 'SEMIBLOCKED' tile
 			if (bottomLeftBlocked || bottomRightBlocked
@@ -240,9 +234,7 @@ public abstract class MapObject {
 				// colliding with
 				//
 				ytemp = (currRow + 1) * tileSize - cheight / 2;
-			}
-			// If we are not colliding
-			else {
+			} else { // If we are not colliding
 				// Our y vector is added to our temporary y position
 				ytemp += dy;
 				if (ytemp >= tileMap.getHeight() - 15) {
@@ -252,7 +244,7 @@ public abstract class MapObject {
 		}
 
 		// Check for collisions in the x direction
-		calculateCorners(xdest, y);
+		calculateCorners(xdest, ypos);
 
 		// If we are moving to the left
 		if (dx < 0) {
@@ -266,18 +258,11 @@ public abstract class MapObject {
 				// tile
 				xtemp = currCol * tileSize + cwidth / 2;
 
-			}
-
-			// If we are not colliding
-			else {
+			} else { // If we are not colliding
 				// Apply the horizontal movement vector
 				xtemp += dx;
 			}
-
-		}
-
-		// If we are moving to the right
-		else if (dx > 0) {
+		} else if (dx > 0) { // If we are moving to the right
 			// And we are colliding on the right
 			if (topRightBlocked) {
 				// Our horizontal movement vector becomes 0
@@ -285,10 +270,7 @@ public abstract class MapObject {
 
 				// Our new position is set just to the left of the blocking tile
 				xtemp = (currCol + 1) * tileSize - cwidth / 2;
-			}
-
-			// If we are not colliding
-			else {
+			} else { // If we are not colliding
 
 				// Apply the horizontal movement vector;
 				xtemp += dx;
@@ -298,7 +280,7 @@ public abstract class MapObject {
 		// Check if we are falling
 		if (!falling) {
 			// See if we move 1 pixel downwards if we are colliding
-			calculateCorners(x, ydest + 1);
+			calculateCorners(xpos, ydest + 1);
 
 			// If we do not collide we are falling
 			if (!bottomLeftBlocked && !bottomLeftSemiBlocked
@@ -313,22 +295,23 @@ public abstract class MapObject {
 	 * sets the topLeft, topRight, bottomLeft and bottomRight boolean
 	 * accordingly.
 	 *
-	 * @param x
+	 * @param xin
 	 *            xposition to check
-	 * @param y
+	 * @param yin
 	 *            yposition to check
 	 */
-	public void calculateCorners(double x, double y) {
-		int leftTile = (int) (x - cwidth / 2) / tileSize;
-		int rightTile = (int) (x - cwidth / 2 + cwidth - 1) / tileSize;
-		int topTile = (int) (y - cheight / 2) / tileSize;
-		int bottomTile = (int) (y - cheight / 2 + cheight) / tileSize;
-
+	@SuppressWarnings("checkstyle:VariableDeclarationUsageDistance")
+	public void calculateCorners(double xin, double yin) {
+		int leftTile = (int) ((xin - cwidth / 2) / (double) tileSize);
+		int rightTile = (int) ((xin - cwidth / 2 + cwidth - 1) / (double) tileSize);
+		int topTile = (int) ((yin - cheight / 2) / (double) tileSize);
+		int bottomTile = (int) ((yin - cheight / 2 + cheight) / (double) tileSize);
+		
 		int tl = tileMap.getType(topTile, leftTile);
 		int tr = tileMap.getType(topTile, rightTile);
 		int bl = tileMap.getType(bottomTile, leftTile);
 		int br = tileMap.getType(bottomTile, rightTile);
-
+		
 		// Flags for whether we are colliding
 		topLeftBlocked = tl == Tile.BLOCKED;
 		topRightBlocked = tr == Tile.BLOCKED;
@@ -343,16 +326,18 @@ public abstract class MapObject {
 	/**
 	 * Draw.
 	 *
-	 * @param g
-	 *            the g
+	 * @param gr
+	 *            the graphics
 	 */
-	public void draw(Graphics2D g) {
-		if (facingRight)
-			g.drawImage(sprite, (int) (x - width / 2), (int) (y - height / 2),
-					null);
-		else
-			g.drawImage(sprite, (int) (x + width / 2), (int) (y - height / 2),
+	public void draw(Graphics2D gr) {
+		if (facingRight) {
+			gr.drawImage(sprite, (int) (xpos - width / (double) 2),
+					(int) (ypos - height / (double) 2),	null);
+		} else {
+			gr.drawImage(sprite, (int) (xpos + width / (double) 2), 
+					(int) (ypos - height / (double) 2),	
 					-width, height, null);
+		}
 	}
 
 	/**
@@ -370,7 +355,7 @@ public abstract class MapObject {
 	 * @return the x
 	 */
 	public double getx() {
-		return x;
+		return xpos;
 	}
 
 	/**
@@ -379,7 +364,7 @@ public abstract class MapObject {
 	 * @return the y
 	 */
 	public double gety() {
-		return y;
+		return ypos;
 	}
 
 	/**
@@ -426,9 +411,9 @@ public abstract class MapObject {
 	 * @param y
 	 *            the y
 	 */
-	public void setPosition(double x, double y) {
-		this.x = x;
-		this.y = y;
+	public void setPosition(double xnew, double ynew) {
+		this.xpos = xnew;
+		this.ypos = ynew;
 	}
 
 	/**
@@ -450,8 +435,8 @@ public abstract class MapObject {
 	 * @param b
 	 *            the new left
 	 */
-	public void setLeft(boolean b) {
-		left = b;
+	public void setLeft(boolean bleft) {
+		left = bleft;
 	}
 
 	/**
@@ -460,8 +445,8 @@ public abstract class MapObject {
 	 * @param b
 	 *            the new right
 	 */
-	public void setRight(boolean b) {
-		right = b;
+	public void setRight(boolean bright) {
+		right = bright;
 	}
 
 	/**
@@ -470,8 +455,8 @@ public abstract class MapObject {
 	 * @param b
 	 *            the new up
 	 */
-	public void setUp(boolean b) {
-		up = b;
+	public void setUp(boolean bup) {
+		up = bup;
 	}
 
 	/**
@@ -480,8 +465,8 @@ public abstract class MapObject {
 	 * @param b
 	 *            the new down
 	 */
-	public void setDown(boolean b) {
-		down = b;
+	public void setDown(boolean bdown) {
+		down = bdown;
 	}
 
 	public double getDx() {
