@@ -6,7 +6,6 @@ import javax.swing.JFrame;
  * The Class Game sets up the JFrame window, in which the game will be played.
  * The class JFrame is an extended version of java.awt.Frame that adds support
  * for the JFC/Swing component architecture.
- * 
  */
 public class Game {
 
@@ -16,7 +15,7 @@ public class Game {
 	 * @param args
 	 *            the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 
 		JFrame window = new JFrame("Bubble Bobble");
 
@@ -31,5 +30,12 @@ public class Game {
 		window.setVisible(true);
 
 	}
+
+	/**
+	 * prevents calls from subclass.
+	 */
+	protected Game() {
+        throw new UnsupportedOperationException();
+    }
 
 }

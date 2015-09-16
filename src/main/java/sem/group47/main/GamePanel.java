@@ -1,5 +1,7 @@
 package sem.group47.main;
 
+import sem.group47.gamestate.GameStateManager;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,12 +11,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import sem.group47.gamestate.GameStateManager;
-
 /**
- * The Class GamePanel, which extends the super class JPanel and implements the
+ * The Class GamePanel, which extends the super class JPanel. Implements the
  * interfaces Runnable and KeyListener. JPanel is a container inside JFrame.
- * 
  */
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener {
@@ -35,11 +34,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	/** The running. */
 	private boolean running;
 
-	/** The desired Frames per seconds */
-	private final static int FPS = 60;
+	/** The desired Frames per seconds. */
+	private static final int FPS = 60;
 
-	/** The target time/ frame period */
-	private final static long FRAME_PERIOD = 1000 / FPS;
+	/** The target time/ frame period. */
+	private static final long FRAME_PERIOD = 1000 / FPS;
 
 	// IMAGE
 
@@ -49,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	/** The g. */
 	private Graphics2D g;
 
-	/** The game state manager */
+	/** The game state manager. */
 	private GameStateManager gsm;
 
 	/**
@@ -60,21 +59,21 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		super();
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-		// makes sure that keyboard input is recognized without having to click
-		// inside the JPanel first
+		// makes sure that keyboard input is recognized
+		// without having to click inside the JPanel first
 		setFocusable(true);
 		requestFocus();
 	}
 
 	/**
-	 * Gamepanel is loaded, so start thread, runs automagically
+	 * Gamepanel is loaded, so start thread, runs automagically.
 	 */
 	@Override
-	public void addNotify() {
+	public final void addNotify() {
 		super.addNotify();
 		if (thread == null) {
-			// create a new thread instance, provide the task that we want to
-			// run (this)
+			// create a new thread instance,
+			// provide the task that we want to run (this)
 			thread = new Thread(this);
 			addKeyListener(this);
 
@@ -84,12 +83,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 
 	/**
-	 * Initializes everything separately from the constructor
+	 * Initializes everything separately from the constructor.
 	 */
 	private void init() {
 
 		// BufferedImage allows us to operate directly with image data
-		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH, HEIGHT,
+				BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 
 		running = true;
@@ -98,24 +98,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 
 	/**
-	 * Run method (Game Loop)
-	 * 
-	 * The game loop is the central code of the game. The initialize phase is
-	 * used to do any necessary game setup and prepare the environment for the
+	 * Run method (Game Loop).
+	 * The game loop is the central code of the game.
+	 * The initialize phase is used to do any necessary
+	 * game setup and prepare the environment for the
 	 * update and draw phases. Here you should create your main entities,
 	 * prepare the menu, detect default hardware capabilities, and so on.
-	 * 
-	 * The main purpose of the update phase is to prepare all objects to be
-	 * drawn, so this is where all the physics code, coordinate updates, health
-	 * points changes, char upgrades, damage dealt and other similar operations
+	 * 		The main purpose of the update phase is to prepare
+	 * all objects to be drawn, so this is where all the physics code,
+	 * coordinate updates, health points changes,
+	 * char upgrades, damage dealt and other similar operations
 	 * belong. This is also where the input will be captured and processed.
-	 * 
-	 * When everything is properly updated and ready, we enter the draw phase
-	 * where all this information is put on the screen. This function should
-	 * contain all the code to manage and draw the levels, layers, chars, HUD
-	 * and so on.
+	 * 		When everything is properly updated and ready,
+	 * we enter the draw phase where all this information
+	 * is put on the screen. This function should
+	 * contain all the code to manage and draw the levels,
+	 * layers, chars, HUD and so on.
 	 */
-	public void run() {
+	public final void run() {
 
 		init();
 
@@ -180,24 +180,29 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		g2.dispose();
 	}
 
-	/*
-	 * keyTyped
+	/**
+	 * keyTyped event handler.
+	 * @param key
+	 * 				The key event to be handled.
 	 */
-
-	public void keyTyped(KeyEvent key) {
+	public final void keyTyped(final KeyEvent key) {
 	}
 
-	/*
-	 * keyPressed
+	/**
+	 * keyPressed event handler.
+	 * @param key
+	 * 				The key event to be handled.
 	 */
-	public void keyPressed(KeyEvent key) {
+	public final void keyPressed(final KeyEvent key) {
 		gsm.keyPressed(key.getKeyCode());
 	}
 
-	/*
-	 * keyReleased
+	/**
+	 * keyReleased event handler.
+	 * @param key
+	 * 				The key event to be handled.
 	 */
-	public void keyReleased(KeyEvent key) {
+	public final void keyReleased(final KeyEvent key) {
 		gsm.keyReleased(key.getKeyCode());
 	}
 
