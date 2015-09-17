@@ -15,9 +15,9 @@ import sem.group47.main.GamePanel;
 import sem.group47.tilemap.TileMap;
 
 /**
- * The Class Level1State.
+ * The Class Level2State.
  */
-public class Level1State extends GameState {
+public class Level2State extends GameState {
 
 	/** The player. */
 	private Player player;
@@ -37,7 +37,7 @@ public class Level1State extends GameState {
 	 * @param gsm
 	 *            the gsm
 	 */
-	public Level1State(final GameStateManager gsm) {
+	public Level2State(final GameStateManager gsm) {
 		this.gsm = gsm;
 		init();
 	}
@@ -49,7 +49,7 @@ public class Level1State extends GameState {
 	public final void init() {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
-		tileMap.loadMap("/maps/level1.map");
+		tileMap.loadMap("/maps/level2.map");
 		player = new Player(tileMap);
 		player.setPosition(100d, 100d);
 		player.setLives(PlayerSave.getLives());
@@ -100,8 +100,7 @@ public class Level1State extends GameState {
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setScore(player.getScore());
 			PlayerSave.setExtraLive(player.getExtraLive());
-			System.out.println(PlayerSave.getExtraLive());
-			gsm.setState(GameStateManager.LEVEL2STATE);
+			gsm.setState(GameStateManager.LEVEL1STATE);
 		}
 	}
 

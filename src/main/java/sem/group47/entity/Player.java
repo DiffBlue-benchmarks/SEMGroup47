@@ -36,7 +36,7 @@ public class Player extends MapObject {
 	private long lastFireTime;
 
 	/** The fire delay. */
-	private int fireDelay; // ms
+	private int fireDelay;
 
 	/** The projectiles. */
 	private ArrayList<Projectile> projectiles;
@@ -47,7 +47,6 @@ public class Player extends MapObject {
 	 * @param tm
 	 *            the tm
 	 */
-
 	public Player(final TileMap tm) {
 		super(tm);
 		setWidth(38);
@@ -65,7 +64,7 @@ public class Player extends MapObject {
 
 		setFacingRight(true);
 
-		lives = 3;
+		// lives = 3;
 		maxLives = lives;
 		extraLive = 300;
 		fireDelay = 500;
@@ -302,13 +301,8 @@ public class Player extends MapObject {
 		}
 	}
 
-	/*
+	/**
 	 * Draws the player
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sem.group47.entity.MapObject#draw(java.awt.Graphics2D)
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
@@ -328,7 +322,7 @@ public class Player extends MapObject {
 		score += points;
 		if (score == extraLive) {
 			lives++;
-			extraLive = 600;
+			extraLive += 300;
 		}
 	}
 
@@ -376,6 +370,14 @@ public class Player extends MapObject {
 	 */
 	public final int getScore() {
 		return score;
+	}
+
+	public final void setLives(final int pLives) {
+		this.lives = pLives;
+	}
+
+	public final void setExtraLive(final int pExtraLive) {
+		this.extraLive = pExtraLive;
 	}
 
 }

@@ -48,7 +48,6 @@ public class HUD {
 	 */
 	public void draw(Graphics2D g) {
 
-		// Draw the number of lives the player has
 		for (int i = 0; i < player.getLives(); i++) {
 			g.drawImage(image, i * 30, 0, null);
 		}
