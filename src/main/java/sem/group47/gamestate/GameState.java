@@ -7,10 +7,10 @@ package sem.group47.gamestate;
 public abstract class GameState {
 
 	/** The gamestate manager. */
-	protected GameStateManager gsm;
+	private GameStateManager gsm;
 
 	/**
-	 * Init
+	 * Init.
 	 */
 	public abstract void init();
 
@@ -42,5 +42,24 @@ public abstract class GameState {
 	 *            the k
 	 */
 	public abstract void keyReleased(int k);
+
+	/**
+	 * getGsm.
+	 * 
+	 * @return gsm
+	 */
+	public final GameStateManager getGsm() {
+		return gsm;
+	}
+
+	/**
+	 * setGsm.
+	 * 
+	 * @param pGsm
+	 *            gsm
+	 */
+	public final void setGsm(final GameStateManager pGsm) {
+		this.gsm = pGsm;
+	}
 
 }

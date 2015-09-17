@@ -35,7 +35,7 @@ public class PlayerSave {
 	/**
 	 * Sets the lives.
 	 *
-	 * @param i
+	 * @param pLives
 	 *            the new lives
 	 */
 	public static void setLives(final int pLives) {
@@ -45,21 +45,37 @@ public class PlayerSave {
 	/**
 	 * Sets the score.
 	 *
-	 * @param points
+	 * @param pScore
 	 *            the new score
 	 */
 	public static void setScore(final int pScore) {
 		score = pScore;
 	}
 
+	/**
+	 * Gets the score.
+	 *
+	 * @return the score
+	 */
 	public static int getScore() {
 		return score;
 	}
 
+	/**
+	 * Sets the extra live.
+	 *
+	 * @param pExtraLive
+	 *            the new extra live
+	 */
 	public static void setExtraLive(final int pExtraLive) {
 		extraLive = pExtraLive;
 	}
 
+	/**
+	 * Gets the extra live.
+	 *
+	 * @return the extra live
+	 */
 	public static int getExtraLive() {
 		return extraLive;
 	}

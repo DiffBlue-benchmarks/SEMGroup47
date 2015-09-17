@@ -38,7 +38,7 @@ public class Level2State extends GameState {
 	 *            the gsm
 	 */
 	public Level2State(final GameStateManager gsm) {
-		this.gsm = gsm;
+		setGsm(gsm);
 		init();
 	}
 
@@ -82,7 +82,7 @@ public class Level2State extends GameState {
 	@Override
 	public final void update() {
 		player.update();
-		player.directEnemyCollision(enemies, gsm);
+		player.directEnemyCollision(enemies, getGsm());
 		player.indirectEnemyCollision(enemies);
 
 		for (int i = 0; i < enemies.size(); i++) {
@@ -100,7 +100,7 @@ public class Level2State extends GameState {
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setScore(player.getScore());
 			PlayerSave.setExtraLive(player.getExtraLive());
-			gsm.setState(GameStateManager.LEVEL1STATE);
+			getGsm().setState(GameStateManager.LEVEL1STATE);
 		}
 	}
 
@@ -140,6 +140,9 @@ public class Level2State extends GameState {
 		if (k == KeyEvent.VK_DOWN) {
 			player.setDown(true);
 		}
+		if (k == KeyEvent.VK_ESCAPE) {
+			getGsm().setPaused(true);
+		}
 	}
 
 	/**
@@ -158,6 +161,9 @@ public class Level2State extends GameState {
 		}
 		if (k == KeyEvent.VK_DOWN) {
 			player.setDown(false);
+		}
+		if (k == KeyEvent.VK_ESCAPE) {
+			getGsm().setPaused(true);
 		}
 	}
 
