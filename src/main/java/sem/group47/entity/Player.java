@@ -101,7 +101,9 @@ public class Player extends MapObject {
 		checkTileMapCollision();
 		setPosition(xposNew, yposNew);
 		fireProjectile();
+		interactWithProjectile();
 		flinching();
+
 	}
 
 	/**
@@ -158,6 +160,37 @@ public class Player extends MapObject {
 			}
 		}
 
+	}
+
+	/**
+	 * lets the player interact with a projectile, enabling him to jump on it
+	 * and lift upwards, or kick against it.
+	 */
+	public void interactWithProjectile() {
+		for (int j = 0; j < getProjectiles().size(); j++) {
+
+			if (intersects(getProjectiles().get(j))) {
+
+				if (getProjectiles().get(j).getFloatDelay() <= 0) {
+
+					if (this.ypos <= getProjectiles().get(j).ypos) {
+						falling = false;
+						dy = getProjectiles().get(j).getDy() - 0.1;
+
+					}
+
+					else if (right || (jumping && right)) {
+						getProjectiles().get(j).setDx(2);
+						getProjectiles().get(j).setFloatDelay(1000);
+					} else if (left || (jumping && left)) {
+						getProjectiles().get(j).setDx(-2);
+						getProjectiles().get(j).setFloatDelay(1000);
+					}
+
+				}
+
+			}
+		}
 	}
 
 	/**

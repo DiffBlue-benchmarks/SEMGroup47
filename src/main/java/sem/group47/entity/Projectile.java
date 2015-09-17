@@ -39,13 +39,13 @@ public class Projectile extends MapObject {
 		height = 32;
 		cwidth = 20;
 		cheight = 20;
-		dx = 5;
+		dx = 3;
 
 		lifeTime = 7500;
-		floatDelay = 700;
+		floatDelay = 1000;
 		lastUpdateTime = System.currentTimeMillis();
 		floating = false;
-		floatSpeed = .1;
+		floatSpeed = .01;
 
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
@@ -77,6 +77,30 @@ public class Projectile extends MapObject {
 
 		checkTileMapCollision();
 		setPosition(xposNew, yposNew);
+	}
+
+	public int getFloatDelay() {
+		return floatDelay;
+	}
+
+	public void setFloatDelay(int floatDelay) {
+		this.floatDelay = floatDelay;
+	}
+
+	public boolean isFloating() {
+		return floating;
+	}
+
+	public void setFloating(boolean floating) {
+		this.floating = floating;
+	}
+
+	public double getFloatSpeed() {
+		return floatSpeed;
+	}
+
+	public void setFloatSpeed(double floatSpeed) {
+		this.floatSpeed = floatSpeed;
 	}
 
 }

@@ -503,4 +503,60 @@ public abstract class MapObject {
 		return dy;
 	}
 
+	public void setDx(int dx) {
+		this.dx = dx;
+	}
+
+	public void setDy(int dy) {
+		this.dy = dy;
+	}
+
+	public double getXpos() {
+		return xpos;
+	}
+
+	public void setXpos(double xpos) {
+		this.xpos = xpos;
+	}
+
+	public double getYpos() {
+		return ypos;
+	}
+
+	public void setYpos(double ypos) {
+		this.ypos = ypos;
+	}
+
+	public double getXdest() {
+		return xdest;
+	}
+
+	public void setXdest(double xdest) {
+		this.xdest = xdest;
+	}
+
+	public double getYdest() {
+		return ydest;
+	}
+
+	public void setYdest(double ydest) {
+		this.ydest = ydest;
+	}
+
+	public double getXposNew() {
+		return xposNew;
+	}
+
+	public void setXposNew(double xposNew) {
+		this.xposNew = xposNew;
+	}
+
+	public double getYposNew() {
+		return yposNew;
+	}
+
+	public void setYposNew(double yposNew) {
+		this.yposNew = yposNew;
+	}
+
 }
