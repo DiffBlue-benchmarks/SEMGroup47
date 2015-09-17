@@ -6,12 +6,13 @@ import javax.imageio.ImageIO;
 
 import sem.group47.tilemap.TileMap;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Projectile.
  */
 public class Projectile extends MapObject {
 
-	/** The life time in ms */
+	/** The life time in ms. */
 	private int lifeTime;
 
 	/** The float delay. */
@@ -32,14 +33,14 @@ public class Projectile extends MapObject {
 	 * @param tm
 	 *            the tm
 	 */
-	public Projectile(TileMap tm) {
+	public Projectile(final TileMap tm) {
 		super(tm);
-		isAlive = true;
-		width = 32;
-		height = 32;
-		cwidth = 20;
-		cheight = 20;
-		dx = 3;
+		setAlive(true);
+		setWidth(32);
+		setHeight(32);
+		setCwidth(20);
+		setCheight(20);
+		setDx(3);
 
 		lifeTime = 7500;
 		floatDelay = 1000;
@@ -50,10 +51,8 @@ public class Projectile extends MapObject {
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/player/bubbles.png"));
-			sprite = spritesheet.getSubimage(96, 0, 32, 32);
-		}
-
-		catch (Exception e) {
+			setSprite(spritesheet.getSubimage(96, 0, 32, 32));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -61,45 +60,78 @@ public class Projectile extends MapObject {
 	/**
 	 * Update.
 	 */
-	public void update() {
+	public final void update() {
 		long timePassed = System.currentTimeMillis() - lastUpdateTime;
 		floatDelay -= timePassed;
 		lifeTime -= timePassed;
 		lastUpdateTime = System.currentTimeMillis();
 		if (floatDelay <= 0) {
-			dx = 0;
-			dy -= floatSpeed;
+			setDx(0);
+			setDy(getDy() - floatSpeed);
 		}
 		if (lifeTime <= 0) {
-			isAlive = false;
+			setAlive(false);
 			return;
 		}
 
 		checkTileMapCollision();
-		setPosition(xposNew, yposNew);
+		setPosition(getXposNew(), getYposNew());
 	}
 
-	public int getFloatDelay() {
+	/**
+	 * Gets the float delay.
+	 *
+	 * @return the float delay
+	 */
+	public final int getFloatDelay() {
 		return floatDelay;
 	}
 
-	public void setFloatDelay(int floatDelay) {
+	/**
+	 * Sets the float delay.
+	 *
+	 * @param floatDelay
+	 *            the new float delay
+	 */
+	public final void setFloatDelay(final int floatDelay) {
 		this.floatDelay = floatDelay;
 	}
 
-	public boolean isFloating() {
+	/**
+	 * Checks if is floating.
+	 *
+	 * @return true, if is floating
+	 */
+	public final boolean isFloating() {
 		return floating;
 	}
 
-	public void setFloating(boolean floating) {
+	/**
+	 * Sets the floating.
+	 *
+	 * @param floating
+	 *            the new floating
+	 */
+	public final void setFloating(final boolean floating) {
 		this.floating = floating;
 	}
 
-	public double getFloatSpeed() {
+	/**
+	 * Gets the float speed.
+	 *
+	 * @return the float speed
+	 */
+	public final double getFloatSpeed() {
 		return floatSpeed;
 	}
 
-	public void setFloatSpeed(double floatSpeed) {
+	/**
+	 * Sets the float speed.
+	 *
+	 * @param floatSpeed
+	 *            the new float speed
+	 */
+	public final void setFloatSpeed(final double floatSpeed) {
 		this.floatSpeed = floatSpeed;
 	}
 

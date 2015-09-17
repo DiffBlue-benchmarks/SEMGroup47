@@ -142,7 +142,7 @@ public class PlayerTest {
 	public void nextPositionUpTest() {
 		player.setUp(true);
 		player.getNextYPosition();
-		assertTrue(player.getJumping());
+		assertTrue(player.isJumping());
 	}
 
 	/**
@@ -153,6 +153,6 @@ public class PlayerTest {
 		player.setFallSpeed(1);
 		player.setFalling(true);
 		player.getNextYPosition();
-		assertTrue(!player.getJumping());
+		assertTrue(!player.isJumping());
 	}
 }

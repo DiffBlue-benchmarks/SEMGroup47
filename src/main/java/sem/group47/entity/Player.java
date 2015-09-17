@@ -47,24 +47,26 @@ public class Player extends MapObject {
 	 * @param tm
 	 *            the tm
 	 */
-	public Player(TileMap tm) {
+
+	public Player(final TileMap tm) {
 		super(tm);
-		width = 38;
-		height = 32;
-		cwidth = 38;
-		cheight = 32;
-		movSpeed = 2.5;
-		maxSpeed = 2.5;
-		stopSpeed = 2.5;
+		setWidth(38);
+		setHeight(32);
+		setCwidth(38);
+		setCheight(32);
+		setMovSpeed(2.5);
+		setMaxSpeed(2.5);
+		setStopSpeed(2.5);
 
-		fallSpeed = .35;
-		maxFallSpeed = 6.0;
-		jumpStart = -10;
-		stopJumpSpeed = .3;
+		setFallSpeed(.35);
+		setMaxFallSpeed(6.0);
+		setJumpStart(-10);
+		setStopJumpSpeed(.3);
 
-		facingRight = true;
+		setFacingRight(true);
 
-		lives = maxLives = 3;
+		lives = 3;
+		maxLives = lives;
 		extraLive = 300;
 		fireDelay = 500;
 
@@ -73,10 +75,8 @@ public class Player extends MapObject {
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/player/player.png"));
-			sprite = spritesheet.getSubimage(0, 0, 38, 32);
-		}
-
-		catch (Exception e) {
+			setSprite(spritesheet.getSubimage(0, 0, 38, 32));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -86,7 +86,7 @@ public class Player extends MapObject {
 	 *
 	 * @return the projectiles
 	 */
-	public ArrayList<Projectile> getProjectiles() {
+	public final ArrayList<Projectile> getProjectiles() {
 		return projectiles;
 	}
 
@@ -94,12 +94,12 @@ public class Player extends MapObject {
 	 * Update. Called every frame. Updates player position, looks for collision
 	 * and then puts the player in the new position
 	 */
-	public void update() {
+	public final void update() {
 		updateProjectiles();
 		getNextXPosition();
 		getNextYPosition();
 		checkTileMapCollision();
-		setPosition(xposNew, yposNew);
+		setPosition(getXposNew(), getYposNew());
 		fireProjectile();
 		interactWithProjectile();
 		flinching();
@@ -109,7 +109,7 @@ public class Player extends MapObject {
 	/**
 	 * Update projectiles.
 	 */
-	public void updateProjectiles() {
+	public final void updateProjectiles() {
 		for (int i = 0; i < projectiles.size(); i++) {
 			if (projectiles.get(i).getIsAlive()) {
 				projectiles.get(i).update();
@@ -123,26 +123,30 @@ public class Player extends MapObject {
 	/**
 	 * Fire projectile.
 	 */
-	public void fireProjectile() {
-		if (down) {
+	public final void fireProjectile() {
+		if (getDown()) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
 				lastFireTime = System.currentTimeMillis();
-				Projectile projectile = new Projectile(tileMap);
-				projectile.setPosition(xpos, ypos);
-				if (!facingRight)
-					projectile.dx *= -1;
+				Projectile projectile = new Projectile(getTileMap());
+				projectile.setPosition(getXpos(), getYpos());
+				if (!isFacingRight()) {
+					projectile.setDx(projectile.getDx() * -1);
+				}
 				projectiles.add(projectile);
 			}
 		}
 	}
 
 	/**
-	 * checks what happens when the player directly collides with an enemy
+	 * checks what happens when the player directly collides with an enemy.
 	 * 
 	 * @param enemies
+	 *            enemies
+	 * 
+	 * 
 	 */
-	public void directEnemyCollision(ArrayList<Enemy> enemies,
-			GameStateManager gsm) {
+	public final void directEnemyCollision(final ArrayList<Enemy> enemies,
+			final GameStateManager gsm) {
 		for (int i = 0; i < enemies.size(); i++) {
 			if (intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
@@ -166,23 +170,20 @@ public class Player extends MapObject {
 	 * lets the player interact with a projectile, enabling him to jump on it
 	 * and lift upwards, or kick against it.
 	 */
-	public void interactWithProjectile() {
+	public final void interactWithProjectile() {
 		for (int j = 0; j < getProjectiles().size(); j++) {
 
 			if (intersects(getProjectiles().get(j))) {
 
 				if (getProjectiles().get(j).getFloatDelay() <= 0) {
 
-					if (this.ypos <= getProjectiles().get(j).ypos) {
-						falling = false;
-						dy = getProjectiles().get(j).getDy() - 0.1;
-
-					}
-
-					else if (right || (jumping && right)) {
+					if (getYpos() <= getProjectiles().get(j).getYpos()) {
+						setFalling(false);
+						setDy((getProjectiles().get(j).getDy() - 0.1));
+					} else if (isRight() || (isJumping() && isRight())) {
 						getProjectiles().get(j).setDx(2);
 						getProjectiles().get(j).setFloatDelay(1000);
-					} else if (left || (jumping && left)) {
+					} else if (isLeft() || (isJumping() && isLeft())) {
 						getProjectiles().get(j).setDx(-2);
 						getProjectiles().get(j).setFloatDelay(1000);
 					}
@@ -195,11 +196,12 @@ public class Player extends MapObject {
 
 	/**
 	 * checks what happens when the player indirectly (projectile) collides with
-	 * an enemy
+	 * an enemy.
 	 * 
 	 * @param enemies
+	 *            enemies
 	 */
-	public void indirectEnemyCollision(ArrayList<Enemy> enemies) {
+	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
 		for (int i = 0; i < enemies.size(); i++) {
 			for (int j = 0; j < getProjectiles().size(); j++) {
 				if (getProjectiles().get(j).intersects(enemies.get(i))) {
@@ -215,7 +217,7 @@ public class Player extends MapObject {
 	/**
 	 * Flinching.
 	 */
-	public void flinching() {
+	public final void flinching() {
 		if (flinching) {
 			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
 			if (elapsed > 1000) {
@@ -231,7 +233,7 @@ public class Player extends MapObject {
 	 * @param damage
 	 *            the damage
 	 */
-	public void hit(int damage) {
+	public final void hit(final int damage) {
 		if (flinching) {
 			return;
 		}
@@ -240,7 +242,7 @@ public class Player extends MapObject {
 			lives = 0;
 		}
 		if (lives == 0) {
-			isAlive = false;
+			setAlive(false);
 		}
 
 		setPosition(100d, 100d);
@@ -252,50 +254,50 @@ public class Player extends MapObject {
 	/**
 	 * Gets the next x position.
 	 *
-	 * @return the next x position
 	 */
-	public void getNextXPosition() {
-		if (left) {
-			dx -= movSpeed;
-			if (dx < -maxSpeed)
-				dx = -maxSpeed;
-		} else if (right) {
-			dx += movSpeed;
-			if (dx > maxSpeed)
-				dx = maxSpeed;
+	public final void getNextXPosition() {
+		if (isLeft()) {
+			setDx(getDx() - getMovSpeed());
+			if (getDx() < -getMaxSpeed()) {
+				setDx(-getMaxSpeed());
+			}
+		} else if (isRight()) {
+			setDx(getDx() + getMovSpeed());
+			if (getDx() > getMaxSpeed()) {
+				setDx(getMaxSpeed());
+			}
 		} else {
-			dx = 0;
+			setDx(0);
 		}
-		if (dx > 0) {
-			facingRight = true;
-		} else if (dx < 0) {
-			facingRight = false;
+		if (getDx() > 0) {
+			setFacingRight(true);
+		} else if (getDx() < 0) {
+			setFacingRight(false);
 		}
 	}
 
 	/**
 	 * Gets the next y position.
 	 *
-	 * @return the next y position
 	 */
-	public void getNextYPosition() {
-		if (up) {
-			jumping = true;
+	public final void getNextYPosition() {
+		if (isUp()) {
+			setJumping(true);
 		}
-		if (jumping && !falling) {
-			dy = jumpStart;
-			falling = true;
+		if (isJumping() && !isFalling()) {
+			setDy(getJumpStart());
+			setFalling(true);
 		}
-		if (falling) {
-			dy += fallSpeed;
-			if (dy > 0) {
-				jumping = false;
+		if (isFalling()) {
+			setDy(getDy() + getFallSpeed());
+			if (getDy() > 0) {
+				setJumping(false);
 			}
-			if (dy < 0 && !jumping) {
-				dy += stopJumpSpeed;
+			if (getDy() < 0 && !isJumping()) {
+				setDy(getDy() + getStopJumpSpeed());
 			}
-			if (dy > maxFallSpeed) {
-				dy = maxFallSpeed;
+			if (getDy() > getMaxFallSpeed()) {
+				setDy(getMaxFallSpeed());
 			}
 		}
 	}
@@ -309,7 +311,7 @@ public class Player extends MapObject {
 	 * @see sem.group47.entity.MapObject#draw(java.awt.Graphics2D)
 	 */
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		super.draw(g);
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).draw(g);
@@ -322,7 +324,7 @@ public class Player extends MapObject {
 	 * @param points
 	 *            the new score
 	 */
-	public void setScore(int points) {
+	public final void setScore(final int points) {
 		score += points;
 		if (score == extraLive) {
 			lives++;
@@ -335,7 +337,7 @@ public class Player extends MapObject {
 	 *
 	 * @return the extra live
 	 */
-	public int getExtraLive() {
+	public final int getExtraLive() {
 		return extraLive;
 	}
 
@@ -345,75 +347,8 @@ public class Player extends MapObject {
 	 * @param b
 	 *            the new flinch
 	 */
-	public void setFlinch(boolean b) {
+	public final void setFlinch(final boolean b) {
 		flinching = b;
-	}
-
-	/**
-	 * Gets the mov speed.
-	 *
-	 * @return the mov speed
-	 */
-	public double getMovSpeed() {
-		return movSpeed;
-	}
-
-	/**
-	 * Sets the mov speed.
-	 *
-	 * @param movSpeed
-	 *            the new mov speed
-	 */
-	public void setMovSpeed(double movSpeed) {
-		this.movSpeed = movSpeed;
-	}
-
-	/**
-	 * Gets the max speed.
-	 *
-	 * @return the max speed
-	 */
-	public double getMaxSpeed() {
-		return maxSpeed;
-	}
-
-	/**
-	 * Sets the max speed.
-	 *
-	 * @param maxSpeed
-	 *            the new max speed
-	 */
-	public void setMaxSpeed(double maxSpeed) {
-		this.maxSpeed = maxSpeed;
-	}
-
-	/**
-	 * Sets the fall speed.
-	 *
-	 * @param fallSpeed
-	 *            the new fall speed
-	 */
-	public void setFallSpeed(double fallSpeed) {
-		this.fallSpeed = fallSpeed;
-	}
-
-	/**
-	 * Gets the jumping.
-	 *
-	 * @return the jumping
-	 */
-	public boolean getJumping() {
-		return jumping;
-	}
-
-	/**
-	 * Sets the falling.
-	 *
-	 * @param fall
-	 *            the new falling
-	 */
-	public void setFalling(boolean fall) {
-		falling = fall;
 	}
 
 	/**
@@ -421,7 +356,7 @@ public class Player extends MapObject {
 	 *
 	 * @return the lives
 	 */
-	public int getLives() {
+	public final int getLives() {
 		return lives;
 	}
 
@@ -430,7 +365,7 @@ public class Player extends MapObject {
 	 *
 	 * @return the max lives
 	 */
-	public int getMaxLives() {
+	public final int getMaxLives() {
 		return maxLives;
 	}
 
@@ -439,7 +374,7 @@ public class Player extends MapObject {
 	 *
 	 * @return the score
 	 */
-	public int getScore() {
+	public final int getScore() {
 		return score;
 	}
 
