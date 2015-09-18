@@ -1,12 +1,11 @@
 package sem.group47.entity;
 
-import sem.group47.tilemap.Tile;
-import sem.group47.tilemap.TileMap;
-
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import sem.group47.tilemap.Tile;
+import sem.group47.tilemap.TileMap;
 
 /**
  * MapObject, SuperClass for all movable and interactable objects inside the
@@ -18,141 +17,141 @@ public abstract class MapObject {
 	// TILEMAP
 
 	/** The tile map. */
-	protected TileMap tileMap;
+	private TileMap tileMap;
 
 	/** The tile size. */
-	protected int tileSize;
+	private int tileSize;
 
 	// POSITION AND VECTOR
 
 	/** The actual x position. */
-	protected double xpos;
+	private double xpos;
 
 	/** The actual y position. */
-	protected double ypos;
+	private double ypos;
 
 	/** Vector in x direction. */
-	protected double dx;
+	private double dx;
 
 	/** Vector in y direction. */
-	protected double dy;
+	private double dy;
 
 	// SPRITE DIMENSION
 
 	/** The width. */
-	protected int width;
+	private int width;
 
 	/** The height. */
-	protected int height;
+	private int height;
 
 	// COLLISION
 
 	/** The cwidth. */
-	protected int cwidth;
+	private int cwidth;
 
 	/** The cheight. */
-	protected int cheight;
+	private int cheight;
 
 	/** The curr row. */
-	protected int currRow;
+	private int currRow;
 
 	/** The curr col. */
-	protected int currCol;
+	private int currCol;
 
 	/** The xdest: x position + x vector(x+dx). */
-	protected double xdest;
+	private double xdest;
 
 	/** The ydest: y position + y vector(y+dy). */
-	protected double ydest;
+	private double ydest;
 
-	/** The xtemp: Helper variable used in physics calculation. */
-	protected double xtemp;
+	/** The xposNew: new actual x position. */
+	private double xposNew;
 
-	/** The ytemp. Helper variable used in physics calculation. */
-	protected double ytemp;
-
-	/** The top left. */
-	protected boolean topLeftBlocked;
-
-	/** The top right. */
-	protected boolean topRightBlocked;
-
-	/** The bottom left. */
-	protected boolean bottomLeftBlocked;
-
-	/** The bottom right. */
-	protected boolean bottomRightBlocked;
+	/** The yposNew. new actual y position. */
+	private double yposNew;
 
 	/** The top left. */
-	protected boolean topLeftSemiBlocked;
+	private boolean topLeftBlocked;
 
 	/** The top right. */
-	protected boolean topRightSemiBlocked;
+	private boolean topRightBlocked;
 
 	/** The bottom left. */
-	protected boolean bottomLeftSemiBlocked;
+	private boolean bottomLeftBlocked;
 
 	/** The bottom right. */
-	protected boolean bottomRightSemiBlocked;
+	private boolean bottomRightBlocked;
+
+	/** The top left. */
+	private boolean topLeftSemiBlocked;
+
+	/** The top right. */
+	private boolean topRightSemiBlocked;
+
+	/** The bottom left. */
+	private boolean bottomLeftSemiBlocked;
+
+	/** The bottom right. */
+	private boolean bottomRightSemiBlocked;
 
 	// ANIMATION
 
 	/** The current action. */
-	protected int currentAction;
+	private int currentAction;
 
 	/** The previous action. */
-	protected int previousAction;
+	private int previousAction;
 
 	/** The facing right. */
-	protected boolean facingRight;
+	private boolean facingRight;
 
 	// MOVEMENT
 
 	/** The left. */
-	protected boolean left;
+	private boolean left;
 
 	/** The right. */
-	protected boolean right;
+	private boolean right;
 
 	/** The up. */
-	protected boolean up;
+	private boolean up;
 
 	/** The down. */
-	protected boolean down;
+	private boolean down;
 
 	/** The jumping. */
-	protected boolean jumping;
+	private boolean jumping;
 
 	/** The falling. */
-	protected boolean falling;
+	private boolean falling;
 
 	/** The mov speed. */
-	protected double movSpeed;
+	private double movSpeed;
 
 	/** The max speed. */
-	protected double maxSpeed;
+	private double maxSpeed;
 
 	/** The stop speed. */
-	protected double stopSpeed;
+	private double stopSpeed;
 
 	/** The fall speed. */
-	protected double fallSpeed;
+	private double fallSpeed;
 
 	/** The max fall speed. */
-	protected double maxFallSpeed;
+	private double maxFallSpeed;
 
 	/** The jump start. */
-	protected double jumpStart;
+	private double jumpStart;
 
 	/** The stop jump speed. */
-	protected double stopJumpSpeed;
+	private double stopJumpSpeed;
 
 	/** The is alive. */
-	protected boolean isAlive;
+	private boolean isAlive;
 
 	// GRAPHICS
 	/** The sprite. */
-	protected BufferedImage sprite;
+	private BufferedImage sprite;
 
 	/**
 	 * Constructor.
@@ -160,7 +159,7 @@ public abstract class MapObject {
 	 * @param tm
 	 *            TileMap in which this object lives
 	 */
-	public MapObject(TileMap tm) {
+	public MapObject(final TileMap tm) {
 		tileMap = tm;
 		tileSize = tm.getTileSize();
 	}
@@ -168,11 +167,11 @@ public abstract class MapObject {
 	/**
 	 * Determines if this MapObject intersects with another object.
 	 *
-	 * @param o
-	 *            the other MapObject
+	 * @param obj
+	 *            the obj
 	 * @return true if they intersect
 	 */
-	public boolean intersects(MapObject obj) {
+	public final boolean intersects(final MapObject obj) {
 		return this.getRectangle().intersects(obj.getRectangle());
 	}
 
@@ -181,15 +180,16 @@ public abstract class MapObject {
 	 *
 	 * @return Rectangle
 	 */
-	public Rectangle getRectangle() {
+	public final Rectangle getRectangle() {
 		return new Rectangle((int) xpos - cwidth / 2, (int) ypos - cheight / 2,
 				cwidth, cheight);
 	}
 
 	/**
-	 * modifies xtemp and ytemp so that they don't intersect with the tileMap.
+	 * modifies xposNew and yposNew so that they don't intersect with the
+	 * tileMap.
 	 */
-	public void checkTileMapCollision() {
+	public final void checkTileMapCollision() {
 		// Determine current column and row
 		currCol = (int) xpos / tileSize;
 		currRow = (int) ypos / tileSize;
@@ -199,9 +199,18 @@ public abstract class MapObject {
 		ydest = ypos + dy;
 
 		// Temporary coordinates
-		xtemp = xpos;
-		ytemp = ypos;
+		xposNew = xpos;
+		yposNew = ypos;
 
+		checkYCollision();
+		checkXCollision();
+	}
+
+	/**
+	 * Check when the MapObject is moving upwards/ downwards if it is colliding
+	 * with anything.
+	 */
+	public final void checkYCollision() {
 		calculateCorners(xpos, ydest);
 
 		// If we are moving upwards
@@ -214,10 +223,10 @@ public abstract class MapObject {
 
 				// Our new position becomes just below the tile above we are
 				// colliding with
-				ytemp = currRow * tileSize + cheight / 2;
+				yposNew = currRow * tileSize + cheight / 2;
 			} else { // If we are not colliding
 				// Our y vector is added to our temporary y position
-				ytemp += dy;
+				yposNew += dy;
 			}
 		} else if (dy > 0) { // If we are moving downwards
 			// And our bottomLeft or bottomRight corner is colliding with a
@@ -233,15 +242,36 @@ public abstract class MapObject {
 				// Our new position becomes just on top of the tile we are
 				// colliding with
 				//
-				ytemp = (currRow + 1) * tileSize - cheight / 2;
+				yposNew = (currRow + 1) * tileSize - cheight / 2;
 			} else { // If we are not colliding
 				// Our y vector is added to our temporary y position
-				ytemp += dy;
-				if (ytemp >= tileMap.getHeight() - 15) {
-					ytemp = 3 * tileMap.getTileSize();
+				falling = true;
+				yposNew += dy;
+				int heightAdjustment = tileMap.getTileSize() / 2;
+
+				if (yposNew >= tileMap.getHeight() - heightAdjustment) {
+					yposNew = 3 * tileMap.getTileSize();
 				}
 			}
+
 		}
+		// Check if we are falling
+		if (!falling) {
+			// See if when we move 1 pixel downwards if we are colliding
+			calculateCorners(xpos, ydest + 1);
+
+			// If we do not collide we are falling
+			if (!bottomLeftBlocked && !bottomLeftSemiBlocked
+					&& !bottomRightSemiBlocked && !bottomRightBlocked) {
+				falling = true;
+			}
+		}
+	}
+
+	/**
+	 * Check x collision.
+	 */
+	public final void checkXCollision() {
 
 		// Check for collisions in the x direction
 		calculateCorners(xdest, ypos);
@@ -256,11 +286,11 @@ public abstract class MapObject {
 
 				// Our new position is set to just to the right of the blocking
 				// tile
-				xtemp = currCol * tileSize + cwidth / 2;
+				xposNew = currCol * tileSize + cwidth / 2;
 
 			} else { // If we are not colliding
 				// Apply the horizontal movement vector
-				xtemp += dx;
+				xposNew += dx;
 			}
 		} else if (dx > 0) { // If we are moving to the right
 			// And we are colliding on the right
@@ -269,25 +299,14 @@ public abstract class MapObject {
 				dx = 0;
 
 				// Our new position is set just to the left of the blocking tile
-				xtemp = (currCol + 1) * tileSize - cwidth / 2;
+				xposNew = (currCol + 1) * tileSize - cwidth / 2;
 			} else { // If we are not colliding
 
 				// Apply the horizontal movement vector;
-				xtemp += dx;
+				xposNew += dx;
 			}
 		}
 
-		// Check if we are falling
-		if (!falling) {
-			// See if we move 1 pixel downwards if we are colliding
-			calculateCorners(xpos, ydest + 1);
-
-			// If we do not collide we are falling
-			if (!bottomLeftBlocked && !bottomLeftSemiBlocked
-					&& !bottomRightSemiBlocked && !bottomRightBlocked) {
-				falling = true;
-			}
-		}
 	}
 
 	/**
@@ -300,18 +319,17 @@ public abstract class MapObject {
 	 * @param yin
 	 *            yposition to check
 	 */
-	@SuppressWarnings("checkstyle:VariableDeclarationUsageDistance")
-	public void calculateCorners(double xin, double yin) {
-		int leftTile = (int) ((xin - cwidth / 2) / (double) tileSize);
-		int rightTile = (int) ((xin - cwidth / 2 + cwidth - 1) / (double) tileSize);
-		int topTile = (int) ((yin - cheight / 2) / (double) tileSize);
-		int bottomTile = (int) ((yin - cheight / 2 + cheight) / (double) tileSize);
-		
+	public final void calculateCorners(final double xin, final double yin) {
+		int leftTile = (int) ((xin - cwidth / 2) / tileSize);
+		int rightTile = (int) ((xin - cwidth / 2 + cwidth - 1) / tileSize);
+		int topTile = (int) ((yin - cheight / 2) / tileSize);
+		int bottomTile = (int) ((yin - cheight / 2 + cheight) / tileSize);
+
 		int tl = tileMap.getType(topTile, leftTile);
 		int tr = tileMap.getType(topTile, rightTile);
 		int bl = tileMap.getType(bottomTile, leftTile);
 		int br = tileMap.getType(bottomTile, rightTile);
-		
+
 		// Flags for whether we are colliding
 		topLeftBlocked = tl == Tile.BLOCKED;
 		topRightBlocked = tr == Tile.BLOCKED;
@@ -329,14 +347,13 @@ public abstract class MapObject {
 	 * @param gr
 	 *            the graphics
 	 */
-	public void draw(Graphics2D gr) {
+	public void draw(final Graphics2D gr) {
 		if (facingRight) {
 			gr.drawImage(sprite, (int) (xpos - width / (double) 2),
-					(int) (ypos - height / (double) 2),	null);
+					(int) (ypos - height / (double) 2), null);
 		} else {
-			gr.drawImage(sprite, (int) (xpos + width / (double) 2), 
-					(int) (ypos - height / (double) 2),	
-					-width, height, null);
+			gr.drawImage(sprite, (int) (xpos + width / (double) 2),
+					(int) (ypos - height / (double) 2), -width, height, null);
 		}
 	}
 
@@ -345,7 +362,7 @@ public abstract class MapObject {
 	 *
 	 * @return the checks if is alive
 	 */
-	public boolean getIsAlive() {
+	public final boolean getIsAlive() {
 		return isAlive;
 	}
 
@@ -354,7 +371,7 @@ public abstract class MapObject {
 	 *
 	 * @return the x
 	 */
-	public double getx() {
+	public final double getx() {
 		return xpos;
 	}
 
@@ -363,7 +380,7 @@ public abstract class MapObject {
 	 *
 	 * @return the y
 	 */
-	public double gety() {
+	public final double gety() {
 		return ypos;
 	}
 
@@ -372,7 +389,7 @@ public abstract class MapObject {
 	 *
 	 * @return the width
 	 */
-	public int getWidth() {
+	public final int getWidth() {
 		return width;
 	}
 
@@ -381,7 +398,7 @@ public abstract class MapObject {
 	 *
 	 * @return the height
 	 */
-	public int getHeight() {
+	public final int getHeight() {
 		return height;
 	}
 
@@ -390,7 +407,7 @@ public abstract class MapObject {
 	 *
 	 * @return the c width
 	 */
-	public int getCWidth() {
+	public final int getCWidth() {
 		return cwidth;
 	}
 
@@ -399,19 +416,19 @@ public abstract class MapObject {
 	 *
 	 * @return the c height
 	 */
-	public int getCHeight() {
+	public final int getCHeight() {
 		return cheight;
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param x
-	 *            the x
-	 * @param y
-	 *            the y
+	 * @param xnew
+	 *            the xnew
+	 * @param ynew
+	 *            the ynew
 	 */
-	public void setPosition(double xnew, double ynew) {
+	public final void setPosition(final double xnew, final double ynew) {
 		this.xpos = xnew;
 		this.ypos = ynew;
 	}
@@ -424,7 +441,7 @@ public abstract class MapObject {
 	 * @param dy
 	 *            the dy
 	 */
-	public void setVector(double dx, double dy) {
+	public final void setVector(final double dx, final double dy) {
 		this.dx = dx;
 		this.dy = dy;
 	}
@@ -432,49 +449,399 @@ public abstract class MapObject {
 	/**
 	 * Sets the left.
 	 *
-	 * @param b
+	 * @param bleft
 	 *            the new left
 	 */
-	public void setLeft(boolean bleft) {
+	public final void setLeft(final boolean bleft) {
 		left = bleft;
 	}
 
 	/**
 	 * Sets the right.
 	 *
-	 * @param b
+	 * @param bright
 	 *            the new right
 	 */
-	public void setRight(boolean bright) {
+	public final void setRight(final boolean bright) {
 		right = bright;
 	}
 
 	/**
 	 * Sets the up.
 	 *
-	 * @param b
+	 * @param bup
 	 *            the new up
 	 */
-	public void setUp(boolean bup) {
+	public final void setUp(final boolean bup) {
 		up = bup;
 	}
 
 	/**
 	 * Sets the down.
 	 *
-	 * @param b
+	 * @param bdown
 	 *            the new down
 	 */
-	public void setDown(boolean bdown) {
+	public final void setDown(final boolean bdown) {
 		down = bdown;
 	}
 
-	public double getDx() {
+	public final boolean getDown() {
+		return down;
+	}
+
+	public final boolean getUp() {
+		return up;
+	}
+
+	/**
+	 * Gets the dx.
+	 *
+	 * @return the dx
+	 */
+	public final double getDx() {
 		return dx;
 	}
 
-	public double getDy() {
+	/**
+	 * Gets the dy.
+	 *
+	 * @return the dy
+	 */
+	public final double getDy() {
 		return dy;
+	}
+
+	// public final void setDx(final int dx) {
+	// this.dx = dx;
+	// }
+	//
+	public final void setDy(final int pDy) {
+		this.dy = pDy;
+	}
+
+	//
+	public final double getXpos() {
+		return xpos;
+	}
+
+	//
+	// public final void setXpos(final double xpos) {
+	// this.xpos = xpos;
+	// }
+	//
+	public final double getYpos() {
+		return ypos;
+	}
+
+	//
+	// public final void setYpos(final double ypos) {
+	// this.ypos = ypos;
+	// }
+	//
+	// public final double getXdest() {
+	// return xdest;
+	// }
+	//
+	// public final void setXdest(final double xdest) {
+	// this.xdest = xdest;
+	// }
+	//
+	// public final double getYdest() {
+	// return ydest;
+	// }
+	//
+	// public final void setYdest(final double ydest) {
+	// this.ydest = ydest;
+	// }
+	//
+	public final double getXposNew() {
+		return xposNew;
+	}
+
+	//
+	// public final void setXposNew(final double xposNew) {
+	// this.xposNew = xposNew;
+	// }
+	//
+	public final double getYposNew() {
+		return yposNew;
+	}
+
+	//
+	// public final void setYposNew(final double yposNew) {
+	// this.yposNew = yposNew;
+	// }
+	//
+	public final TileMap getTileMap() {
+		return tileMap;
+	}
+
+	//
+	// public final void setTileMap(TileMap tileMap) {
+	// this.tileMap = tileMap;
+	// }
+	//
+	// public final int getTileSize() {
+	// return tileSize;
+	// }
+	//
+	// public final void setTileSize(final int tileSize) {
+	// this.tileSize = tileSize;
+	// }
+	//
+	// public final int getCwidth() {
+	// return cwidth;
+	// }
+	//
+
+	public final void setCwidth(final int pCwidth) {
+		this.cwidth = pCwidth;
+	}
+
+	//
+	// public final int getCheight() {
+	// return cheight;
+	// }
+	//
+	public final void setCheight(final int pCheight) {
+		this.cheight = pCheight;
+	}
+
+	//
+	// public final int getCurrRow() {
+	// return currRow;
+	// }
+	//
+	// public final void setCurrRow(final int currRow) {
+	// this.currRow = currRow;
+	// }
+	//
+	// public final int getCurrCol() {
+	// return currCol;
+	// }
+	//
+	// public final void setCurrCol(final int currCol) {
+	// this.currCol = currCol;
+	// }
+	//
+	// public boolean isTopLeftBlocked() {
+	// return topLeftBlocked;
+	// }
+	//
+	// public void setTopLeftBlocked(boolean topLeftBlocked) {
+	// this.topLeftBlocked = topLeftBlocked;
+	// }
+	//
+	// public boolean isTopRightBlocked() {
+	// return topRightBlocked;
+	// }
+	//
+	// public void setTopRightBlocked(boolean topRightBlocked) {
+	// this.topRightBlocked = topRightBlocked;
+	// }
+	//
+	// public boolean isBottomLeftBlocked() {
+	// return bottomLeftBlocked;
+	// }
+	//
+	// public void setBottomLeftBlocked(boolean bottomLeftBlocked) {
+	// this.bottomLeftBlocked = bottomLeftBlocked;
+	// }
+	//
+	// public boolean isBottomRightBlocked() {
+	// return bottomRightBlocked;
+	// }
+	//
+	// public void setBottomRightBlocked(boolean bottomRightBlocked) {
+	// this.bottomRightBlocked = bottomRightBlocked;
+	// }
+	//
+	// public boolean isTopLeftSemiBlocked() {
+	// return topLeftSemiBlocked;
+	// }
+	//
+	// public void setTopLeftSemiBlocked(boolean topLeftSemiBlocked) {
+	// this.topLeftSemiBlocked = topLeftSemiBlocked;
+	// }
+	//
+	// public boolean isTopRightSemiBlocked() {
+	// return topRightSemiBlocked;
+	// }
+	//
+	// public void setTopRightSemiBlocked(boolean topRightSemiBlocked) {
+	// this.topRightSemiBlocked = topRightSemiBlocked;
+	// }
+	//
+	// public boolean isBottomLeftSemiBlocked() {
+	// return bottomLeftSemiBlocked;
+	// }
+	//
+	// public void setBottomLeftSemiBlocked(boolean bottomLeftSemiBlocked) {
+	// this.bottomLeftSemiBlocked = bottomLeftSemiBlocked;
+	// }
+	//
+	// public boolean isBottomRightSemiBlocked() {
+	// return bottomRightSemiBlocked;
+	// }
+	//
+	// public void setBottomRightSemiBlocked(boolean bottomRightSemiBlocked) {
+	// this.bottomRightSemiBlocked = bottomRightSemiBlocked;
+	// }
+	//
+	// public int getCurrentAction() {
+	// return currentAction;
+	// }
+	//
+	// public void setCurrentAction(int currentAction) {
+	// this.currentAction = currentAction;
+	// }
+	//
+	// public int getPreviousAction() {
+	// return previousAction;
+	// }
+	//
+	// public void setPreviousAction(int previousAction) {
+	// this.previousAction = previousAction;
+	// }
+	//
+	public final boolean isFacingRight() {
+		return facingRight;
+	}
+
+	//
+	public final void setFacingRight(final boolean pFacingRight) {
+		this.facingRight = pFacingRight;
+	}
+
+	public final boolean isJumping() {
+		return jumping;
+	}
+
+	public final void setJumping(final boolean pJumping) {
+		this.jumping = pJumping;
+	}
+
+	public final boolean isFalling() {
+		return falling;
+	}
+
+	public final void setFalling(final boolean pFalling) {
+		this.falling = pFalling;
+	}
+
+	public double getMovSpeed() {
+		return movSpeed;
+	}
+
+	public final void setMovSpeed(final double pMovSpeed) {
+		this.movSpeed = pMovSpeed;
+	}
+
+	public final double getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public final void setMaxSpeed(final double pMaxSpeed) {
+		this.maxSpeed = pMaxSpeed;
+	}
+
+	public final double getStopSpeed() {
+		return stopSpeed;
+	}
+
+	public final void setStopSpeed(final double pStopSpeed) {
+		this.stopSpeed = pStopSpeed;
+	}
+
+	public final double getFallSpeed() {
+		return fallSpeed;
+	}
+
+	public final double getMaxFallSpeed() {
+		return maxFallSpeed;
+	}
+
+	public final void setFallSpeed(final double pFallSpeed) {
+		this.fallSpeed = pFallSpeed;
+	}
+
+	public final void setMaxFallSpeed(final double pMaxFallSpeed) {
+		this.maxFallSpeed = pMaxFallSpeed;
+	}
+
+	public double getJumpStart() {
+		return jumpStart;
+	}
+
+	//
+	public final void setJumpStart(final double pJumpStart) {
+		this.jumpStart = pJumpStart;
+	}
+
+	public final double getStopJumpSpeed() {
+		return stopJumpSpeed;
+	}
+
+	public final void setStopJumpSpeed(final double pStopJumpSpeed) {
+		this.stopJumpSpeed = pStopJumpSpeed;
+	}
+
+	//
+	// public BufferedImage getSprite() {
+	// return sprite;
+	// }
+	//
+	public final void setSprite(final BufferedImage pSprite) {
+		this.sprite = pSprite;
+	}
+
+	public final boolean isLeft() {
+		return left;
+	}
+
+	public final boolean isRight() {
+		return right;
+	}
+
+	public final boolean isUp() {
+		return up;
+	}
+
+	public final boolean isDown() {
+		return down;
+	}
+
+	public final void setDx(final double pDx) {
+		this.dx = pDx;
+	}
+
+	public final void setDy(final double pDy) {
+		this.dy = pDy;
+	}
+
+	/**
+	 * setWidth.
+	 * 
+	 * @param pWidth
+	 *            .
+	 */
+	public final void setWidth(final int pWidth) {
+		this.width = pWidth;
+	}
+
+	/**
+	 * setHeight.
+	 * 
+	 * @param pHeight
+	 *            .
+	 */
+	public final void setHeight(final int pHeight) {
+		this.height = pHeight;
+	}
+
+	public final void setAlive(final boolean pIsAlive) {
+		this.isAlive = pIsAlive;
 	}
 
 }

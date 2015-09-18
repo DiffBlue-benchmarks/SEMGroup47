@@ -1,20 +1,27 @@
 package sem.group47.entity;
 
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
+
 import sem.group47.tilemap.TileMap;
 
 /**
  * The Class Enemy.
  */
 public class Enemy extends MapObject {
-	
+
 	/** The caught. */
-	protected boolean caught;
+	private boolean caught;
 
 	/** The score points. */
-	protected int scorePoints;
+	private int scorePoints;
 
 	/** The float speed. */
-	protected double floatSpeed;
+	private double floatSpeed;
+
+	/** The spritesheet. */
+	private BufferedImage spritesheet;
 
 	/**
 	 * Instantiates a new enemy.
@@ -22,9 +29,17 @@ public class Enemy extends MapObject {
 	 * @param tm
 	 *            the tm
 	 */
-	public Enemy(TileMap tm) {
+	public Enemy(final TileMap tm) {
 		super(tm);
-		isAlive = true;
+		setAlive(true);
+
+		try {
+			spritesheet = ImageIO.read(getClass().getResourceAsStream(
+					"/enemies/level1.gif"));
+			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -32,16 +47,17 @@ public class Enemy extends MapObject {
 	 *
 	 * @return true, if is caught
 	 */
-	public boolean isCaught() {
+	public final boolean isCaught() {
 		return caught;
 	}
 
 	/**
 	 * Hit.
 	 */
-	public void hit() {
-		if (!caught)
+	public final void hit() {
+		if (!caught) {
 			caught = true;
+		}
 	}
 
 	/**
@@ -55,6 +71,7 @@ public class Enemy extends MapObject {
 	 */
 	public void setCaught() {
 		caught = true;
+		setSprite(spritesheet.getSubimage(90, 0, 30, 30));
 	}
 
 	/**
@@ -62,8 +79,20 @@ public class Enemy extends MapObject {
 	 *
 	 * @return the score points
 	 */
-	public int getScorePoints() {
+	public final int getScorePoints() {
 		return scorePoints;
+	}
+
+	public final void setScorePoints(final int pScorePoints) {
+		this.scorePoints = pScorePoints;
+	}
+
+	public final void setFloatSpeed(final double pFloatSpeed) {
+		this.floatSpeed = pFloatSpeed;
+	}
+
+	public final double getFloatSpeed() {
+		return floatSpeed;
 	}
 
 }

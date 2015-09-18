@@ -1,7 +1,5 @@
 package sem.group47.main;
 
-import sem.group47.gamestate.GameStateManager;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,6 +8,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
+
+import sem.group47.gamestate.GameStateManager;
 
 /**
  * The Class GamePanel, which extends the super class JPanel. Implements the
@@ -55,12 +55,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * Instantiates a new game panel.
 	 */
 	public GamePanel() {
-		// calls parent (JPanel) constructor
 		super();
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
-		// makes sure that keyboard input is recognized
-		// without having to click inside the JPanel first
 		setFocusable(true);
 		requestFocus();
 	}
@@ -72,12 +68,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public final void addNotify() {
 		super.addNotify();
 		if (thread == null) {
-			// create a new thread instance,
-			// provide the task that we want to run (this)
 			thread = new Thread(this);
 			addKeyListener(this);
-
-			// results in call of run() method
 			thread.start();
 		}
 	}
@@ -86,10 +78,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * Initializes everything separately from the constructor.
 	 */
 	private void init() {
-
-		// BufferedImage allows us to operate directly with image data
-		image = new BufferedImage(WIDTH, HEIGHT,
-				BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 
 		running = true;
@@ -98,21 +87,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 
 	/**
-	 * Run method (Game Loop).
-	 * The game loop is the central code of the game.
-	 * The initialize phase is used to do any necessary
-	 * game setup and prepare the environment for the
-	 * update and draw phases. Here you should create your main entities,
-	 * prepare the menu, detect default hardware capabilities, and so on.
-	 * 		The main purpose of the update phase is to prepare
-	 * all objects to be drawn, so this is where all the physics code,
-	 * coordinate updates, health points changes,
-	 * char upgrades, damage dealt and other similar operations
-	 * belong. This is also where the input will be captured and processed.
-	 * 		When everything is properly updated and ready,
-	 * we enter the draw phase where all this information
-	 * is put on the screen. This function should
-	 * contain all the code to manage and draw the levels,
+	 * Run method (Game Loop). The game loop is the central code of the game.
+	 * The initialize phase is used to do any necessary game setup and prepare
+	 * the environment for the update and draw phases. Here you should create
+	 * your main entities, prepare the menu, detect default hardware
+	 * capabilities, and so on. The main purpose of the update phase is to
+	 * prepare all objects to be drawn, so this is where all the physics code,
+	 * coordinate updates, health points changes, char upgrades, damage dealt
+	 * and other similar operations belong. This is also where the input will be
+	 * captured and processed. When everything is properly updated and ready, we
+	 * enter the draw phase where all this information is put on the screen.
+	 * This function should contain all the code to manage and draw the levels,
 	 * layers, chars, HUD and so on.
 	 */
 	public final void run() {
@@ -182,16 +167,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	/**
 	 * keyTyped event handler.
+	 * 
 	 * @param key
-	 * 				The key event to be handled.
+	 *            The key event to be handled.
 	 */
 	public final void keyTyped(final KeyEvent key) {
 	}
 
 	/**
 	 * keyPressed event handler.
+	 * 
 	 * @param key
-	 * 				The key event to be handled.
+	 *            The key event to be handled.
 	 */
 	public final void keyPressed(final KeyEvent key) {
 		gsm.keyPressed(key.getKeyCode());
@@ -199,8 +186,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	/**
 	 * keyReleased event handler.
+	 * 
 	 * @param key
-	 * 				The key event to be handled.
+	 *            The key event to be handled.
 	 */
 	public final void keyReleased(final KeyEvent key) {
 		gsm.keyReleased(key.getKeyCode());

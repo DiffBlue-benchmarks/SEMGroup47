@@ -18,10 +18,12 @@ public class GameStateManager {
 
 	/** The Constant LEVEL1STATE. */
 	public static final int LEVEL1STATE = 1;
-	
+
+	/** The Constant LEVEL2STATE. */
+	public static final int LEVEL2STATE = 2;
+
 	/** The Constant GAMEOVER. */
-	public static final int GAMEOVER = 2;
-	
+	public static final int GAMEOVER = 3;
 
 	/**
 	 * Instantiates a new game state manager.
@@ -29,15 +31,11 @@ public class GameStateManager {
 	public GameStateManager() {
 
 		gameStates = new ArrayList<GameState>();
-
-		// set to menu state as this is the state with which we want to start
-		// the game
 		currentState = MENUSTATE;
-		// first state
+
 		gameStates.add(new MenuState(this));
-		// second state
 		gameStates.add(new Level1State(this));
-		// last sate
+		gameStates.add(new Level2State(this));
 		gameStates.add(new GameOverState(this));
 
 	}
@@ -92,6 +90,7 @@ public class GameStateManager {
 
 	/*
 	 * Returns current gameState
+	 * 
 	 * @return current gameState
 	 */
 	public int getCurrentState() {

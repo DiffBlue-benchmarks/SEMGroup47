@@ -1,20 +1,14 @@
 package sem.group47.entity.enemies;
 
+import java.awt.Graphics2D;
+
 import sem.group47.entity.Enemy;
 import sem.group47.tilemap.TileMap;
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
 
 /**
  * The Class Level1Enemy.
  */
 public class Level1Enemy extends Enemy {
-
-	/** The spritesheet. */
-	BufferedImage spritesheet;
 
 	/**
 	 * Instantiates a new level1 enemy.
@@ -22,40 +16,29 @@ public class Level1Enemy extends Enemy {
 	 * @param tm
 	 *            the tm
 	 */
-	public Level1Enemy(TileMap tm) {
+	public Level1Enemy(final TileMap tm) {
 		super(tm);
 
-		scorePoints = 100;
-		width = 30;
-		height = 30;
-		cwidth = 30;
-		cheight = 30;
-		movSpeed = 0.3;
-		maxSpeed = 1.6;
-		stopSpeed = .4;
+		setScorePoints(100);
+		setWidth(30);
+		setHeight(30);
+		setCwidth(30);
+		setCheight(30);
+		setMovSpeed(0.3);
+		setMaxSpeed(1.6);
+		setStopSpeed(.4);
 
-		fallSpeed = .35;
-		floatSpeed = .1;
-		maxFallSpeed = 6.0;
-		jumpStart = -10.0;
-		stopJumpSpeed = .3;
+		setFallSpeed(.35);
+		setFloatSpeed(.1);
+		setMaxFallSpeed(6.0);
+		setJumpStart(-10.0);
+		setStopJumpSpeed(.3);
+		setFacingRight(true);
 
-		facingRight = true;
-		if (Math.round(Math.random()) == 0)
-			left = true;
-		else
-			right = true;
-
-		// Load sprite
-
-		try {
-			spritesheet = ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/level1.gif"));
-			sprite = spritesheet.getSubimage(0, 0, 30, 30);
-		}
-
-		catch (Exception e) {
-			e.printStackTrace();
+		if (Math.round(Math.random()) == 0) {
+			setLeft(true);
+		} else {
+			setRight(true);
 		}
 
 	}
@@ -63,70 +46,87 @@ public class Level1Enemy extends Enemy {
 	/**
 	 * Gets the next position.
 	 *
-	 * @return the next position
 	 */
-	private void getNextPosition() {
-		double dice = Math.random() * 1000;
-		if (dice < 5) {
-			up = true;
-		} else if (dice < 15) {
-			left = true;
-			right = false;
-			up = false;
-		} else if (dice < 25) {
-			left = false;
-			right = true;
-			up = false;
+	private void getNextXPosition() {
+		if (isLeft()) {
+			setDx(getDx() - getMovSpeed());
+			if (getDx() < -getMaxSpeed()) {
+				setDx(-getMaxSpeed());
+			}
+		} else if (isRight()) {
+			setDx(getDx() + getMovSpeed());
+			if (getDx() > getMaxSpeed()) {
+				setDx(getMaxSpeed());
+			}
 		} else {
-			up = false;
-		}
-
-		if (left) { // If move left is pressed
-			dx -= movSpeed;
-			if (dx < -maxSpeed)
-				dx = -maxSpeed;
-		} else if (right) { // If move right is pressed
-			dx += movSpeed;
-			if (dx > maxSpeed)
-				dx = maxSpeed;
-		} else {
-			if (dx > 0) {
-				dx -= stopSpeed;
-				if (dx < 0)
-					dx = 0;
-			} else if (dx < 0) {
-				dx += stopSpeed;
-				if (dx > 0)
-					dx = 0;
+			if (getDx() > 0) {
+				setDx(getDx() - getStopSpeed());
+				if (getDx() < 0) {
+					setDx(0);
+				}
+			} else if (getDx() < 0) {
+				setDx(getDx() + getStopSpeed());
+				if (getDx() > 0) {
+					setDx(0);
+				}
 			}
 		}
-
-		if (dx > 0)
-			facingRight = true;
-		else if (dx < 0)
-			facingRight = false;
-
-		if (up)
-			jumping = true; // If jump is pressed
-
-		if (jumping && !falling) {
-			dy = jumpStart;
-			falling = true;
+		if (getDx() > 0) {
+			setFacingRight(true);
+		} else if (getDx() < 0) {
+			setFacingRight(false);
 		}
 
-		if (caught) {
-			dy -= floatSpeed;
-			dx = 0;
-		} else if (falling) {
-			dy += fallSpeed;
-			if (dy > 0)
-				jumping = false;
-			if (dy < 0 && !jumping)
-				dy += stopJumpSpeed;
-			if (dy > maxFallSpeed)
-				dy = maxFallSpeed;
+	}
+
+	/**
+	 * Gets the next y position.
+	 *
+	 */
+	private void getNextYPosition() {
+		if (getUp()) {
+			setJumping(true);
+		}
+		if (isJumping() && !isFalling()) {
+			setDy(getJumpStart());
+			setFalling(true);
+		}
+		if (isCaught()) {
+			setDy(getDy() - getFloatSpeed());
+			setDx(0);
+		} else if (isFalling()) {
+			setDy(getDy() + getFallSpeed());
+			if (getDy() > 0) {
+				setJumping(false);
+			}
+			if (getDy() < 0 && !isJumping()) {
+				setDy(getDy() + getStopJumpSpeed());
+			}
+			if (getDy() > getMaxFallSpeed()) {
+				setDy(getMaxFallSpeed());
+			}
 		} else {
-			dy = 0;
+			setDy(0);
+		}
+	}
+
+	/**
+	 * Movement dice.
+	 */
+	private void movementDice() {
+		double dice = Math.random() * 1000;
+		if (dice < 5) {
+			setUp(true);
+		} else if (dice < 15) {
+			setLeft(true);
+			setRight(false);
+			setUp(false);
+		} else if (dice < 25) {
+			setLeft(false);
+			setRight(true);
+			setUp(false);
+		} else {
+			setUp(false);
 		}
 	}
 
@@ -134,30 +134,20 @@ public class Level1Enemy extends Enemy {
 	 * Update
 	 */
 	@Override
-	public void update() {
-
-		// update position
-		getNextPosition();
+	public final void update() {
+		movementDice();
+		getNextXPosition();
+		getNextYPosition();
 		checkTileMapCollision();
-		setPosition(xtemp, ytemp);
-
+		setPosition(getXposNew(), getYposNew());
 	}
 
 	/*
 	 * Draw
 	 */
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		super.draw(g);
-	}
-
-	/*
-	 * SetCaught
-	 */
-	@Override
-	public void setCaught() {
-		caught = true;
-		sprite = spritesheet.getSubimage(90, 0, 30, 30);
 	}
 
 }
