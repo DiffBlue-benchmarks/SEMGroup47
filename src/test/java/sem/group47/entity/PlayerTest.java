@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -44,6 +45,8 @@ public class PlayerTest {
 	@Before
 	public void setUp() throws IOException {
 
+		Log.setLog();
+		
 		tileMap = new TileMap(tileSize);
 
 		tileMap.loadTiles("/test/Test_Tile.gif");

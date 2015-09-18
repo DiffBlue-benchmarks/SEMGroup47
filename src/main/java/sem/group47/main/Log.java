@@ -1,5 +1,6 @@
 package sem.group47.main;
 
+import java.io.File;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class Log {
 		}
 
 	}
-
+	
 	/**
 	 * {@link java.io.PrintStream} to write messages to.
 	 */
@@ -57,6 +58,34 @@ public class Log {
 	 */
 	public static void debug(String module, String message) {
 		logMessage(Level.DEBUG, module, message);
+	}
+	
+	public static void setLog() {
+		String filename = "log_";
+		String datestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		filename += datestamp;
+		
+		File[] files;
+		try {
+			files = new File("logfiles/").listFiles();
+			if(files.length > 10) {				
+				File file = new File(files[1].toString());
+	    		file.delete();		
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			Log.setPrintStream(new PrintStream(new File("logfiles/"+filename+".txt")));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Log.info("Document name", "LOGFILE");
+		Log.info("Program name & version","Bubble Bobble V0.0.1");
+		Log.info("Date & time", datestamp+"\n");
+		Log.ps.println("______________________________________________________________________");
 	}
 
 	/**

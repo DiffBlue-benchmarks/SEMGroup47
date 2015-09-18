@@ -36,31 +36,7 @@ public class Game {
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
-		String filename = "log_";
-		String datestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-		filename += datestamp;
-		
-		File[] files;
-		try {
-			files = new File("logfiles/").listFiles();
-			if(files.length > 10) {				
-				File file = new File(files[1].toString());
-	    		file.delete();		
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			Log.setPrintStream(new PrintStream(new File("logfiles/"+filename+".txt")));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		Log.info("Document name", "LOGFILE");
-		Log.info("Program name & version","Bubble Bobble V0.0.1");
-		Log.info("Date & time", datestamp+"\n");
-		Log.ps.println("______________________________________________________________________");
+		Log.setLog();
 		
 	}
 
