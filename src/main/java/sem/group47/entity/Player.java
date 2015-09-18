@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import sem.group47.gamestate.GameStateManager;
+import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -49,6 +50,9 @@ public class Player extends MapObject {
 	 */
 	public Player(final TileMap tm) {
 		super(tm);
+		
+		Log.info("Player action", "Player instance created");
+		
 		setWidth(38);
 		setHeight(32);
 		setCwidth(38);
@@ -76,6 +80,7 @@ public class Player extends MapObject {
 					.getResourceAsStream("/player/player.png"));
 			setSprite(spritesheet.getSubimage(0, 0, 38, 32));
 		} catch (Exception e) {
+			Log.error("IO Read", "Could not file player sprite");
 			e.printStackTrace();
 		}
 	}
@@ -132,8 +137,10 @@ public class Player extends MapObject {
 					projectile.setDx(projectile.getDx() * -1);
 				}
 				projectiles.add(projectile);
+				Log.info("Player Action", "Bubble fired");
 			}
 		}
+		
 	}
 
 	/**
@@ -146,17 +153,22 @@ public class Player extends MapObject {
 	 */
 	public final void directEnemyCollision(final ArrayList<Enemy> enemies,
 			final GameStateManager gsm) {
+
 		for (int i = 0; i < enemies.size(); i++) {
 			if (intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
 
 					setScore(enemies.get(i).getScorePoints());
 					enemies.remove(i);
+					Log.info("Player Action", "Player collision with Caught Enemy");
 				} else if (getLives() > 1) {
 					hit(1);
+					Log.info("Player Action", "Player collision with Enemy");
 				} else {
 
 					gsm.setState(GameStateManager.GAMEOVERSTATE);
+					Log.info("Player Action", "Game over");
+
 					return;
 
 				}
@@ -206,6 +218,7 @@ public class Player extends MapObject {
 				if (getProjectiles().get(j).intersects(enemies.get(i))) {
 					getProjectiles().remove(j);
 					j--;
+					Log.info("Player Action", "Fired bubble hit enemy");
 					enemies.get(i).setCaught();
 
 				}
@@ -237,11 +250,14 @@ public class Player extends MapObject {
 			return;
 		}
 		lives -= damage;
+		Log.info("Player Action", "Player lost a life");
 		if (lives < 0) {
 			lives = 0;
+			Log.warning("Player info wrong", "Amount of lives of player was <0. Set back to 0");
 		}
 		if (lives == 0) {
 			setAlive(false);
+			Log.info("Player Action", "Player died");
 		}
 
 		setPosition(100d, 100d);
@@ -256,11 +272,13 @@ public class Player extends MapObject {
 	 */
 	public final void getNextXPosition() {
 		if (isLeft()) {
+			Log.info("Player Action", "Player moved left");
 			setDx(getDx() - getMovSpeed());
 			if (getDx() < -getMaxSpeed()) {
 				setDx(-getMaxSpeed());
 			}
 		} else if (isRight()) {
+			Log.info("Player Action", "Player moved right");
 			setDx(getDx() + getMovSpeed());
 			if (getDx() > getMaxSpeed()) {
 				setDx(getMaxSpeed());
@@ -282,6 +300,7 @@ public class Player extends MapObject {
 	public final void getNextYPosition() {
 		if (isUp()) {
 			setJumping(true);
+			Log.info("Player Action", "Player jumped");
 		}
 		if (isJumping() && !isFalling()) {
 			setDy(getJumpStart());
@@ -323,9 +342,11 @@ public class Player extends MapObject {
 	 */
 	public final void setScore(final int points) {
 		score += points;
+		Log.info("Player Action", "Player recieved "+points+" points");
 		if (score == extraLive) {
 			lives++;
 			extraLive += 300;
+			Log.info("Player Action", "Player recieved a new life");
 		}
 	}
 

@@ -1,5 +1,13 @@
 package sem.group47.main;
 
+import java.io.File;
+import java.io.PrintStream;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.swing.JFrame;
 
 /**
@@ -28,6 +36,8 @@ public class Game {
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
+		Log.setLog();
+		
 	}
 
 	/**
