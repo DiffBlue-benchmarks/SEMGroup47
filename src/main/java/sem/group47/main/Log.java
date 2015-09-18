@@ -122,7 +122,7 @@ public class Log {
 		
 			// construct the message
 			String logMessage = "#" + currentLogID + "\t";
-			logMessage += new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()) + "\t";
+			logMessage += new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "\t";
 			logMessage += level.getName() + "\t";
 			logMessage += " (" + module + "): ";
 			logMessage += message;
