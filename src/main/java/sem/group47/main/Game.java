@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JFrame;
 
@@ -37,7 +37,7 @@ public class Game {
 		window.setVisible(true);
 
 		String filename = "log_";
-		String datestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		String datestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		filename += datestamp;
 		
 		File[] files;

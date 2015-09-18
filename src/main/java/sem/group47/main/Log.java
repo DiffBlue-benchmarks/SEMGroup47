@@ -2,7 +2,7 @@ package sem.group47.main;
 
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 
 public class Log {
 	
