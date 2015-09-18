@@ -190,15 +190,12 @@ public abstract class MapObject {
 	 * tileMap.
 	 */
 	public final void checkTileMapCollision() {
-		// Determine current column and row
 		currCol = (int) xpos / tileSize;
 		currRow = (int) ypos / tileSize;
 
-		// Destination coordinates
 		xdest = xpos + dx;
 		ydest = ypos + dy;
 
-		// Temporary coordinates
 		xposNew = xpos;
 		yposNew = ypos;
 
@@ -212,55 +209,37 @@ public abstract class MapObject {
 	 */
 	public final void checkYCollision() {
 		calculateCorners(xpos, ydest);
-
-		// If we are moving upwards
 		if (dy < 0) {
-			// And our topLeft or topRight corner is
-			// colliding with a 'BLOCKED' tile
 			if (topLeftBlocked || topRightBlocked) {
-				// Our vertical movement vector becomes 0
 				dy = 0;
-
-				// Our new position becomes just below the tile above we are
-				// colliding with
 				yposNew = currRow * tileSize + cheight / 2;
-			} else { // If we are not colliding
-				// Our y vector is added to our temporary y position
-				yposNew += dy;
+			} else {
+				if (yposNew <= 60) {
+					yposNew = 560;
+				} else {
+					yposNew += dy;
+				}
+
 			}
-		} else if (dy > 0) { // If we are moving downwards
-			// And our bottomLeft or bottomRight corner is colliding with a
-			// 'BLOCKED' or 'SEMIBLOCKED' tile
+		} else if (dy > 0) {
 			if (bottomLeftBlocked || bottomRightBlocked
 					|| bottomLeftSemiBlocked || bottomRightSemiBlocked) {
-
-				// Our horizontal movement vector becomes 0
 				dy = 0;
-				// We are standing on a solid tile, so we are not falling
 				falling = false;
-
-				// Our new position becomes just on top of the tile we are
-				// colliding with
-				//
 				yposNew = (currRow + 1) * tileSize - cheight / 2;
-			} else { // If we are not colliding
-				// Our y vector is added to our temporary y position
+			} else {
 				falling = true;
 				yposNew += dy;
-				int heightAdjustment = tileMap.getTileSize() / 2;
 
-				if (yposNew >= tileMap.getHeight() - heightAdjustment) {
+				if (yposNew >= tileMap.getHeight() - 15) {
 					yposNew = 3 * tileMap.getTileSize();
 				}
 			}
 
 		}
-		// Check if we are falling
-		if (!falling) {
-			// See if when we move 1 pixel downwards if we are colliding
-			calculateCorners(xpos, ydest + 1);
 
-			// If we do not collide we are falling
+		if (!falling) {
+			calculateCorners(xpos, ydest + 1);
 			if (!bottomLeftBlocked && !bottomLeftSemiBlocked
 					&& !bottomRightSemiBlocked && !bottomRightBlocked) {
 				falling = true;
@@ -272,37 +251,19 @@ public abstract class MapObject {
 	 * Check x collision.
 	 */
 	public final void checkXCollision() {
-
-		// Check for collisions in the x direction
 		calculateCorners(xdest, ypos);
-
-		// If we are moving to the left
 		if (dx < 0) {
-			// And we are colliding on the left
-
 			if (topLeftBlocked) {
-				// Our horizontal movement vector becomes 0
 				dx = 0;
-
-				// Our new position is set to just to the right of the blocking
-				// tile
 				xposNew = currCol * tileSize + cwidth / 2;
-
-			} else { // If we are not colliding
-				// Apply the horizontal movement vector
+			} else {
 				xposNew += dx;
 			}
-		} else if (dx > 0) { // If we are moving to the right
-			// And we are colliding on the right
+		} else if (dx > 0) {
 			if (topRightBlocked) {
-				// Our horizontal movement vector becomes 0
 				dx = 0;
-
-				// Our new position is set just to the left of the blocking tile
 				xposNew = (currCol + 1) * tileSize - cwidth / 2;
-			} else { // If we are not colliding
-
-				// Apply the horizontal movement vector;
+			} else {
 				xposNew += dx;
 			}
 		}
@@ -330,7 +291,6 @@ public abstract class MapObject {
 		int bl = tileMap.getType(bottomTile, leftTile);
 		int br = tileMap.getType(bottomTile, rightTile);
 
-		// Flags for whether we are colliding
 		topLeftBlocked = tl == Tile.BLOCKED;
 		topRightBlocked = tr == Tile.BLOCKED;
 		bottomLeftBlocked = bl == Tile.BLOCKED;
