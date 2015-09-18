@@ -138,11 +138,11 @@ public class Player extends MapObject {
 
 	/**
 	 * checks what happens when the player directly collides with an enemy.
-	 * 
+	 *
 	 * @param enemies
 	 *            enemies
-	 * 
-	 * 
+	 * @param gsm
+	 *            the gsm
 	 */
 	public final void directEnemyCollision(final ArrayList<Enemy> enemies,
 			final GameStateManager gsm) {
@@ -156,7 +156,7 @@ public class Player extends MapObject {
 					hit(1);
 				} else {
 
-					gsm.setState(GameStateManager.GAMEOVER);
+					gsm.setState(GameStateManager.GAMEOVERSTATE);
 					return;
 
 				}
@@ -302,7 +302,10 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Draws the player
+	 * Draws the player.
+	 *
+	 * @param g
+	 *            the g
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
@@ -372,10 +375,22 @@ public class Player extends MapObject {
 		return score;
 	}
 
+	/**
+	 * Sets the lives.
+	 *
+	 * @param pLives
+	 *            the new lives
+	 */
 	public final void setLives(final int pLives) {
 		this.lives = pLives;
 	}
 
+	/**
+	 * Sets the extra live.
+	 *
+	 * @param pExtraLive
+	 *            the new extra live
+	 */
 	public final void setExtraLive(final int pExtraLive) {
 		this.extraLive = pExtraLive;
 	}

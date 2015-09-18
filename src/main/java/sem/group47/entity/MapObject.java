@@ -82,12 +82,6 @@ public abstract class MapObject {
 	/** The bottom right. */
 	private boolean bottomRightBlocked;
 
-	/** The top left. */
-	private boolean topLeftSemiBlocked;
-
-	/** The top right. */
-	private boolean topRightSemiBlocked;
-
 	/** The bottom left. */
 	private boolean bottomLeftSemiBlocked;
 
@@ -95,12 +89,6 @@ public abstract class MapObject {
 	private boolean bottomRightSemiBlocked;
 
 	// ANIMATION
-
-	/** The current action. */
-	private int currentAction;
-
-	/** The previous action. */
-	private int previousAction;
 
 	/** The facing right. */
 	private boolean facingRight;
@@ -295,8 +283,6 @@ public abstract class MapObject {
 		topRightBlocked = tr == Tile.BLOCKED;
 		bottomLeftBlocked = bl == Tile.BLOCKED;
 		bottomRightBlocked = br == Tile.BLOCKED;
-		topLeftSemiBlocked = tl == Tile.SEMIBLOCKED;
-		topRightSemiBlocked = tr == Tile.SEMIBLOCKED;
 		bottomLeftSemiBlocked = bl == Tile.SEMIBLOCKED;
 		bottomRightSemiBlocked = br == Tile.SEMIBLOCKED;
 	}
@@ -396,14 +382,14 @@ public abstract class MapObject {
 	/**
 	 * Sets the vector.
 	 *
-	 * @param dx
+	 * @param pDx
 	 *            the dx
-	 * @param dy
+	 * @param pDy
 	 *            the dy
 	 */
-	public final void setVector(final double dx, final double dy) {
-		this.dx = dx;
-		this.dy = dy;
+	public final void setVector(final double pDx, final double pDy) {
+		this.dx = pDx;
+		this.dy = pDy;
 	}
 
 	/**
@@ -446,10 +432,20 @@ public abstract class MapObject {
 		down = bdown;
 	}
 
+	/**
+	 * Gets the down.
+	 *
+	 * @return the down
+	 */
 	public final boolean getDown() {
 		return down;
 	}
 
+	/**
+	 * Gets the up.
+	 *
+	 * @return the up
+	 */
 	public final boolean getUp() {
 		return up;
 	}
@@ -472,310 +468,336 @@ public abstract class MapObject {
 		return dy;
 	}
 
-	// public final void setDx(final int dx) {
-	// this.dx = dx;
-	// }
-	//
+	/**
+	 * Sets the dy.
+	 *
+	 * @param pDy
+	 *            the new dy
+	 */
 	public final void setDy(final int pDy) {
 		this.dy = pDy;
 	}
 
 	//
+	/**
+	 * Gets the xpos.
+	 *
+	 * @return the xpos
+	 */
 	public final double getXpos() {
 		return xpos;
 	}
 
-	//
-	// public final void setXpos(final double xpos) {
-	// this.xpos = xpos;
-	// }
-	//
+	/**
+	 * Gets the ypos.
+	 *
+	 * @return the ypos
+	 */
 	public final double getYpos() {
 		return ypos;
 	}
 
-	//
-	// public final void setYpos(final double ypos) {
-	// this.ypos = ypos;
-	// }
-	//
-	// public final double getXdest() {
-	// return xdest;
-	// }
-	//
-	// public final void setXdest(final double xdest) {
-	// this.xdest = xdest;
-	// }
-	//
-	// public final double getYdest() {
-	// return ydest;
-	// }
-	//
-	// public final void setYdest(final double ydest) {
-	// this.ydest = ydest;
-	// }
-	//
+	/**
+	 * Gets the xpos new.
+	 *
+	 * @return the xpos new
+	 */
 	public final double getXposNew() {
 		return xposNew;
 	}
 
-	//
-	// public final void setXposNew(final double xposNew) {
-	// this.xposNew = xposNew;
-	// }
-	//
+	/**
+	 * Gets the ypos new.
+	 *
+	 * @return the ypos new
+	 */
 	public final double getYposNew() {
 		return yposNew;
 	}
 
-	//
-	// public final void setYposNew(final double yposNew) {
-	// this.yposNew = yposNew;
-	// }
-	//
+	/**
+	 * Gets the tile map.
+	 *
+	 * @return the tile map
+	 */
 	public final TileMap getTileMap() {
 		return tileMap;
 	}
 
-	//
-	// public final void setTileMap(TileMap tileMap) {
-	// this.tileMap = tileMap;
-	// }
-	//
-	// public final int getTileSize() {
-	// return tileSize;
-	// }
-	//
-	// public final void setTileSize(final int tileSize) {
-	// this.tileSize = tileSize;
-	// }
-	//
-	// public final int getCwidth() {
-	// return cwidth;
-	// }
-	//
-
+	/**
+	 * Sets the cwidth.
+	 *
+	 * @param pCwidth
+	 *            the new cwidth
+	 */
 	public final void setCwidth(final int pCwidth) {
 		this.cwidth = pCwidth;
 	}
 
-	//
-	// public final int getCheight() {
-	// return cheight;
-	// }
-	//
+	/**
+	 * Sets the cheight.
+	 *
+	 * @param pCheight
+	 *            the new cheight
+	 */
 	public final void setCheight(final int pCheight) {
 		this.cheight = pCheight;
 	}
 
-	//
-	// public final int getCurrRow() {
-	// return currRow;
-	// }
-	//
-	// public final void setCurrRow(final int currRow) {
-	// this.currRow = currRow;
-	// }
-	//
-	// public final int getCurrCol() {
-	// return currCol;
-	// }
-	//
-	// public final void setCurrCol(final int currCol) {
-	// this.currCol = currCol;
-	// }
-	//
-	// public boolean isTopLeftBlocked() {
-	// return topLeftBlocked;
-	// }
-	//
-	// public void setTopLeftBlocked(boolean topLeftBlocked) {
-	// this.topLeftBlocked = topLeftBlocked;
-	// }
-	//
-	// public boolean isTopRightBlocked() {
-	// return topRightBlocked;
-	// }
-	//
-	// public void setTopRightBlocked(boolean topRightBlocked) {
-	// this.topRightBlocked = topRightBlocked;
-	// }
-	//
-	// public boolean isBottomLeftBlocked() {
-	// return bottomLeftBlocked;
-	// }
-	//
-	// public void setBottomLeftBlocked(boolean bottomLeftBlocked) {
-	// this.bottomLeftBlocked = bottomLeftBlocked;
-	// }
-	//
-	// public boolean isBottomRightBlocked() {
-	// return bottomRightBlocked;
-	// }
-	//
-	// public void setBottomRightBlocked(boolean bottomRightBlocked) {
-	// this.bottomRightBlocked = bottomRightBlocked;
-	// }
-	//
-	// public boolean isTopLeftSemiBlocked() {
-	// return topLeftSemiBlocked;
-	// }
-	//
-	// public void setTopLeftSemiBlocked(boolean topLeftSemiBlocked) {
-	// this.topLeftSemiBlocked = topLeftSemiBlocked;
-	// }
-	//
-	// public boolean isTopRightSemiBlocked() {
-	// return topRightSemiBlocked;
-	// }
-	//
-	// public void setTopRightSemiBlocked(boolean topRightSemiBlocked) {
-	// this.topRightSemiBlocked = topRightSemiBlocked;
-	// }
-	//
-	// public boolean isBottomLeftSemiBlocked() {
-	// return bottomLeftSemiBlocked;
-	// }
-	//
-	// public void setBottomLeftSemiBlocked(boolean bottomLeftSemiBlocked) {
-	// this.bottomLeftSemiBlocked = bottomLeftSemiBlocked;
-	// }
-	//
-	// public boolean isBottomRightSemiBlocked() {
-	// return bottomRightSemiBlocked;
-	// }
-	//
-	// public void setBottomRightSemiBlocked(boolean bottomRightSemiBlocked) {
-	// this.bottomRightSemiBlocked = bottomRightSemiBlocked;
-	// }
-	//
-	// public int getCurrentAction() {
-	// return currentAction;
-	// }
-	//
-	// public void setCurrentAction(int currentAction) {
-	// this.currentAction = currentAction;
-	// }
-	//
-	// public int getPreviousAction() {
-	// return previousAction;
-	// }
-	//
-	// public void setPreviousAction(int previousAction) {
-	// this.previousAction = previousAction;
-	// }
-	//
+	/**
+	 * Checks if is facing right.
+	 *
+	 * @return true, if is facing right
+	 */
 	public final boolean isFacingRight() {
 		return facingRight;
 	}
 
 	//
+	/**
+	 * Sets the facing right.
+	 *
+	 * @param pFacingRight
+	 *            the new facing right
+	 */
 	public final void setFacingRight(final boolean pFacingRight) {
 		this.facingRight = pFacingRight;
 	}
 
+	/**
+	 * Checks if is jumping.
+	 *
+	 * @return true, if is jumping
+	 */
 	public final boolean isJumping() {
 		return jumping;
 	}
 
+	/**
+	 * Sets the jumping.
+	 *
+	 * @param pJumping
+	 *            the new jumping
+	 */
 	public final void setJumping(final boolean pJumping) {
 		this.jumping = pJumping;
 	}
 
+	/**
+	 * Checks if is falling.
+	 *
+	 * @return true, if is falling
+	 */
 	public final boolean isFalling() {
 		return falling;
 	}
 
+	/**
+	 * Sets the falling.
+	 *
+	 * @param pFalling
+	 *            the new falling
+	 */
 	public final void setFalling(final boolean pFalling) {
 		this.falling = pFalling;
 	}
 
-	public double getMovSpeed() {
+	/**
+	 * Gets the mov speed.
+	 *
+	 * @return the mov speed
+	 */
+	public final double getMovSpeed() {
 		return movSpeed;
 	}
 
+	/**
+	 * Sets the mov speed.
+	 *
+	 * @param pMovSpeed
+	 *            the new mov speed
+	 */
 	public final void setMovSpeed(final double pMovSpeed) {
 		this.movSpeed = pMovSpeed;
 	}
 
+	/**
+	 * Gets the max speed.
+	 *
+	 * @return the max speed
+	 */
 	public final double getMaxSpeed() {
 		return maxSpeed;
 	}
 
+	/**
+	 * Sets the max speed.
+	 *
+	 * @param pMaxSpeed
+	 *            the new max speed
+	 */
 	public final void setMaxSpeed(final double pMaxSpeed) {
 		this.maxSpeed = pMaxSpeed;
 	}
 
+	/**
+	 * Gets the stop speed.
+	 *
+	 * @return the stop speed
+	 */
 	public final double getStopSpeed() {
 		return stopSpeed;
 	}
 
+	/**
+	 * Sets the stop speed.
+	 *
+	 * @param pStopSpeed
+	 *            the new stop speed
+	 */
 	public final void setStopSpeed(final double pStopSpeed) {
 		this.stopSpeed = pStopSpeed;
 	}
 
+	/**
+	 * Gets the fall speed.
+	 *
+	 * @return the fall speed
+	 */
 	public final double getFallSpeed() {
 		return fallSpeed;
 	}
 
+	/**
+	 * Gets the max fall speed.
+	 *
+	 * @return the max fall speed
+	 */
 	public final double getMaxFallSpeed() {
 		return maxFallSpeed;
 	}
 
+	/**
+	 * Sets the fall speed.
+	 *
+	 * @param pFallSpeed
+	 *            the new fall speed
+	 */
 	public final void setFallSpeed(final double pFallSpeed) {
 		this.fallSpeed = pFallSpeed;
 	}
 
+	/**
+	 * Sets the max fall speed.
+	 *
+	 * @param pMaxFallSpeed
+	 *            the new max fall speed
+	 */
 	public final void setMaxFallSpeed(final double pMaxFallSpeed) {
 		this.maxFallSpeed = pMaxFallSpeed;
 	}
 
-	public double getJumpStart() {
+	/**
+	 * Gets the jump start.
+	 *
+	 * @return the jump start
+	 */
+	public final double getJumpStart() {
 		return jumpStart;
 	}
 
 	//
+	/**
+	 * Sets the jump start.
+	 *
+	 * @param pJumpStart
+	 *            the new jump start
+	 */
 	public final void setJumpStart(final double pJumpStart) {
 		this.jumpStart = pJumpStart;
 	}
 
+	/**
+	 * Gets the stop jump speed.
+	 *
+	 * @return the stop jump speed
+	 */
 	public final double getStopJumpSpeed() {
 		return stopJumpSpeed;
 	}
 
+	/**
+	 * Sets the stop jump speed.
+	 *
+	 * @param pStopJumpSpeed
+	 *            the new stop jump speed
+	 */
 	public final void setStopJumpSpeed(final double pStopJumpSpeed) {
 		this.stopJumpSpeed = pStopJumpSpeed;
 	}
 
-	//
-	// public BufferedImage getSprite() {
-	// return sprite;
-	// }
-	//
+	/**
+	 * Sets the sprite.
+	 *
+	 * @param pSprite
+	 *            the new sprite
+	 */
 	public final void setSprite(final BufferedImage pSprite) {
 		this.sprite = pSprite;
 	}
 
+	/**
+	 * Checks if is left.
+	 *
+	 * @return true, if is left
+	 */
 	public final boolean isLeft() {
 		return left;
 	}
 
+	/**
+	 * Checks if is right.
+	 *
+	 * @return true, if is right
+	 */
 	public final boolean isRight() {
 		return right;
 	}
 
+	/**
+	 * Checks if is up.
+	 *
+	 * @return true, if is up
+	 */
 	public final boolean isUp() {
 		return up;
 	}
 
+	/**
+	 * Checks if is down.
+	 *
+	 * @return true, if is down
+	 */
 	public final boolean isDown() {
 		return down;
 	}
 
+	/**
+	 * Sets the dx.
+	 *
+	 * @param pDx
+	 *            the new dx
+	 */
 	public final void setDx(final double pDx) {
 		this.dx = pDx;
 	}
 
+	/**
+	 * Sets the dy.
+	 *
+	 * @param pDy
+	 *            the new dy
+	 */
 	public final void setDy(final double pDy) {
 		this.dy = pDy;
 	}
@@ -800,6 +822,12 @@ public abstract class MapObject {
 		this.height = pHeight;
 	}
 
+	/**
+	 * Sets the alive.
+	 *
+	 * @param pIsAlive
+	 *            the new alive
+	 */
 	public final void setAlive(final boolean pIsAlive) {
 		this.isAlive = pIsAlive;
 	}

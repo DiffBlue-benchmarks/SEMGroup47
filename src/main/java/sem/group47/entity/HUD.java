@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * The Class HUD
+ * The Class HUD.
  */
 public class HUD {
 
@@ -28,7 +28,7 @@ public class HUD {
 	 * @param p
 	 *            the p
 	 */
-	public HUD(Player p) {
+	public HUD(final Player p) {
 		this.player = p;
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(
@@ -41,12 +41,12 @@ public class HUD {
 	}
 
 	/**
-	 * Draw the HUD
+	 * Draw the HUD.
 	 *
 	 * @param g
 	 *            the g
 	 */
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 
 		for (int i = 0; i < player.getLives(); i++) {
 			g.drawImage(image, i * 30, 0, null);

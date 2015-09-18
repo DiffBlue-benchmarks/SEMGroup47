@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import sem.group47.main.GamePanel;
 
 /**
- * The Class MenuState, which extends the super class GameState.
+ * The Class GameOverState, which extends the super class GameState.
  */
 public class GameOverState extends GameState {
 
@@ -24,7 +24,7 @@ public class GameOverState extends GameState {
 	/** The options. */
 	private String[] options = { "Restart", "Main Menu" };
 
-	// ** The Background */
+	/** The Background. */
 	private String bg = "/backgrounds/BubbleBobble_Logo.gif";
 
 	/** The image. */
@@ -36,9 +36,9 @@ public class GameOverState extends GameState {
 	 * @param gsm
 	 *            the gamestatemanager
 	 */
-	public GameOverState(GameStateManager gsm) {
+	public GameOverState(final GameStateManager gsm) {
 
-		this.gsm = gsm;
+		setGsm(gsm);
 
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(bg));
@@ -51,25 +51,25 @@ public class GameOverState extends GameState {
 
 	}
 
-	/*
-	 * Init
+	/**
+	 * Init.
 	 */
 	@Override
 	public void init() {
 	}
 
-	/*
-	 * Update
+	/**
+	 * Update.
 	 */
 	@Override
 	public void update() {
 	}
 
-	/*
-	 * Draws everything of the menu screen
+	/**
+	 * Draws everything of the menu screen.
 	 */
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
@@ -84,7 +84,7 @@ public class GameOverState extends GameState {
 		g.setFont(font);
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentChoice) {
-				g.setColor(Color.YELLOW);
+				g.setColor(Color.GREEN);
 			} else {
 				g.setColor(Color.WHITE);
 			}
@@ -99,18 +99,18 @@ public class GameOverState extends GameState {
 	 */
 	private void select() {
 		if (currentChoice == 0) {
-			gsm.setState(GameStateManager.LEVEL1STATE);
+			getGsm().setState(GameStateManager.LEVEL1STATE);
 		}
 		if (currentChoice == 1) {
-			gsm.setState(GameStateManager.MENUSTATE);
+			getGsm().setState(GameStateManager.MENUSTATE);
 		}
 	}
 
-	/*
-	 * Lets you scroll through menu options with up and down keys
+	/**
+	 * Lets you scroll through menu options with up and down keys.
 	 */
 	@Override
-	public void keyPressed(int k) {
+	public final void keyPressed(final int k) {
 		if (k == KeyEvent.VK_ENTER) {
 			select();
 		}
@@ -128,11 +128,11 @@ public class GameOverState extends GameState {
 		}
 	}
 
-	/*
-	 * keyReleased
+	/**
+	 * keyReleased.
 	 */
 	@Override
-	public void keyReleased(int k) {
+	public final void keyReleased(final int k) {
 	}
 
 }

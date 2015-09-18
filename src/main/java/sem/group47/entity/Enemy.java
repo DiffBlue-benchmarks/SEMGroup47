@@ -69,7 +69,7 @@ public class Enemy extends MapObject {
 	/**
 	 * Sets the caught.
 	 */
-	public void setCaught() {
+	public final void setCaught() {
 		caught = true;
 		setSprite(spritesheet.getSubimage(90, 0, 30, 30));
 	}
@@ -83,14 +83,31 @@ public class Enemy extends MapObject {
 		return scorePoints;
 	}
 
+	/**
+	 * Sets the score points.
+	 *
+	 * @param pScorePoints
+	 *            the new score points
+	 */
 	public final void setScorePoints(final int pScorePoints) {
 		this.scorePoints = pScorePoints;
 	}
 
+	/**
+	 * Sets the float speed.
+	 *
+	 * @param pFloatSpeed
+	 *            the new float speed
+	 */
 	public final void setFloatSpeed(final double pFloatSpeed) {
 		this.floatSpeed = pFloatSpeed;
 	}
 
+	/**
+	 * Gets the float speed.
+	 *
+	 * @return the float speed
+	 */
 	public final double getFloatSpeed() {
 		return floatSpeed;
 	}

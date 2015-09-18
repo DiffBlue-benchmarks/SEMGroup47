@@ -90,11 +90,11 @@ public class Projectile extends MapObject {
 	/**
 	 * Sets the float delay.
 	 *
-	 * @param floatDelay
+	 * @param pFloatDelay
 	 *            the new float delay
 	 */
-	public final void setFloatDelay(final int floatDelay) {
-		this.floatDelay = floatDelay;
+	public final void setFloatDelay(final int pFloatDelay) {
+		this.floatDelay = pFloatDelay;
 	}
 
 	/**
@@ -109,11 +109,11 @@ public class Projectile extends MapObject {
 	/**
 	 * Sets the floating.
 	 *
-	 * @param floating
+	 * @param pFloating
 	 *            the new floating
 	 */
-	public final void setFloating(final boolean floating) {
-		this.floating = floating;
+	public final void setFloating(final boolean pFloating) {
+		this.floating = pFloating;
 	}
 
 	/**
@@ -128,11 +128,11 @@ public class Projectile extends MapObject {
 	/**
 	 * Sets the float speed.
 	 *
-	 * @param floatSpeed
+	 * @param pFloatSpeed
 	 *            the new float speed
 	 */
-	public final void setFloatSpeed(final double floatSpeed) {
-		this.floatSpeed = floatSpeed;
+	public final void setFloatSpeed(final double pFloatSpeed) {
+		this.floatSpeed = pFloatSpeed;
 	}
 
 }
