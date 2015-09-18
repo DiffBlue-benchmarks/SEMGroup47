@@ -1,2 +1,0 @@
-Info (Example):
-This text has been written to a file

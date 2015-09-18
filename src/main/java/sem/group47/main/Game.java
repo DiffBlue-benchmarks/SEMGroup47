@@ -2,6 +2,9 @@ package sem.group47.main;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 
@@ -31,17 +34,17 @@ public class Game {
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
-		Log.debug("Example", "This text is logged");
-		Log.setMinimumPriorityLevel(Log.Level.INFO);
-		Log.debug("Example", "This text is not logged");
-		Log.warning("Example", "This text is also logged");
+		
+		String filename = "log_";
+		String datestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		filename += datestamp;
+		
 		try {
-			Log.setPrintStream(new PrintStream(new File("log.txt")));
+			Log.setPrintStream(new PrintStream(new File("logfiles/"+filename+".txt")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Log.info("Example", "This text has been written to a file");
-
+		Log.info("", "LOGFILE Bubble Bobble V0.0.1\nTimestamp: " + datestamp);
 	}
 
 	/**
