@@ -30,6 +30,8 @@ public class PlayerTest {
 	/** The player. */
 	private Player player;
 
+	private PlayerSave playerSave;
+
 	/** The projectile. */
 	private Projectile projectile;
 
@@ -67,7 +69,7 @@ public class PlayerTest {
 	@Test
 	public void hitTest() {
 		player.hit(1);
-		assertEquals(player.getLives(), 2);
+		assertEquals(playerSave.getLives(), 3);
 	}
 
 	/**
@@ -97,7 +99,7 @@ public class PlayerTest {
 	public void hitFlinchTest() {
 		player.setFlinch(true);
 		player.hit(1);
-		assertEquals(player.getLives(), 3);
+		assertEquals(playerSave.getLives(), 3);
 	}
 
 	/**

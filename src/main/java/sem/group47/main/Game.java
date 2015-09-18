@@ -19,13 +19,12 @@ public class Game {
 
 		JFrame window = new JFrame("Bubble Bobble");
 
-		// The contentpane inside the JFrame Window (a JPanel)
 		window.setContentPane(new GamePanel());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// Our first version won't be resizable
+
 		window.setResizable(false);
 		window.pack();
-		// Start JFrame in middle of screen
+
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
@@ -35,7 +34,7 @@ public class Game {
 	 * prevents calls from subclass.
 	 */
 	protected Game() {
-        throw new UnsupportedOperationException();
-    }
+		throw new UnsupportedOperationException();
+	}
 
 }
