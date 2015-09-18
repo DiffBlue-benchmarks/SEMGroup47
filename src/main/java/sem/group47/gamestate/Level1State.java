@@ -12,6 +12,7 @@ import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
 import sem.group47.entity.enemies.Level1Enemy;
 import sem.group47.main.GamePanel;
+import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -102,6 +103,7 @@ public class Level1State extends GameState {
 			PlayerSave.setExtraLive(player.getExtraLive());
 			System.out.println(PlayerSave.getExtraLive());
 			getGsm().setState(GameStateManager.LEVEL2STATE);
+			Log.info("Player Action", "Player reached next level");
 		}
 	}
 

@@ -1,24 +1,24 @@
 package sem.group47.main;
 
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Log {
+	
+	static int currentLogID = 0;
+	
 	/**
 	 * Enumeration of the logging levels.
 	 */
 	public enum Level {
-		DEBUG("Debug", 0), INFO("Info", 1), WARNING("Warning", 2), ERROR(
-				"Error", 3);
+		DEBUG("Debug", 0), INFO("Info", 1), WARNING("Warning", 2), ERROR("Error", 3);
 
 		/**
 		 * Name to be output when logged.
 		 */
 		private String name;
-		/**
-		 * Priority of level.
-		 */
-		private int priority;
-
+		
 		/**
 		 * Create a new level.
 		 *
@@ -29,7 +29,6 @@ public class Log {
 		 */
 		private Level(String name, int priority) {
 			this.name = name;
-			this.priority = priority;
 		}
 
 		/**
@@ -41,24 +40,12 @@ public class Log {
 			return name;
 		}
 
-		/**
-		 * Get the priority of the level.
-		 * 
-		 * @return the priority of the level (higher value has priority).
-		 */
-		public int getPriority() {
-			return priority;
-		}
 	}
 
 	/**
-	 * Minimum priority of messages to log.
-	 */
-	private static Level minLevel = Level.DEBUG;
-	/**
 	 * {@link java.io.PrintStream} to write messages to.
 	 */
-	private static PrintStream ps = null;
+	static PrintStream ps = null;
 
 	/**
 	 * Log a message at the DEBUG level.
@@ -103,25 +90,6 @@ public class Log {
 	}
 
 	/**
-	 * Returns the minimum priority level.
-	 * 
-	 * @return the current minimum priority level.
-	 */
-	public static Level getMinimumPriorityLevel() {
-		return minLevel;
-	}
-
-	/**
-	 * Sets the minimum priority level.
-	 * 
-	 * @param level
-	 *            the minimum level set to.
-	 */
-	public static synchronized void setMinimumPriorityLevel(Level level) {
-		Log.minLevel = level;
-	}
-
-	/**
 	 * Returns the print stream.
 	 * 
 	 * @return the current print stream.
@@ -136,7 +104,7 @@ public class Log {
 	 * @param ps
 	 *            the desired print stream or null for the console.
 	 */
-	public static synchronized void setPrintStream(PrintStream ps) {
+	public static void setPrintStream(PrintStream ps) {
 		Log.ps = ps;
 	}
 
@@ -150,21 +118,19 @@ public class Log {
 	 * @param message
 	 *            message to be logged.
 	 */
-	public static synchronized void logMessage(Level level, String module,
-			String message) {
-		// check if message has high enough priority
-		if (level.getPriority() >= minLevel.getPriority()) {
+	public static void logMessage(Level level, String module, String message) {
+		
 			// construct the message
-			String logMessage = level.getName() + " (" + module + "):\n"
-					+ message;
-			// write to the print stream or System.err if null
-			if (ps == null) {
-				System.err.println(logMessage);
-				System.err.flush();
-			} else {
-				ps.println(logMessage);
-				ps.flush();
-			}
-		}
+			String logMessage = "#" + currentLogID + "\t";
+			logMessage += new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()) + "\t";
+			logMessage += level.getName() + "\t";
+			logMessage += " (" + module + "): ";
+			logMessage += message;
+			
+			currentLogID++;
+			
+			ps.println(logMessage);
+			ps.flush();
+			
 	}
 }

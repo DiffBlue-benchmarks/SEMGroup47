@@ -1,0 +1,722 @@
+#0	2015-09-18 12:13:17	Info	 (Document name): LOGFILE
+#1	2015-09-18 12:13:17	Info	 (Program name & version): Bubble Bobble V0.0.1
+#2	2015-09-18 12:13:17	Info	 (Date & time): 20150918_121317
+
+______________________________________________________________________
+#2	2015-09-18 12:13:17	Info	 (Player action): Player instance created
+#4	2015-09-18 12:13:17	Info	 (Player Action): Player recieved 0 points
+#5	2015-09-18 12:13:17	Info	 (Player action): Player instance created
+#6	2015-09-18 12:13:17	Info	 (Player Action): Player recieved 0 points
+#7	2015-09-18 12:13:20	Info	 (Player action): Player instance created
+#8	2015-09-18 12:13:20	Info	 (Player Action): Player recieved 0 points
+#9	2015-09-18 12:13:20	Info	 (Player action): Player instance created
+#10	2015-09-18 12:13:20	Info	 (Player Action): Player recieved 0 points
+#11	2015-09-18 12:13:20	Info	 (Player Action): Player reached next level
+#12	2015-09-18 12:13:21	Info	 (Player Action): Bubble fired
+#13	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#14	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#15	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#16	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#17	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#18	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#19	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#20	2015-09-18 12:13:21	Info	 (Player Action): Player jumped
+#21	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#22	2015-09-18 12:13:21	Info	 (Player Action): Player jumped
+#23	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#24	2015-09-18 12:13:21	Info	 (Player Action): Player jumped
+#25	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#26	2015-09-18 12:13:21	Info	 (Player Action): Player jumped
+#27	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#28	2015-09-18 12:13:21	Info	 (Player Action): Player jumped
+#29	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#30	2015-09-18 12:13:21	Info	 (Player Action): Player jumped
+#31	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#32	2015-09-18 12:13:21	Info	 (Player Action): Player jumped
+#33	2015-09-18 12:13:21	Info	 (Player Action): Player moved right
+#34	2015-09-18 12:13:21	Info	 (Player Action): Player jumped
+#35	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#36	2015-09-18 12:13:22	Info	 (Player Action): Player jumped
+#37	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#38	2015-09-18 12:13:22	Info	 (Player Action): Player jumped
+#39	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#40	2015-09-18 12:13:22	Info	 (Player Action): Player jumped
+#41	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#42	2015-09-18 12:13:22	Info	 (Player Action): Player jumped
+#43	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#44	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#45	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#46	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#47	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#48	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#49	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#50	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#51	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#52	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#53	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#54	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#55	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#56	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#57	2015-09-18 12:13:22	Info	 (Player Action): Player moved right
+#58	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#59	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#60	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#61	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#62	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#63	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#64	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#65	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#66	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#67	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#68	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#69	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#70	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#71	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#72	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#73	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#74	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#75	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#76	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#77	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#78	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#79	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#80	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#81	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#82	2015-09-18 12:13:23	Info	 (Player Action): Player moved right
+#83	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#84	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#85	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#86	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#87	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#88	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#89	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#90	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#91	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#92	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#93	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#94	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#95	2015-09-18 12:13:24	Info	 (Player Action): Player moved right
+#96	2015-09-18 12:13:24	Info	 (Player Action): Bubble fired
+#97	2015-09-18 12:13:25	Info	 (Player Action): Fired bubble hit enemy
+#98	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#99	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#100	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#101	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#102	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#103	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#104	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#105	2015-09-18 12:13:25	Info	 (Player Action): Player moved left
+#106	2015-09-18 12:13:25	Info	 (Player Action): Player moved left
+#107	2015-09-18 12:13:25	Info	 (Player Action): Player moved left
+#108	2015-09-18 12:13:25	Info	 (Player Action): Player moved left
+#109	2015-09-18 12:13:25	Info	 (Player Action): Player moved left
+#110	2015-09-18 12:13:25	Info	 (Player Action): Bubble fired
+#111	2015-09-18 12:13:25	Info	 (Player Action): Player moved left
+#112	2015-09-18 12:13:25	Info	 (Player Action): Player moved left
+#113	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#114	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#115	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#116	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#117	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#118	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#119	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#120	2015-09-18 12:13:25	Info	 (Player Action): Player moved right
+#121	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#122	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#123	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#124	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#125	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#126	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#127	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#128	2015-09-18 12:13:26	Info	 (Player Action): Fired bubble hit enemy
+#129	2015-09-18 12:13:26	Info	 (Player Action): Player moved left
+#130	2015-09-18 12:13:26	Info	 (Player Action): Player moved left
+#131	2015-09-18 12:13:26	Info	 (Player Action): Player moved left
+#132	2015-09-18 12:13:26	Info	 (Player Action): Player moved left
+#133	2015-09-18 12:13:26	Info	 (Player Action): Player moved left
+#134	2015-09-18 12:13:26	Info	 (Player Action): Player moved left
+#135	2015-09-18 12:13:26	Info	 (Player Action): Player moved left
+#136	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#137	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#138	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#139	2015-09-18 12:13:26	Info	 (Player Action): Player moved right
+#140	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#141	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#142	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#143	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#144	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#145	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#146	2015-09-18 12:13:27	Info	 (Player Action): Player jumped
+#147	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#148	2015-09-18 12:13:27	Info	 (Player Action): Player jumped
+#149	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#150	2015-09-18 12:13:27	Info	 (Player Action): Player jumped
+#151	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#152	2015-09-18 12:13:27	Info	 (Player Action): Player jumped
+#153	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#154	2015-09-18 12:13:27	Info	 (Player Action): Player jumped
+#155	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#156	2015-09-18 12:13:27	Info	 (Player Action): Player jumped
+#157	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#158	2015-09-18 12:13:27	Info	 (Player Action): Player jumped
+#159	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#160	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#161	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#162	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#163	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#164	2015-09-18 12:13:27	Info	 (Player Action): Player recieved 100 points
+#165	2015-09-18 12:13:27	Info	 (Player Action): Player collision with Caught Enemy
+#166	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#167	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#168	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#169	2015-09-18 12:13:27	Info	 (Player Action): Player moved right
+#170	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#171	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#172	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#173	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#174	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#175	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#176	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#177	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#178	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#179	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#180	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#181	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#182	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#183	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#184	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#185	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#186	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#187	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#188	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#189	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#190	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#191	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#192	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#193	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#194	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#195	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#196	2015-09-18 12:13:28	Info	 (Player Action): Player moved right
+#197	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#198	2015-09-18 12:13:29	Info	 (Player Action): Fired bubble hit enemy
+#199	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#200	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#201	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#202	2015-09-18 12:13:29	Info	 (Player Action): Player moved left
+#203	2015-09-18 12:13:29	Info	 (Player Action): Player moved left
+#204	2015-09-18 12:13:29	Info	 (Player Action): Player moved left
+#205	2015-09-18 12:13:29	Info	 (Player Action): Player moved left
+#206	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#207	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#208	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#209	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#210	2015-09-18 12:13:29	Info	 (Player Action): Player moved left
+#211	2015-09-18 12:13:29	Info	 (Player Action): Player moved left
+#212	2015-09-18 12:13:29	Info	 (Player Action): Player moved left
+#213	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#214	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#215	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#216	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#217	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#218	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#219	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#220	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#221	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#222	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#223	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#224	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#225	2015-09-18 12:13:29	Info	 (Player Action): Player moved right
+#226	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#227	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#228	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#229	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#230	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#231	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#232	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#233	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#234	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#235	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#236	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#237	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#238	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#239	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#240	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#241	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#242	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#243	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#244	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#245	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#246	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#247	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#248	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#249	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#250	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#251	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#252	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#253	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#254	2015-09-18 12:13:30	Info	 (Player Action): Player moved right
+#255	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#256	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#257	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#258	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#259	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#260	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#261	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#262	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#263	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#264	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#265	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#266	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#267	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#268	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#269	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#270	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#271	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#272	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#273	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#274	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#275	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#276	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#277	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#278	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#279	2015-09-18 12:13:31	Info	 (Player Action): Player moved right
+#280	2015-09-18 12:13:32	Info	 (Player Action): Bubble fired
+#281	2015-09-18 12:13:34	Info	 (Player Action): Fired bubble hit enemy
+#282	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#283	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#284	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#285	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#286	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#287	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#288	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#289	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#290	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#291	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#292	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#293	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#294	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#295	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#296	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#297	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#298	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#299	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#300	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#301	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#302	2015-09-18 12:13:34	Info	 (Player Action): Player moved right
+#303	2015-09-18 12:13:34	Info	 (Player Action): Player jumped
+#304	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#305	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#306	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#307	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#308	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#309	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#310	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#311	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#312	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#313	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#314	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#315	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#316	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#317	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#318	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#319	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#320	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#321	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#322	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#323	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#324	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#325	2015-09-18 12:13:35	Info	 (Player Action): Player moved right
+#326	2015-09-18 12:13:36	Info	 (Player Action): Player moved right
+#327	2015-09-18 12:13:36	Info	 (Player Action): Player moved right
+#328	2015-09-18 12:13:36	Info	 (Player Action): Player moved right
+#329	2015-09-18 12:13:36	Info	 (Player Action): Player moved right
+#330	2015-09-18 12:13:36	Info	 (Player Action): Player moved right
+#331	2015-09-18 12:13:36	Info	 (Player Action): Player moved right
+#332	2015-09-18 12:13:36	Info	 (Player Action): Player moved right
+#333	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#334	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#335	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#336	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#337	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#338	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#339	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#340	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#341	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#342	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#343	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#344	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#345	2015-09-18 12:13:36	Info	 (Player Action): Player moved left
+#346	2015-09-18 12:13:37	Info	 (Player Action): Player recieved 100 points
+#347	2015-09-18 12:13:37	Info	 (Player Action): Player collision with Caught Enemy
+#348	2015-09-18 12:13:37	Info	 (Player Action): Player moved left
+#349	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#350	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#351	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#352	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#353	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#354	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#355	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#356	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#357	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#358	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#359	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#360	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#361	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#362	2015-09-18 12:13:37	Info	 (Player Action): Player moved right
+#363	2015-09-18 12:13:38	Info	 (Player Action): Player moved left
+#364	2015-09-18 12:13:38	Info	 (Player Action): Player moved left
+#365	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#366	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#367	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#368	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#369	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#370	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#371	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#372	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#373	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#374	2015-09-18 12:13:39	Info	 (Player Action): Player moved left
+#375	2015-09-18 12:13:39	Info	 (Player Action): Player moved right
+#376	2015-09-18 12:13:39	Info	 (Player Action): Player moved right
+#377	2015-09-18 12:13:39	Info	 (Player Action): Player moved right
+#378	2015-09-18 12:13:39	Info	 (Player Action): Player moved right
+#379	2015-09-18 12:13:39	Info	 (Player Action): Player moved right
+#380	2015-09-18 12:13:39	Info	 (Player Action): Player moved right
+#381	2015-09-18 12:13:39	Info	 (Player Action): Player moved right
+#382	2015-09-18 12:13:39	Info	 (Player Action): Player moved right
+#383	2015-09-18 12:13:40	Info	 (Player Action): Player moved right
+#384	2015-09-18 12:13:40	Info	 (Player Action): Player moved right
+#385	2015-09-18 12:13:40	Info	 (Player Action): Player moved right
+#386	2015-09-18 12:13:40	Info	 (Player Action): Player moved right
+#387	2015-09-18 12:13:40	Info	 (Player Action): Player moved right
+#388	2015-09-18 12:13:40	Info	 (Player Action): Player moved right
+#389	2015-09-18 12:13:40	Info	 (Player Action): Player moved left
+#390	2015-09-18 12:13:40	Info	 (Player Action): Player moved left
+#391	2015-09-18 12:13:40	Info	 (Player Action): Player moved left
+#392	2015-09-18 12:13:40	Info	 (Player Action): Player moved left
+#393	2015-09-18 12:13:44	Info	 (Player Action): Player lost a life
+#394	2015-09-18 12:13:44	Info	 (Player Action): Player collision with Enemy
+#395	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#396	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#397	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#398	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#399	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#400	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#401	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#402	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#403	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#404	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#405	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#406	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#407	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#408	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#409	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#410	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#411	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#412	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#413	2015-09-18 12:13:46	Info	 (Player Action): Player recieved 100 points
+#414	2015-09-18 12:13:46	Info	 (Player Action): Player recieved a new life
+#415	2015-09-18 12:13:46	Info	 (Player Action): Player collision with Caught Enemy
+#416	2015-09-18 12:13:46	Info	 (Player Action): Player moved right
+#417	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#418	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#419	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#420	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#421	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#422	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#423	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#424	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#425	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#426	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#427	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#428	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#429	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#430	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#431	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#432	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#433	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#434	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#435	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#436	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#437	2015-09-18 12:13:47	Info	 (Player Action): Player moved right
+#438	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#439	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#440	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#441	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#442	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#443	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#444	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#445	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#446	2015-09-18 12:13:48	Info	 (Player Action): Bubble fired
+#447	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#448	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#449	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#450	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#451	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#452	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#453	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#454	2015-09-18 12:13:48	Info	 (Player Action): Fired bubble hit enemy
+#455	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#456	2015-09-18 12:13:48	Info	 (Player Action): Player recieved 100 points
+#457	2015-09-18 12:13:48	Info	 (Player Action): Player collision with Caught Enemy
+#458	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#459	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#460	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#461	2015-09-18 12:13:48	Info	 (Player Action): Player jumped
+#462	2015-09-18 12:13:48	Info	 (Player Action): Player moved right
+#463	2015-09-18 12:13:48	Info	 (Player Action): Player jumped
+#464	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#465	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#466	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#467	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#468	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#469	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#470	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#471	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#472	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#473	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#474	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#475	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#476	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#477	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#478	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#479	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#480	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#481	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#482	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#483	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#484	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#485	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#486	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#487	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#488	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#489	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#490	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#491	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#492	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#493	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#494	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#495	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#496	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#497	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#498	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#499	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#500	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#501	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#502	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#503	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#504	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#505	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#506	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#507	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#508	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#509	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#510	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#511	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#512	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#513	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#514	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#515	2015-09-18 12:13:49	Info	 (Player Action): Player jumped
+#516	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#517	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#518	2015-09-18 12:13:49	Info	 (Player Action): Player moved right
+#519	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#520	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#521	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#522	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#523	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#524	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#525	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#526	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#527	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#528	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#529	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#530	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#531	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#532	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#533	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#534	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#535	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#536	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#537	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#538	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#539	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#540	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#541	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#542	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#543	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#544	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#545	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#546	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#547	2015-09-18 12:13:50	Info	 (Player Action): Player moved right
+#548	2015-09-18 12:13:50	Info	 (Player Action): Player jumped
+#549	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#550	2015-09-18 12:13:51	Info	 (Player Action): Player jumped
+#551	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#552	2015-09-18 12:13:51	Info	 (Player Action): Player jumped
+#553	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#554	2015-09-18 12:13:51	Info	 (Player Action): Player jumped
+#555	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#556	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#557	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#558	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#559	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#560	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#561	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#562	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#563	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#564	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#565	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#566	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#567	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#568	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#569	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#570	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#571	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#572	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#573	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#574	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#575	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#576	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#577	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#578	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#579	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#580	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#581	2015-09-18 12:13:51	Info	 (Player Action): Player moved right
+#582	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#583	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#584	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#585	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#586	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#587	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#588	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#589	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#590	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#591	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#592	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#593	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#594	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#595	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#596	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#597	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#598	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#599	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#600	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#601	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#602	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#603	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#604	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#605	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#606	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#607	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#608	2015-09-18 12:13:52	Info	 (Player Action): Player moved right
+#609	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#610	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#611	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#612	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#613	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#614	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#615	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#616	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#617	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#618	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#619	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#620	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#621	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#622	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#623	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#624	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#625	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#626	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#627	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#628	2015-09-18 12:13:53	Info	 (Player Action): Bubble fired
+#629	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#630	2015-09-18 12:13:53	Info	 (Player Action): Player moved right
+#631	2015-09-18 12:13:54	Info	 (Player Action): Player moved right
+#632	2015-09-18 12:13:54	Info	 (Player Action): Player moved right
+#633	2015-09-18 12:13:54	Info	 (Player Action): Player moved right
+#634	2015-09-18 12:13:54	Info	 (Player Action): Player moved right
+#635	2015-09-18 12:13:54	Info	 (Player Action): Player moved right
+#636	2015-09-18 12:13:55	Info	 (Player Action): Fired bubble hit enemy
+#637	2015-09-18 12:13:55	Info	 (Player Action): Player moved right
+#638	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#639	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#640	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#641	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#642	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#643	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#644	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#645	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#646	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#647	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#648	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#649	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#650	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#651	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#652	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#653	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#654	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#655	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#656	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#657	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#658	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#659	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#660	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#661	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#662	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#663	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#664	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#665	2015-09-18 12:13:56	Info	 (Player Action): Player jumped
+#666	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#667	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#668	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#669	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#670	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#671	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#672	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#673	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#674	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#675	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#676	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#677	2015-09-18 12:13:56	Info	 (Player Action): Player moved right
+#678	2015-09-18 12:13:57	Info	 (Player Action): Player moved right
+#679	2015-09-18 12:13:57	Info	 (Player Action): Player moved right
+#680	2015-09-18 12:13:57	Info	 (Player Action): Player moved right
+#681	2015-09-18 12:13:57	Info	 (Player Action): Player moved right
+#682	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#683	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#684	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#685	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#686	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#687	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#688	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#689	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#690	2015-09-18 12:13:57	Info	 (Player Action): Player moved left
+#691	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#692	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#693	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#694	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#695	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#696	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#697	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#698	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#699	2015-09-18 12:13:58	Info	 (Player Action): Player moved right
+#700	2015-09-18 12:13:58	Info	 (Player Action): Player moved left
+#701	2015-09-18 12:13:58	Info	 (Player Action): Player moved left
+#702	2015-09-18 12:13:58	Info	 (Player Action): Player moved left
+#703	2015-09-18 12:13:58	Info	 (Player Action): Player moved left
+#704	2015-09-18 12:13:58	Info	 (Player Action): Player moved left
+#705	2015-09-18 12:13:59	Info	 (Player Action): Player recieved 100 points
+#706	2015-09-18 12:13:59	Info	 (Player Action): Player collision with Caught Enemy
+#707	2015-09-18 12:13:59	Info	 (Player action): Player instance created
+#708	2015-09-18 12:13:59	Info	 (Player Action): Player recieved 500 points
+#709	2015-09-18 12:13:59	Info	 (Player Action): Player moved right
+#710	2015-09-18 12:13:59	Info	 (Player Action): Player moved right
+#711	2015-09-18 12:13:59	Info	 (Player Action): Player moved right
+#712	2015-09-18 12:13:59	Info	 (Player Action): Player moved right
+#713	2015-09-18 12:13:59	Info	 (Player Action): Player moved right
+#714	2015-09-18 12:14:01	Info	 (Player Action): Player moved right
+#715	2015-09-18 12:14:01	Info	 (Player Action): Player moved right
+#716	2015-09-18 12:14:01	Info	 (Player Action): Player moved right
+#717	2015-09-18 12:14:01	Info	 (Player Action): Player moved right
+#718	2015-09-18 12:14:01	Info	 (Player Action): Player moved right
+#719	2015-09-18 12:14:01	Info	 (Player Action): Player moved right

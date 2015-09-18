@@ -1,0 +1,9 @@
+#0	2015-09-18 12:19:02	Info	 (Document name): LOGFILE
+#1	2015-09-18 12:19:02	Info	 (Program name & version): Bubble Bobble V0.0.1
+#2	2015-09-18 12:19:02	Info	 (Date & time): 20150918_121902
+
+______________________________________________________________________
+#3	2015-09-18 12:19:02	Info	 (Player action): Player instance created
+#4	2015-09-18 12:19:02	Info	 (Player Action): Player recieved 0 points
+#5	2015-09-18 12:19:02	Info	 (Player action): Player instance created
+#6	2015-09-18 12:19:02	Info	 (Player Action): Player recieved 0 points

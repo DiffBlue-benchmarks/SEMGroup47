@@ -2,8 +2,10 @@ package sem.group47.main;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import javax.swing.JFrame;
@@ -34,17 +36,32 @@ public class Game {
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
-		
 		String filename = "log_";
 		String datestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		filename += datestamp;
+		
+		File[] files;
+		try {
+			files = new File("logfiles/").listFiles();
+			if(files.length > 10) {				
+				File file = new File(files[1].toString());
+	    		file.delete();		
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			Log.setPrintStream(new PrintStream(new File("logfiles/"+filename+".txt")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Log.info("", "LOGFILE Bubble Bobble V0.0.1\nTimestamp: " + datestamp);
+		
+		Log.info("Document name", "LOGFILE");
+		Log.info("Program name & version","Bubble Bobble V0.0.1");
+		Log.info("Date & time", datestamp+"\n");
+		Log.ps.println("______________________________________________________________________");
+		
 	}
 
 	/**
