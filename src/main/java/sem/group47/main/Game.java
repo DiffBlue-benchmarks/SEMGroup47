@@ -1,5 +1,8 @@
 package sem.group47.main;
 
+import java.io.File;
+import java.io.PrintStream;
+
 import javax.swing.JFrame;
 
 /**
@@ -27,6 +30,17 @@ public class Game {
 
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
+
+		Log.debug("Example", "This text is logged");
+		Log.setMinimumPriorityLevel(Log.Level.INFO);
+		Log.debug("Example", "This text is not logged");
+		Log.warning("Example", "This text is also logged");
+		try {
+			Log.setPrintStream(new PrintStream(new File("log.txt")));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Log.info("Example", "This text has been written to a file");
 
 	}
 
