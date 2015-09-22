@@ -342,11 +342,11 @@ public class Player extends MapObject {
 	 */
 	public final void setScore(final int points) {
 		score += points;
-		Log.info("Player Action", "Player recieved "+points+" points");
+		Log.info("Player Action", "Player received "+points+" points");
 		if (score == extraLive) {
 			lives++;
 			extraLive += 300;
-			Log.info("Player Action", "Player recieved a new life");
+			Log.info("Player Action", "Player received a new life");
 		}
 	}
 
