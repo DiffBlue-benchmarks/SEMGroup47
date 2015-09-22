@@ -101,7 +101,7 @@ public final class Log {
 		File[] files;
 		try {
 			files = new File("logfiles/").listFiles();
-			if (files.length > 10 && files[1].exists()) {
+			if (files != null && files.length > 10) {
 				File file = new File(files[1].toString());
 		    	file.delete();
 			}
