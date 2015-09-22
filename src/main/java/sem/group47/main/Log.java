@@ -24,11 +24,6 @@ public final class Log {
 	private static int currentLogID = 0;
 
 	/**
-	 * The maximum amount of files present in 'logfiles'.
-	 */
-	private static int maxFiles = 10;
-
-	/**
 	 * Enumeration of the logging levels.
 	 */
 	public enum Level {
@@ -106,9 +101,9 @@ public final class Log {
 		File[] files;
 		try {
 			files = new File("logfiles/").listFiles();
-			if (files.length > maxFiles) {
+			if (files.length > 10 && files[1].exists()) {
 				File file = new File(files[1].toString());
-	    		file.delete();
+		    	file.delete();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,7 +111,7 @@ public final class Log {
 
 		try {
 			Log.setPrintStream(new PrintStream(
-				new File("logfiles/" + filename + ".txt")));
+				new File("logfiles/" + filename + ".txt"), "UTF-8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
