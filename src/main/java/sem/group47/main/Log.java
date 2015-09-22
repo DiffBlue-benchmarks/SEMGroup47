@@ -1,6 +1,7 @@
 package sem.group47.main;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -103,7 +104,9 @@ public final class Log {
 			files = new File("logfiles/").listFiles();
 			if (files != null && files.length > 10) {
 				File file = new File(files[1].toString());
-		    	file.delete();
+		    	if (!file.delete()) {
+		    		throw new IOException();
+		    	}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,7 +114,8 @@ public final class Log {
 
 		try {
 			Log.setPrintStream(new PrintStream(
-				new File("logfiles/" + filename + ".txt"), "UTF-8"));
+				new File("logfiles/" + filename + ".txt"),
+				"UTF-8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
