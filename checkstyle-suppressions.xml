@@ -9,4 +9,6 @@
              files="[a-zA-Z0-9]*"/>
   <suppress checks="MagicNumber"
              files="GamePanel.java*"/>
+  <suppress checks="MagicNumber"
+             files="Level1State.java"/>
 </suppressions>

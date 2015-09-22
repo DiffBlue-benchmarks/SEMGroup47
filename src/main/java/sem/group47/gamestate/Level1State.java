@@ -20,14 +20,19 @@ import sem.group47.tilemap.TileMap;
  */
 public class Level1State extends GameState {
 
- /** Whether multiplayer is ons **/
+ /** Whether multiplayer is on.
+  **/
  private boolean multiplayer = true;
- 
- /** Paused flag **/
+
+ /** Paused flag.
+  **/
  private boolean paused;
- 
-	/** The players. */
+
+	/** The players.
+	 **/
 	private Player player1;
+	/** The player 2, only set when multiplayer is true.
+	 **/
 	private Player player2;
 
 	/** The enemies. */
@@ -43,7 +48,7 @@ public class Level1State extends GameState {
 	 * Instantiates a new level1 state.
 	 *
 	 * @param gsm
-	 *            the gsm
+	 *            the gamestatemanager.
 	 */
 	public Level1State(final GameStateManager gsm) {
 		setGsm(gsm);
@@ -58,7 +63,7 @@ public class Level1State extends GameState {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		tileMap.loadMap("/maps/level1.map");
-		
+
 		player1 = new Player(tileMap);
 		player1.setPosition(30d * (2d + .5d), 30d * (18d + .5d) - 1);
 		player1.setLives(PlayerSave.getLives());
@@ -73,10 +78,10 @@ public class Level1State extends GameState {
 		 player2.setExtraLive(PlayerSave.getExtraLive());
 		 player2.setFacingRight(false);
 		}
-		
+
 		populateEnemies();
 		hud = new HUD(player1);
-		
+
 		paused = false;
 	}
 
@@ -85,9 +90,11 @@ public class Level1State extends GameState {
 	 */
 	private void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
-		Point[] points = new Point[] { new Point(300, 100),
-		  new Point(500, 100), new Point(300, 250), new Point(500, 400),
-		  new Point(200, 550) };
+		Point[] points = new Point[] {
+				new Point(300, 100), new Point(500, 100),
+				new Point(300, 250), new Point(500, 400),
+				new Point(200, 550)
+				};
 		Level1Enemy enemy;
 		for (int i = 0; i < points.length; i++) {
 			enemy = new Level1Enemy(tileMap);
@@ -105,17 +112,17 @@ public class Level1State extends GameState {
  		player1.update();
  		player1.directEnemyCollision(enemies, getGsm());
  		player1.indirectEnemyCollision(enemies);
- 		
+
  		if (multiplayer) {
  		 player2.update();
  		 player2.directEnemyCollision(enemies, getGsm());
  		 player2.indirectEnemyCollision(enemies);
  		}
- 		
+
  		for (int i = 0; i < enemies.size(); i++) {
  			enemies.get(i).update();
  		}
- 
+
  		nextLevelCheck();
 	 }
 	}
@@ -200,6 +207,8 @@ public class Level1State extends GameState {
 	   player2.setDown(true);
 	  }
 	  return;
+	  default:
+		  return;
 	 }
 	}
 
@@ -248,6 +257,8 @@ public class Level1State extends GameState {
     paused = true;
    }
    return;
+  default:
+	  return;
   }
 	}
 
