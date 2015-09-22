@@ -60,14 +60,14 @@ public class Level1State extends GameState {
 		tileMap.loadMap("/maps/level1.map");
 		
 		player1 = new Player(tileMap);
-		player1.setPosition(30d*(2d+.5d), 30d*(18d+.5d)-1);
+		player1.setPosition(30d * (2d + .5d), 30d * (18d + .5d) - 1);
 		player1.setLives(PlayerSave.getLives());
 		player1.setScore(PlayerSave.getScore());
 		player1.setExtraLive(PlayerSave.getExtraLive());
 
-		if(multiplayer) {
+		if (multiplayer) {
 		 player2 = new Player(tileMap);
-		 player2.setPosition(30d*(24d+.5d), 30d*(18d+.5d)-1);
+		 player2.setPosition(30d * (24d + .5d), 30d * (18d + .5d) - 1);
 		 player2.setLives(PlayerSave.getLives());
 		 player2.setScore(PlayerSave.getScore());
 		 player2.setExtraLive(PlayerSave.getExtraLive());
@@ -88,11 +88,11 @@ public class Level1State extends GameState {
 		Point[] points = new Point[] { new Point(300, 100),
 		  new Point(500, 100), new Point(300, 250), new Point(500, 400),
 		  new Point(200, 550) };
-		Level1Enemy e;
+		Level1Enemy enemy;
 		for (int i = 0; i < points.length; i++) {
-			e = new Level1Enemy(tileMap);
-			e.setPosition(points[i].x, points[i].y);
-			enemies.add(e);
+			enemy = new Level1Enemy(tileMap);
+			enemy.setPosition(points[i].x, points[i].y);
+			enemies.add(enemy);
 		}
 	}
 
@@ -101,12 +101,12 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public final void update() {
-	 if(!paused) {
+	 if (!paused) {
  		player1.update();
  		player1.directEnemyCollision(enemies, getGsm());
  		player1.indirectEnemyCollision(enemies);
  		
- 		if(multiplayer) {
+ 		if (multiplayer) {
  		 player2.update();
  		 player2.directEnemyCollision(enemies, getGsm());
  		 player2.indirectEnemyCollision(enemies);
@@ -138,26 +138,27 @@ public class Level1State extends GameState {
 	 * Draw everything of level 1.
 	 */
 	@Override
-	public final void draw(final Graphics2D g) {
+	public final void draw(final Graphics2D gr) {
 
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+		gr.setColor(Color.BLACK);
+		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
-		tileMap.draw(g);
-		player1.draw(g);
-		if(multiplayer)
-		 player2.draw(g);
-
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).draw(g);
+		tileMap.draw(gr);
+		player1.draw(gr);
+		if (multiplayer) {
+		 player2.draw(gr);
 		}
 
-		hud.draw(g);
-		if(paused) {
-		 g.setColor(new Color(0, 0, 0, 180));
-		 g.fillRect(0,  0, 1000, 1000);
-		 g.setColor(Color.WHITE);
-		 g.drawString("PAUSED", 680, 26);
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).draw(gr);
+		}
+
+		hud.draw(gr);
+		if (paused) {
+		 gr.setColor(new Color(0, 0, 0, 180));
+		 gr.fillRect(0,  0, 1000, 1000);
+		 gr.setColor(Color.WHITE);
+		 gr.drawString("PAUSED", 680, 26);
 		}
 	}
 
@@ -166,7 +167,7 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public final void keyPressed(final int k) {
-	 switch(k) {
+	 switch (k) {
 	 case KeyEvent.VK_LEFT:
 	  player1.setLeft(true);
 	  return;
@@ -180,20 +181,24 @@ public class Level1State extends GameState {
 	  player1.setDown(true);
 	  return;
 	 case KeyEvent.VK_A:
-	  if(multiplayer)
+	  if (multiplayer) {
 	   player2.setLeft(true);
+	  }
 	  return;
 	 case KeyEvent.VK_D:
-	  if(multiplayer)
+	  if (multiplayer) {
 	   player2.setRight(true);
+	  }
 	  return;
 	 case KeyEvent.VK_W:
-	  if(multiplayer)
+	  if (multiplayer) {
 	   player2.setUp(true);
+	  }
 	  return;
 	 case KeyEvent.VK_S:
-	  if(multiplayer)
+	  if (multiplayer) {
 	   player2.setDown(true);
+	  }
 	  return;
 	 }
 	}
@@ -203,7 +208,7 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public final void keyReleased(final int k) {
-	 switch(k) {
+	 switch (k) {
   case KeyEvent.VK_LEFT:
    player1.setLeft(false);
    return;
@@ -217,26 +222,31 @@ public class Level1State extends GameState {
    player1.setDown(false);
    return;
   case KeyEvent.VK_A:
-   if(multiplayer)
+   if (multiplayer) {
     player2.setLeft(false);
+   }
    return;
   case KeyEvent.VK_D:
-   if(multiplayer)
+   if (multiplayer) {
     player2.setRight(false);
+   }
    return;
   case KeyEvent.VK_W:
-   if(multiplayer)
+   if (multiplayer) {
     player2.setUp(false);
+   }
    return;
   case KeyEvent.VK_S:
-   if(multiplayer)
+   if (multiplayer) {
     player2.setDown(false);
+   }
    return;
   case KeyEvent.VK_ESCAPE:
-   if(paused)
+   if (paused) {
     paused = false;
-   else
+   } else {
     paused = true;
+   }
    return;
   }
 	}
