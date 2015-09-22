@@ -20,10 +20,13 @@ import sem.group47.tilemap.TileMap;
  */
 public class Level1State extends GameState {
 
- /** Whether multiplayer is on **/
+ /** Whether multiplayer is ons **/
  private boolean multiplayer = true;
  
-	/** The player. */
+ /** Paused flag **/
+ private boolean paused;
+ 
+	/** The players. */
 	private Player player1;
 	private Player player2;
 
@@ -69,12 +72,12 @@ public class Level1State extends GameState {
 		 player2.setScore(PlayerSave.getScore());
 		 player2.setExtraLive(PlayerSave.getExtraLive());
 		 player2.setFacingRight(false);
-		 //TODO
-		 
 		}
 		
 		populateEnemies();
 		hud = new HUD(player1);
+		
+		paused = false;
 	}
 
 	/**
@@ -98,27 +101,29 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public final void update() {
-		player1.update();
-		player1.directEnemyCollision(enemies, getGsm());
-		player1.indirectEnemyCollision(enemies);
-		
-		if(multiplayer) {
-		 player2.update();
-		 player2.directEnemyCollision(enemies, getGsm());
-		 player2.indirectEnemyCollision(enemies);
-		}
-		
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).update();
-		}
-
-		nextLevel();
+	 if(!paused) {
+ 		player1.update();
+ 		player1.directEnemyCollision(enemies, getGsm());
+ 		player1.indirectEnemyCollision(enemies);
+ 		
+ 		if(multiplayer) {
+ 		 player2.update();
+ 		 player2.directEnemyCollision(enemies, getGsm());
+ 		 player2.indirectEnemyCollision(enemies);
+ 		}
+ 		
+ 		for (int i = 0; i < enemies.size(); i++) {
+ 			enemies.get(i).update();
+ 		}
+ 
+ 		nextLevelCheck();
+	 }
 	}
 
 	/**
 	 * Next level.
 	 */
-	public final void nextLevel() {
+	public final void nextLevelCheck() {
 		if (enemies.size() == 0) {
 			PlayerSave.setLives(player1.getLives());
 			PlayerSave.setScore(player1.getScore());
@@ -148,6 +153,12 @@ public class Level1State extends GameState {
 		}
 
 		hud.draw(g);
+		if(paused) {
+		 g.setColor(new Color(0, 0, 0, 180));
+		 g.fillRect(0,  0, 1000, 1000);
+		 g.setColor(Color.WHITE);
+		 g.drawString("PAUSED", 680, 26);
+		}
 	}
 
 	/**
@@ -184,8 +195,6 @@ public class Level1State extends GameState {
 	  if(multiplayer)
 	   player2.setDown(true);
 	  return;
-	 //case KeyEvent.VK_ESCAPE:
-	  //getGsm().setPaused(true);
 	 }
 	}
 
@@ -224,7 +233,10 @@ public class Level1State extends GameState {
     player2.setDown(false);
    return;
   case KeyEvent.VK_ESCAPE:
-   getGsm().setPaused(true);
+   if(paused)
+    paused = false;
+   else
+    paused = true;
    return;
   }
 	}
