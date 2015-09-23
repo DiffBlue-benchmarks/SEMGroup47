@@ -11,6 +11,10 @@ import sem.group47.entity.HUD;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
 import sem.group47.entity.enemies.Level1Enemy;
+import sem.group47.entity.pickups.BubbleSizePowerup;
+import sem.group47.entity.pickups.BubbleSpeedPowerup;
+import sem.group47.entity.pickups.MovementSpeedPowerup;
+import sem.group47.entity.pickups.PickupObject;
 import sem.group47.main.GamePanel;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
@@ -48,6 +52,9 @@ public class LevelState extends GameState {
  /** The tile map. */
  private TileMap tileMap;
 
+ /** List of pickupobjects in the level. **/
+ private ArrayList<PickupObject> pickups;
+
  /**
 	 * Instantiates a new level1 state.
 	 *
@@ -64,7 +71,6 @@ public class LevelState extends GameState {
 	@Override
 	public final void init() {
 	 multiplayer = PlayerSave.getMultiplayerEnabled();
-	 System.out.println("mp: " + multiplayer);
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		level = 0;
@@ -84,6 +90,7 @@ public class LevelState extends GameState {
 	 this.level = level;
 	 tileMap.loadMap("/maps/" + levelFileNames[level]);
 
+	 pickups = new ArrayList<PickupObject>();
 	 int tileSize = tileMap.getTileSize();
 
   player1 = new Player(tileMap);
@@ -106,6 +113,7 @@ public class LevelState extends GameState {
   }
 
   populateEnemies();
+  populatePowerups();
 	}
 
 	/**
@@ -126,6 +134,21 @@ public class LevelState extends GameState {
 	}
 
 	/**
+	 * loads the powerups.
+	 */
+	private void populatePowerups() {
+	 PickupObject po = new MovementSpeedPowerup(tileMap);
+  po.setPosition(100, 100);
+  pickups.add(po);
+  po = new BubbleSizePowerup(tileMap);
+  po.setPosition(tileMap.getWidth()-100, 100);
+  pickups.add(po);
+  po = new BubbleSpeedPowerup(tileMap);
+  po.setPosition(tileMap.getWidth()/2, 100);
+  pickups.add(po);
+	}
+
+	/**
 	 * Update the player and enemies.
 	 */
 	@Override
@@ -143,6 +166,20 @@ public class LevelState extends GameState {
 
  		for (int i = 0; i < enemies.size(); i++) {
  			enemies.get(i).update();
+ 		}
+
+ 		for (int i = 0; i < pickups.size(); i++) {
+ 		 if (
+ 		   pickups.get(i).checkCollision(player1)
+ 		   ||
+ 		   (multiplayer && pickups.get(i).checkCollision(player2))
+ 		   ) {
+ 		  pickups.remove(i);
+ 		  i--;
+     }
+ 		 else {
+ 		  pickups.get(i).update();
+ 		 }
  		}
 
  		nextLevelCheck();
@@ -173,6 +210,10 @@ public class LevelState extends GameState {
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
 		tileMap.draw(gr);
+
+		for (int i = 0; i < pickups.size(); i++) {
+		 pickups.get(i).draw(gr);
+		}
 		player1.draw(gr);
 		if (multiplayer) {
 		 player2.draw(gr);

@@ -30,6 +30,7 @@ public class Level1Enemy extends Enemy {
 
 		setFallSpeed(.35);
 		setFloatSpeed(.1);
+		setMaxFloatSpeed(-4.5);
 		setMaxFallSpeed(6.0);
 		setJumpStart(-10.0);
 		setStopJumpSpeed(.3);
@@ -93,6 +94,8 @@ public class Level1Enemy extends Enemy {
 		}
 		if (isCaught()) {
 			setDy(getDy() - getFloatSpeed());
+			if(getDy() < getMaxFloatSpeed())
+			 setDy(getMaxFloatSpeed());
 			setDx(0);
 		} else if (isFalling()) {
 			setDy(getDy() + getFallSpeed());

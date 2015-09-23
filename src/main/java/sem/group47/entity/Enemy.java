@@ -19,6 +19,9 @@ public class Enemy extends MapObject {
 
 	/** The float speed. */
 	private double floatSpeed;
+	
+	/** The max float speed. */
+	private double maxFloatSpeed;
 
 	/** The spritesheet. */
 	private BufferedImage spritesheet;
@@ -110,6 +113,24 @@ public class Enemy extends MapObject {
 	 */
 	public final double getFloatSpeed() {
 		return floatSpeed;
+	}
+
+	/**
+	 * Gets the max float speed.
+	 *
+	 * @return the speed
+	 */
+	public final double getMaxFloatSpeed() {
+	 return maxFloatSpeed;
+	}
+
+	/**
+	 * Sets the max float speed.
+	 * @param speed
+	 *  Speed to be set
+	 */
+	public final void setMaxFloatSpeed(final double speed) {
+	 maxFloatSpeed = speed;
 	}
 
 }
