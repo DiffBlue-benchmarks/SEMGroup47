@@ -41,6 +41,17 @@ public class Player extends MapObject {
 
 	/** The projectiles. */
 	private ArrayList<Projectile> projectiles;
+	
+	/** The animation. */
+	private ArrayList<BufferedImage[]> sprites;
+	private final int[] numFrames = {
+		3,2,2	
+	};
+
+	/** Animation actions*/
+	public static final int IDLE = 0;
+	public static final int WALKING = 1;
+	public static final int ATTACK = 2;
 
 	/**
 	 * Instantiates a new player.
@@ -76,13 +87,42 @@ public class Player extends MapObject {
 		projectiles = new ArrayList<Projectile>();
 
 		try {
-			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/player/player.png"));
-			setSprite(spritesheet.getSubimage(0, 0, 38, 32));
-		} catch (Exception e) {
-			Log.error("IO Read", "Could not file player sprite");
+			
+			BufferedImage spritesheet = ImageIO.read(
+				getClass().getResourceAsStream("/player/playerv2.png")
+			);
+			
+			sprites = new ArrayList<BufferedImage[]>();
+			for(int i = 0; i < 3; i++) {
+				
+				BufferedImage[] bi =
+					new BufferedImage[numFrames[i]];
+				
+				for(int j = 0; j < numFrames[i]; j++) {
+						bi[j] = spritesheet.getSubimage(
+								j * getWidth(),
+								i * getHeight(),
+								getWidth(),
+								getHeight()
+						);
+					
+					
+					
+				}
+				
+				sprites.add(bi);
+				
+			}
+			
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		animation = new Animation();
+		currentAction = IDLE;
+		animation.setFrames(sprites.get(IDLE));
+		animation.setDelay(400);
 	}
 
 	/**
@@ -104,9 +144,11 @@ public class Player extends MapObject {
 		getNextYPosition();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
+		updateAnimation();
 		fireProjectile();
 		interactWithProjectile();
 		flinching();
+		
 
 	}
 
@@ -320,6 +362,18 @@ public class Player extends MapObject {
 		}
 	}
 
+	public final void updateAnimation() {
+		if(isLeft() || isRight()) {
+			if(currentAction != WALKING) {
+				currentAction = WALKING;
+				animation.setFrames(sprites.get(WALKING));
+				animation.setDelay(75);
+			}
+		}
+		
+		animation.update();
+	}
+	
 	/**
 	 * Draws the player.
 	 *
@@ -328,7 +382,14 @@ public class Player extends MapObject {
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
-		super.draw(g);
+		if (facingRight) {
+			g.drawImage(animation.getImage(), (int) (getXpos() - getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2), null);
+		} else {
+			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
+		}
+			
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).draw(g);
 		}
