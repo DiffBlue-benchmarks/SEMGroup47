@@ -6,6 +6,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 
 /**
  * AudioPlayer.
@@ -57,7 +58,8 @@ public class AudioPlayer {
 					false);
 			AudioInputStream dais = AudioSystem.getAudioInputStream(
 					decodeFormat, ais);
-			clip = AudioSystem.getClip();
+			DataLine.Info info = new DataLine.Info(Clip.class, decodeFormat);
+			clip = (Clip)AudioSystem.getLine(info);
 			clip.open(dais);
 			clips.put(n, clip);
 		} catch (Exception e) {
