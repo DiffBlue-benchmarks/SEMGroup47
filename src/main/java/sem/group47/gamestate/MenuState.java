@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.entity.PlayerSave;
 import sem.group47.main.GamePanel;
 
 /**
@@ -19,7 +20,7 @@ public class MenuState extends GameState {
 	private int currentChoice = 0;
 
 	/** The options. */
-	private String[] options = { "Start", "Help", "Quit" };
+	private String[] options = { "Start", "2 Player Mode", "Help", "Quit" };
 
 	/** The font. */
 	private Font font;
@@ -94,12 +95,17 @@ public class MenuState extends GameState {
 	 */
 	private void select() {
 		if (currentChoice == 0) {
-			getGsm().setState(GameStateManager.LEVEL1STATE);
+		 PlayerSave.setMultiplayerEnabled(false);
+			getGsm().setState(GameStateManager.LEVELSTATE);
 		}
 		if (currentChoice == 1) {
-			getGsm().setState(GameStateManager.HELPSTATE);
+		 PlayerSave.setMultiplayerEnabled(true);
+		 getGsm().setState(GameStateManager.LEVELSTATE);
 		}
 		if (currentChoice == 2) {
+			getGsm().setState(GameStateManager.HELPSTATE);
+		}
+		if (currentChoice == 3) {
 			System.exit(0);
 		}
 	}

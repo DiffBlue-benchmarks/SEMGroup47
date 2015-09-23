@@ -13,26 +13,20 @@ public class GameStateManager {
 	/** The current state. */
 	private int currentState;
 
-	/** The pauseState. */
-	private PauseState pauseState;
-
 	/** Paused. */
 	private boolean paused;
 
 	/** The Constant MENUSTATE. */
 	public static final int MENUSTATE = 0;
 
-	/** The Constant LEVEL1STATE. */
-	public static final int LEVEL1STATE = 1;
-
-	/** The Constant LEVEL2STATE. */
-	public static final int LEVEL2STATE = 2;
+	/** The Constant LEVELSTATE. */
+	public static final int LEVELSTATE = 1;
 
 	/** The Constant GAMEOVER. */
-	public static final int GAMEOVERSTATE = 3;
+	public static final int GAMEOVERSTATE = 2;
 
 	/** The Constant HELPSTATE. */
-	public static final int HELPSTATE = 4;
+	public static final int HELPSTATE = 3;
 
 	/**
 	 * Instantiates a new game state manager.
@@ -42,12 +36,8 @@ public class GameStateManager {
 		gameStates = new ArrayList<GameState>();
 		currentState = MENUSTATE;
 
-		pauseState = new PauseState(this);
-		paused = false;
-
 		gameStates.add(new MenuState(this));
-		gameStates.add(new Level1State(this));
-		gameStates.add(new Level2State(this));
+		gameStates.add(new LevelState(this));
 		gameStates.add(new GameOverState(this));
 		gameStates.add(new HelpState(this));
 
@@ -69,7 +59,7 @@ public class GameStateManager {
 	 * @param state
 	 *            the new state
 	 */
-	public final void setState(final int state) {
+	public final synchronized void setState(final int state) {
 		currentState = state;
 		gameStates.get(currentState).init();
 	}
@@ -77,11 +67,7 @@ public class GameStateManager {
 	/**
 	 * Updates the current state.
 	 */
-	public final void update() {
-		if (paused) {
-			pauseState.update();
-			return;
-		}
+	public final synchronized void update() {
 		gameStates.get(currentState).update();
 	}
 
@@ -92,10 +78,6 @@ public class GameStateManager {
 	 *            the g
 	 */
 	public final void draw(final java.awt.Graphics2D g) {
-		if (paused) {
-			pauseState.draw(g);
-			return;
-		}
 		gameStates.get(currentState).draw(g);
 	}
 

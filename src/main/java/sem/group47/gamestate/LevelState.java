@@ -18,11 +18,16 @@ import sem.group47.tilemap.TileMap;
 /**
  * The Class Level1State.
  */
-public class Level1State extends GameState {
+public class LevelState extends GameState {
 
- /** Whether multiplayer is on.
-  **/
- private boolean multiplayer = true;
+ /** level file names **/
+ private String[] levelFileNames = new String[] {"level1.map", "level2.map"};
+ 
+ /** Current level **/
+ private int level;
+ 
+ /** Whether multiplayer is on. **/
+ private boolean multiplayer;
 
  /** Paused flag.
   **/
@@ -50,9 +55,8 @@ public class Level1State extends GameState {
 	 * @param gsm
 	 *            the gamestatemanager.
 	 */
-	public Level1State(final GameStateManager gsm) {
+	public LevelState(final GameStateManager gsm) {
 		setGsm(gsm);
-		init();
 	}
 
 	/**
@@ -60,29 +64,46 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public final void init() {
+	 multiplayer = PlayerSave.getMultiplayerEnabled();
+	 System.out.println("mp: "+multiplayer);
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
-		tileMap.loadMap("/maps/level1.map");
+		level = 0;
+		setupLevel(level);
+  hud = new HUD(player1);
+  paused = false;
+	}
+	
+	/** Sets up a certain level **/
+	
+	private void setupLevel(int level) {
+	 if(level >= levelFileNames.length)
+	  level = 0;
+	 this.level = level;
+	 tileMap.loadMap("/maps/" + levelFileNames[level]);
 
-		player1 = new Player(tileMap);
-		player1.setPosition(30d * (2d + .5d), 30d * (18d + .5d) - 1);
-		player1.setLives(PlayerSave.getLives());
-		player1.setScore(PlayerSave.getScore());
-		player1.setExtraLive(PlayerSave.getExtraLive());
+	 int tileSize = tileMap.getTileSize();
+	 
+  player1 = new Player(tileMap);
+  player1.setPosition(
+    tileSize * (2d + .5d) + 5,
+    tileSize * (tileMap.getNumRows() - 2 + .5d));
+  player1.setLives(PlayerSave.getLives());
+  player1.setScore(PlayerSave.getScore());
+  player1.setExtraLive(PlayerSave.getExtraLive());
 
-		if (multiplayer) {
-		 player2 = new Player(tileMap);
-		 player2.setPosition(30d * (24d + .5d), 30d * (18d + .5d) - 1);
-		 player2.setLives(PlayerSave.getLives());
-		 player2.setScore(PlayerSave.getScore());
-		 player2.setExtraLive(PlayerSave.getExtraLive());
-		 player2.setFacingRight(false);
-		}
-
-		populateEnemies();
-		hud = new HUD(player1);
-
-		paused = false;
+  if (multiplayer) {
+   player2 = new Player(tileMap);
+   player2.setPosition(
+     tileSize * (tileMap.getNumCols() - 3 + .5d) - 5,
+     tileSize * (tileMap.getNumRows() - 2 + .5d));
+   player2.setLives(PlayerSave.getLives());
+   player2.setScore(PlayerSave.getScore());
+   player2.setExtraLive(PlayerSave.getExtraLive());
+   player2.setFacingRight(false);
+  }
+  
+  populateEnemies();
 	}
 
 	/**
@@ -90,15 +111,12 @@ public class Level1State extends GameState {
 	 */
 	private void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
-		Point[] points = new Point[] {
-				new Point(300, 100), new Point(500, 100),
-				new Point(300, 250), new Point(500, 400),
-				new Point(200, 550)
-				};
+		
+		ArrayList<Point> points = tileMap.getEnemyStartLocations();
 		Level1Enemy enemy;
-		for (int i = 0; i < points.length; i++) {
+		for (int i = 0; i < points.size(); i++) {
 			enemy = new Level1Enemy(tileMap);
-			enemy.setPosition(points[i].x, points[i].y);
+			enemy.setPosition((points.get(i).x + .5d) * 30d, (points.get(i).y + .5d) * 30d);
 			enemies.add(enemy);
 		}
 	}
@@ -136,7 +154,7 @@ public class Level1State extends GameState {
 			PlayerSave.setScore(player1.getScore());
 			PlayerSave.setExtraLive(player1.getExtraLive());
 			System.out.println(PlayerSave.getExtraLive());
-			getGsm().setState(GameStateManager.LEVEL2STATE);
+			setupLevel(level + 1);
 			Log.info("Player Action", "Player reached next level");
 		}
 	}
@@ -163,7 +181,7 @@ public class Level1State extends GameState {
 		hud.draw(gr);
 		if (paused) {
 		 gr.setColor(new Color(0, 0, 0, 180));
-		 gr.fillRect(0,  0, 1000, 1000);
+		 gr.fillRect(0,  0, tileMap.getWidth(), tileMap.getHeight());
 		 gr.setColor(Color.WHITE);
 		 gr.drawString("PAUSED", 680, 26);
 		}

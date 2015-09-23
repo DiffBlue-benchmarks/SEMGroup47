@@ -260,7 +260,9 @@ public class Player extends MapObject {
 			Log.info("Player Action", "Player died");
 		}
 
-		setPosition(30d*(2d+.5d), 30d*(18d+.5d)-1);
+		setPosition(
+    getTileMap().getTileSize() * (2d + .5d) + 5,
+    getTileMap().getTileSize() * (getTileMap().getNumRows() - 2 + .5d));
 		flinching = true;
 		flinchTimer = System.nanoTime();
 

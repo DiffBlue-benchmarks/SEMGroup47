@@ -99,7 +99,7 @@ public class GameOverState extends GameState {
 	 */
 	private void select() {
 		if (currentChoice == 0) {
-			getGsm().setState(GameStateManager.LEVEL1STATE);
+			getGsm().setState(GameStateManager.LEVELSTATE);
 		}
 		if (currentChoice == 1) {
 			getGsm().setState(GameStateManager.MENUSTATE);
