@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.Enemy;
 import sem.group47.entity.HUD;
 import sem.group47.entity.Player;
@@ -30,6 +31,9 @@ public class Level2State extends GameState {
 
 	/** The tile map. */
 	private TileMap tileMap;
+
+	/** The audioPlayer. */
+	private AudioPlayer bgMusic;
 
 	/**
 	 * Instantiates a new level1 state.
@@ -58,6 +62,8 @@ public class Level2State extends GameState {
 
 		populateEnemies();
 		hud = new HUD(player);
+		bgMusic = new AudioPlayer("/Music/level2.mp3");
+		bgMusic.play();
 	}
 
 	/**
@@ -101,6 +107,7 @@ public class Level2State extends GameState {
 			PlayerSave.setScore(player.getScore());
 			PlayerSave.setExtraLive(player.getExtraLive());
 			getGsm().setState(GameStateManager.LEVEL1STATE);
+			bgMusic.stop();
 		}
 	}
 
@@ -140,9 +147,6 @@ public class Level2State extends GameState {
 		if (k == KeyEvent.VK_DOWN) {
 			player.setDown(true);
 		}
-		if (k == KeyEvent.VK_ESCAPE) {
-			getGsm().setPaused(true);
-		}
 	}
 
 	/**
@@ -161,9 +165,6 @@ public class Level2State extends GameState {
 		}
 		if (k == KeyEvent.VK_DOWN) {
 			player.setDown(false);
-		}
-		if (k == KeyEvent.VK_ESCAPE) {
-			getGsm().setPaused(true);
 		}
 	}
 

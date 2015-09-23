@@ -3,9 +3,11 @@ package sem.group47.entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.gamestate.GameStateManager;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
@@ -42,6 +44,9 @@ public class Player extends MapObject {
 	/** The projectiles. */
 	private ArrayList<Projectile> projectiles;
 
+	/** The sfx. */
+	private HashMap<String, AudioPlayer> sfx;
+
 	/**
 	 * Instantiates a new player.
 	 *
@@ -50,9 +55,9 @@ public class Player extends MapObject {
 	 */
 	public Player(final TileMap tm) {
 		super(tm);
-		
+
 		Log.info("Player action", "Player instance created");
-		
+
 		setWidth(38);
 		setHeight(32);
 		setCwidth(38);
@@ -83,6 +88,13 @@ public class Player extends MapObject {
 			Log.error("IO Read", "Could not file player sprite");
 			e.printStackTrace();
 		}
+
+		sfx = new HashMap<String, AudioPlayer>();
+		sfx.put("jump", new AudioPlayer("/sfx/jump.wav"));
+		sfx.put("scratch", new AudioPlayer("/sfx/fire_bubble.wav"));
+		sfx.put("extraLife", new AudioPlayer("/sfx/extra_life.wav"));
+		sfx.put("bubblePop", new AudioPlayer("/sfx/bubble_pop.wav"));
+		sfx.put("dead", new AudioPlayer("/sfx/player_death.wav"));
 	}
 
 	/**
@@ -130,6 +142,7 @@ public class Player extends MapObject {
 	public final void fireProjectile() {
 		if (getDown()) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
+				sfx.get("scratch").play();
 				lastFireTime = System.currentTimeMillis();
 				Projectile projectile = new Projectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
@@ -140,7 +153,7 @@ public class Player extends MapObject {
 				Log.info("Player Action", "Bubble fired");
 			}
 		}
-		
+
 	}
 
 	/**
@@ -160,7 +173,8 @@ public class Player extends MapObject {
 
 					setScore(enemies.get(i).getScorePoints());
 					enemies.remove(i);
-					Log.info("Player Action", "Player collision with Caught Enemy");
+					Log.info("Player Action",
+							"Player collision with Caught Enemy");
 				} else if (getLives() > 1) {
 					hit(1);
 					Log.info("Player Action", "Player collision with Enemy");
@@ -253,11 +267,14 @@ public class Player extends MapObject {
 		Log.info("Player Action", "Player lost a life");
 		if (lives < 0) {
 			lives = 0;
-			Log.warning("Player info wrong", "Amount of lives of player was <0. Set back to 0");
+			Log.warning("Player info wrong",
+					"Amount of lives of player was <0. Set back to 0");
 		}
 		if (lives == 0) {
+			sfx.get("dead").play();
 			setAlive(false);
 			Log.info("Player Action", "Player died");
+			// TODO GameOver screen
 		}
 
 		setPosition(100d, 100d);
@@ -303,6 +320,7 @@ public class Player extends MapObject {
 			Log.info("Player Action", "Player jumped");
 		}
 		if (isJumping() && !isFalling()) {
+			sfx.get("jump").play();
 			setDy(getJumpStart());
 			setFalling(true);
 		}
@@ -341,9 +359,13 @@ public class Player extends MapObject {
 	 *            the new score
 	 */
 	public final void setScore(final int points) {
+		if (score != 0) {
+			sfx.get("bubblePop").play();
+		}
 		score += points;
-		Log.info("Player Action", "Player received "+points+" points");
+		Log.info("Player Action", "Player received " + points + " points");
 		if (score == extraLive) {
+			sfx.get("extraLife").play();
 			lives++;
 			extraLive += 300;
 			Log.info("Player Action", "Player received a new life");

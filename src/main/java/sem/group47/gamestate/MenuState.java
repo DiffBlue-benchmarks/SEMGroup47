@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.main.GamePanel;
 
 /**
@@ -30,6 +31,9 @@ public class MenuState extends GameState {
 	/** The image. */
 	private BufferedImage image;
 
+	/** The audioPlayer. */
+	private AudioPlayer bgMusic;
+
 	/**
 	 * Instantiates a new menu state.
 	 *
@@ -47,6 +51,9 @@ public class MenuState extends GameState {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		bgMusic = new AudioPlayer("/Music/menu.mp3");
+		bgMusic.play();
 
 	}
 
@@ -95,9 +102,11 @@ public class MenuState extends GameState {
 	private void select() {
 		if (currentChoice == 0) {
 			getGsm().setState(GameStateManager.LEVEL1STATE);
+			bgMusic.stop();
 		}
 		if (currentChoice == 1) {
 			getGsm().setState(GameStateManager.HELPSTATE);
+			bgMusic.stop();
 		}
 		if (currentChoice == 2) {
 			System.exit(0);
