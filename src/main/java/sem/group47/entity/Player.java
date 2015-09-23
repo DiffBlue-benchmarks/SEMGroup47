@@ -85,6 +85,7 @@ public class Player extends MapObject {
 			e.printStackTrace();
 		}
 
+		//
 		AudioPlayer.load("/sfx/jump.wav", "jump");
 		AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
 		AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
