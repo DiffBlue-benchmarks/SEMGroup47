@@ -3,7 +3,6 @@ package sem.group47.entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -43,9 +42,6 @@ public class Player extends MapObject {
 
 	/** The projectiles. */
 	private ArrayList<Projectile> projectiles;
-
-	/** The sfx. */
-	private HashMap<String, AudioPlayer> sfx;
 
 	/**
 	 * Instantiates a new player.
