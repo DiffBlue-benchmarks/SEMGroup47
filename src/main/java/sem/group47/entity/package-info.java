@@ -1,7 +1,5 @@
-/**
- * Contains the Enemy, HUD, MapObject, Player and Projectile classes.
- */
-/**
+
+/** Contains the Enemy, HUD, MapObject, Player and Projectile classes.
  * @author SEM Project group 47
  *
  */
