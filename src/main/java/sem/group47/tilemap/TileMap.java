@@ -14,12 +14,8 @@ import sem.group47.main.GamePanel;
 
 /**
  * The Class TileMap. Loads the Tiles and the TileMap and draws it.
- * 
  */
 public class TileMap {
-
-	// POSITION
-
 	/** The x. */
 	private double x;
 
@@ -69,8 +65,8 @@ public class TileMap {
 	private int numColsToDraw;
 
 	/** Enemy start Locations. **/
-	ArrayList<Point> enemyStartLocations;
-	
+	private ArrayList<Point> enemyStartLocations;
+
 	/**
 	 * Instantiates a new tile map.
 	 *
@@ -90,7 +86,6 @@ public class TileMap {
 	 *            the s
 	 */
 	public void loadTiles(String s) {
-	 
 		try {
 
 			// get the tileset image which has 2 rows of 2 tiles of 30
@@ -112,15 +107,20 @@ public class TileMap {
 			// third row of tiles becomes blocked typed (able to collide)
 			for (int col = 0; col < numTilesAcross; col++) {
 				// gets the image based on its position inside the .gif
-				subimage = tileset.getSubimage(col * tileSize, 0, tileSize,
+				subimage = tileset.getSubimage(
+				  col * tileSize, 0, tileSize,
 						tileSize);
 				tiles[0][col] = new Tile(subimage, Tile.NORMAL);
-				subimage = tileset.getSubimage(col * tileSize, tileSize,
+				subimage = tileset.getSubimage(
+				  col * tileSize, tileSize,
 						tileSize, tileSize);
-				tiles[1][col] = new Tile(subimage, Tile.SEMIBLOCKED);
-				subimage = tileset.getSubimage(col * tileSize, tileSize,
+    tiles[1][col] =
+				  new Tile(subimage, Tile.SEMIBLOCKED);
+				subimage = tileset.getSubimage(
+				  col * tileSize, tileSize,
 						tileSize, tileSize);
-				tiles[2][col] = new Tile(subimage, Tile.BLOCKED);
+				tiles[2][col] =
+				  new Tile(subimage, Tile.BLOCKED);
 
 			}
 
@@ -183,12 +183,12 @@ public class TileMap {
 		}
 
 	}
-	
+
 	/**
-	 * returns the enemy start locations
-	 * @return enemy start locatiosn
+	 * returns the enemy start locations.
+	 * @return enemy start locations
 	 */
-	
+
 	public ArrayList<Point> getEnemyStartLocations() {
 	 return enemyStartLocations;
 	}

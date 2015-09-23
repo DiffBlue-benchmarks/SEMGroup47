@@ -3,7 +3,7 @@
 .gradle
 bin/
 tmp/
-logfiles/
+logfiles/log_*
 *.tmp
 *.bak
 *.swp

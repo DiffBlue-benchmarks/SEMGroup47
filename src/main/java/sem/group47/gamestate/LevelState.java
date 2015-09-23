@@ -20,12 +20,12 @@ import sem.group47.tilemap.TileMap;
  */
 public class LevelState extends GameState {
 
- /** level file names **/
+ /** level file names. **/
  private String[] levelFileNames = new String[] {"level1.map", "level2.map"};
- 
- /** Current level **/
+
+ /** Current level. **/
  private int level;
- 
+
  /** Whether multiplayer is on. **/
  private boolean multiplayer;
 
@@ -33,23 +33,22 @@ public class LevelState extends GameState {
   **/
  private boolean paused;
 
-	/** The players.
-	 **/
-	private Player player1;
-	/** The player 2, only set when multiplayer is true.
-	 **/
-	private Player player2;
+ /** The players. **/
+ private Player player1;
 
-	/** The enemies. */
-	private ArrayList<Enemy> enemies;
+ /** The player 2, only set when multiplayer is true. **/
+ private Player player2;
 
-	/** The hud. */
-	private HUD hud;
+ /** The enemies. */
+ private ArrayList<Enemy> enemies;
 
-	/** The tile map. */
-	private TileMap tileMap;
+ /** The hud. */
+ private HUD hud;
 
-	/**
+ /** The tile map. */
+ private TileMap tileMap;
+
+ /**
 	 * Instantiates a new level1 state.
 	 *
 	 * @param gsm
@@ -65,7 +64,7 @@ public class LevelState extends GameState {
 	@Override
 	public final void init() {
 	 multiplayer = PlayerSave.getMultiplayerEnabled();
-	 System.out.println("mp: "+multiplayer);
+	 System.out.println("mp: " + multiplayer);
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		level = 0;
@@ -73,17 +72,20 @@ public class LevelState extends GameState {
   hud = new HUD(player1);
   paused = false;
 	}
-	
-	/** Sets up a certain level **/
-	
+
+	/**
+	 * Sets up a certain level.
+	 * @param level number of level to be set
+	 */
 	private void setupLevel(int level) {
-	 if(level >= levelFileNames.length)
+	 if (level >= levelFileNames.length) {
 	  level = 0;
+	 }
 	 this.level = level;
 	 tileMap.loadMap("/maps/" + levelFileNames[level]);
 
 	 int tileSize = tileMap.getTileSize();
-	 
+
   player1 = new Player(tileMap);
   player1.setPosition(
     tileSize * (2d + .5d) + 5,
@@ -102,7 +104,7 @@ public class LevelState extends GameState {
    player2.setExtraLive(PlayerSave.getExtraLive());
    player2.setFacingRight(false);
   }
-  
+
   populateEnemies();
 	}
 
@@ -111,12 +113,14 @@ public class LevelState extends GameState {
 	 */
 	private void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
-		
+
 		ArrayList<Point> points = tileMap.getEnemyStartLocations();
 		Level1Enemy enemy;
 		for (int i = 0; i < points.size(); i++) {
 			enemy = new Level1Enemy(tileMap);
-			enemy.setPosition((points.get(i).x + .5d) * 30d, (points.get(i).y + .5d) * 30d);
+			enemy.setPosition(
+			  (points.get(i).x + .5d) * 30d,
+			  (points.get(i).y + .5d) * 30d);
 			enemies.add(enemy);
 		}
 	}
