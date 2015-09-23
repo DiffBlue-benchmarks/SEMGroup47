@@ -1,5 +1,7 @@
 package sem.group47.gamestate;
 
+import sem.group47.audio.AudioPlayer;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class GameStateManager.
@@ -35,6 +37,7 @@ public class GameStateManager {
 	 */
 	public GameStateManager() {
 
+		AudioPlayer.init();
 		gameStates = new GameState[NUMGAMESTATES];
 
 		currentState = MENUSTATE;

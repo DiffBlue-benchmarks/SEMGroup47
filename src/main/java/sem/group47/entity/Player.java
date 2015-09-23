@@ -89,12 +89,12 @@ public class Player extends MapObject {
 			e.printStackTrace();
 		}
 
-		sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("jump", new AudioPlayer("/sfx/jump.wav"));
-		sfx.put("scratch", new AudioPlayer("/sfx/fire_bubble.wav"));
-		sfx.put("extraLife", new AudioPlayer("/sfx/extra_life.wav"));
-		sfx.put("bubblePop", new AudioPlayer("/sfx/bubble_pop.wav"));
-		sfx.put("dead", new AudioPlayer("/sfx/player_death.wav"));
+		AudioPlayer.load("/sfx/jump.wav", "jump");
+		AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
+		AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
+		AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
+		AudioPlayer.load("/sfx/player_death.wav", "dead");
+		AudioPlayer.load("/sfx/crash.wav", "crash");
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class Player extends MapObject {
 	public final void fireProjectile() {
 		if (getDown()) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
-				sfx.get("scratch").play();
+				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
 				Projectile projectile = new Projectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
@@ -176,6 +176,7 @@ public class Player extends MapObject {
 					Log.info("Player Action",
 							"Player collision with Caught Enemy");
 				} else if (getLives() > 1) {
+					AudioPlayer.play("crash");
 					hit(1);
 					Log.info("Player Action", "Player collision with Enemy");
 				} else {
@@ -271,7 +272,9 @@ public class Player extends MapObject {
 					"Amount of lives of player was <0. Set back to 0");
 		}
 		if (lives == 0) {
-			sfx.get("dead").play();
+			AudioPlayer.play("dead");
+			AudioPlayer.stop("level1");
+			AudioPlayer.stop("level2");
 			setAlive(false);
 			Log.info("Player Action", "Player died");
 			// TODO GameOver screen
@@ -320,7 +323,7 @@ public class Player extends MapObject {
 			Log.info("Player Action", "Player jumped");
 		}
 		if (isJumping() && !isFalling()) {
-			sfx.get("jump").play();
+			AudioPlayer.play("jump");
 			setDy(getJumpStart());
 			setFalling(true);
 		}
@@ -359,13 +362,14 @@ public class Player extends MapObject {
 	 *            the new score
 	 */
 	public final void setScore(final int points) {
-		if (score != 0) {
-			sfx.get("bubblePop").play();
-		}
+
 		score += points;
+		if (score != 0) {
+			AudioPlayer.play("bubblePop");
+		}
 		Log.info("Player Action", "Player received " + points + " points");
 		if (score == extraLive) {
-			sfx.get("extraLife").play();
+			AudioPlayer.play("extraLife");
 			lives++;
 			extraLive += 300;
 			Log.info("Player Action", "Player received a new life");

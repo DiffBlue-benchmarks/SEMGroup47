@@ -63,8 +63,8 @@ public class Level1State extends GameState {
 
 		populateEnemies();
 		hud = new HUD(player);
-		bgMusic = new AudioPlayer("/Music/level1.mp3");
-		bgMusic.play();
+		AudioPlayer.load("/music/level1.wav", "level1");
+		AudioPlayer.loop("level1");
 
 	}
 
@@ -111,7 +111,7 @@ public class Level1State extends GameState {
 			System.out.println(PlayerSave.getExtraLive());
 			getGsm().setState(GameStateManager.LEVEL2STATE);
 			Log.info("Player Action", "Player reached next level");
-			bgMusic.stop();
+			AudioPlayer.stop("level1");
 		}
 	}
 

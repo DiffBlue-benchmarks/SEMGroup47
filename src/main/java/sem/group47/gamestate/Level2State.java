@@ -62,8 +62,8 @@ public class Level2State extends GameState {
 
 		populateEnemies();
 		hud = new HUD(player);
-		bgMusic = new AudioPlayer("/Music/level2.mp3");
-		bgMusic.play();
+		AudioPlayer.load("/Music/level2.wav", "level2");
+		AudioPlayer.loop("level2");
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Level2State extends GameState {
 			PlayerSave.setScore(player.getScore());
 			PlayerSave.setExtraLive(player.getExtraLive());
 			getGsm().setState(GameStateManager.LEVEL1STATE);
-			bgMusic.stop();
+			AudioPlayer.stop("level2");
 		}
 	}
 

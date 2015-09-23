@@ -52,8 +52,8 @@ public class MenuState extends GameState {
 			e.printStackTrace();
 		}
 
-		bgMusic = new AudioPlayer("/Music/menu.mp3");
-		bgMusic.play();
+		AudioPlayer.load("/music/menu.mp3", "menu");
+		AudioPlayer.resumeLoop("menu");
 
 	}
 
@@ -102,11 +102,11 @@ public class MenuState extends GameState {
 	private void select() {
 		if (currentChoice == 0) {
 			getGsm().setState(GameStateManager.LEVEL1STATE);
-			bgMusic.stop();
+			AudioPlayer.stop("menu");
 		}
 		if (currentChoice == 1) {
 			getGsm().setState(GameStateManager.HELPSTATE);
-			bgMusic.stop();
+
 		}
 		if (currentChoice == 2) {
 			System.exit(0);
@@ -133,6 +133,7 @@ public class MenuState extends GameState {
 				currentChoice = 0;
 			}
 		}
+
 	}
 
 	/**
