@@ -6,8 +6,8 @@ package sem.group47.entity;
 public class PlayerSave {
 
 	/** The lives. */
-	private static int livesp1;
-	private static int livesp2;
+	private static int livesp1 = 3;
+	private static int livesp2 = 3;
 
 	/** The score. */
 	private static int scorep1;

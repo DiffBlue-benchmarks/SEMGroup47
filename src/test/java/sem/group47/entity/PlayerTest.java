@@ -76,7 +76,7 @@ public class PlayerTest {
 	@Test
 	public final void hitTest() {
 		player.hit(1);
-		assertEquals(playerSave.getLivesP1(), 3);
+		assertEquals(PlayerSave.getLivesP1(), 3);
 	}
 
 	/**
