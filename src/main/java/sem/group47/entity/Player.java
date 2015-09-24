@@ -85,18 +85,12 @@ public class Player extends MapObject {
 			e.printStackTrace();
 		}
 
-		try {
-			AudioPlayer.load("/sfx/jump.wav", "jump");
-			AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
-			AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
-			AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
-			AudioPlayer.load("/sfx/player_death.wav", "dead");
-			AudioPlayer.load("/sfx/crash.wav", "crash");
-		} catch (Exception e) {
-			Log.error("IO Read", "Could not file music");
-			e.printStackTrace();
-		}
-
+		AudioPlayer.load("/sfx/jump.wav", "jump");
+		AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
+		AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
+		AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
+		AudioPlayer.load("/sfx/player_death.wav", "dead");
+		AudioPlayer.load("/sfx/crash.wav", "crash");
 	}
 
 	/**
