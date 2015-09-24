@@ -38,14 +38,17 @@ public class GameOverState extends GameState {
 	 *            the gamestatemanager
 	 */
 	public GameOverState(final GameStateManager gsm) {
-
-		setGsm(gsm);
-
 		try {
 			AudioPlayer.stop("level1");
 			AudioPlayer.stop("level2");
 			AudioPlayer.load("/music/gameover.wav", "gameover");
 			AudioPlayer.loop("gameover");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		setGsm(gsm);
+
+		try {
 			image = ImageIO.read(getClass().getResourceAsStream(bg));
 
 			font = new Font("Arial", Font.PLAIN, 40);
