@@ -85,13 +85,19 @@ public class Player extends MapObject {
 			e.printStackTrace();
 		}
 
-		//
-		AudioPlayer.load("/sfx/jump.wav", "jump");
-		AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
-		AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
-		AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
-		AudioPlayer.load("/sfx/player_death.wav", "dead");
-		AudioPlayer.load("/sfx/crash.wav", "crash");
+		// AudioPlayer.load("/sfx/jump.wav", "jump");
+		// AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
+		// AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
+		// AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
+		// AudioPlayer.load("/sfx/player_death.wav", "dead");
+		// AudioPlayer.load("/sfx/crash.wav", "crash");
+
+		AudioPlayer.load("/music/menu.mp3", "jump");
+		AudioPlayer.load("/music/menu.mp3", "fire");
+		AudioPlayer.load("/music/menu.mp3", "extraLife");
+		AudioPlayer.load("/music/menu.mp3", "bubblePop");
+		AudioPlayer.load("/music/menu.mp3", "dead");
+		AudioPlayer.load("/music/menu.mp3", "crash");
 	}
 
 	/**

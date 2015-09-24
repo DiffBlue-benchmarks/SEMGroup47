@@ -42,9 +42,9 @@ public class GameStateManagerTest {
 		assertEquals(gsm.getCurrentState(), GameStateManager.MENUSTATE);
 		gsm.setState(GameStateManager.LEVEL1STATE);
 		assertEquals(gsm.getCurrentState(), GameStateManager.LEVEL1STATE);
-		// for (int i = 0; i < 6000; i++) {
-		gsm.update();
-		// }
+		for (int i = 0; i < 6000; i++) {
+			gsm.update();
+		}
 	}
 
 	/**
@@ -56,10 +56,10 @@ public class GameStateManagerTest {
 		assertEquals(gsm.getCurrentState(), GameStateManager.MENUSTATE);
 		gsm.setState(GameStateManager.LEVEL1STATE);
 		assertEquals(gsm.getCurrentState(), GameStateManager.LEVEL1STATE);
-		// for (int i = 0; i < 6000; i++) {
-		gsm.update();
-		gsm.draw(g2d);
-		// }
+		for (int i = 0; i < 6000; i++) {
+			gsm.update();
+			gsm.draw(g2d);
+		}
 	}
 
 }
