@@ -38,14 +38,20 @@ public class Player extends MapObject {
 
 	/** The fire delay. */
 	private int fireDelay;
-
+	
+	/** If the player is attacking or not */
+	private boolean isAttacking;	
+	
+	/** If the player is idle or not */
+	private boolean isIdle;	
+	
 	/** The projectiles. */
 	private ArrayList<Projectile> projectiles;
 	
 	/** The animation. */
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = {
-		3,2,2	
+		3,2,3	
 	};
 
 	/** Animation actions*/
@@ -61,8 +67,6 @@ public class Player extends MapObject {
 	 */
 	public Player(final TileMap tm) {
 		super(tm);
-		
-		Log.info("Player action", "Player instance created");
 		
 		setWidth(38);
 		setHeight(32);
@@ -83,6 +87,7 @@ public class Player extends MapObject {
 		maxLives = lives;
 		extraLive = 300;
 		fireDelay = 500;
+		isAttacking = false;
 
 		projectiles = new ArrayList<Projectile>();
 
@@ -123,6 +128,7 @@ public class Player extends MapObject {
 		currentAction = IDLE;
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelay(400);
+		Log.info("Player action", "Player instance created");
 	}
 
 	/**
@@ -178,6 +184,8 @@ public class Player extends MapObject {
 				if (!isFacingRight()) {
 					projectile.setDx(projectile.getDx() * -1);
 				}
+				isAttacking = true;
+				isIdle = false;
 				projectiles.add(projectile);
 				Log.info("Player Action", "Bubble fired");
 			}
@@ -314,18 +322,21 @@ public class Player extends MapObject {
 	 */
 	public final void getNextXPosition() {
 		if (isLeft()) {
+			isIdle = false;
 			Log.info("Player Action", "Player moved left");
 			setDx(getDx() - getMovSpeed());
 			if (getDx() < -getMaxSpeed()) {
 				setDx(-getMaxSpeed());
 			}
 		} else if (isRight()) {
+			isIdle = false;
 			Log.info("Player Action", "Player moved right");
 			setDx(getDx() + getMovSpeed());
 			if (getDx() > getMaxSpeed()) {
 				setDx(getMaxSpeed());
 			}
 		} else {
+			isIdle = true;
 			setDx(0);
 		}
 		if (getDx() > 0) {
@@ -363,11 +374,29 @@ public class Player extends MapObject {
 	}
 
 	public final void updateAnimation() {
-		if(isLeft() || isRight()) {
+		
+		if(isAttacking) {
+			if(currentAction != ATTACK) {
+				currentAction = ATTACK;
+				animation.setFrames(sprites.get(ATTACK));
+				animation.setDelay(100);
+			}
+			if(animation.hasPlayedOnce()) {
+				isIdle = true;
+				isAttacking = false;
+			}
+		} else if(isIdle) {
+			if(currentAction != IDLE) {
+				currentAction = IDLE;
+				animation.setFrames(sprites.get(IDLE));
+				animation.setDelay(400);
+			}
+		}
+		else if(isLeft() || isRight()) {
 			if(currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(75);
+				animation.setDelay(200);
 			}
 		}
 		
