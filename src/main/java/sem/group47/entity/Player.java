@@ -38,25 +38,31 @@ public class Player extends MapObject {
 
 	/** The fire delay. */
 	private int fireDelay;
-	
-	/** If the player is attacking or not */
-	private boolean isAttacking;	
-	
-	/** If the player is idle or not */
-	private boolean isIdle;	
-	
+
+	/** If the player is attacking or not. */
+	private boolean isAttacking;
+
+	/** If the player is idle or not. */
+	private boolean isIdle;
+
 	/** The projectiles. */
 	private ArrayList<Projectile> projectiles;
-	
+
 	/** The animation. */
 	private ArrayList<BufferedImage[]> sprites;
+
+	/** Number of frames for each animation action in order. */
 	private final int[] numFrames = {
-		3,2,3	
+		3, 2, 3
 	};
 
-	/** Animation actions*/
+	/** Animation actions # for idle state. */
 	public static final int IDLE = 0;
+
+	/** Animation actions # for walking state. */
 	public static final int WALKING = 1;
+
+	/** Animation actions # for attacking state. */
 	public static final int ATTACK = 2;
 
 	/**
@@ -67,7 +73,7 @@ public class Player extends MapObject {
 	 */
 	public Player(final TileMap tm) {
 		super(tm);
-		
+
 		setWidth(38);
 		setHeight(32);
 		setCwidth(38);
@@ -92,38 +98,33 @@ public class Player extends MapObject {
 		projectiles = new ArrayList<Projectile>();
 
 		try {
-			
+
 			BufferedImage spritesheet = ImageIO.read(
-				getClass().getResourceAsStream("/player/playerv2.png")
+				getClass().getResourceAsStream(
+						"/player/playerv2.png"
+				)
 			);
-			
+
 			sprites = new ArrayList<BufferedImage[]>();
-			for(int i = 0; i < 3; i++) {
-				
+			for (int i = 0; i < 3; i++) {
+
 				BufferedImage[] bi =
 					new BufferedImage[numFrames[i]];
-				
-				for(int j = 0; j < numFrames[i]; j++) {
+
+				for (int j = 0; j < numFrames[i]; j++) {
 						bi[j] = spritesheet.getSubimage(
 								j * getWidth(),
 								i * getHeight(),
 								getWidth(),
 								getHeight()
 						);
-					
-					
-					
 				}
-				
 				sprites.add(bi);
-				
 			}
-			
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		animation = new Animation();
 		currentAction = IDLE;
 		animation.setFrames(sprites.get(IDLE));
@@ -141,8 +142,9 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Update. Called every frame. Updates player position, looks for collision
-	 * and then puts the player in the new position
+	 * Update. Called every frame. Updates player position,
+	 * looks for collision and then puts the player in the
+	 * new position
 	 */
 	public final void update() {
 		updateProjectiles();
@@ -154,8 +156,6 @@ public class Player extends MapObject {
 		fireProjectile();
 		interactWithProjectile();
 		flinching();
-		
-
 	}
 
 	/**
@@ -190,7 +190,6 @@ public class Player extends MapObject {
 				Log.info("Player Action", "Bubble fired");
 			}
 		}
-		
 	}
 
 	/**
@@ -210,10 +209,14 @@ public class Player extends MapObject {
 
 					setScore(enemies.get(i).getScorePoints());
 					enemies.remove(i);
-					Log.info("Player Action", "Player collision with Caught Enemy");
+					Log.info(
+							"Player Action", "Player collision with Caught Enemy"
+							);
 				} else if (getLives() > 1) {
 					hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info(
+							"Player Action", "Player collision with Enemy"
+							);
 				} else {
 
 					gsm.setState(GameStateManager.GAMEOVERSTATE);
@@ -258,7 +261,7 @@ public class Player extends MapObject {
 	/**
 	 * checks what happens when the player indirectly (projectile) collides with
 	 * an enemy.
-	 * 
+	 *
 	 * @param enemies
 	 *            enemies
 	 */
@@ -373,36 +376,37 @@ public class Player extends MapObject {
 		}
 	}
 
+	/**
+	 * Update function for the animations that are rendered.
+	 */
 	public final void updateAnimation() {
-		
-		if(isAttacking) {
-			if(currentAction != ATTACK) {
+
+		if (isAttacking) {
+			if (currentAction != ATTACK) {
 				currentAction = ATTACK;
 				animation.setFrames(sprites.get(ATTACK));
 				animation.setDelay(100);
 			}
-			if(animation.hasPlayedOnce()) {
+			if (animation.hasPlayedOnce()) {
 				isIdle = true;
 				isAttacking = false;
 			}
-		} else if(isIdle) {
-			if(currentAction != IDLE) {
+		} else if (isIdle) {
+			if (currentAction != IDLE) {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
 				animation.setDelay(400);
 			}
-		}
-		else if(isLeft() || isRight()) {
-			if(currentAction != WALKING) {
+		} else if (isLeft() || isRight()) {
+			if (currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(200);
 			}
 		}
-		
 		animation.update();
 	}
-	
+
 	/**
 	 * Draws the player.
 	 *
@@ -418,7 +422,7 @@ public class Player extends MapObject {
 			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth() / (double) 2),
 					(int) (getYpos() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
 		}
-			
+
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).draw(g);
 		}
@@ -432,7 +436,7 @@ public class Player extends MapObject {
 	 */
 	public final void setScore(final int points) {
 		score += points;
-		Log.info("Player Action", "Player received "+points+" points");
+		Log.info("Player Action", "Player received " + points + " points");
 		if (score == extraLive) {
 			lives++;
 			extraLive += 300;
