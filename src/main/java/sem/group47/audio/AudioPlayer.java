@@ -1,6 +1,8 @@
 package sem.group47.audio;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -42,11 +44,11 @@ public class AudioPlayer {
 	 *            the n
 	 */
 	public static void load(final String s, final String n) {
-		if (clips.get(n) != null) {
-			return;
-		}
-		Clip clip;
 		try {
+		 if (clips.get(n) != null) {
+	   return;
+	  }
+	  Clip clip;
 			AudioInputStream ais = AudioSystem
 					.getAudioInputStream(AudioPlayer.class
 							.getResourceAsStream(s));
@@ -74,7 +76,12 @@ public class AudioPlayer {
 	 *            the s
 	 */
 	public static void play(final String s) {
-		play(s, gap);
+	 try {
+	  play(s, gap);
+	 }
+  catch (Exception e) {
+   e.printStackTrace();
+  }
 	}
 
 	/**
@@ -86,20 +93,25 @@ public class AudioPlayer {
 	 *            the i
 	 */
 	public static void play(final String s, final int i) {
-		if (mute) {
-			return;
-		}
-		Clip c = clips.get(s);
-		if (c == null) {
-			return;
-		}
-		if (c.isRunning()) {
-			c.stop();
-		}
-		c.setFramePosition(i);
-		while (!c.isRunning()) {
-			c.start();
-		}
+	 try {
+ 		if (mute) {
+ 			return;
+ 		}
+ 		Clip c = clips.get(s);
+ 		if (c == null) {
+ 			return;
+ 		}
+ 		if (c.isRunning()) {
+ 			c.stop();
+ 		}
+ 		c.setFramePosition(i);
+ 		while (!c.isRunning()) {
+ 			c.start();
+ 		}
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 
 	/**
@@ -109,12 +121,17 @@ public class AudioPlayer {
 	 *            the s
 	 */
 	public static void stop(final String s) {
-		if (clips.get(s) == null) {
-			return;
-		}
-		if (clips.get(s).isRunning()) {
-			clips.get(s).stop();
-		}
+	 try {
+ 		if (clips.get(s) == null) {
+ 			return;
+ 		}
+ 		if (clips.get(s).isRunning()) {
+ 			clips.get(s).stop();
+ 		}
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 
 	/**
@@ -124,14 +141,18 @@ public class AudioPlayer {
 	 *            the s
 	 */
 	public static void resume(final String s) {
-		if (mute) {
-			return;
-		}
-		if (clips.get(s).isRunning()) {
-			return;
-		}
-		clips.get(s).start();
-
+	 try {
+ 		if (mute) {
+ 			return;
+ 		}
+ 		if (clips.get(s).isRunning()) {
+ 			return;
+ 		}
+ 		clips.get(s).start();
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 
 	/**
@@ -141,14 +162,18 @@ public class AudioPlayer {
 	 *            the s
 	 */
 	public static void resumeLoop(final String s) {
-		if (mute) {
-			return;
-		}
-		if (clips.get(s).isRunning()) {
-			return;
-		}
-		loop(s);
-
+	 try {
+ 		if (mute) {
+ 			return;
+ 		}
+ 		if (clips.get(s).isRunning()) {
+ 			return;
+ 		}
+ 		loop(s);
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 
 	/**
@@ -158,7 +183,12 @@ public class AudioPlayer {
 	 *            the s
 	 */
 	public static void loop(final String s) {
-		loop(s, gap, gap, clips.get(s).getFrameLength() - 1);
+	 try {
+	  loop(s, gap, gap, clips.get(s).getFrameLength() - 1);
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 
 	/**
@@ -170,7 +200,12 @@ public class AudioPlayer {
 	 *            the frame
 	 */
 	public static void loop(final String s, final int frame) {
-		loop(s, frame, gap, clips.get(s).getFrameLength() - 1);
+	 try {
+	  loop(s, frame, gap, clips.get(s).getFrameLength() - 1);
+	 }
+  catch (Exception e) {
+   e.printStackTrace();
+  }
 	}
 
 	/**
@@ -184,7 +219,12 @@ public class AudioPlayer {
 	 *            the end
 	 */
 	public static void loop(final String s, final int start, final int end) {
-		loop(s, gap, start, end);
+	 try {
+	  loop(s, gap, start, end);
+	 }
+  catch (Exception e) {
+   e.printStackTrace();
+  }
 	}
 
 	/**
@@ -201,13 +241,18 @@ public class AudioPlayer {
 	 */
 	public static void loop(final String s, final int frame, final int start,
 			final int end) {
-		stop(s);
-		if (mute) {
-			return;
-		}
-		clips.get(s).setLoopPoints(start, end);
-		clips.get(s).setFramePosition(frame);
-		clips.get(s).loop(Clip.LOOP_CONTINUOUSLY);
+	 try {
+ 		stop(s);
+ 		if (mute) {
+ 			return;
+ 		}
+ 		clips.get(s).setLoopPoints(start, end);
+ 		clips.get(s).setFramePosition(frame);
+ 		clips.get(s).loop(Clip.LOOP_CONTINUOUSLY);
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 
 	/**
@@ -219,7 +264,12 @@ public class AudioPlayer {
 	 *            the frame
 	 */
 	public static void setPosition(final String s, final int frame) {
-		clips.get(s).setFramePosition(frame);
+	 try {
+	  clips.get(s).setFramePosition(frame);
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 
 	/**
@@ -230,7 +280,13 @@ public class AudioPlayer {
 	 * @return the frames
 	 */
 	public static int getFrames(final String s) {
-		return clips.get(s).getFrameLength();
+	 try {
+	  return clips.get(s).getFrameLength();
+	 }
+	 catch(Exception e) {
+	  e.printStackTrace();
+	  return 0;
+	 }
 	}
 
 	/**
@@ -241,7 +297,13 @@ public class AudioPlayer {
 	 * @return the position
 	 */
 	public static int getPosition(final String s) {
-		return clips.get(s).getFramePosition();
+	 try {
+	  return clips.get(s).getFramePosition();
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	  return 0;
+	 }
 	}
 
 	/**
@@ -251,7 +313,30 @@ public class AudioPlayer {
 	 *            the s
 	 */
 	public static void close(final String s) {
-		stop(s);
-		clips.get(s).close();
+	 try {
+	  stop(s);
+		 clips.get(s).close();
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
+	}
+
+	/**
+	 * Stops all music clips.
+	 */
+	public static void stopAll() {
+	 try {
+ 	 Iterator<Entry<String, Clip>> it = clips.entrySet().iterator();
+ 	 while (it.hasNext()) {
+ 	  Clip clip = it.next().getValue();
+ 	  if (clip != null && clip.isRunning()) {
+ 	   clip.stop();
+ 	  }
+ 	 }
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 }

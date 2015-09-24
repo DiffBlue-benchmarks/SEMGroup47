@@ -22,12 +22,25 @@ public abstract class PickupObject extends MapObject {
   */
  public PickupObject(final TileMap tm) {
   super(tm);
-  setWidth(15);
-  setHeight(15);
-  setCwidth(15);
-  setCheight(15);
+  setWidth(32);
+  setHeight(32);
+  setCwidth(32);
+  setCheight(32);
   setFallSpeed(.35);
   setMaxFallSpeed(6.0);
+  
+  try {
+   BufferedImage spritesheet = ImageIO.read(getClass()
+     .getResourceAsStream("/items/items.png"));
+   setSprite(spritesheet.getSubimage(
+     (int) Math.round(Math.random() * 7) * 32,
+     (int) Math.round(Math.random() * 7) * 32,
+     32,
+     32));
+  } catch (Exception e) {
+   Log.error("IO Read", "Could not file player sprite");
+   e.printStackTrace();
+  }
  }
 
  /**

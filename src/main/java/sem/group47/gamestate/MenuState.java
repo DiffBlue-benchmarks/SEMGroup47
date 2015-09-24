@@ -47,9 +47,7 @@ public class MenuState extends GameState {
 
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(bg));
-
 			font = new Font("Arial", Font.PLAIN, 40);
-			AudioPlayer.load("/music/menu.mp3", "menu");
 			AudioPlayer.resumeLoop("menu");
 		} catch (Exception e) {
 			e.printStackTrace();

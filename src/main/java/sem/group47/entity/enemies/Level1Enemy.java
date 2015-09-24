@@ -2,6 +2,7 @@ package sem.group47.entity.enemies;
 
 import java.awt.Graphics2D;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.Enemy;
 import sem.group47.tilemap.TileMap;
 
@@ -91,10 +92,11 @@ public class Level1Enemy extends Enemy {
 		if (isJumping() && !isFalling()) {
 			setDy(getJumpStart());
 			setFalling(true);
+			AudioPlayer.play("jump");
 		}
 		if (isCaught()) {
 			setDy(getDy() - getFloatSpeed());
-			if(getDy() < getMaxFloatSpeed())
+			if (getDy() < getMaxFloatSpeed())
 			 setDy(getMaxFloatSpeed());
 			setDx(0);
 		} else if (isFalling()) {

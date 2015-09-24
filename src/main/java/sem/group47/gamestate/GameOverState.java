@@ -39,9 +39,7 @@ public class GameOverState extends GameState {
 	 */
 	public GameOverState(final GameStateManager gsm) {
 		try {
-			AudioPlayer.stop("level1");
-			AudioPlayer.stop("level2");
-			AudioPlayer.load("/music/gameover.wav", "gameover");
+			AudioPlayer.stopAll();
 			AudioPlayer.loop("gameover");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -92,19 +92,6 @@ public class Player extends MapObject {
 			Log.error("IO Read", "Could not file player sprite");
 			e.printStackTrace();
 		}
-
-		try {
-			AudioPlayer.load("/sfx/jump.wav", "jump");
-			AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
-			AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
-			AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
-			AudioPlayer.load("/sfx/player_death.wav", "dead");
-			AudioPlayer.load("/sfx/crash.wav", "crash");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/**
@@ -193,21 +180,13 @@ public class Player extends MapObject {
 					enemies.remove(i);
 					Log.info("Player Action",
 							"Player collision with Caught Enemy");
-				} else if (getLives() > 1) {
+				} else {
 					AudioPlayer.play("crash");
 					hit(1);
 					Log.info(
 					  "Player Action",
 					  "Player collision with Enemy"
 					  );
-				} else {
-
-					gsm.setState(
-					  GameStateManager.GAMEOVERSTATE);
-					Log.info("Player Action", "Game over");
-
-					return;
-
 				}
 			}
 		}
@@ -295,17 +274,17 @@ public class Player extends MapObject {
 					"Amount of lives of player was <0. Set back to 0");
 		}
 		if (lives == 0) {
+		 AudioPlayer.stopAll();
 			AudioPlayer.play("dead");
-			AudioPlayer.stop("level1");
-			AudioPlayer.stop("level2");
 			setAlive(false);
 			Log.info("Player Action", "Player died");
 			// TODO GameOver screen
 		}
 
 		setPosition(
-    getTileMap().getTileSize() * (2d + .5d) + 5,
-    getTileMap().getTileSize() * (getTileMap().getNumRows() - 2 + .5d));
+    getTileMap().getWidth() / 2,
+    getTileMap().getHeight() / 2);
+		setVector(0 , 0);
 		flinching = true;
 		flinchTimer = System.nanoTime();
 
