@@ -1,23 +1,21 @@
 package sem.group47.gamestate;
 
-import java.util.ArrayList;
+import sem.group47.audio.AudioPlayer;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GameStateManager.
  */
 public class GameStateManager {
 
 	/** The list of game states. */
-	private ArrayList<GameState> gameStates;
+	private GameState[] gameStates;
 
 	/** The current state. */
 	private int currentState;
 
-	/** The pauseState. */
-	private PauseState pauseState;
-
-	/** Paused. */
-	private boolean paused;
+	/** The number of gamestates. */
+	public static final int NUMGAMESTATES = 5;
 
 	/** The Constant MENUSTATE. */
 	public static final int MENUSTATE = 0;
@@ -39,50 +37,63 @@ public class GameStateManager {
 	 */
 	public GameStateManager() {
 
-		gameStates = new ArrayList<GameState>();
+		AudioPlayer.init();
+		gameStates = new GameState[NUMGAMESTATES];
+
 		currentState = MENUSTATE;
-
-		pauseState = new PauseState(this);
-		paused = false;
-
-		gameStates.add(new MenuState(this));
-		gameStates.add(new Level1State(this));
-		gameStates.add(new Level2State(this));
-		gameStates.add(new GameOverState(this));
-		gameStates.add(new HelpState(this));
-
+		loadState(currentState);
 	}
 
 	/**
-	 * setPaused.
-	 * 
-	 * @param pPaused
-	 *            pause
+	 * Load state.
+	 *
+	 * @param state
+	 *            the state
 	 */
-	public final void setPaused(final boolean pPaused) {
-		paused = pPaused;
+	private void loadState(final int state) {
+		if (state == MENUSTATE) {
+			gameStates[state] = new MenuState(this);
+		} else if (state == LEVEL1STATE) {
+			gameStates[state] = new Level1State(this);
+		} else if (state == LEVEL2STATE) {
+			gameStates[state] = new Level2State(this);
+		} else if (state == GAMEOVERSTATE) {
+			gameStates[state] = new GameOverState(this);
+		} else if (state == HELPSTATE) {
+			gameStates[state] = new HelpState(this);
+		}
 	}
 
 	/**
-	 * Sets the current state.
+	 * Unload state.
+	 *
+	 * @param state
+	 *            the state
+	 */
+	private void unloadState(final int state) {
+		gameStates[state] = null;
+	}
+
+	/**
+	 * Sets the state.
 	 *
 	 * @param state
 	 *            the new state
 	 */
 	public final void setState(final int state) {
+		unloadState(currentState);
 		currentState = state;
-		gameStates.get(currentState).init();
+		loadState(currentState);
 	}
 
 	/**
 	 * Updates the current state.
 	 */
 	public final void update() {
-		if (paused) {
-			pauseState.update();
-			return;
+
+		if (gameStates[currentState] != null) {
+			gameStates[currentState].update();
 		}
-		gameStates.get(currentState).update();
 	}
 
 	/**
@@ -92,11 +103,9 @@ public class GameStateManager {
 	 *            the g
 	 */
 	public final void draw(final java.awt.Graphics2D g) {
-		if (paused) {
-			pauseState.draw(g);
-			return;
+		if (gameStates[currentState] != null) {
+			gameStates[currentState].draw(g);
 		}
-		gameStates.get(currentState).draw(g);
 	}
 
 	/**
@@ -106,7 +115,9 @@ public class GameStateManager {
 	 *            the k
 	 */
 	public final void keyPressed(final int k) {
-		gameStates.get(currentState).keyPressed(k);
+		if (gameStates[currentState] != null) {
+			gameStates[currentState].keyPressed(k);
+		}
 	}
 
 	/**
@@ -116,7 +127,9 @@ public class GameStateManager {
 	 *            the k
 	 */
 	public final void keyReleased(final int k) {
-		gameStates.get(currentState).keyReleased(k);
+		if (gameStates[currentState] != null) {
+			gameStates[currentState].keyReleased(k);
+		}
 	}
 
 	/**

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.gamestate.GameStateManager;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
@@ -50,9 +51,9 @@ public class Player extends MapObject {
 	 */
 	public Player(final TileMap tm) {
 		super(tm);
-		
+
 		Log.info("Player action", "Player instance created");
-		
+
 		setWidth(38);
 		setHeight(32);
 		setCwidth(38);
@@ -83,6 +84,19 @@ public class Player extends MapObject {
 			Log.error("IO Read", "Could not file player sprite");
 			e.printStackTrace();
 		}
+
+		try {
+			AudioPlayer.load("/sfx/jump.wav", "jump");
+			AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
+			AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
+			AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
+			AudioPlayer.load("/sfx/player_death.wav", "dead");
+			AudioPlayer.load("/sfx/crash.wav", "crash");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -130,6 +144,7 @@ public class Player extends MapObject {
 	public final void fireProjectile() {
 		if (getDown()) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
+				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
 				Projectile projectile = new Projectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
@@ -140,7 +155,7 @@ public class Player extends MapObject {
 				Log.info("Player Action", "Bubble fired");
 			}
 		}
-		
+
 	}
 
 	/**
@@ -160,8 +175,10 @@ public class Player extends MapObject {
 
 					setScore(enemies.get(i).getScorePoints());
 					enemies.remove(i);
-					Log.info("Player Action", "Player collision with Caught Enemy");
+					Log.info("Player Action",
+							"Player collision with Caught Enemy");
 				} else if (getLives() > 1) {
+					AudioPlayer.play("crash");
 					hit(1);
 					Log.info("Player Action", "Player collision with Enemy");
 				} else {
@@ -253,11 +270,16 @@ public class Player extends MapObject {
 		Log.info("Player Action", "Player lost a life");
 		if (lives < 0) {
 			lives = 0;
-			Log.warning("Player info wrong", "Amount of lives of player was <0. Set back to 0");
+			Log.warning("Player info wrong",
+					"Amount of lives of player was <0. Set back to 0");
 		}
 		if (lives == 0) {
+			AudioPlayer.play("dead");
+			AudioPlayer.stop("level1");
+			AudioPlayer.stop("level2");
 			setAlive(false);
 			Log.info("Player Action", "Player died");
+			// TODO GameOver screen
 		}
 
 		setPosition(100d, 100d);
@@ -303,6 +325,7 @@ public class Player extends MapObject {
 			Log.info("Player Action", "Player jumped");
 		}
 		if (isJumping() && !isFalling()) {
+			AudioPlayer.play("jump");
 			setDy(getJumpStart());
 			setFalling(true);
 		}
@@ -341,9 +364,14 @@ public class Player extends MapObject {
 	 *            the new score
 	 */
 	public final void setScore(final int points) {
+
 		score += points;
-		Log.info("Player Action", "Player received "+points+" points");
+		if (score != 0) {
+			AudioPlayer.play("bubblePop");
+		}
+		Log.info("Player Action", "Player received " + points + " points");
 		if (score == extraLive) {
+			AudioPlayer.play("extraLife");
 			lives++;
 			extraLive += 300;
 			Log.info("Player Action", "Player received a new life");
