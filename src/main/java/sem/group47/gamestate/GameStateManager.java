@@ -14,29 +14,28 @@ public class GameStateManager {
 	/** The current state. */
 	private int currentState;
 
+	/** Paused. */
+	private boolean paused;
+
 	/** The number of gamestates. */
-	public static final int NUMGAMESTATES = 5;
+	public static final int NUMGAMESTATES = 4;
 
 	/** The Constant MENUSTATE. */
 	public static final int MENUSTATE = 0;
 
-	/** The Constant LEVEL1STATE. */
-	public static final int LEVEL1STATE = 1;
-
-	/** The Constant LEVEL2STATE. */
-	public static final int LEVEL2STATE = 2;
+	/** The Constant LEVELSTATE. */
+	public static final int LEVELSTATE = 1;
 
 	/** The Constant GAMEOVER. */
-	public static final int GAMEOVERSTATE = 3;
+	public static final int GAMEOVERSTATE = 2;
 
 	/** The Constant HELPSTATE. */
-	public static final int HELPSTATE = 4;
+	public static final int HELPSTATE = 3;
 
 	/**
 	 * Instantiates a new game state manager.
 	 */
 	public GameStateManager() {
-
 		AudioPlayer.init();
 		gameStates = new GameState[NUMGAMESTATES];
 
@@ -53,15 +52,14 @@ public class GameStateManager {
 	private void loadState(final int state) {
 		if (state == MENUSTATE) {
 			gameStates[state] = new MenuState(this);
-		} else if (state == LEVEL1STATE) {
-			gameStates[state] = new Level1State(this);
-		} else if (state == LEVEL2STATE) {
-			gameStates[state] = new Level2State(this);
+		} else if (state == LEVELSTATE) {
+			gameStates[state] = new LevelState(this);
 		} else if (state == GAMEOVERSTATE) {
 			gameStates[state] = new GameOverState(this);
 		} else if (state == HELPSTATE) {
 			gameStates[state] = new HelpState(this);
 		}
+		gameStates[state].init();
 	}
 
 	/**
@@ -80,7 +78,7 @@ public class GameStateManager {
 	 * @param state
 	 *            the new state
 	 */
-	public final void setState(final int state) {
+	public final synchronized void setState(final int state) {
 		unloadState(currentState);
 		currentState = state;
 		loadState(currentState);
@@ -89,7 +87,7 @@ public class GameStateManager {
 	/**
 	 * Updates the current state.
 	 */
-	public final void update() {
+	public synchronized final void update() {
 
 		if (gameStates[currentState] != null) {
 			gameStates[currentState].update();

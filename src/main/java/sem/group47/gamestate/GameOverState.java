@@ -107,7 +107,7 @@ public class GameOverState extends GameState {
 	 */
 	private void select() {
 		if (currentChoice == 0) {
-			getGsm().setState(GameStateManager.LEVEL1STATE);
+			getGsm().setState(GameStateManager.LEVELSTATE);
 			AudioPlayer.stop("gameover");
 		}
 		if (currentChoice == 1) {

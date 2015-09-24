@@ -14,6 +14,9 @@ public class PlayerSave {
 	/** The extra live. */
 	private static int extraLive = 300;
 
+	/** Whether multiplayer is enabled. **/
+	private static boolean multiplayer = false;
+	
 	/**
 	 * Inits the.
 	 */
@@ -79,5 +82,23 @@ public class PlayerSave {
 	public static int getExtraLive() {
 		return extraLive;
 	}
-
+	
+	/**
+	 * returns whether multiplayer mode is enabled.
+	 * 
+	 * @return true if multiplayer is enabled
+	 */
+	public static boolean getMultiplayerEnabled() {
+	 return multiplayer;
+	}
+	
+	/**
+	 * sets the mutli player mode.
+	 * 
+	 * @param true = on, false = off
+	 */
+	public static void setMultiplayerEnabled(boolean b) {
+	 multiplayer = b;
+	}
+	
 }
