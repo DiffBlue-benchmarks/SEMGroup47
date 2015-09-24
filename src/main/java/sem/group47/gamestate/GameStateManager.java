@@ -36,8 +36,8 @@ public class GameStateManager {
 	 * Instantiates a new game state manager.
 	 */
 	public GameStateManager() {
+	 AudioPlayer.init();
 	 try {
-		 AudioPlayer.init();
 		 AudioPlayer.load("/music/menu.mp3", "menu");
 		 AudioPlayer.load("/music/level1.mp3", "level1");
 		 AudioPlayer.load("/music/level2.mp3", "level2");
@@ -51,7 +51,7 @@ public class GameStateManager {
    AudioPlayer.load("/sfx/crash.wav", "crash");
 	 }
 	 catch (Exception e) {
-	  
+	  e.printStackTrace();
 	 }
   gameStates = new GameState[NUMGAMESTATES];
 
