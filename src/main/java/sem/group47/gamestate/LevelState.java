@@ -26,7 +26,10 @@ import sem.group47.tilemap.TileMap;
 public class LevelState extends GameState {
 
  /** level file names. **/
- private String[] levelFileNames = new String[] {"level1.map", "level2.map"};
+ private String[] levelFileNames = new String[] {"level1.map", "level2.map", "level3.map", "level4.map"};
+ 
+ /** file names of music **/
+ private String[] musicFileNames = new String[] {"level1", "level2", "level1", "level2"};
 
  /** Current level. **/
  private int level;
@@ -71,21 +74,13 @@ public class LevelState extends GameState {
 	 */
 	@Override
 	public final void init() {
+	 PlayerSave.init();
 	 multiplayer = PlayerSave.getMultiplayerEnabled();
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		level = 0;
 		setupLevel(level);
-  hud = new HUD(player1);
   paused = false;
-  
-  try {
-   AudioPlayer.load("/music/level1.mp3", "level1");
-   AudioPlayer.loop("level1");
-
-  } catch (Exception e) {
-   e.printStackTrace();
-  }
 	}
 
 	/**
@@ -106,23 +101,26 @@ public class LevelState extends GameState {
   player1.setPosition(
     tileSize * (2d + .5d) + 5,
     tileSize * (tileMap.getNumRows() - 2 + .5d));
-  player1.setLives(PlayerSave.getLives());
-  player1.setScore(PlayerSave.getScore());
-  player1.setExtraLive(PlayerSave.getExtraLive());
+  player1.setLives(PlayerSave.getLivesP1());
+  player1.setScore(PlayerSave.getScoreP1());
+  player1.setExtraLive(PlayerSave.getExtraLiveP1());
 
   if (multiplayer) {
    player2 = new Player(tileMap);
    player2.setPosition(
      tileSize * (tileMap.getNumCols() - 3 + .5d) - 5,
      tileSize * (tileMap.getNumRows() - 2 + .5d));
-   player2.setLives(PlayerSave.getLives());
-   player2.setScore(PlayerSave.getScore());
-   player2.setExtraLive(PlayerSave.getExtraLive());
+   player2.setLives(PlayerSave.getLivesP2());
+   player2.setScore(PlayerSave.getScoreP2());
+   player2.setExtraLive(PlayerSave.getExtraLiveP2());
    player2.setFacingRight(false);
   }
+  hud = new HUD(player1, player2);
 
   populateEnemies();
   populatePowerups();
+  AudioPlayer.stopAll();
+  AudioPlayer.loop(musicFileNames[level]);
 	}
 
 	/**
@@ -163,16 +161,19 @@ public class LevelState extends GameState {
 	@Override
 	public final void update() {
 	 if (!paused) {
- 		player1.update();
- 		player1.directEnemyCollision(enemies, getGsm());
- 		player1.indirectEnemyCollision(enemies);
-
- 		if (multiplayer) {
+	  if(player1.getLives() > 0) {
+ 		 player1.update();
+ 		 player1.directEnemyCollision(enemies, getGsm());
+ 		 player1.indirectEnemyCollision(enemies);
+	  }
+ 		if (multiplayer && player2.getLives() > 0) {
  		 player2.update();
  		 player2.directEnemyCollision(enemies, getGsm());
  		 player2.indirectEnemyCollision(enemies);
  		}
 
+ 		lostCheck();
+ 		
  		for (int i = 0; i < enemies.size(); i++) {
  			enemies.get(i).update();
  		}
@@ -183,6 +184,7 @@ public class LevelState extends GameState {
  		   ||
  		   (multiplayer && pickups.get(i).checkCollision(player2))
  		   ) {
+ 		  AudioPlayer.play("extraLife");
  		  pickups.remove(i);
  		  i--;
      }
@@ -196,14 +198,30 @@ public class LevelState extends GameState {
 	}
 
 	/**
+	 * checks if the player is dead.
+	 */
+	private void lostCheck() {
+	 if (player1.getLives() <= 0) {
+	  if(!multiplayer || player2.getLives() <= 0) {
+	   getGsm().setState(GameStateManager.GAMEOVERSTATE);
+	  }
+	 }
+	}
+
+	/**
 	 * Next level.
 	 */
 	public final void nextLevelCheck() {
 		if (enemies.size() == 0) {
-			PlayerSave.setLives(player1.getLives());
-			PlayerSave.setScore(player1.getScore());
-			PlayerSave.setExtraLive(player1.getExtraLive());
-			System.out.println(PlayerSave.getExtraLive());
+		 PlayerSave.setLivesP1(player1.getLives());
+   PlayerSave.setScoreP1(player1.getScore());
+   PlayerSave.setExtraLiveP1(player1.getExtraLive());
+   if(multiplayer) {
+    PlayerSave.setLivesP2(player2.getLives());
+    PlayerSave.setScoreP2(player2.getScore());
+    PlayerSave.setExtraLiveP2(player2.getExtraLive());
+ 			System.out.println(PlayerSave.getExtraLiveP2());
+   }
 			setupLevel(level + 1);
 			Log.info("Player Action", "Player reached next level");
 		}
@@ -223,8 +241,10 @@ public class LevelState extends GameState {
 		for (int i = 0; i < pickups.size(); i++) {
 		 pickups.get(i).draw(gr);
 		}
-		player1.draw(gr);
-		if (multiplayer) {
+		if (player1.getLives() > 0) {
+		 player1.draw(gr);
+		}
+		if (multiplayer && player2.getLives() > 0) {
 		 player2.draw(gr);
 		}
 

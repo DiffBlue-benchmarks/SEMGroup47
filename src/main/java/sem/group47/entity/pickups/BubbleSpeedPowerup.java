@@ -21,19 +21,11 @@ public class BubbleSpeedPowerup extends PickupObject {
   */
  public BubbleSpeedPowerup(final TileMap tm) {
   super(tm);
-  try {
-   BufferedImage spritesheet = ImageIO.read(getClass()
-     .getResourceAsStream("/player/player.png"));
-   setSprite(spritesheet.getSubimage(0, 0, 38, 32));
-  } catch (Exception e) {
-   Log.error("IO Read", "Could not file player sprite");
-   e.printStackTrace();
-  }
  }
 
  @Override
  protected final void onPickup(final Player p) {
-  p.setBubbleSpeed(p.getBubbleSpeed() + 2.5f);
+  p.setBubbleSpeed(p.getBubbleSpeed() + 4.5f);
  }
 
 }

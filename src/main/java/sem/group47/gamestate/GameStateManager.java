@@ -37,6 +37,17 @@ public class GameStateManager {
 	 */
 	public GameStateManager() {
 		AudioPlayer.init();
+		AudioPlayer.load("/music/menu.mp3", "menu");
+		AudioPlayer.load("/music/level1.mp3", "level1");
+		AudioPlayer.load("/music/level2.mp3", "level2");
+		AudioPlayer.load("/music/gameover.wav", "gameover");
+
+		AudioPlayer.load("/sfx/jump.wav", "jump");
+  AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
+  AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
+  AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
+  AudioPlayer.load("/sfx/player_death.wav", "dead");
+  AudioPlayer.load("/sfx/crash.wav", "crash");
 		gameStates = new GameState[NUMGAMESTATES];
 
 		currentState = MENUSTATE;

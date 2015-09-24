@@ -1,6 +1,8 @@
 package sem.group47.audio;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -253,5 +255,18 @@ public class AudioPlayer {
 	public static void close(final String s) {
 		stop(s);
 		clips.get(s).close();
+	}
+
+	/**
+	 * Stops all music clips.
+	 */
+	public static void stopAll() {
+	 Iterator<Entry<String, Clip>> it = clips.entrySet().iterator();
+	 while (it.hasNext()) {
+	  Clip clip = it.next().getValue();
+	  if (clip != null && clip.isRunning()) {
+	   clip.stop();
+	  }
+	 }
 	}
 }

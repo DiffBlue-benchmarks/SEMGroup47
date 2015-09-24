@@ -76,7 +76,7 @@ public class PlayerTest {
 	@Test
 	public final void hitTest() {
 		player.hit(1);
-		assertEquals(playerSave.getLives(), 3);
+		assertEquals(playerSave.getLivesP1(), 3);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class PlayerTest {
 	public final void hitFlinchTest() {
 		player.setFlinch(true);
 		player.hit(1);
-		assertEquals(playerSave.getLives(), 3);
+		assertEquals(playerSave.getLivesP1(), 3);
 	}
 
 	/**

@@ -21,20 +21,12 @@ public class MovementSpeedPowerup extends PickupObject {
   */
  public MovementSpeedPowerup(final TileMap tm) {
   super(tm);
-  try {
-   BufferedImage spritesheet = ImageIO.read(getClass()
-     .getResourceAsStream("/player/player.png"));
-   setSprite(spritesheet.getSubimage(0, 0, 38, 32));
-  } catch (Exception e) {
-   Log.error("IO Read", "Could not file player sprite");
-   e.printStackTrace();
-  }
  }
 
  @Override
  protected final void onPickup(final Player p) {
-  p.setMaxSpeed(p.getMaxSpeed() + 1.3);
-  p.setMovSpeed(getMovSpeed() + 1.3);
+  p.setMaxSpeed(p.getMaxSpeed() + 1.8);
+  p.setMovSpeed(getMovSpeed() + 1.8);
  }
 
 }
