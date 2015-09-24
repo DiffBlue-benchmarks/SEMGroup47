@@ -36,24 +36,27 @@ public class GameStateManager {
 	 * Instantiates a new game state manager.
 	 */
 	public GameStateManager() {
-	 AudioPlayer.init();
-	 try {
-		 AudioPlayer.load("/music/menu.mp3", "menu");
-		 AudioPlayer.load("/music/level1.mp3", "level1");
-		 AudioPlayer.load("/music/level2.mp3", "level2");
-		 AudioPlayer.load("/music/gameover.wav", "gameover");
+		AudioPlayer.init();
+		try {
+			AudioPlayer.load("/music/menu.mp3", "menu");
+			AudioPlayer.load("/music/level1.mp3", "level1");
+			AudioPlayer.load("/music/level2.mp3", "level2");
+			AudioPlayer.load("/music/level3.mp3", "level3");
+			AudioPlayer.load("/music/level4.mp3", "level4");
 
-		 AudioPlayer.load("/sfx/jump.wav", "jump");
-   AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
-   AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
-   AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
-   AudioPlayer.load("/sfx/player_death.wav", "dead");
-   AudioPlayer.load("/sfx/crash.wav", "crash");
-	 }
-	 catch (Exception e) {
-	  e.printStackTrace();
-	 }
-  gameStates = new GameState[NUMGAMESTATES];
+			AudioPlayer.load("/music/gameover.wav", "gameover");
+
+			AudioPlayer.load("/sfx/jump.wav", "jump");
+			AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
+			AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
+			AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
+			AudioPlayer.load("/sfx/player_death.wav", "dead");
+			AudioPlayer.load("/sfx/crash.wav", "crash");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		gameStates = new GameState[NUMGAMESTATES];
 
 		currentState = MENUSTATE;
 		loadState(currentState);

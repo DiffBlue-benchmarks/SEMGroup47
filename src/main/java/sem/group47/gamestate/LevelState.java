@@ -25,41 +25,44 @@ import sem.group47.tilemap.TileMap;
  */
 public class LevelState extends GameState {
 
- /** level file names. **/
- private String[] levelFileNames = new String[] {"level1.map", "level2.map", "level3.map", "level4.map"};
- 
- /** file names of music **/
- private String[] musicFileNames = new String[] {"level1", "level2", "level1", "level2"};
+	/** level file names. **/
+	private String[] levelFileNames = new String[] { "level1.map",
+			"level2.map", "level3.map", "level4.map" };
 
- /** Current level. **/
- private int level;
+	/** file names of music **/
+	private String[] musicFileNames = new String[] { "level1", "level2",
+			"level3", "level4" };
 
- /** Whether multiplayer is on. **/
- private boolean multiplayer;
+	/** Current level. **/
+	private int level;
 
- /** Paused flag.
-  **/
- private boolean paused;
+	/** Whether multiplayer is on. **/
+	private boolean multiplayer;
 
- /** The players. **/
- private Player player1;
+	/**
+	 * Paused flag.
+	 **/
+	private boolean paused;
 
- /** The player 2, only set when multiplayer is true. **/
- private Player player2;
+	/** The players. **/
+	private Player player1;
 
- /** The enemies. */
- private ArrayList<Enemy> enemies;
+	/** The player 2, only set when multiplayer is true. **/
+	private Player player2;
 
- /** The hud. */
- private HUD hud;
+	/** The enemies. */
+	private ArrayList<Enemy> enemies;
 
- /** The tile map. */
- private TileMap tileMap;
+	/** The hud. */
+	private HUD hud;
 
- /** List of pickupobjects in the level. **/
- private ArrayList<PickupObject> pickups;
+	/** The tile map. */
+	private TileMap tileMap;
 
- /**
+	/** List of pickupobjects in the level. **/
+	private ArrayList<PickupObject> pickups;
+
+	/**
 	 * Instantiates a new level1 state.
 	 *
 	 * @param gsm
@@ -74,53 +77,54 @@ public class LevelState extends GameState {
 	 */
 	@Override
 	public final void init() {
-	 PlayerSave.init();
-	 multiplayer = PlayerSave.getMultiplayerEnabled();
+		PlayerSave.init();
+		multiplayer = PlayerSave.getMultiplayerEnabled();
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		level = 0;
 		setupLevel(level);
-  paused = false;
+		paused = false;
 	}
 
 	/**
 	 * Sets up a certain level.
-	 * @param level number of level to be set
+	 * 
+	 * @param level
+	 *            number of level to be set
 	 */
 	private void setupLevel(int level) {
-	 if (level >= levelFileNames.length) {
-	  level = 0;
-	 }
-	 this.level = level;
-	 tileMap.loadMap("/maps/" + levelFileNames[level]);
+		if (level >= levelFileNames.length) {
+			level = 0;
+		}
+		this.level = level;
+		tileMap.loadMap("/maps/" + levelFileNames[level]);
 
-	 pickups = new ArrayList<PickupObject>();
-	 int tileSize = tileMap.getTileSize();
+		pickups = new ArrayList<PickupObject>();
+		int tileSize = tileMap.getTileSize();
 
-  player1 = new Player(tileMap);
-  player1.setPosition(
-    tileSize * (2d + .5d) + 5,
-    tileSize * (tileMap.getNumRows() - 2 + .5d));
-  player1.setLives(PlayerSave.getLivesP1());
-  player1.setScore(PlayerSave.getScoreP1());
-  player1.setExtraLive(PlayerSave.getExtraLiveP1());
+		player1 = new Player(tileMap);
+		player1.setPosition(tileSize * (2d + .5d) + 5,
+				tileSize * (tileMap.getNumRows() - 2 + .5d));
+		player1.setLives(PlayerSave.getLivesP1());
+		player1.setScore(PlayerSave.getScoreP1());
+		player1.setExtraLive(PlayerSave.getExtraLiveP1());
 
-  if (multiplayer) {
-   player2 = new Player(tileMap);
-   player2.setPosition(
-     tileSize * (tileMap.getNumCols() - 3 + .5d) - 5,
-     tileSize * (tileMap.getNumRows() - 2 + .5d));
-   player2.setLives(PlayerSave.getLivesP2());
-   player2.setScore(PlayerSave.getScoreP2());
-   player2.setExtraLive(PlayerSave.getExtraLiveP2());
-   player2.setFacingRight(false);
-  }
-  hud = new HUD(player1, player2);
+		if (multiplayer) {
+			player2 = new Player(tileMap);
+			player2.setPosition(
+					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5, tileSize
+							* (tileMap.getNumRows() - 2 + .5d));
+			player2.setLives(PlayerSave.getLivesP2());
+			player2.setScore(PlayerSave.getScoreP2());
+			player2.setExtraLive(PlayerSave.getExtraLiveP2());
+			player2.setFacingRight(false);
+		}
+		hud = new HUD(player1, player2);
 
-  populateEnemies();
-  populatePowerups();
-  AudioPlayer.stopAll();
-  AudioPlayer.loop(musicFileNames[level]);
+		populateEnemies();
+		populatePowerups();
+		AudioPlayer.stopAll();
+		AudioPlayer.loop(musicFileNames[level]);
 	}
 
 	/**
@@ -133,9 +137,8 @@ public class LevelState extends GameState {
 		Level1Enemy enemy;
 		for (int i = 0; i < points.size(); i++) {
 			enemy = new Level1Enemy(tileMap);
-			enemy.setPosition(
-			  (points.get(i).x + .5d) * 30d,
-			  (points.get(i).y + .5d) * 30d);
+			enemy.setPosition((points.get(i).x + .5d) * 30d,
+					(points.get(i).y + .5d) * 30d);
 			enemies.add(enemy);
 		}
 	}
@@ -144,15 +147,15 @@ public class LevelState extends GameState {
 	 * loads the powerups.
 	 */
 	private void populatePowerups() {
-	 PickupObject po = new MovementSpeedPowerup(tileMap);
-  po.setPosition(100, 100);
-  pickups.add(po);
-  po = new BubbleSizePowerup(tileMap);
-  po.setPosition(tileMap.getWidth()-100, 100);
-  pickups.add(po);
-  po = new BubbleSpeedPowerup(tileMap);
-  po.setPosition(tileMap.getWidth()/2, 100);
-  pickups.add(po);
+		PickupObject po = new MovementSpeedPowerup(tileMap);
+		po.setPosition(100, 100);
+		pickups.add(po);
+		po = new BubbleSizePowerup(tileMap);
+		po.setPosition(tileMap.getWidth() - 100, 100);
+		pickups.add(po);
+		po = new BubbleSpeedPowerup(tileMap);
+		po.setPosition(tileMap.getWidth() / 2, 100);
+		pickups.add(po);
 	}
 
 	/**
@@ -160,52 +163,49 @@ public class LevelState extends GameState {
 	 */
 	@Override
 	public final void update() {
-	 if (!paused) {
-	  if(player1.getLives() > 0) {
- 		 player1.update();
- 		 player1.directEnemyCollision(enemies, getGsm());
- 		 player1.indirectEnemyCollision(enemies);
-	  }
- 		if (multiplayer && player2.getLives() > 0) {
- 		 player2.update();
- 		 player2.directEnemyCollision(enemies, getGsm());
- 		 player2.indirectEnemyCollision(enemies);
- 		}
+		if (!paused) {
+			if (player1.getLives() > 0) {
+				player1.update();
+				player1.directEnemyCollision(enemies, getGsm());
+				player1.indirectEnemyCollision(enemies);
+			}
+			if (multiplayer && player2.getLives() > 0) {
+				player2.update();
+				player2.directEnemyCollision(enemies, getGsm());
+				player2.indirectEnemyCollision(enemies);
+			}
 
- 		lostCheck();
- 		
- 		for (int i = 0; i < enemies.size(); i++) {
- 			enemies.get(i).update();
- 		}
+			lostCheck();
 
- 		for (int i = 0; i < pickups.size(); i++) {
- 		 if (
- 		   pickups.get(i).checkCollision(player1)
- 		   ||
- 		   (multiplayer && pickups.get(i).checkCollision(player2))
- 		   ) {
- 		  AudioPlayer.play("extraLife");
- 		  pickups.remove(i);
- 		  i--;
-     }
- 		 else {
- 		  pickups.get(i).update();
- 		 }
- 		}
+			for (int i = 0; i < enemies.size(); i++) {
+				enemies.get(i).update();
+			}
 
- 		nextLevelCheck();
-	 }
+			for (int i = 0; i < pickups.size(); i++) {
+				if (pickups.get(i).checkCollision(player1)
+						|| (multiplayer && pickups.get(i).checkCollision(
+								player2))) {
+					AudioPlayer.play("extraLife");
+					pickups.remove(i);
+					i--;
+				} else {
+					pickups.get(i).update();
+				}
+			}
+
+			nextLevelCheck();
+		}
 	}
 
 	/**
 	 * checks if the player is dead.
 	 */
 	private void lostCheck() {
-	 if (player1.getLives() <= 0) {
-	  if(!multiplayer || player2.getLives() <= 0) {
-	   getGsm().setState(GameStateManager.GAMEOVERSTATE);
-	  }
-	 }
+		if (player1.getLives() <= 0) {
+			if (!multiplayer || player2.getLives() <= 0) {
+				getGsm().setState(GameStateManager.GAMEOVERSTATE);
+			}
+		}
 	}
 
 	/**
@@ -213,15 +213,15 @@ public class LevelState extends GameState {
 	 */
 	public final void nextLevelCheck() {
 		if (enemies.size() == 0) {
-		 PlayerSave.setLivesP1(player1.getLives());
-   PlayerSave.setScoreP1(player1.getScore());
-   PlayerSave.setExtraLiveP1(player1.getExtraLive());
-   if(multiplayer) {
-    PlayerSave.setLivesP2(player2.getLives());
-    PlayerSave.setScoreP2(player2.getScore());
-    PlayerSave.setExtraLiveP2(player2.getExtraLive());
- 			System.out.println(PlayerSave.getExtraLiveP2());
-   }
+			PlayerSave.setLivesP1(player1.getLives());
+			PlayerSave.setScoreP1(player1.getScore());
+			PlayerSave.setExtraLiveP1(player1.getExtraLive());
+			if (multiplayer) {
+				PlayerSave.setLivesP2(player2.getLives());
+				PlayerSave.setScoreP2(player2.getScore());
+				PlayerSave.setExtraLiveP2(player2.getExtraLive());
+				System.out.println(PlayerSave.getExtraLiveP2());
+			}
 			setupLevel(level + 1);
 			Log.info("Player Action", "Player reached next level");
 		}
@@ -239,13 +239,13 @@ public class LevelState extends GameState {
 		tileMap.draw(gr);
 
 		for (int i = 0; i < pickups.size(); i++) {
-		 pickups.get(i).draw(gr);
+			pickups.get(i).draw(gr);
 		}
 		if (player1.getLives() > 0) {
-		 player1.draw(gr);
+			player1.draw(gr);
 		}
 		if (multiplayer && player2.getLives() > 0) {
-		 player2.draw(gr);
+			player2.draw(gr);
 		}
 
 		for (int i = 0; i < enemies.size(); i++) {
@@ -254,10 +254,10 @@ public class LevelState extends GameState {
 
 		hud.draw(gr);
 		if (paused) {
-		 gr.setColor(new Color(0, 0, 0, 180));
-		 gr.fillRect(0,  0, tileMap.getWidth(), tileMap.getHeight());
-		 gr.setColor(Color.WHITE);
-		 gr.drawString("PAUSED", 680, 26);
+			gr.setColor(new Color(0, 0, 0, 180));
+			gr.fillRect(0, 0, tileMap.getWidth(), tileMap.getHeight());
+			gr.setColor(Color.WHITE);
+			gr.drawString("PAUSED", 680, 26);
 		}
 	}
 
@@ -266,42 +266,42 @@ public class LevelState extends GameState {
 	 */
 	@Override
 	public final void keyPressed(final int k) {
-	 switch (k) {
-	 case KeyEvent.VK_LEFT:
-	  player1.setLeft(true);
-	  return;
-	 case KeyEvent.VK_RIGHT:
-	  player1.setRight(true);
-	  return;
-	 case KeyEvent.VK_UP:
-	  player1.setUp(true);
-	  return;
-	 case KeyEvent.VK_DOWN:
-	  player1.setDown(true);
-	  return;
-	 case KeyEvent.VK_A:
-	  if (multiplayer) {
-	   player2.setLeft(true);
-	  }
-	  return;
-	 case KeyEvent.VK_D:
-	  if (multiplayer) {
-	   player2.setRight(true);
-	  }
-	  return;
-	 case KeyEvent.VK_W:
-	  if (multiplayer) {
-	   player2.setUp(true);
-	  }
-	  return;
-	 case KeyEvent.VK_S:
-	  if (multiplayer) {
-	   player2.setDown(true);
-	  }
-	  return;
-	  default:
-		  return;
-	 }
+		switch (k) {
+		case KeyEvent.VK_LEFT:
+			player1.setLeft(true);
+			return;
+		case KeyEvent.VK_RIGHT:
+			player1.setRight(true);
+			return;
+		case KeyEvent.VK_UP:
+			player1.setUp(true);
+			return;
+		case KeyEvent.VK_DOWN:
+			player1.setDown(true);
+			return;
+		case KeyEvent.VK_A:
+			if (multiplayer) {
+				player2.setLeft(true);
+			}
+			return;
+		case KeyEvent.VK_D:
+			if (multiplayer) {
+				player2.setRight(true);
+			}
+			return;
+		case KeyEvent.VK_W:
+			if (multiplayer) {
+				player2.setUp(true);
+			}
+			return;
+		case KeyEvent.VK_S:
+			if (multiplayer) {
+				player2.setDown(true);
+			}
+			return;
+		default:
+			return;
+		}
 	}
 
 	/**
@@ -309,51 +309,51 @@ public class LevelState extends GameState {
 	 */
 	@Override
 	public final void keyReleased(final int k) {
-	 switch (k) {
-  case KeyEvent.VK_LEFT:
-   player1.setLeft(false);
-   return;
-  case KeyEvent.VK_RIGHT:
-   player1.setRight(false);
-   return;
-  case KeyEvent.VK_UP:
-   player1.setUp(false);
-   return;
-  case KeyEvent.VK_DOWN:
-   player1.setDown(false);
-   return;
-  case KeyEvent.VK_A:
-   if (multiplayer) {
-    player2.setLeft(false);
-   }
-   return;
-  case KeyEvent.VK_D:
-   if (multiplayer) {
-    player2.setRight(false);
-   }
-   return;
-  case KeyEvent.VK_W:
-   if (multiplayer) {
-    player2.setUp(false);
-   }
-   return;
-  case KeyEvent.VK_S:
-   if (multiplayer) {
-    player2.setDown(false);
-   }
-   return;
-  case KeyEvent.VK_ESCAPE:
-   if (paused) {
-    paused = false;
-    AudioPlayer.resume("level1");
-   } else {
-    paused = true;
-    AudioPlayer.stop("level1");
-   }
-   return;
-  default:
-	  return;
-  }
+		switch (k) {
+		case KeyEvent.VK_LEFT:
+			player1.setLeft(false);
+			return;
+		case KeyEvent.VK_RIGHT:
+			player1.setRight(false);
+			return;
+		case KeyEvent.VK_UP:
+			player1.setUp(false);
+			return;
+		case KeyEvent.VK_DOWN:
+			player1.setDown(false);
+			return;
+		case KeyEvent.VK_A:
+			if (multiplayer) {
+				player2.setLeft(false);
+			}
+			return;
+		case KeyEvent.VK_D:
+			if (multiplayer) {
+				player2.setRight(false);
+			}
+			return;
+		case KeyEvent.VK_W:
+			if (multiplayer) {
+				player2.setUp(false);
+			}
+			return;
+		case KeyEvent.VK_S:
+			if (multiplayer) {
+				player2.setDown(false);
+			}
+			return;
+		case KeyEvent.VK_ESCAPE:
+			if (paused) {
+				paused = false;
+				AudioPlayer.resume(musicFileNames[level]);
+			} else {
+				paused = true;
+				AudioPlayer.stop(musicFileNames[level]);
+			}
+			return;
+		default:
+			return;
+		}
 	}
 
 }
