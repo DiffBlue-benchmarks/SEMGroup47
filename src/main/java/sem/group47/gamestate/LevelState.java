@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.Enemy;
 import sem.group47.entity.HUD;
 import sem.group47.entity.Player;
@@ -77,6 +78,14 @@ public class LevelState extends GameState {
 		setupLevel(level);
   hud = new HUD(player1);
   paused = false;
+  
+  try {
+   AudioPlayer.load("/music/level1.mp3", "level1");
+   AudioPlayer.loop("level1");
+
+  } catch (Exception e) {
+   e.printStackTrace();
+  }
 	}
 
 	/**
@@ -316,8 +325,10 @@ public class LevelState extends GameState {
   case KeyEvent.VK_ESCAPE:
    if (paused) {
     paused = false;
+    AudioPlayer.resume("level1");
    } else {
     paused = true;
+    AudioPlayer.stop("level1");
    }
    return;
   default:

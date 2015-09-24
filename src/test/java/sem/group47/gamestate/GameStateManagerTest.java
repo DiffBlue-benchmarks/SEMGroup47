@@ -8,22 +8,36 @@ import java.awt.image.BufferedImage;
 import org.junit.Before;
 import org.junit.Test;
 
-import sem.group47.gamestate.GameStateManager;
+import sem.group47.main.Log;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GameStateManagerTest.
+ */
 public class GameStateManagerTest {
-	
+
+	/** The g2d. */
 	private Graphics2D g2d;
-	
+
+	/** The gsm. */
 	public GameStateManager gsm;
-	
+
+	/**
+	 * Sets the up.
+	 */
 	@Before
-	public void setUp() {
-		BufferedImage image = new BufferedImage(810, 600, BufferedImage.TYPE_INT_RGB);
+	public final void setUp() {
+		Log.setLog();
+		BufferedImage image = new BufferedImage(810, 600,
+				BufferedImage.TYPE_INT_RGB);
 		g2d = (Graphics2D) image.getGraphics();
 	}
-	
+
+	/**
+	 * Test game update.
+	 */
 	@Test
-	public void testGameUpdate() {
+	public final void testGameUpdate() {
 		gsm = new GameStateManager();
 		assertEquals(gsm.getCurrentState(), GameStateManager.MENUSTATE);
 		gsm.setState(GameStateManager.LEVELSTATE);
@@ -32,9 +46,12 @@ public class GameStateManagerTest {
 			gsm.update();
 		}
 	}
-	
+
+	/**
+	 * Test game update and draw.
+	 */
 	@Test
-	public void testGameUpdateAndDraw() {
+	public final void testGameUpdateAndDraw() {
 		gsm = new GameStateManager();
 		assertEquals(gsm.getCurrentState(), GameStateManager.MENUSTATE);
 		gsm.setState(GameStateManager.LEVELSTATE);
