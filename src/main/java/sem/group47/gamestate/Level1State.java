@@ -65,7 +65,7 @@ public class Level1State extends GameState {
 		hud = new HUD(player);
 
 		try {
-			AudioPlayer.load("/music/level1.wav", "level1");
+			AudioPlayer.load("/music/level1.mp3", "level1");
 			AudioPlayer.loop("level1");
 
 		} catch (Exception e) {
