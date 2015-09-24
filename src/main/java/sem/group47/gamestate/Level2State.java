@@ -62,8 +62,15 @@ public class Level2State extends GameState {
 
 		populateEnemies();
 		hud = new HUD(player);
-		AudioPlayer.load("/music/level2.wav", "level2");
-		AudioPlayer.loop("level2");
+
+		try {
+			AudioPlayer.load("/music/level2.wav", "level2");
+			AudioPlayer.loop("level2");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**

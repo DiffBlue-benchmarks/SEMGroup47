@@ -63,8 +63,14 @@ public class Level1State extends GameState {
 
 		populateEnemies();
 		hud = new HUD(player);
-		AudioPlayer.load("/music/level1.wav", "level1");
-		AudioPlayer.loop("level1");
+
+		try {
+			AudioPlayer.load("/music/level1.wav", "level1");
+			AudioPlayer.loop("level1");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
