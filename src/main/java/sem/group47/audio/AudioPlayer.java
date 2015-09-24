@@ -76,7 +76,12 @@ public class AudioPlayer {
 	 *            the s
 	 */
 	public static void play(final String s) {
-		play(s, gap);
+	 try {
+	  play(s, gap);
+	 }
+  catch (Exception e) {
+   e.printStackTrace();
+  }
 	}
 
 	/**
@@ -178,7 +183,12 @@ public class AudioPlayer {
 	 *            the s
 	 */
 	public static void loop(final String s) {
-		loop(s, gap, gap, clips.get(s).getFrameLength() - 1);
+	 try {
+	  loop(s, gap, gap, clips.get(s).getFrameLength() - 1);
+	 }
+	 catch (Exception e) {
+	  e.printStackTrace();
+	 }
 	}
 
 	/**
@@ -190,7 +200,12 @@ public class AudioPlayer {
 	 *            the frame
 	 */
 	public static void loop(final String s, final int frame) {
-		loop(s, frame, gap, clips.get(s).getFrameLength() - 1);
+	 try {
+	  loop(s, frame, gap, clips.get(s).getFrameLength() - 1);
+	 }
+  catch (Exception e) {
+   e.printStackTrace();
+  }
 	}
 
 	/**
@@ -204,7 +219,12 @@ public class AudioPlayer {
 	 *            the end
 	 */
 	public static void loop(final String s, final int start, final int end) {
-		loop(s, gap, start, end);
+	 try {
+	  loop(s, gap, start, end);
+	 }
+  catch (Exception e) {
+   e.printStackTrace();
+  }
 	}
 
 	/**
