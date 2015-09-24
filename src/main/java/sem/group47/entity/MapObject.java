@@ -153,6 +153,11 @@ public abstract class MapObject {
 	}
 
 	/**
+	 * Any game physics should be applied here.
+	 */
+	public abstract void update();
+
+	/**
 	 * Determines if this MapObject intersects with another object.
 	 *
 	 * @param obj

@@ -42,6 +42,12 @@ public class Player extends MapObject {
 	/** The projectiles. */
 	private ArrayList<Projectile> projectiles;
 
+	/** The speed at which bubbles fire. */
+	private double bubbleSpeed;
+
+	/** The size of bubbles fired. **/
+	private int bubbleSize;
+
 	/**
 	 * Instantiates a new player.
 	 *
@@ -65,6 +71,8 @@ public class Player extends MapObject {
 		setMaxFallSpeed(6.0);
 		setJumpStart(-10);
 		setStopJumpSpeed(.3);
+		setBubbleSpeed(4.7);
+		setBubbleSize(32);
 
 		setFacingRight(true);
 
@@ -107,7 +115,6 @@ public class Player extends MapObject {
 		fireProjectile();
 		interactWithProjectile();
 		flinching();
-
 	}
 
 	/**
@@ -129,18 +136,28 @@ public class Player extends MapObject {
 	 */
 	public final void fireProjectile() {
 		if (getDown()) {
-			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
+			if (
+			  lastFireTime + fireDelay < System.currentTimeMillis()
+			  ) {
 				lastFireTime = System.currentTimeMillis();
-				Projectile projectile = new Projectile(getTileMap());
+				Projectile projectile =
+				  new Projectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
-					projectile.setDx(projectile.getDx() * -1);
+					projectile.setDx(bubbleSpeed * -1);
+				} else {
+				 projectile.setDx(bubbleSpeed);
 				}
+				projectile.setWidth(getBubbleSize());
+				projectile.setHeight(getBubbleSize());
+				projectile.setCwidth(
+				  (int) (getBubbleSize() / 1.6f));
+				projectile.setCheight(
+				  (int) (getBubbleSize() / 1.6f));
 				projectiles.add(projectile);
 				Log.info("Player Action", "Bubble fired");
 			}
 		}
-		
 	}
 
 	/**
@@ -158,15 +175,23 @@ public class Player extends MapObject {
 			if (intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
 
-					setScore(enemies.get(i).getScorePoints());
+					setScore(
+					  enemies.get(i).getScorePoints());
 					enemies.remove(i);
-					Log.info("Player Action", "Player collision with Caught Enemy");
+					Log.info(
+					  "Player Action",
+					  "Player collision with Caught Enemy"
+					  );
 				} else if (getLives() > 1) {
 					hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info(
+					  "Player Action",
+					  "Player collision with Enemy"
+					  );
 				} else {
 
-					gsm.setState(GameStateManager.GAMEOVERSTATE);
+					gsm.setState(
+					  GameStateManager.GAMEOVERSTATE);
 					Log.info("Player Action", "Game over");
 
 					return;
@@ -215,7 +240,8 @@ public class Player extends MapObject {
 	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
 		for (int i = 0; i < enemies.size(); i++) {
 			for (int j = 0; j < getProjectiles().size(); j++) {
-				if (getProjectiles().get(j).intersects(enemies.get(i))) {
+				if (getProjectiles().get(j).getDy() == 0 && 
+				  getProjectiles().get(j).intersects(enemies.get(i))) {
 					getProjectiles().remove(j);
 					j--;
 					Log.info("Player Action", "Fired bubble hit enemy");
@@ -418,4 +444,40 @@ public class Player extends MapObject {
 		this.extraLive = pExtraLive;
 	}
 
+	/**
+	 * Sets the bubble speed.
+	 *
+	 * @param speed
+	 *  The bubble speed
+	 */
+	public final void setBubbleSpeed(final double speed) {
+	 this.bubbleSpeed = speed;
+	}
+
+	/**
+	 * Returns the bubble speed.
+	 *
+	 * @return bubbleSpeed
+	 */
+	public final double getBubbleSpeed() {
+	 return bubbleSpeed;
+	}
+
+	/**
+	 * Sets the bubble size.
+	 *
+	 * @param size
+	 *  The bubble size
+	 */
+	public final void setBubbleSize(final int size) {
+	 bubbleSize = size;
+	}
+
+	/**
+	 * Gets the bubble size.
+	 * @return bubblesize
+	 */
+	public final int getBubbleSize() {
+	 return bubbleSize;
+	}
 }
