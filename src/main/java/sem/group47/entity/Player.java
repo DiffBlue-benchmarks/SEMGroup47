@@ -40,8 +40,31 @@ public class Player extends MapObject {
 	/** The fire delay. */
 	private int fireDelay;
 
+	/** If the player is attacking or not. */
+	private boolean isAttacking;
+
+	/** If the player is idle or not. */
+	private boolean isIdle;
+
 	/** The projectiles. */
 	private ArrayList<Projectile> projectiles;
+
+	/** The animation. */
+	private ArrayList<BufferedImage[]> sprites;
+
+	/** Number of frames for each animation action in order. */
+	private final int[] numFrames = {
+		3, 2, 3
+	};
+
+	/** Animation actions # for idle state. */
+	public static final int IDLE = 0;
+
+	/** Animation actions # for walking state. */
+	public static final int WALKING = 1;
+
+	/** Animation actions # for attacking state. */
+	public static final int ATTACK = 2;
 
 	/** The speed at which bubbles fire. */
 	private double bubbleSpeed;
@@ -81,17 +104,43 @@ public class Player extends MapObject {
 		maxLives = lives;
 		extraLive = 300;
 		fireDelay = 500;
+		isAttacking = false;
 
 		projectiles = new ArrayList<Projectile>();
 
 		try {
-			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/player/player.png"));
-			setSprite(spritesheet.getSubimage(0, 0, 38, 32));
+
+			BufferedImage spritesheet = ImageIO.read(
+				getClass().getResourceAsStream(
+						"/player/playerv2.png"
+				)
+			);
+
+			sprites = new ArrayList<BufferedImage[]>();
+			for (int i = 0; i < 3; i++) {
+
+				BufferedImage[] bi =
+					new BufferedImage[numFrames[i]];
+
+				for (int j = 0; j < numFrames[i]; j++) {
+						bi[j] = spritesheet.getSubimage(
+								j * getWidth(),
+								i * getHeight(),
+								getWidth(),
+								getHeight()
+						);
+				}
+				sprites.add(bi);
+			}
 		} catch (Exception e) {
-			Log.error("IO Read", "Could not file player sprite");
 			e.printStackTrace();
 		}
+
+		animation = new Animation();
+		currentAction = IDLE;
+		animation.setFrames(sprites.get(IDLE));
+		animation.setDelay(400);
+		Log.info("Player action", "Player instance created");
 	}
 
 	/**
@@ -104,8 +153,9 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Update. Called every frame. Updates player position, looks for collision
-	 * and then puts the player in the new position
+	 * Update. Called every frame. Updates player position,
+	 * looks for collision and then puts the player in the
+	 * new position
 	 */
 	public final void update() {
 		updateProjectiles();
@@ -113,6 +163,7 @@ public class Player extends MapObject {
 		getNextYPosition();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
+		updateAnimation();
 		fireProjectile();
 		interactWithProjectile();
 		flinching();
@@ -148,12 +199,17 @@ public class Player extends MapObject {
 				} else {
 				 projectile.setDx(bubbleSpeed);
 				}
+
+				isAttacking = true;
+				isIdle = false;
+
 				projectile.setWidth(getBubbleSize());
 				projectile.setHeight(getBubbleSize());
 				projectile.setCwidth(
 				  (int) (getBubbleSize() / 1.6f));
 				projectile.setCheight(
 				  (int) (getBubbleSize() / 1.6f));
+
 				projectiles.add(projectile);
 				Log.info("Player Action", "Bubble fired");
 			}
@@ -178,8 +234,16 @@ public class Player extends MapObject {
 					setScore(
 					  enemies.get(i).getScorePoints());
 					enemies.remove(i);
+					
 					Log.info("Player Action",
 							"Player collision with Caught Enemy");
+
+				} else if (getLives() > 1) {
+					hit(1);
+					Log.info(
+							"Player Action", "Player collision with Enemy"
+							);
+					
 				} else {
 					AudioPlayer.play("crash");
 					hit(1);
@@ -224,7 +288,7 @@ public class Player extends MapObject {
 	/**
 	 * checks what happens when the player indirectly (projectile) collides with
 	 * an enemy.
-	 * 
+	 *
 	 * @param enemies
 	 *            enemies
 	 */
@@ -296,18 +360,21 @@ public class Player extends MapObject {
 	 */
 	public final void getNextXPosition() {
 		if (isLeft()) {
+			isIdle = false;
 			Log.info("Player Action", "Player moved left");
 			setDx(getDx() - getMovSpeed());
 			if (getDx() < -getMaxSpeed()) {
 				setDx(-getMaxSpeed());
 			}
 		} else if (isRight()) {
+			isIdle = false;
 			Log.info("Player Action", "Player moved right");
 			setDx(getDx() + getMovSpeed());
 			if (getDx() > getMaxSpeed()) {
 				setDx(getMaxSpeed());
 			}
 		} else {
+			isIdle = true;
 			setDx(0);
 		}
 		if (getDx() > 0) {
@@ -346,6 +413,37 @@ public class Player extends MapObject {
 	}
 
 	/**
+	 * Update function for the animations that are rendered.
+	 */
+	public final void updateAnimation() {
+
+		if (isAttacking) {
+			if (currentAction != ATTACK) {
+				currentAction = ATTACK;
+				animation.setFrames(sprites.get(ATTACK));
+				animation.setDelay(100);
+			}
+			if (animation.hasPlayedOnce()) {
+				isIdle = true;
+				isAttacking = false;
+			}
+		} else if (isIdle) {
+			if (currentAction != IDLE) {
+				currentAction = IDLE;
+				animation.setFrames(sprites.get(IDLE));
+				animation.setDelay(400);
+			}
+		} else if (isLeft() || isRight()) {
+			if (currentAction != WALKING) {
+				currentAction = WALKING;
+				animation.setFrames(sprites.get(WALKING));
+				animation.setDelay(200);
+			}
+		}
+		animation.update();
+	}
+
+	/**
 	 * Draws the player.
 	 *
 	 * @param g
@@ -353,7 +451,14 @@ public class Player extends MapObject {
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
-		super.draw(g);
+		if (facingRight) {
+			g.drawImage(animation.getImage(), (int) (getXpos() - getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2), null);
+		} else {
+			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
+		}
+
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).draw(g);
 		}
@@ -368,9 +473,11 @@ public class Player extends MapObject {
 	public final void setScore(final int points) {
 
 		score += points;
+
 		if (score != 0) {
 			AudioPlayer.play("bubblePop");
 		}
+
 		Log.info("Player Action", "Player received " + points + " points");
 		if (score == extraLive) {
 			AudioPlayer.play("extraLife");

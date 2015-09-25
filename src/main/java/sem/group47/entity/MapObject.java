@@ -90,9 +90,18 @@ public abstract class MapObject {
 
 	// ANIMATION
 
+	/** The animation. */
+	protected Animation animation;
+	
+	/** The current Action. */
+	protected int currentAction;
+	
+	/** The previous action. */
+	protected int previousAction;
+	
 	/** The facing right. */
-	private boolean facingRight;
-
+	protected boolean facingRight;
+	
 	// MOVEMENT
 
 	/** The left. */
