@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -73,8 +74,8 @@ public class TileMap {
 	 * @param tileSize
 	 *            the tile size
 	 */
-	public TileMap(int tileSize) {
-		this.tileSize = tileSize;
+	public TileMap(final int tsize) {
+		tileSize = tsize;
 		numRowsToDraw = GamePanel.HEIGHT / tileSize;
 		numColsToDraw = GamePanel.WIDTH / tileSize;
 	}
@@ -85,7 +86,7 @@ public class TileMap {
 	 * @param s
 	 *            the s
 	 */
-	public void loadTiles(String s) {
+	public final void loadTiles(final String s) {
 		try {
 
 			// get the tileset image which has 2 rows of 2 tiles of 30
@@ -136,13 +137,13 @@ public class TileMap {
 	 * @param s
 	 *            the s
 	 */
-	public void loadMap(String s) {
-
+	public final void loadMap(final String s) {
+		InputStream in = null;
 		try {
 
 			// get the map layout
-			InputStream in = getClass().getResourceAsStream(s);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			in = getClass().getResourceAsStream(s);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 
 			// first row is the num of col
 			numCols = Integer.parseInt(br.readLine());
@@ -164,8 +165,11 @@ public class TileMap {
 			for (int row = 0; row < numRows; row++) {
 				String line = br.readLine();
 				// use white spaces to split as tokens
-				String[] tokens = line.split(delims);
-
+				String[] tokens = null;
+				if (line != null) {
+					tokens = line.split(delims);
+				} 
+				
 				// put the values in the map matrix
 				for (int col = 0; col < numCols; col++) {
 				 if(tokens[col].equals("e")) {
@@ -177,11 +181,11 @@ public class TileMap {
 				 }
 				}
 			}
-
+			
+			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
+		} 
 	}
 
 	/**
@@ -189,7 +193,7 @@ public class TileMap {
 	 * @return enemy start locations
 	 */
 
-	public ArrayList<Point> getEnemyStartLocations() {
+	public final ArrayList<Point> getEnemyStartLocations() {
 	 return enemyStartLocations;
 	}
 
@@ -198,7 +202,7 @@ public class TileMap {
 	 *
 	 * @return the tile size
 	 */
-	public int getTileSize() {
+	public final int getTileSize() {
 		return tileSize;
 	}
 
@@ -207,7 +211,7 @@ public class TileMap {
 	 *
 	 * @return the x
 	 */
-	public int getx() {
+	public final int getx() {
 		return (int) x;
 	}
 
@@ -216,7 +220,7 @@ public class TileMap {
 	 *
 	 * @return the y
 	 */
-	public int gety() {
+	public final int gety() {
 		return (int) y;
 	}
 
@@ -225,7 +229,7 @@ public class TileMap {
 	 *
 	 * @return the width
 	 */
-	public int getWidth() {
+	public final int getWidth() {
 		return width;
 	}
 
@@ -234,7 +238,7 @@ public class TileMap {
 	 *
 	 * @return the height
 	 */
-	public int getHeight() {
+	public final int getHeight() {
 		return height;
 	}
 
@@ -247,7 +251,7 @@ public class TileMap {
 	 *            the col
 	 * @return the type
 	 */
-	public int getType(int row, int col) {
+	public final int getType(final int row, final int col) {
 		// returns the value inside the multidimensional array e.g. tile 2
 
 		if (row >= this.getNumRows() || row < 0 || col >= this.getNumCols() || col < 0) {
@@ -269,7 +273,7 @@ public class TileMap {
 	 * @param g
 	 *            the g
 	 */
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 
 		for (int row = 0; row < numRowsToDraw; row++) {
 
@@ -308,7 +312,7 @@ public class TileMap {
 	 *
 	 * @return the num rows
 	 */
-	public int getNumRows() {
+	public final int getNumRows() {
 		return numRows;
 	}
 
@@ -317,16 +321,16 @@ public class TileMap {
 	 *
 	 * @return the num cols
 	 */
-	public int getNumCols() {
+	public final int getNumCols() {
 		return numCols;
 	}
 
-	public int[][] getMap() {
-		return map;
+	public final int[][] getMap() {
+		return map.clone();
 	}
 
-	public Tile[][] getTiles() {
-		return tiles;
+	public final Tile[][] getTiles() {
+		return tiles.clone();
 	}
 
 }
