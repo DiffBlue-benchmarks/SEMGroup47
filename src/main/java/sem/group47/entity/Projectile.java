@@ -40,17 +40,18 @@ public class Projectile extends MapObject {
 		setHeight(32);
 		setCwidth(20);
 		setCheight(20);
-		setDx(3);
+		setDx(4.7);
 
 		lifeTime = 7500;
-		floatDelay = 1000;
+		floatDelay = 700;
 		lastUpdateTime = System.currentTimeMillis();
 		floating = false;
-		floatSpeed = .01;
+		floatSpeed = .02;
 
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/player/bubbles.png"));
+					.getResourceAsStream(
+					  "/player/bubbles.png"));
 			setSprite(spritesheet.getSubimage(96, 0, 32, 32));
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.gamestate.GameStateManager;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
@@ -65,6 +66,12 @@ public class Player extends MapObject {
 	/** Animation actions # for attacking state. */
 	public static final int ATTACK = 2;
 
+	/** The speed at which bubbles fire. */
+	private double bubbleSpeed;
+
+	/** The size of bubbles fired. **/
+	private int bubbleSize;
+
 	/**
 	 * Instantiates a new player.
 	 *
@@ -73,6 +80,8 @@ public class Player extends MapObject {
 	 */
 	public Player(final TileMap tm) {
 		super(tm);
+
+		Log.info("Player action", "Player instance created");
 
 		setWidth(38);
 		setHeight(32);
@@ -86,6 +95,8 @@ public class Player extends MapObject {
 		setMaxFallSpeed(6.0);
 		setJumpStart(-10);
 		setStopJumpSpeed(.3);
+		setBubbleSpeed(4.7);
+		setBubbleSize(32);
 
 		setFacingRight(true);
 
@@ -178,14 +189,27 @@ public class Player extends MapObject {
 	public final void fireProjectile() {
 		if (getDown()) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
+				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
-				Projectile projectile = new Projectile(getTileMap());
+				Projectile projectile =
+				  new Projectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
-					projectile.setDx(projectile.getDx() * -1);
+					projectile.setDx(bubbleSpeed * -1);
+				} else {
+				 projectile.setDx(bubbleSpeed);
 				}
+
 				isAttacking = true;
 				isIdle = false;
+
+				projectile.setWidth(getBubbleSize());
+				projectile.setHeight(getBubbleSize());
+				projectile.setCwidth(
+				  (int) (getBubbleSize() / 1.6f));
+				projectile.setCheight(
+				  (int) (getBubbleSize() / 1.6f));
+
 				projectiles.add(projectile);
 				Log.info("Player Action", "Bubble fired");
 			}
@@ -207,23 +231,26 @@ public class Player extends MapObject {
 			if (intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
 
-					setScore(enemies.get(i).getScorePoints());
+					setScore(
+					  enemies.get(i).getScorePoints());
 					enemies.remove(i);
-					Log.info(
-							"Player Action", "Player collision with Caught Enemy"
-							);
+					
+					Log.info("Player Action",
+							"Player collision with Caught Enemy");
+
 				} else if (getLives() > 1) {
 					hit(1);
 					Log.info(
 							"Player Action", "Player collision with Enemy"
 							);
+					
 				} else {
-
-					gsm.setState(GameStateManager.GAMEOVERSTATE);
-					Log.info("Player Action", "Game over");
-
-					return;
-
+					AudioPlayer.play("crash");
+					hit(1);
+					Log.info(
+					  "Player Action",
+					  "Player collision with Enemy"
+					  );
 				}
 			}
 		}
@@ -268,7 +295,8 @@ public class Player extends MapObject {
 	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
 		for (int i = 0; i < enemies.size(); i++) {
 			for (int j = 0; j < getProjectiles().size(); j++) {
-				if (getProjectiles().get(j).intersects(enemies.get(i))) {
+				if (getProjectiles().get(j).getDy() == 0 && 
+				  getProjectiles().get(j).intersects(enemies.get(i))) {
 					getProjectiles().remove(j);
 					j--;
 					Log.info("Player Action", "Fired bubble hit enemy");
@@ -306,14 +334,21 @@ public class Player extends MapObject {
 		Log.info("Player Action", "Player lost a life");
 		if (lives < 0) {
 			lives = 0;
-			Log.warning("Player info wrong", "Amount of lives of player was <0. Set back to 0");
+			Log.warning("Player info wrong",
+					"Amount of lives of player was <0. Set back to 0");
 		}
 		if (lives == 0) {
+		 AudioPlayer.stopAll();
+			AudioPlayer.play("dead");
 			setAlive(false);
 			Log.info("Player Action", "Player died");
+			// TODO GameOver screen
 		}
 
-		setPosition(100d, 100d);
+		setPosition(
+    getTileMap().getWidth() / 2,
+    getTileMap().getHeight() / 2);
+		setVector(0 , 0);
 		flinching = true;
 		flinchTimer = System.nanoTime();
 
@@ -359,6 +394,7 @@ public class Player extends MapObject {
 			Log.info("Player Action", "Player jumped");
 		}
 		if (isJumping() && !isFalling()) {
+			AudioPlayer.play("jump");
 			setDy(getJumpStart());
 			setFalling(true);
 		}
@@ -435,9 +471,16 @@ public class Player extends MapObject {
 	 *            the new score
 	 */
 	public final void setScore(final int points) {
+
 		score += points;
+
+		if (score != 0) {
+			AudioPlayer.play("bubblePop");
+		}
+
 		Log.info("Player Action", "Player received " + points + " points");
 		if (score == extraLive) {
+			AudioPlayer.play("extraLife");
 			lives++;
 			extraLive += 300;
 			Log.info("Player Action", "Player received a new life");
@@ -510,4 +553,40 @@ public class Player extends MapObject {
 		this.extraLive = pExtraLive;
 	}
 
+	/**
+	 * Sets the bubble speed.
+	 *
+	 * @param speed
+	 *  The bubble speed
+	 */
+	public final void setBubbleSpeed(final double speed) {
+	 this.bubbleSpeed = speed;
+	}
+
+	/**
+	 * Returns the bubble speed.
+	 *
+	 * @return bubbleSpeed
+	 */
+	public final double getBubbleSpeed() {
+	 return bubbleSpeed;
+	}
+
+	/**
+	 * Sets the bubble size.
+	 *
+	 * @param size
+	 *  The bubble size
+	 */
+	public final void setBubbleSize(final int size) {
+	 bubbleSize = size;
+	}
+
+	/**
+	 * Gets the bubble size.
+	 * @return bubblesize
+	 */
+	public final int getBubbleSize() {
+	 return bubbleSize;
+	}
 }

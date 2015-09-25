@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.entity.PlayerSave;
+import sem.group47.audio.AudioPlayer;
 import sem.group47.main.GamePanel;
 
 /**
@@ -19,7 +21,7 @@ public class MenuState extends GameState {
 	private int currentChoice = 0;
 
 	/** The options. */
-	private String[] options = { "Start", "Help", "Quit" };
+	private String[] options = { "Start", "2 Player Mode", "Help", "Quit" };
 
 	/** The font. */
 	private Font font;
@@ -29,6 +31,9 @@ public class MenuState extends GameState {
 
 	/** The image. */
 	private BufferedImage image;
+
+	/** The audioPlayer. */
+	private AudioPlayer bgMusic;
 
 	/**
 	 * Instantiates a new menu state.
@@ -42,8 +47,8 @@ public class MenuState extends GameState {
 
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(bg));
-
 			font = new Font("Arial", Font.PLAIN, 40);
+			AudioPlayer.resumeLoop("menu");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -94,12 +99,19 @@ public class MenuState extends GameState {
 	 */
 	private void select() {
 		if (currentChoice == 0) {
-			getGsm().setState(GameStateManager.LEVEL1STATE);
+		 PlayerSave.setMultiplayerEnabled(false);
+		 getGsm().setState(GameStateManager.LEVELSTATE);
+                 AudioPlayer.stop("menu");
 		}
 		if (currentChoice == 1) {
-			getGsm().setState(GameStateManager.HELPSTATE);
+		 PlayerSave.setMultiplayerEnabled(true);
+		 getGsm().setState(GameStateManager.LEVELSTATE);
+                 AudioPlayer.stop("menu");
 		}
 		if (currentChoice == 2) {
+			getGsm().setState(GameStateManager.HELPSTATE);
+		}
+		if (currentChoice == 3) {
 			System.exit(0);
 		}
 	}
@@ -124,6 +136,7 @@ public class MenuState extends GameState {
 				currentChoice = 0;
 			}
 		}
+
 	}
 
 	/**

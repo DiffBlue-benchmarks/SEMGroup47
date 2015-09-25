@@ -105,7 +105,7 @@ public class HelpState extends GameState {
 			getGsm().setState(GameStateManager.MENUSTATE);
 		}
 		if (currentChoice == 1) {
-			getGsm().setState(GameStateManager.LEVEL1STATE);
+			getGsm().setState(GameStateManager.LEVELSTATE);
 		}
 
 	}

@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
@@ -31,6 +32,7 @@ public class PlayerTest {
 	/** The player. */
 	private Player player;
 
+	/** The player save state. */
 	private PlayerSave playerSave;
 
 	/** The projectile. */
@@ -43,23 +45,25 @@ public class PlayerTest {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	@Before
-	public void setUp() throws IOException {
+	public final void setUp() throws IOException {
 
 		Log.setLog();
-		
+		AudioPlayer.init();
+
 		tileMap = new TileMap(tileSize);
 
 		tileMap.loadTiles("/test/Test_Tile.gif");
 		tileMap.loadMap("/test/Test_Map.map");
 		player = new Player(tileMap);
 		projectile = new Projectile(tileMap);
+
 	}
 
 	/**
 	 * Update test.
 	 */
 	@Test
-	public void updateTest() {
+	public final void updateTest() {
 		player.setDown(true);
 		player.update();
 		assertEquals(player.getProjectiles().size(), 1);
@@ -70,16 +74,16 @@ public class PlayerTest {
 	 * Hit test.
 	 */
 	@Test
-	public void hitTest() {
+	public final void hitTest() {
 		player.hit(1);
-		assertEquals(playerSave.getLives(), 3);
+		assertEquals(PlayerSave.getLivesP1(), 3);
 	}
 
 	/**
 	 * Hit dead test.
 	 */
 	@Test
-	public void hitDeadTest() {
+	public final void hitDeadTest() {
 		player.hit(3);
 		assertEquals(player.getIsAlive(), false);
 		assertEquals(player.getLives(), 0);
@@ -89,7 +93,7 @@ public class PlayerTest {
 	 * Hit out of bounds test.
 	 */
 	@Test
-	public void hitOutOfBoundsTest() {
+	public final void hitOutOfBoundsTest() {
 		player.hit(4);
 		assertEquals(player.getIsAlive(), false);
 		assertEquals(player.getLives(), 0);
@@ -99,17 +103,17 @@ public class PlayerTest {
 	 * Hit flinch test.
 	 */
 	@Test
-	public void hitFlinchTest() {
+	public final void hitFlinchTest() {
 		player.setFlinch(true);
 		player.hit(1);
-		assertEquals(playerSave.getLives(), 3);
+		assertEquals(playerSave.getLivesP1(), 3);
 	}
 
 	/**
 	 * Next position left test.
 	 */
 	@Test
-	public void nextPositionLeftTest() {
+	public final void nextPositionLeftTest() {
 		player.setLeft(true);
 		player.setMovSpeed(3.0);
 		player.setMaxSpeed(2.0);
@@ -121,7 +125,7 @@ public class PlayerTest {
 	 * Next position right test.
 	 */
 	@Test
-	public void nextPositionRightTest() {
+	public final void nextPositionRightTest() {
 		player.setRight(true);
 		player.setMovSpeed(3.0);
 		player.setMaxSpeed(2.0);
@@ -133,7 +137,7 @@ public class PlayerTest {
 	 * Next position stop test.
 	 */
 	@Test
-	public void nextPositionStopTest() {
+	public final void nextPositionStopTest() {
 		player.setRight(false);
 		player.setLeft(false);
 		player.getNextXPosition();
@@ -144,7 +148,7 @@ public class PlayerTest {
 	 * Next position up test.
 	 */
 	@Test
-	public void nextPositionUpTest() {
+	public final void nextPositionUpTest() {
 		player.setUp(true);
 		player.getNextYPosition();
 		assertTrue(player.isJumping());
@@ -154,7 +158,7 @@ public class PlayerTest {
 	 * Next position falling test.
 	 */
 	@Test
-	public void nextPositionFallingTest() {
+	public final void nextPositionFallingTest() {
 		player.setFallSpeed(1);
 		player.setFalling(true);
 		player.getNextYPosition();

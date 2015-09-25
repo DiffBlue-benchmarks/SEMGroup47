@@ -3,7 +3,7 @@
 .gradle
 bin/
 tmp/
-logfiles/
+logfiles/log_*
 *.tmp
 *.bak
 *.swp
@@ -39,3 +39,5 @@ local.properties
 # TeXlipse plugin
 .texlipse
 /target/
+src/main/java/sem/group47/gamestate/Level1State.java
+src/main/java/sem/group47/gamestate/Level2State.java

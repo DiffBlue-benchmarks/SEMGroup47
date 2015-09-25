@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.audio.AudioPlayer;
 import sem.group47.main.GamePanel;
 
 /**
@@ -37,7 +38,12 @@ public class GameOverState extends GameState {
 	 *            the gamestatemanager
 	 */
 	public GameOverState(final GameStateManager gsm) {
-
+		try {
+			AudioPlayer.stopAll();
+			AudioPlayer.loop("gameover");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		setGsm(gsm);
 
 		try {
@@ -99,10 +105,12 @@ public class GameOverState extends GameState {
 	 */
 	private void select() {
 		if (currentChoice == 0) {
-			getGsm().setState(GameStateManager.LEVEL1STATE);
+			getGsm().setState(GameStateManager.LEVELSTATE);
+			AudioPlayer.stop("gameover");
 		}
 		if (currentChoice == 1) {
 			getGsm().setState(GameStateManager.MENUSTATE);
+			AudioPlayer.stop("gameover");
 		}
 	}
 

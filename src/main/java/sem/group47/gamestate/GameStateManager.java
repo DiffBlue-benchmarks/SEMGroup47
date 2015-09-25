@@ -1,88 +1,116 @@
 package sem.group47.gamestate;
 
-import java.util.ArrayList;
+import sem.group47.audio.AudioPlayer;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GameStateManager.
  */
 public class GameStateManager {
 
 	/** The list of game states. */
-	private ArrayList<GameState> gameStates;
+	private GameState[] gameStates;
 
 	/** The current state. */
 	private int currentState;
 
-	/** The pauseState. */
-	private PauseState pauseState;
-
 	/** Paused. */
 	private boolean paused;
+
+	/** The number of gamestates. */
+	public static final int NUMGAMESTATES = 4;
 
 	/** The Constant MENUSTATE. */
 	public static final int MENUSTATE = 0;
 
-	/** The Constant LEVEL1STATE. */
-	public static final int LEVEL1STATE = 1;
-
-	/** The Constant LEVEL2STATE. */
-	public static final int LEVEL2STATE = 2;
+	/** The Constant LEVELSTATE. */
+	public static final int LEVELSTATE = 1;
 
 	/** The Constant GAMEOVER. */
-	public static final int GAMEOVERSTATE = 3;
+	public static final int GAMEOVERSTATE = 2;
 
 	/** The Constant HELPSTATE. */
-	public static final int HELPSTATE = 4;
+	public static final int HELPSTATE = 3;
 
 	/**
 	 * Instantiates a new game state manager.
 	 */
 	public GameStateManager() {
+		AudioPlayer.init();
+		try {
+			AudioPlayer.load("/music/menu.mp3", "menu");
+			AudioPlayer.load("/music/level1.mp3", "level1");
+			AudioPlayer.load("/music/level2.mp3", "level2");
+			AudioPlayer.load("/music/level3.mp3", "level3");
+			AudioPlayer.load("/music/level4.mp3", "level4");
 
-		gameStates = new ArrayList<GameState>();
+			AudioPlayer.load("/music/gameover.wav", "gameover");
+
+			AudioPlayer.load("/sfx/jump.wav", "jump");
+			AudioPlayer.load("/sfx/fire_bubble.wav", "fire");
+			AudioPlayer.load("/sfx/extra_life.wav", "extraLife");
+			AudioPlayer.load("/sfx/bubble_pop.wav", "bubblePop");
+			AudioPlayer.load("/sfx/player_death.wav", "dead");
+			AudioPlayer.load("/sfx/crash.wav", "crash");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		gameStates = new GameState[NUMGAMESTATES];
+
 		currentState = MENUSTATE;
-
-		pauseState = new PauseState(this);
-		paused = false;
-
-		gameStates.add(new MenuState(this));
-		gameStates.add(new Level1State(this));
-		gameStates.add(new Level2State(this));
-		gameStates.add(new GameOverState(this));
-		gameStates.add(new HelpState(this));
-
+		loadState(currentState);
 	}
 
 	/**
-	 * setPaused.
-	 * 
-	 * @param pPaused
-	 *            pause
+	 * Load state.
+	 *
+	 * @param state
+	 *            the state
 	 */
-	public final void setPaused(final boolean pPaused) {
-		paused = pPaused;
+	private void loadState(final int state) {
+		if (state == MENUSTATE) {
+			gameStates[state] = new MenuState(this);
+		} else if (state == LEVELSTATE) {
+			gameStates[state] = new LevelState(this);
+		} else if (state == GAMEOVERSTATE) {
+			gameStates[state] = new GameOverState(this);
+		} else if (state == HELPSTATE) {
+			gameStates[state] = new HelpState(this);
+		}
+		gameStates[state].init();
 	}
 
 	/**
-	 * Sets the current state.
+	 * Unload state.
+	 *
+	 * @param state
+	 *            the state
+	 */
+	private void unloadState(final int state) {
+		gameStates[state] = null;
+	}
+
+	/**
+	 * Sets the state.
 	 *
 	 * @param state
 	 *            the new state
 	 */
-	public final void setState(final int state) {
+	public final synchronized void setState(final int state) {
+		unloadState(currentState);
 		currentState = state;
-		gameStates.get(currentState).init();
+		loadState(currentState);
 	}
 
 	/**
 	 * Updates the current state.
 	 */
-	public final void update() {
-		if (paused) {
-			pauseState.update();
-			return;
+	public synchronized final void update() {
+
+		if (gameStates[currentState] != null) {
+			gameStates[currentState].update();
 		}
-		gameStates.get(currentState).update();
 	}
 
 	/**
@@ -92,11 +120,9 @@ public class GameStateManager {
 	 *            the g
 	 */
 	public final void draw(final java.awt.Graphics2D g) {
-		if (paused) {
-			pauseState.draw(g);
-			return;
+		if (gameStates[currentState] != null) {
+			gameStates[currentState].draw(g);
 		}
-		gameStates.get(currentState).draw(g);
 	}
 
 	/**
@@ -106,7 +132,9 @@ public class GameStateManager {
 	 *            the k
 	 */
 	public final void keyPressed(final int k) {
-		gameStates.get(currentState).keyPressed(k);
+		if (gameStates[currentState] != null) {
+			gameStates[currentState].keyPressed(k);
+		}
 	}
 
 	/**
@@ -116,7 +144,9 @@ public class GameStateManager {
 	 *            the k
 	 */
 	public final void keyReleased(final int k) {
-		gameStates.get(currentState).keyReleased(k);
+		if (gameStates[currentState] != null) {
+			gameStates[currentState].keyReleased(k);
+		}
 	}
 
 	/**
