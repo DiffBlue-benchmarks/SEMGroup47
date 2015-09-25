@@ -4,11 +4,14 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import org.apache.commons.io.IOUtils;
 
 import sem.group47.main.GamePanel;
 
@@ -70,11 +73,11 @@ public class TileMap {
 	/**
 	 * Instantiates a new tile map.
 	 *
-	 * @param tileSize
+	 * @param tsize
 	 *            the tile size
 	 */
-	public TileMap(int tileSize) {
-		this.tileSize = tileSize;
+	public TileMap(final int tsize) {
+		tileSize = tsize;
 		numRowsToDraw = GamePanel.HEIGHT / tileSize;
 		numColsToDraw = GamePanel.WIDTH / tileSize;
 	}
@@ -85,28 +88,33 @@ public class TileMap {
 	 * @param s
 	 *            the s
 	 */
-	public void loadTiles(String s) {
+	public final void loadTiles(final String s) {
 		try {
 
-			// get the tileset image which has 2 rows of 2 tiles of 30
-			// pixels each
-			tileset = ImageIO.read(getClass().getResourceAsStream(s));
+			// get the tileset image which has
+			// 2 rows of 2 tiles of 30 pixels each
+			tileset = ImageIO.read(
+					getClass().getResourceAsStream(s));
 
-			// 2 tiles across
-			numTilesAcross = tileset.getWidth() / tileSize;
-			numTilesLength = tileset.getHeight() / tileSize;
+			numTilesAcross =
+					tileset.getWidth() / tileSize;
+			numTilesLength =
+					tileset.getHeight() / tileSize;
 
 			// Creates a matrix from the tilesheet
 			tiles = new Tile[numTilesLength][numTilesAcross];
 
 			BufferedImage subimage;
 
-			// first row of tiles becomes normal typed (not able to collide)
-			// second row of tiles becomes semiblocked typed (able to collide on
-			// top)
-			// third row of tiles becomes blocked typed (able to collide)
+			// first row of tiles becomes normal typed
+			// (not able to collide)
+			// second row of tiles becomes semiblocked typed
+			// (able to collide on top)
+			// third row of tiles becomes blocked typed
+			// (able to collide)
 			for (int col = 0; col < numTilesAcross; col++) {
-				// gets the image based on its position inside the .gif
+				// gets the image based on its position
+				// inside the .gif
 				subimage = tileset.getSubimage(
 				  col * tileSize, 0, tileSize,
 						tileSize);
@@ -124,7 +132,7 @@ public class TileMap {
 
 			}
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -136,14 +144,12 @@ public class TileMap {
 	 * @param s
 	 *            the s
 	 */
-	public void loadMap(String s) {
-
+	public final void loadMap(final String s) {
+		InputStream in = getClass().getResourceAsStream(s);
+		BufferedReader br = null;
 		try {
-
-			// get the map layout
-			InputStream in = getClass().getResourceAsStream(s);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
+			br = new BufferedReader(
+					new InputStreamReader(in, "UTF-8"));
 			// first row is the num of col
 			numCols = Integer.parseInt(br.readLine());
 			// second row is the num of rows
@@ -156,7 +162,7 @@ public class TileMap {
 
 			// enemies
 			enemyStartLocations = new ArrayList<Point>();
-			
+
 			// white spaces
 			String delims = "\\s+";
 
@@ -164,24 +170,26 @@ public class TileMap {
 			for (int row = 0; row < numRows; row++) {
 				String line = br.readLine();
 				// use white spaces to split as tokens
-				String[] tokens = line.split(delims);
+				String[] tokens = null;
+				if (line != null) {
+					tokens = line.split(delims);
+				}
 
 				// put the values in the map matrix
 				for (int col = 0; col < numCols; col++) {
-				 if(tokens[col].equals("e")) {
+				 if (tokens[col].equals("e")) {
 				  enemyStartLocations.add(new Point(col, row));
 				  map[row][col] = 0;
-				 }
-				 else {
+				 } else {
 				  map[row][col] = Integer.parseInt(tokens[col]);
 				 }
 				}
 			}
-
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			IOUtils.closeQuietly(br);
 		}
-
 	}
 
 	/**
@@ -189,7 +197,7 @@ public class TileMap {
 	 * @return enemy start locations
 	 */
 
-	public ArrayList<Point> getEnemyStartLocations() {
+	public final ArrayList<Point> getEnemyStartLocations() {
 	 return enemyStartLocations;
 	}
 
@@ -198,7 +206,7 @@ public class TileMap {
 	 *
 	 * @return the tile size
 	 */
-	public int getTileSize() {
+	public final int getTileSize() {
 		return tileSize;
 	}
 
@@ -207,7 +215,7 @@ public class TileMap {
 	 *
 	 * @return the x
 	 */
-	public int getx() {
+	public final int getx() {
 		return (int) x;
 	}
 
@@ -216,7 +224,7 @@ public class TileMap {
 	 *
 	 * @return the y
 	 */
-	public int gety() {
+	public final int gety() {
 		return (int) y;
 	}
 
@@ -225,7 +233,7 @@ public class TileMap {
 	 *
 	 * @return the width
 	 */
-	public int getWidth() {
+	public final int getWidth() {
 		return width;
 	}
 
@@ -234,7 +242,7 @@ public class TileMap {
 	 *
 	 * @return the height
 	 */
-	public int getHeight() {
+	public final int getHeight() {
 		return height;
 	}
 
@@ -247,10 +255,13 @@ public class TileMap {
 	 *            the col
 	 * @return the type
 	 */
-	public int getType(int row, int col) {
-		// returns the value inside the multidimensional array e.g. tile 2
+	public final int getType(final int row, final int col) {
+		// returns the value inside the
+		// multidimensional array e.g. tile 2
 
-		if (row >= this.getNumRows() || row < 0 || col >= this.getNumCols() || col < 0) {
+		if (row >= this.getNumRows()
+				|| row < 0 || col >= this.getNumCols()
+				|| col < 0) {
 			return Tile.NORMAL;
 		}
 		int rc = map[row][col];
@@ -269,32 +280,38 @@ public class TileMap {
 	 * @param g
 	 *            the g
 	 */
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 
 		for (int row = 0; row < numRowsToDraw; row++) {
 
 			// all rows are drawn
-			if (row >= numRows)
+			if (row >= numRows) {
 				break;
+			}
 
 			for (int col = 0; col < numColsToDraw; col++) {
 
 				// all columns are drawn
-				if (col >= numCols)
+				if (col >= numCols) {
 					break;
+				}
 
-				// don't bother drawing it, cause its transparent (first block
-				// in .gif is a transparent image)
-				if (map[row][col] == 0)
+				// don't bother drawing it,
+				// cause its transparent
+				// (first block in .gif is a transparent image)
+				if (map[row][col] == 0) {
 					continue;
+				}
 
-				// translate the tile at the map coordinate into a coordinate in
+				// translate the tile at the map
+				// coordinate into a coordinate in
 				// the tiles coordinate
 				int rc = map[row][col];
 				int r = rc / numTilesAcross;
 				int c = rc % numTilesAcross;
 
-				g.drawImage(tiles[r][c].getImage(), (int) x + col * tileSize,
+				g.drawImage(tiles[r][c].getImage(),
+						(int) x + col * tileSize,
 						(int) y + row * tileSize, null);
 
 			}
@@ -308,7 +325,7 @@ public class TileMap {
 	 *
 	 * @return the num rows
 	 */
-	public int getNumRows() {
+	public final int getNumRows() {
 		return numRows;
 	}
 
@@ -317,16 +334,24 @@ public class TileMap {
 	 *
 	 * @return the num cols
 	 */
-	public int getNumCols() {
+	public final int getNumCols() {
 		return numCols;
 	}
 
-	public int[][] getMap() {
-		return map;
+	/**
+	 * Gets a copy of the map in integer array.
+	 * @return a copy of the map
+	 */
+	public final int[][] getMap() {
+		return map.clone();
 	}
 
-	public Tile[][] getTiles() {
-		return tiles;
+	/**
+	 * Returns a copy of the tiles array.
+	 * @return a copy of the tiles array.
+	 */
+	public final Tile[][] getTiles() {
+		return tiles.clone();
 	}
 
 }
