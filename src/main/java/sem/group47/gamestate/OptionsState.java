@@ -4,34 +4,23 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
 
 import sem.group47.audio.AudioPlayer;
-import sem.group47.entity.PlayerSave;
 import sem.group47.main.GamePanel;
 
 /**
- * The Class MenuState, which extends the super class GameState.
+ * The Class HelpState, which extends the super class GameState.
  */
-public class MenuState extends GameState {
+public class OptionsState extends GameState {
 
 	/** The current choice. */
 	private int currentChoice = 0;
 
-	/** The options. */
-	private String[] options = { "Start", "2 Player Mode", "Help", "Options",
-			"Quit" };
-
 	/** The font. */
-	private Font font;
+	private Font font, font2;
 
-	/** The Background. */
-	private String bg = "/backgrounds/BubbleBobble_Logo.gif";
-
-	/** The image. */
-	private BufferedImage image;
+	/** The options. */
+	private String[] options = { "On", "Off" };
 
 	/**
 	 * Instantiates a new menu state.
@@ -39,14 +28,15 @@ public class MenuState extends GameState {
 	 * @param gsm
 	 *            the gamestatemanager
 	 */
-	public MenuState(final GameStateManager gsm) {
+	public OptionsState(final GameStateManager gsm) {
 
 		setGsm(gsm);
 
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream(bg));
+
 			font = new Font("Arial", Font.PLAIN, 30);
-			AudioPlayer.resumeLoop("menu");
+			font2 = new Font("Arial", Font.PLAIN, 40);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,19 +65,21 @@ public class MenuState extends GameState {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
-		int x = (GamePanel.WIDTH - image.getWidth(null)) / 2;
-		int y = (GamePanel.HEIGHT - image.getHeight(null)) / 5;
-		g.drawImage(image, x, y, null);
+		int x = GamePanel.WIDTH - 300;
 
 		g.setFont(font);
+		g.setColor(Color.WHITE);
+		g.drawString("Audio settings", 100, 100);
+
+		g.setFont(font2);
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentChoice) {
 				g.setColor(Color.GREEN);
 			} else {
-				g.setColor(Color.white);
+				g.setColor(Color.WHITE);
 			}
 
-			g.drawString(options[i], 370, 380 + i * 50);
+			g.drawString(options[i], 320, 500 + i * 50);
 		}
 
 	}
@@ -97,25 +89,19 @@ public class MenuState extends GameState {
 	 */
 	private void select() {
 		if (currentChoice == 0) {
-			PlayerSave.setMultiplayerEnabled(false);
-			getGsm().setState(GameStateManager.LEVELSTATE);
-			AudioPlayer.stop("menu");
+			if (AudioPlayer.isMute() == true) {
+				AudioPlayer.setMute(false);
+			}
+			getGsm().setState(GameStateManager.MENUSTATE);
 		}
 		if (currentChoice == 1) {
-			PlayerSave.setMultiplayerEnabled(true);
-			getGsm().setState(GameStateManager.LEVELSTATE);
-			AudioPlayer.stop("menu");
-		}
-		if (currentChoice == 2) {
-			getGsm().setState(GameStateManager.HELPSTATE);
+			if (AudioPlayer.isMute() == false) {
+				AudioPlayer.setMute(true);
+				AudioPlayer.stop("menu");
+			}
+			getGsm().setState(GameStateManager.MENUSTATE);
 		}
 
-		if (currentChoice == 3) {
-			getGsm().setState(GameStateManager.OPTIONSSTATE);
-		}
-		if (currentChoice == 4) {
-			System.exit(0);
-		}
 	}
 
 	/**
@@ -138,7 +124,6 @@ public class MenuState extends GameState {
 				currentChoice = 0;
 			}
 		}
-
 	}
 
 	/**

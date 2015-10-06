@@ -325,4 +325,12 @@ public class AudioPlayer {
 			e.printStackTrace();
 		}
 	}
+
+	public static boolean isMute() {
+		return mute;
+	}
+
+	public static void setMute(boolean pMute) {
+		mute = pMute;
+	}
 }

@@ -20,7 +20,7 @@ public class GameStateManager {
 	private boolean paused;
 
 	/** The number of gamestates. */
-	public static final int NUMGAMESTATES = 4;
+	public static final int NUMGAMESTATES = 5;
 
 	/** The Constant MENUSTATE. */
 	public static final int MENUSTATE = 0;
@@ -33,6 +33,9 @@ public class GameStateManager {
 
 	/** The Constant HELPSTATE. */
 	public static final int HELPSTATE = 3;
+
+	/** The Constant OPTIONSSTATE. */
+	public static final int OPTIONSSTATE = 4;
 
 	/**
 	 * Instantiates a new game state manager.
@@ -92,6 +95,8 @@ public class GameStateManager {
 			gameStates[state] = new GameOverState(this);
 		} else if (state == HELPSTATE) {
 			gameStates[state] = new HelpState(this);
+		} else if (state == OPTIONSSTATE) {
+			gameStates[state] = new OptionsState(this);
 		}
 		gameStates[state].init();
 	}
