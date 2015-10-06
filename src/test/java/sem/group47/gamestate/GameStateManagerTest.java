@@ -16,15 +16,15 @@ import sem.group47.tilemap.TileMap;
  * The Class GameStateManagerTest.
  */
 public class GameStateManagerTest {
-	
+
 	/** The g2d. */
 	private Graphics2D g2d;
-	
+
 	/** The gsm. */
 	public GameStateManager gsm;
-	
+
 	public TileMap tileMap;
-	
+
 	/**
 	 * Sets the up.
 	 */
@@ -35,13 +35,13 @@ public class GameStateManagerTest {
 				BufferedImage.TYPE_INT_RGB);
 		g2d = (Graphics2D) image.getGraphics();
 	}
-	
+
 	/**
 	 * Test game update.
 	 */
 	@Test
 	public final void testGameUpdate() {
-		gsm = new GameStateManager();
+		gsm = GameStateManager.getInstance();
 		assertEquals(gsm.getCurrentState(), GameStateManager.MENUSTATE);
 		gsm.setState(GameStateManager.LEVELSTATE);
 		assertEquals(gsm.getCurrentState(), GameStateManager.LEVELSTATE);
@@ -49,13 +49,13 @@ public class GameStateManagerTest {
 			gsm.update();
 		}
 	}
-	
+
 	/**
 	 * Test game update and draw.
 	 */
 	@Test
 	public final void testGameUpdateAndDraw() {
-		gsm = new GameStateManager();
+		gsm = GameStateManager.getInstance();
 		assertEquals(gsm.getCurrentState(), GameStateManager.MENUSTATE);
 		gsm.setState(GameStateManager.LEVELSTATE);
 		assertEquals(gsm.getCurrentState(), GameStateManager.LEVELSTATE);
@@ -64,7 +64,7 @@ public class GameStateManagerTest {
 			gsm.draw(g2d);
 		}
 	}
-	
+
 	// @Test
 	// public final void testMultiPlayer() {
 	// PlayerSave.setMultiplayerEnabled(true);
@@ -80,5 +80,5 @@ public class GameStateManagerTest {
 	// assertEquals(ls.player2.getIsAlive(), false);
 	// assertEquals(ls.player1.getIsAlive(), true);
 	// }
-	
+
 }
