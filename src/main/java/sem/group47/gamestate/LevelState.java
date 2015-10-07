@@ -2,16 +2,16 @@ package sem.group47.gamestate;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import sem.group47.audio.AudioPlayer;
-import sem.group47.entity.Enemy;
 import sem.group47.entity.HUD;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
+import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.Level1Enemy;
+import sem.group47.entity.enemies.ProjectileEnemy;
 import sem.group47.entity.pickups.BubbleSizePowerup;
 import sem.group47.entity.pickups.BubbleSpeedPowerup;
 import sem.group47.entity.pickups.MovementSpeedPowerup;
@@ -27,11 +27,11 @@ public class LevelState extends GameState {
 	
 	/** level file names. **/
 	private String[] levelFileNames = new String[] { "level1.map", "level2.map",
-			"level3.map", "level4.map" };
+			"level3.map", "level4.map", "level5.map"};
 	
 	/** file names of music **/
 	private String[] musicFileNames = new String[] { "level1", "level2",
-			"level3", "level4" };
+			"level3", "level4", "level3" };
 	
 	/** Current level. **/
 	private int level;
@@ -132,12 +132,21 @@ public class LevelState extends GameState {
 	private void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
 		
-		ArrayList<Point> points = tileMap.getEnemyStartLocations();
-		Level1Enemy enemy;
+		ArrayList<int[]> points = tileMap.getEnemyStartLocations();
+		Enemy enemy;
 		for (int i = 0; i < points.size(); i++) {
-			enemy = new Level1Enemy(tileMap);
-			enemy.setPosition((points.get(i).x + .5d) * 30d,
-					(points.get(i).y + .5d) * 30d);
+			switch(points.get(i)[2]) {
+			case Enemy.LEVEL1_ENEMY:
+				enemy = new Level1Enemy(tileMap);
+				break;
+			case Enemy.PROJECTILE_ENEMEY:
+				enemy = new ProjectileEnemy(tileMap);
+				break;
+			default:
+				enemy = new Level1Enemy(tileMap);
+			}
+			enemy.setPosition((points.get(i)[0] + .5d) * 30,
+					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
 			enemies.add(enemy);
 		}
 	}
@@ -275,6 +284,7 @@ public class LevelState extends GameState {
 			player1.setUp(true);
 			return;
 		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_SPACE:
 			player1.setDown(true);
 			return;
 		case KeyEvent.VK_A:
@@ -318,6 +328,7 @@ public class LevelState extends GameState {
 			player1.setUp(false);
 			return;
 		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_SPACE:
 			player1.setDown(false);
 			return;
 		case KeyEvent.VK_A:

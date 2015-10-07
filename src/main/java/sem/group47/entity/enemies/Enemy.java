@@ -1,9 +1,9 @@
-package sem.group47.entity;
+package sem.group47.entity.enemies;
 
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
-
+import sem.group47.entity.Player;
+import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -11,6 +11,9 @@ import sem.group47.tilemap.TileMap;
  */
 public class Enemy extends MapObject {
 
+	public static final int LEVEL1_ENEMY = 0;
+	public static final int PROJECTILE_ENEMEY = 1;
+	
 	/** The caught. */
 	private boolean caught;
 
@@ -35,14 +38,6 @@ public class Enemy extends MapObject {
 	public Enemy(final TileMap tm) {
 		super(tm);
 		setAlive(true);
-
-		try {
-			spritesheet = ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/level1.gif"));
-			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -70,9 +65,16 @@ public class Enemy extends MapObject {
 	}
 
 	/**
+	 * checks for projectile collision with object
+	 */
+	public boolean projectileCollision(MapObject o) {
+		return false;
+	}
+	
+	/**
 	 * Sets the caught.
 	 */
-	public final void setCaught() {
+	public void setCaught() {
 		caught = true;
 		setSprite(spritesheet.getSubimage(90, 0, 30, 30));
 	}
@@ -131,6 +133,14 @@ public class Enemy extends MapObject {
 	 */
 	public final void setMaxFloatSpeed(final double speed) {
 	 maxFloatSpeed = speed;
+	}
+	
+	public final BufferedImage getSpriteSheet() {
+		return spritesheet;
+	}
+	
+	public final void setSpriteSheet(BufferedImage bi) {
+		spritesheet = bi;
 	}
 
 }

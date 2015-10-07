@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import sem.group47.audio.AudioPlayer;
+import sem.group47.entity.enemies.Enemy;
 import sem.group47.gamestate.GameStateManager;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
@@ -228,7 +229,10 @@ public class Player extends MapObject {
 			final GameStateManager gsm) {
 
 		for (int i = 0; i < enemies.size(); i++) {
-			if (intersects(enemies.get(i))) {
+			if (enemies.get(i).projectileCollision(this)) {
+				kill();
+			}
+			else if (intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
 
 					setScore(
@@ -238,25 +242,34 @@ public class Player extends MapObject {
 					Log.info("Player Action",
 							"Player collision with Caught Enemy");
 
-				} else if (getLives() > 1) {
-					hit(1);
-					Log.info(
-							"Player Action", "Player collision with Enemy"
-							);
-					
 				} else {
-					AudioPlayer.play("crash");
-					hit(1);
-					Log.info(
-					  "Player Action",
-					  "Player collision with Enemy"
-					  );
+					kill();
 				}
 			}
 		}
 
 	}
 
+	/**
+	 * takes a life, or ends the game
+	 */
+	public final void kill() {
+		if (getLives() > 1) {
+			hit(1);
+			Log.info(
+					"Player Action", "Player collision with Enemy"
+					);
+			
+		} else {
+			AudioPlayer.play("crash");
+			hit(1);
+			Log.info(
+			  "Player Action",
+			  "Player collision with Enemy"
+			  );
+		}
+	}
+	
 	/**
 	 * lets the player interact with a projectile, enabling him to jump on it
 	 * and lift upwards, or kick against it.
@@ -313,7 +326,7 @@ public class Player extends MapObject {
 	public final void flinching() {
 		if (flinching) {
 			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
-			if (elapsed > 1000) {
+			if (elapsed > 2500) {
 				flinching = false;
 			}
 		}
@@ -451,12 +464,14 @@ public class Player extends MapObject {
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
-		if (facingRight) {
-			g.drawImage(animation.getImage(), (int) (getXpos() - getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2), null);
-		} else {
-			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
+		if(!flinching || Math.round(Math.random()*1) == 0) {
+			if (facingRight) {
+				g.drawImage(animation.getImage(), (int) (getXpos() - getWidth() / (double) 2),
+						(int) (getYpos() - getHeight() / (double) 2), null);
+			} else {
+				g.drawImage(animation.getImage(), (int) (getXpos() + getWidth() / (double) 2),
+						(int) (getYpos() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
+			}
 		}
 
 		for (int i = 0; i < projectiles.size(); i++) {
