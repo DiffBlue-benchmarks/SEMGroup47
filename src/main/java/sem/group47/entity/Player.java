@@ -216,46 +216,7 @@ public class Player extends MapObject {
 		}
 	}
 
-	/**
-	 * checks what happens when the player directly collides with an enemy.
-	 *
-	 * @param enemies
-	 *            enemies
-	 * @param gsm
-	 *            the gsm
-	 */
-	public final void directEnemyCollision(final ArrayList<Enemy> enemies,
-			final GameStateManager gsm) {
-
-		for (int i = 0; i < enemies.size(); i++) {
-			if (intersects(enemies.get(i))) {
-				if (enemies.get(i).isCaught()) {
-
-					setScore(
-					  enemies.get(i).getScorePoints());
-					enemies.remove(i);
-					
-					Log.info("Player Action",
-							"Player collision with Caught Enemy");
-
-				} else if (getLives() > 1) {
-					hit(1);
-					Log.info(
-							"Player Action", "Player collision with Enemy"
-							);
-					
-				} else {
-					AudioPlayer.play("crash");
-					hit(1);
-					Log.info(
-					  "Player Action",
-					  "Player collision with Enemy"
-					  );
-				}
-			}
-		}
-
-	}
+	
 
 	/**
 	 * lets the player interact with a projectile, enabling him to jump on it
