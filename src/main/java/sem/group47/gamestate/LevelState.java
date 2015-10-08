@@ -16,7 +16,6 @@ import sem.group47.entity.pickups.BubbleSizePowerup;
 import sem.group47.entity.pickups.BubbleSpeedPowerup;
 import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.entity.pickups.PickupObject;
-import sem.group47.main.Drawable;
 import sem.group47.main.GamePanel;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
@@ -84,7 +83,6 @@ public class LevelState extends GameState {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		level = 0;
-		drawComponents = new ArrayList<Drawable>();
 		setupLevel(level);
 		paused = false;
 		
@@ -199,7 +197,7 @@ public class LevelState extends GameState {
 			
 			for (int i = 0; i < pickups.size(); i++) {
 				if (pickups.get(i).checkCollision(player1)
-						|| (multiplayer && pickups.get(i).checkCollision(player2))) {
+						|| multiplayer && pickups.get(i).checkCollision(player2)) {
 					AudioPlayer.play("extraLife");
 					removeComponent(pickups.get(i));
 					pickups.remove(i);
@@ -219,9 +217,12 @@ public class LevelState extends GameState {
 	 */
 	private void lostCheck() {
 		if (player1.getLives() <= 0) {
+			removeComponent(player1);
 			if (!multiplayer || player2.getLives() <= 0) {
 				getGsm().setState(GameStateManager.GAMEOVERSTATE);
 			}
+		} else if (player2.getLives() <= 0) {
+			removeComponent(player2);
 		}
 	}
 	
