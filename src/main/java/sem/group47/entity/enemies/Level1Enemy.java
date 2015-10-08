@@ -152,6 +152,9 @@ public class Level1Enemy extends Enemy {
 		if(isCaught() && (System.nanoTime() - getTimeCaught())/1000000000 > getTimeUntillBreakFree()) {
 			setCaught(false);
 		}
+		if(isAngry() && (System.nanoTime() - getAngryTime())/1000000000 > 10) {
+			setIsAngry(false);
+		}
 	}
 
 	/*

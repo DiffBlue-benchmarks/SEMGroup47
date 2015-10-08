@@ -34,6 +34,9 @@ public class Enemy extends MapObject {
 
 	/** The time the enemy needs to break free from the bubble. */
 	private float timeUntillBreakFree;
+	
+	/** The time the enemy got angry after break free from bubble. */
+	private float angryTime;
 
 	/**
 	 * Instantiates a new enemy.
@@ -85,11 +88,12 @@ public class Enemy extends MapObject {
 	 */
 	public final void setCaught(boolean isCaught) {
 		caught = isCaught;
+		setIsAngry(false);
 		setTimeCaught(System.nanoTime());
 		if(isCaught) {
 			setSprite(spritesheet.getSubimage(90, 0, 30, 30));
 		} else {
-			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
+			setIsAngry(true);
 		}
 	}
 
@@ -100,6 +104,15 @@ public class Enemy extends MapObject {
 	 */
 	public final void setIsAngry(boolean angry) {
 		isAngry = angry;
+		System.out.println(angry);
+		if(angry) {
+			setAngryTime(System.nanoTime());
+			setSprite(spritesheet.getSubimage(120, 0, 30, 30));
+			setMovSpeed(1);
+		} else {
+			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
+			setMovSpeed(0.3);
+		}
 	}
 
 	/**
@@ -116,6 +129,23 @@ public class Enemy extends MapObject {
 	 */
 	public final float getTimeCaught() {
 		return timeCaught;
+	}
+	
+	/**
+	 * Gets the Angry Time.
+	 * @return angryTime
+	 */
+	public final float getAngryTime() {
+		return angryTime;
+	}
+
+	/**
+	 * Sets the Angry Time.
+	 * @param time
+	 * the Angry time set
+	 */
+	public final void setAngryTime(float time) {
+		angryTime = time;
 	}
 
 	/**
