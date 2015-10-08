@@ -19,12 +19,21 @@ public class Enemy extends MapObject {
 
 	/** The float speed. */
 	private double floatSpeed;
-	
+
 	/** The max float speed. */
 	private double maxFloatSpeed;
 
 	/** The spritesheet. */
 	private BufferedImage spritesheet;
+
+	/** Whether or not the enemy is angry. */
+	private boolean isAngry;
+
+	/** The time the enemy got caught. */
+	private float timeCaught;
+
+	/** The time the enemy needs to break free from the bubble. */
+	private float timeUntillBreakFree;
 
 	/**
 	 * Instantiates a new enemy.
@@ -71,10 +80,69 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Sets the caught.
+	 * @param isCaught
+	 * Whether or not the enemy is caught
 	 */
-	public final void setCaught() {
-		caught = true;
-		setSprite(spritesheet.getSubimage(90, 0, 30, 30));
+	public final void setCaught(boolean isCaught) {
+		caught = isCaught;
+		setTimeCaught(System.nanoTime());
+		if(isCaught) {
+			setSprite(spritesheet.getSubimage(90, 0, 30, 30));
+		} else {
+			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
+		}
+	}
+
+	/**
+	 * Sets the isAngry.
+	 * @param angry
+	 * whether or not the enemy is angry
+	 */
+	public final void setIsAngry(boolean angry) {
+		isAngry = angry;
+	}
+
+	/**
+	 * Gets isAngry.
+	 * @return isAngry
+	 */
+	public final boolean isAngry() {
+		return isAngry;
+	}
+
+	/**
+	 * Gets the timeCaught.
+	 * @return timeCaught
+	 */
+	public final float getTimeCaught() {
+		return timeCaught;
+	}
+
+	/**
+	 * Sets the timeCaught.
+	 * @param time
+	 * The new timeCaught
+	 */
+	public final void setTimeCaught(float time) {
+		timeCaught = time;
+	}
+	
+	/**
+	 * Sets the time needed to break free from a bubble
+	 * @param time
+	 * The time needed
+	 */
+	public final void setTimeUntillBreakFree(float time) {
+		timeUntillBreakFree = time;
+	}
+	
+	/**
+	 * Gets the time needed to break free from a bubble
+	 * @return timeUntillBreakFree
+	 * The time needed
+	 */
+	public final float getTimeUntillBreakFree() {
+		return timeUntillBreakFree;
 	}
 
 	/**
@@ -132,5 +200,6 @@ public class Enemy extends MapObject {
 	public final void setMaxFloatSpeed(final double speed) {
 	 maxFloatSpeed = speed;
 	}
+
 
 }

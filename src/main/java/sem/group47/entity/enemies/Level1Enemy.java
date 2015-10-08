@@ -37,6 +37,10 @@ public class Level1Enemy extends Enemy {
 		setStopJumpSpeed(.3);
 		setFacingRight(true);
 
+		setIsAngry(false);
+		setTimeCaught(0);
+		setTimeUntillBreakFree(10);
+
 		if (Math.round(Math.random()) == 0) {
 			setLeft(true);
 		} else {
@@ -145,6 +149,9 @@ public class Level1Enemy extends Enemy {
 		getNextYPosition();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
+		if(isCaught() && (System.nanoTime() - getTimeCaught())/1000000000 > getTimeUntillBreakFree()) {
+			setCaught(false);
+		}
 	}
 
 	/*
