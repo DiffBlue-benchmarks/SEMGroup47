@@ -104,12 +104,11 @@ public class Enemy extends MapObject {
 	 */
 	public final void setIsAngry(boolean angry) {
 		isAngry = angry;
-		System.out.println(angry);
 		if(angry) {
 			setAngryTime(System.nanoTime());
 			setSprite(spritesheet.getSubimage(120, 0, 30, 30));
-			setMovSpeed(1);
-		} else {
+			setMaxSpeed(getMaxSpeed() * 1.5);
+			setMovSpeed(getMovSpeed() * 1.5);		} else {
 			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
 			setMovSpeed(0.3);
 		}
