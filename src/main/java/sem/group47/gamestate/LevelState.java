@@ -65,6 +65,8 @@ public class LevelState extends GameState {
 	
 	private Magiron aaron;
 	
+	public static double time = System.currentTimeMillis();
+	
 	/**
 	 * Instantiates a new level1 state.
 	 * 
@@ -242,8 +244,10 @@ public class LevelState extends GameState {
 			if (!multiplayer || player2.getLives() <= 0) {
 				getGsm().setState(GameStateManager.GAMEOVERSTATE);
 			}
+			time = System.currentTimeMillis();
 		} else if (multiplayer && player2.getLives() <= 0) {
 			removeComponent(player2);
+			time = System.currentTimeMillis();
 		}
 	}
 	
@@ -261,6 +265,7 @@ public class LevelState extends GameState {
 				PlayerSave.setExtraLiveP2(player2.getExtraLive());
 				System.out.println(PlayerSave.getExtraLiveP2());
 			}
+			time = System.currentTimeMillis();
 			setupLevel(level + 1);
 			Log.info("Player Action", "Player reached next level");
 		}
@@ -271,12 +276,10 @@ public class LevelState extends GameState {
 	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
-		
 		gr.setColor(Color.BLACK);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
 		drawComponents(gr);
-		aaron.draw(gr);
 		
 		if (paused) {
 			gr.setColor(new Color(0, 0, 0, 180));
