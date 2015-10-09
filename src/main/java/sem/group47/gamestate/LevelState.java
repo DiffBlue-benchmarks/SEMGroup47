@@ -106,6 +106,8 @@ public class LevelState extends GameState {
 		this.level = level;
 		tileMap.loadMap("/maps/" + levelFileNames[level]);
 		
+		clearComponents();
+		
 		addComponent(tileMap);
 		
 		pickups = new ArrayList<PickupObject>();
@@ -180,9 +182,11 @@ public class LevelState extends GameState {
 		PickupObject po = new MovementSpeedPowerup(tileMap);
 		po.setPosition(100, 100);
 		pickups.add(po);
+		addComponent(po);
 		po = new BubbleSizePowerup(tileMap);
 		po.setPosition(tileMap.getWidth() - 100, 100);
 		pickups.add(po);
+		addComponent(po);
 		po = new BubbleSpeedPowerup(tileMap);
 		po.setPosition(tileMap.getWidth() / 2, 100);
 		pickups.add(po);

@@ -63,6 +63,16 @@ public abstract class DrawComposite implements Drawable {
 		}
 		drawComponents.remove(dr);
 	}
+	
+	/**
+	 * Clears the entire drawable list
+	 */
+	public final void clearComponents() {
+		if (drawComponents == null) {
+			return;
+		}
+		drawComponents.clear();
+	}
 
 	/**
 	 * Get the i'th element of the list.
