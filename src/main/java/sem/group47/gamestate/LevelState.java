@@ -168,6 +168,7 @@ public class LevelState extends GameState {
 		aaron = new Magiron(tileMap);
 		aaron.setPosition((points.get(j)[0] + .5d) * 30, (points.get(j)[1] + 1)
 				* 30 - .5d * aaron.getCHeight());
+		addComponent(aaron);
 	}
 	
 	/**
@@ -241,7 +242,7 @@ public class LevelState extends GameState {
 			if (!multiplayer || player2.getLives() <= 0) {
 				getGsm().setState(GameStateManager.GAMEOVERSTATE);
 			}
-		} else if (player2.getLives() <= 0) {
+		} else if (multiplayer && player2.getLives() <= 0) {
 			removeComponent(player2);
 		}
 	}
