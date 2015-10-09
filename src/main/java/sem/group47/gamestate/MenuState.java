@@ -138,6 +138,15 @@ public class MenuState extends GameState {
 				currentChoice = 0;
 			}
 		}
+		if (k == KeyEvent.VK_M) {
+			if (AudioPlayer.isMute() == false) {
+				AudioPlayer.setMute(true);
+				System.out.println("hiero");
+			} else {
+				AudioPlayer.setMute(false);
+				System.out.println("daaro");
+			}
+		}
 
 	}
 

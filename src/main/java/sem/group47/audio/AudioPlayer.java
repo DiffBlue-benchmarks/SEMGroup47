@@ -11,7 +11,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
 /**
- * AudioPlayer.
+ * AudioPlayer, for playing audio in the game.
  * 
  * @author Bas
  *
@@ -28,7 +28,7 @@ public class AudioPlayer {
 	private static boolean mute = false;
 
 	/**
-	 * Inits the.
+	 * Initializes the hashmap and gap.
 	 */
 	public static void init() {
 		clips = new HashMap<String, Clip>();
@@ -36,7 +36,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Load.
+	 * Loads the audio file.
 	 *
 	 * @param s
 	 *            the s
@@ -84,7 +84,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Play.
+	 * Plays the audio file.
 	 *
 	 * @param s
 	 *            the s
@@ -113,7 +113,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Stop.
+	 * Stops the audio file.
 	 *
 	 * @param s
 	 *            the s
@@ -152,7 +152,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Resume.
+	 * Resumes the loop.
 	 *
 	 * @param s
 	 *            the s
@@ -247,7 +247,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Sets the position.
+	 * Sets the music frame position.
 	 *
 	 * @param s
 	 *            the s
@@ -263,7 +263,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Gets the frames.
+	 * Gets the music frames.
 	 *
 	 * @param s
 	 *            the s
@@ -279,7 +279,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Gets the position.
+	 * Gets the position of the musicframe.
 	 *
 	 * @param s
 	 *            the s
@@ -295,7 +295,7 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Close.
+	 * Closes all music clips.
 	 *
 	 * @param s
 	 *            the s
@@ -326,11 +326,23 @@ public class AudioPlayer {
 		}
 	}
 
+	/**
+	 * Checks if the audio is muted.
+	 *
+	 * @return true, if is muted
+	 */
 	public static boolean isMute() {
 		return mute;
 	}
 
+	/**
+	 * Sets the audio to muted.
+	 *
+	 * @param pMute
+	 *            the new muted value
+	 */
 	public static void setMute(boolean pMute) {
 		mute = pMute;
 	}
+
 }

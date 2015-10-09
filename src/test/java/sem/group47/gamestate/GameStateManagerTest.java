@@ -56,6 +56,8 @@ public class GameStateManagerTest {
 	@Test
 	public final void testGameUpdateAndDraw() {
 		gsm = GameStateManager.getInstance();
+		// System.out.println(gsm.getCurrentState());
+		// System.out.println(GameStateManager.MENUSTATE);
 		// assertEquals(gsm.getCurrentState(), GameStateManager.MENUSTATE);
 		// gsm.setState(GameStateManager.LEVELSTATE);
 		assertEquals(gsm.getCurrentState(), GameStateManager.LEVELSTATE);
@@ -64,7 +66,6 @@ public class GameStateManagerTest {
 			gsm.draw(g2d);
 		}
 	}
-
 	// @Test
 	// public final void testMultiPlayer() {
 	// PlayerSave.setMultiplayerEnabled(true);

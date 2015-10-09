@@ -37,6 +37,10 @@ public class Level1Enemy extends Enemy {
 		setStopJumpSpeed(.3);
 		setFacingRight(true);
 
+		setIsAngry(false);
+		setTimeCaught(0);
+		setTimeUntillBreakFree(10);
+
 		if (Math.round(Math.random()) == 0) {
 			setLeft(true);
 		} else {
@@ -96,8 +100,9 @@ public class Level1Enemy extends Enemy {
 		}
 		if (isCaught()) {
 			setDy(getDy() - getFloatSpeed());
-			if (getDy() < getMaxFloatSpeed())
+			if (getDy() < getMaxFloatSpeed()) {
 			 setDy(getMaxFloatSpeed());
+			}
 			setDx(0);
 		} else if (isFalling()) {
 			setDy(getDy() + getFallSpeed());
@@ -145,6 +150,16 @@ public class Level1Enemy extends Enemy {
 		getNextYPosition();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
+		updateStates();
+	}
+
+	public final void updateStates() {
+		if(isCaught() && (System.nanoTime() - getTimeCaught())/1000000000 > getTimeUntillBreakFree()) {
+			setCaught(false);
+		}
+		if(isAngry() && (System.nanoTime() - getAngryTime())/1000000000 > 10) {
+			setIsAngry(false);
+		}
 	}
 
 	/*
