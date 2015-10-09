@@ -2,7 +2,6 @@ package sem.group47.gamestate;
 
 import sem.group47.audio.AudioPlayer;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GameStateManager.
  */
@@ -10,6 +9,9 @@ public class GameStateManager {
 
 	/** The list of game states. */
 	private GameState[] gameStates;
+
+	/** Unique Instance of GamestateManager. */
+	private static GameStateManager uniqueInstance;
 
 	/** The current state. */
 	private int currentState;
@@ -35,7 +37,7 @@ public class GameStateManager {
 	/**
 	 * Instantiates a new game state manager.
 	 */
-	public GameStateManager() {
+	private GameStateManager() {
 		AudioPlayer.init();
 		try {
 			AudioPlayer.load("/music/menu.mp3", "menu");
@@ -60,6 +62,19 @@ public class GameStateManager {
 
 		currentState = MENUSTATE;
 		loadState(currentState);
+	}
+
+	/**
+	 * Makes sure GameStateManager is a Singleton, and can't have more than one
+	 * instance running.
+	 * 
+	 * @return
+	 */
+	public static synchronized GameStateManager getInstance() {
+		if (uniqueInstance == null) {
+			uniqueInstance = new GameStateManager();
+		}
+		return uniqueInstance;
 	}
 
 	/**

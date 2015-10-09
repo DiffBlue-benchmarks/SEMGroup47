@@ -313,7 +313,7 @@ public class Player extends MapObject {
 					getProjectiles().remove(j);
 					j--;
 					Log.info("Player Action", "Fired bubble hit enemy");
-					enemies.get(i).setCaught();
+					enemies.get(i).setCaught(true);
 
 				}
 			}
