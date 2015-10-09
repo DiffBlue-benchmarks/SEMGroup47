@@ -98,7 +98,7 @@ public class Level1EnemyTest {
 	public final void testSetCaught() {
 		enemy = new Level1Enemy(tileMap);
 		assertEquals(enemy.isCaught(), false);
-		enemy.setCaught();
+		enemy.setCaught(true);
 		assertEquals(enemy.isCaught(), true);
 	}
 
