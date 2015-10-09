@@ -28,8 +28,9 @@ public class ProjectileEnemy extends GroundEnemy {
 		setHeight(36);
 		setCwidth(36);
 		setCheight(36);
-		setMovSpeed(0.3);
-		setMaxSpeed(1.6);
+		setMovSpeed(2);
+		setNormalMovSpeed(1.6);
+		setAngryMovSpeed(4);
 		setStopSpeed(.4);
 
 		setFallSpeed(.35);

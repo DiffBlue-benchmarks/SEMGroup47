@@ -39,6 +39,9 @@ public class Enemy extends MapObject {
 
 	/** The time the enemy got angry after break free from bubble. */
 	private float angryTime;
+	
+	private double angryMovSpeed;
+	private double normalMovSpeed;
 
 	/**
 	 * Instantiates a new enemy.
@@ -108,13 +111,21 @@ public class Enemy extends MapObject {
 		if (angry) {
 			setAngryTime(System.nanoTime());
 			setSprite(spritesheet.getSubimage(120, 0, 30, 30));
-			setMaxSpeed(getMaxSpeed() + 2);
+			setMaxSpeed(angryMovSpeed);
 		} else {
 			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
-			setMaxSpeed(getMaxSpeed() - 2);
+			setMaxSpeed(normalMovSpeed);
 		}
 	}
 
+	public final void setNormalMovSpeed(double s) {
+		normalMovSpeed = s;
+	}
+	
+	public final void setAngryMovSpeed(double s) {
+		angryMovSpeed = s;
+	}
+	
 	/**
 	 * Gets isAngry.
 	 * @return isAngry

@@ -1,10 +1,7 @@
 package sem.group47.entity.enemies;
 
-import java.awt.Graphics2D;
-
 import javax.imageio.ImageIO;
 
-import sem.group47.audio.AudioPlayer;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -27,7 +24,8 @@ public class Level1Enemy extends GroundEnemy {
 		setCwidth(30);
 		setCheight(30);
 		setMovSpeed(0.3);
-		setMaxSpeed(1.6);
+		setNormalMovSpeed(1.2);
+		setAngryMovSpeed(3);
 		setStopSpeed(.4);
 
 		setFallSpeed(.35);
@@ -49,12 +47,5 @@ public class Level1Enemy extends GroundEnemy {
 		setIsAngry(false);
 		setTimeCaught(0);
 		setTimeUntillBreakFree(10);
-
-		if (Math.round(Math.random()) == 0) {
-			setLeft(true);
-		} else {
-			setRight(true);
-		}
-
 	}
 }
