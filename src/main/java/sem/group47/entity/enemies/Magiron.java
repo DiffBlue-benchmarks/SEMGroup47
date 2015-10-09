@@ -8,12 +8,12 @@ import sem.group47.gamestate.LevelState;
 import sem.group47.tilemap.TileMap;
 
 public class Magiron extends Enemy {
-	
+
 	public int i;
-	
+
 	public Magiron(TileMap tm) {
 		super(tm);
-		
+
 		setScorePoints(100);
 		setWidth(30);
 		setHeight(30);
@@ -21,15 +21,15 @@ public class Magiron extends Enemy {
 		setCheight(30);
 		setMovSpeed(1);
 		setMaxSpeed(2);
-		
+
 		setFacingRight(true);
-		
+
 		if (Math.round(Math.random()) == 0) {
 			setLeft(true);
 		} else {
 			setRight(true);
 		}
-		
+
 		try {
 			setSprite(ImageIO.read(getClass().getResourceAsStream(
 					"/hud/Bubble_Heart.png")));
@@ -37,7 +37,7 @@ public class Magiron extends Enemy {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void getNextXPosition() {
 		if (isRight()) {
 			setDx(getDx() + getMovSpeed());
@@ -56,7 +56,7 @@ public class Magiron extends Enemy {
 			setFacingRight(false);
 		}
 	}
-	
+
 	private void getNextYPosition() {
 		if (isUp()) {
 			setDy(getDy() - getMovSpeed());
@@ -70,7 +70,7 @@ public class Magiron extends Enemy {
 			}
 		}
 	}
-	
+
 	private void movementDice() {
 		double dice = Math.random() * 100;
 		if (dice < 25) {
@@ -95,20 +95,23 @@ public class Magiron extends Enemy {
 			setRight(false);
 		}
 	}
-	
+
 	@Override
 	public void update() {
-		i++;
-		if (i == 20) {
-			movementDice();
-			i = 0;
+		if (System.currentTimeMillis() - LevelState.time > 9000) {
+
+			i++;
+			if (i == 20) {
+				movementDice();
+				i = 0;
+			}
+			getNextXPosition();
+			getNextYPosition();
+			checkTileMapCollision();
+			setPosition(getXposNew(), getYposNew());
 		}
-		getNextXPosition();
-		getNextYPosition();
-		checkTileMapCollision();
-		setPosition(getXposNew(), getYposNew());
 	}
-	
+
 	@Override
 	public void checkYCollision() {
 		calculateCorners(xpos, ydest);
@@ -122,7 +125,7 @@ public class Magiron extends Enemy {
 				} else {
 					yposNew += dy;
 				}
-				
+
 			}
 		} else if (dy > 0) {
 			if (bottomLeftBlocked || bottomRightBlocked) {
@@ -132,14 +135,14 @@ public class Magiron extends Enemy {
 			} else {
 				falling = true;
 				yposNew += dy;
-				
+
 				if (yposNew >= tileMap.getHeight() - 15) {
 					yposNew = 3 * tileMap.getTileSize();
 				}
 			}
-			
+
 		}
-		
+
 		if (!falling) {
 			calculateCorners(xpos, ydest + 1);
 			if (!bottomLeftBlocked && !bottomRightBlocked) {
@@ -147,27 +150,27 @@ public class Magiron extends Enemy {
 			}
 		}
 	}
-	
+
 	@Override
 	public final void draw(final Graphics2D g) {
-		if (System.currentTimeMillis() - LevelState.time > 9000) {
-			super.draw(g);
+		 if (System.currentTimeMillis() - LevelState.time > 9000) {
+		super.draw(g);
 		}
 	}
-	
+
 	@Override
 	public void hit() {
 		caught = false;
 	}
-	
+
 	@Override
 	public void setCaught() {
 		caught = false;
 	}
-	
+
 	@Override
 	public void setCaught(boolean isCaught) {
 		caught = false;
 	}
-	
+
 }
