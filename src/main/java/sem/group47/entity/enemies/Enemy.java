@@ -1,9 +1,8 @@
-package sem.group47.entity;
+package sem.group47.entity.enemies;
 
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
-
+import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -11,6 +10,9 @@ import sem.group47.tilemap.TileMap;
  */
 public class Enemy extends MapObject {
 
+	public static final int LEVEL1_ENEMY = 0;
+	public static final int PROJECTILE_ENEMEY = 1;
+	
 	/** The caught. */
 	private boolean caught;
 
@@ -37,6 +39,9 @@ public class Enemy extends MapObject {
 
 	/** The time the enemy got angry after break free from bubble. */
 	private float angryTime;
+	
+	private double angryMovSpeed;
+	private double normalMovSpeed;
 
 	/**
 	 * Instantiates a new enemy.
@@ -47,17 +52,6 @@ public class Enemy extends MapObject {
 	public Enemy(final TileMap tm) {
 		super(tm);
 		setAlive(true);
-
-		try {
-			spritesheet = ImageIO.read(
-					getClass().getResourceAsStream(
-							"/enemies/level1.gif"
-					)
-			);
-			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -85,6 +79,13 @@ public class Enemy extends MapObject {
 	}
 
 	/**
+	 * checks for projectile collision with object
+	 */
+	public boolean projectileCollision(MapObject o) {
+		return false;
+	}
+	
+	/**
 	 * Sets the caught.
 	 * @param isCaught
 	 * Whether or not the enemy is caught
@@ -110,13 +111,21 @@ public class Enemy extends MapObject {
 		if (angry) {
 			setAngryTime(System.nanoTime());
 			setSprite(spritesheet.getSubimage(120, 0, 30, 30));
-			setMaxSpeed(getMaxSpeed() + 2);
+			setMaxSpeed(angryMovSpeed);
 		} else {
 			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
-			setMaxSpeed(getMaxSpeed() - 2);
+			setMaxSpeed(normalMovSpeed);
 		}
 	}
 
+	public final void setNormalMovSpeed(double s) {
+		normalMovSpeed = s;
+	}
+	
+	public final void setAngryMovSpeed(double s) {
+		angryMovSpeed = s;
+	}
+	
 	/**
 	 * Gets isAngry.
 	 * @return isAngry
@@ -231,6 +240,14 @@ public class Enemy extends MapObject {
 	 */
 	public final void setMaxFloatSpeed(final double speed) {
 	 maxFloatSpeed = speed;
+	}
+	
+	public final BufferedImage getSpriteSheet() {
+		return spritesheet;
+	}
+	
+	public final void setSpriteSheet(BufferedImage bi) {
+		spritesheet = bi;
 	}
 
 

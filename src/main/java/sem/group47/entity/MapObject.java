@@ -759,6 +759,15 @@ public abstract class MapObject {
 	public final void setSprite(final BufferedImage pSprite) {
 		this.sprite = pSprite;
 	}
+	
+	/**
+	 * Returns the sprite
+	 * 
+	 * @return the sprite
+	 */
+	public final BufferedImage getSprite() {
+		return sprite;
+	}
 
 	/**
 	 * Checks if is left.

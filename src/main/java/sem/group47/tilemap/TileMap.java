@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 
+import sem.group47.entity.enemies.Enemy;
 import sem.group47.main.GamePanel;
 
 /**
@@ -68,7 +69,7 @@ public class TileMap {
 	private int numColsToDraw;
 
 	/** Enemy start Locations. **/
-	private ArrayList<Point> enemyStartLocations;
+	private ArrayList<int[]> enemyStartLocations;
 
 	/**
 	 * Instantiates a new tile map.
@@ -161,7 +162,7 @@ public class TileMap {
 			height = numRows * tileSize;
 
 			// enemies
-			enemyStartLocations = new ArrayList<Point>();
+			enemyStartLocations = new ArrayList<int[]>();
 
 			// white spaces
 			String delims = "\\s+";
@@ -178,9 +179,12 @@ public class TileMap {
 				// put the values in the map matrix
 				for (int col = 0; col < numCols; col++) {
 				 if (tokens[col].equals("e")) {
-				  enemyStartLocations.add(new Point(col, row));
-				  map[row][col] = 0;
-				 } else {
+				 	enemyStartLocations.add(new int[]{col, row, Enemy.LEVEL1_ENEMY});
+				 	map[row][col] = 0;
+				 } else if(tokens[col].equals("f")) {
+					 enemyStartLocations.add(new int[]{col, row, Enemy.PROJECTILE_ENEMEY});
+					 map[row][col] = 0;
+				 }else {
 				  map[row][col] = Integer.parseInt(tokens[col]);
 				 }
 				}
@@ -197,7 +201,7 @@ public class TileMap {
 	 * @return enemy start locations
 	 */
 
-	public final ArrayList<Point> getEnemyStartLocations() {
+	public final ArrayList<int[]> getEnemyStartLocations() {
 	 return enemyStartLocations;
 	}
 
