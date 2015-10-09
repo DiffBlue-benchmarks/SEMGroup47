@@ -150,7 +150,7 @@ public class Magiron extends Enemy {
 	
 	@Override
 	public final void draw(final Graphics2D g) {
-		if (System.currentTimeMillis() - LevelState.time > 90000) {
+		if (System.currentTimeMillis() - LevelState.time > 9000) {
 			super.draw(g);
 		}
 	}

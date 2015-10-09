@@ -172,7 +172,6 @@ public class LevelState extends GameState {
 		aaron = new Magiron(tileMap);
 		aaron.setPosition((points.get(j)[0] + .5d) * 30, (points.get(j)[1] + 1)
 				* 30 - .5d * aaron.getCHeight());
-		addComponent(aaron);
 	}
 	
 	/**
@@ -199,6 +198,9 @@ public class LevelState extends GameState {
 	@Override
 	public final void update() {
 		if (!paused) {
+			if (System.currentTimeMillis() - time > 89999) {
+				addComponent(aaron);
+			}
 			if (player1.getLives() > 0) {
 				player1.update();
 				directEnemyCollision(player1);
