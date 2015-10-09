@@ -1,10 +1,13 @@
 package sem.group47.gamestate;
 
+import sem.group47.main.DrawComposite;
+import sem.group47.main.Drawable;
+
 /**
  * The Class GameState. Acts as a Superclass for the separate gamestates e.g.
  * MenuState.
  */
-public abstract class GameState {
+public abstract class GameState extends DrawComposite {
 
 	/** The gamestate manager. */
 	private GameStateManager gsm;

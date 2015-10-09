@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import sem.group47.main.Drawable;
 import sem.group47.tilemap.Tile;
 import sem.group47.tilemap.TileMap;
 
@@ -12,7 +13,7 @@ import sem.group47.tilemap.TileMap;
  * gameworld.
  */
 
-public abstract class MapObject {
+public abstract class MapObject implements Drawable {
 
 	// TILEMAP
 

@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
-
+import sem.group47.main.Drawable;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.main.GamePanel;
 
 /**
  * The Class TileMap. Loads the Tiles and the TileMap and draws it.
  */
-public class TileMap {
+public class TileMap implements Drawable {
 	/** The x. */
 	private double x;
 

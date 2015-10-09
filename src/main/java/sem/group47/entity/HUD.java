@@ -10,12 +10,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import sem.group47.main.Drawable;
 import sem.group47.main.GamePanel;
 
 /**
  * The Class HUD.
  */
-public class HUD {
+public class HUD implements Drawable {
 
  /** The player. */
  private Player player1;

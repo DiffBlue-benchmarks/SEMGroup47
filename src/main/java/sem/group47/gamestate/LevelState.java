@@ -84,6 +84,7 @@ public class LevelState extends GameState {
 		level = 0;
 		setupLevel(level);
 		paused = false;
+		
 	}
 
 	/**
@@ -93,11 +94,14 @@ public class LevelState extends GameState {
 	 *            number of level to be set
 	 */
 	private void setupLevel(int level) {
+		
 		if (level >= levelFileNames.length) {
 			level = 0;
 		}
 		this.level = level;
 		tileMap.loadMap("/maps/" + levelFileNames[level]);
+
+		addComponent(tileMap);
 
 		pickups = new ArrayList<PickupObject>();
 		int tileSize = tileMap.getTileSize();
@@ -109,6 +113,8 @@ public class LevelState extends GameState {
 		player1.setScore(PlayerSave.getScoreP1());
 		player1.setExtraLive(PlayerSave.getExtraLiveP1());
 
+		addComponent(player1);
+
 		if (multiplayer) {
 			player2 = new Player(tileMap);
 			player2.setPosition(
@@ -118,8 +124,10 @@ public class LevelState extends GameState {
 			player2.setScore(PlayerSave.getScoreP2());
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
 			player2.setFacingRight(false);
+			addComponent(player2);
 		}
 		hud = new HUD(player1, player2);
+		addComponent(hud);
 
 		populateEnemies();
 		populatePowerups();
@@ -148,6 +156,7 @@ public class LevelState extends GameState {
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
 					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
 			enemies.add(enemy);
+			addComponent(enemy);
 		}
 	}
 
@@ -164,6 +173,7 @@ public class LevelState extends GameState {
 		po = new BubbleSpeedPowerup(tileMap);
 		po.setPosition(tileMap.getWidth() / 2, 100);
 		pickups.add(po);
+		addComponent(po);
 	}
 
 	/**
@@ -174,13 +184,19 @@ public class LevelState extends GameState {
 		if (!paused) {
 			if (player1.getLives() > 0) {
 				player1.update();
-				player1.directEnemyCollision(enemies, getGsm());
+				directEnemyCollision(player1);
 				player1.indirectEnemyCollision(enemies);
+			} else {
+				removeComponent(player1);
 			}
-			if (multiplayer && player2.getLives() > 0) {
-				player2.update();
-				player2.directEnemyCollision(enemies, getGsm());
-				player2.indirectEnemyCollision(enemies);
+			if (multiplayer) {
+				if (player2.getLives() > 0) {
+					player2.update();
+					directEnemyCollision(player2);
+					player2.indirectEnemyCollision(enemies);
+				} else {
+					removeComponent(player2);
+				}
 			}
 
 			lostCheck();
@@ -194,7 +210,9 @@ public class LevelState extends GameState {
 						|| (multiplayer && pickups.get(i).checkCollision(
 								player2))) {
 					AudioPlayer.play("extraLife");
+					removeComponent(pickups.get(i));
 					pickups.remove(i);
+					
 					i--;
 				} else {
 					pickups.get(i).update();
@@ -210,9 +228,12 @@ public class LevelState extends GameState {
 	 */
 	private void lostCheck() {
 		if (player1.getLives() <= 0) {
+			removeComponent(player1);
 			if (!multiplayer || player2.getLives() <= 0) {
 				getGsm().setState(GameStateManager.GAMEOVERSTATE);
 			}
+		} else if (player2.getLives() <= 0) {
+			removeComponent(player2);
 		}
 	}
 
@@ -243,24 +264,9 @@ public class LevelState extends GameState {
 
 		gr.setColor(Color.BLACK);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+		
+		drawComponents(gr);
 
-		tileMap.draw(gr);
-
-		for (int i = 0; i < pickups.size(); i++) {
-			pickups.get(i).draw(gr);
-		}
-		if (player1.getLives() > 0) {
-			player1.draw(gr);
-		}
-		if (multiplayer && player2.getLives() > 0) {
-			player2.draw(gr);
-		}
-
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).draw(gr);
-		}
-
-		hud.draw(gr);
 		if (paused) {
 			gr.setColor(new Color(0, 0, 0, 180));
 			gr.fillRect(0, 0, tileMap.getWidth(), tileMap.getHeight());
@@ -364,6 +370,46 @@ public class LevelState extends GameState {
 		default:
 			return;
 		}
+	}
+	
+	/**
+	 * checks what happens when the player directly collides with an enemy.
+	 *
+	 * @param player
+	 * 			the Player object to check collisions with
+	 */
+	public final void directEnemyCollision(Player player) {
+
+		for (int i = 0; i < enemies.size(); i++) {
+			if (player.intersects(enemies.get(i))) {
+				if (enemies.get(i).isCaught()) {
+
+					player.setScore(
+					  enemies.get(i).getScorePoints());
+					removeComponent(enemies.get(i));
+					enemies.remove(i);
+					
+					
+					Log.info("Player Action",
+							"Player collision with Caught Enemy");
+
+				} else if (player.getLives() > 1) {
+					player.hit(1);
+					Log.info(
+							"Player Action", "Player collision with Enemy"
+							);
+					
+				} else {
+					AudioPlayer.play("crash");
+					player.hit(1);
+					Log.info(
+					  "Player Action",
+					  "Player collision with Enemy"
+					  );
+				}
+			}
+		}
+
 	}
 
 }
