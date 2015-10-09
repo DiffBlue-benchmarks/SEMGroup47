@@ -222,6 +222,10 @@ public class LevelState extends GameState {
 			
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).update();
+				if(enemies.get(i).projectileCollision(player1))
+					player1.kill();
+				if(multiplayer && enemies.get(i).projectileCollision(player2))
+					player2.kill();
 			}
 			
 			for (int i = 0; i < pickups.size(); i++) {
