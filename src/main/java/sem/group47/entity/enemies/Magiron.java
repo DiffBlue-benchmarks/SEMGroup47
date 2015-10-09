@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
 
-import sem.group47.gamestate.LevelState;
 import sem.group47.tilemap.TileMap;
 
 public class Magiron extends Enemy {
@@ -150,9 +149,7 @@ public class Magiron extends Enemy {
 	
 	@Override
 	public final void draw(final Graphics2D g) {
-		if (System.currentTimeMillis() - LevelState.time > 90000) {
-			super.draw(g);
-		}
+		super.draw(g);
 	}
 	
 	@Override
