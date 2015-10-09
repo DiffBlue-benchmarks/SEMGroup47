@@ -34,7 +34,7 @@ public class Enemy extends MapObject {
 
 	/** The time the enemy needs to break free from the bubble. */
 	private float timeUntillBreakFree;
-	
+
 	/** The time the enemy got angry after break free from bubble. */
 	private float angryTime;
 
@@ -49,8 +49,11 @@ public class Enemy extends MapObject {
 		setAlive(true);
 
 		try {
-			spritesheet = ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/level1.gif"));
+			spritesheet = ImageIO.read(
+					getClass().getResourceAsStream(
+							"/enemies/level1.gif"
+					)
+			);
 			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,11 +89,11 @@ public class Enemy extends MapObject {
 	 * @param isCaught
 	 * Whether or not the enemy is caught
 	 */
-	public final void setCaught(boolean isCaught) {
+	public void setCaught(boolean isCaught) {
 		caught = isCaught;
 		setIsAngry(false);
 		setTimeCaught(System.nanoTime());
-		if(isCaught) {
+		if (isCaught) {
 			setSprite(spritesheet.getSubimage(90, 0, 30, 30));
 		} else {
 			setIsAngry(true);
@@ -102,15 +105,15 @@ public class Enemy extends MapObject {
 	 * @param angry
 	 * whether or not the enemy is angry
 	 */
-	public final void setIsAngry(boolean angry) {
+	public void setIsAngry(boolean angry) {
 		isAngry = angry;
-		if(angry) {
+		if (angry) {
 			setAngryTime(System.nanoTime());
 			setSprite(spritesheet.getSubimage(120, 0, 30, 30));
-			setMaxSpeed(getMaxSpeed() * 1.5);
-			setMovSpeed(getMovSpeed() * 1.5);		} else {
+			setMaxSpeed(getMaxSpeed() + 2);
+		} else {
 			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
-			setMovSpeed(0.3);
+			setMaxSpeed(getMaxSpeed() - 2);
 		}
 	}
 
@@ -129,7 +132,7 @@ public class Enemy extends MapObject {
 	public final float getTimeCaught() {
 		return timeCaught;
 	}
-	
+
 	/**
 	 * Gets the Angry Time.
 	 * @return angryTime
@@ -143,7 +146,7 @@ public class Enemy extends MapObject {
 	 * @param time
 	 * the Angry time set
 	 */
-	public final void setAngryTime(float time) {
+	public void setAngryTime(float time) {
 		angryTime = time;
 	}
 
@@ -152,21 +155,21 @@ public class Enemy extends MapObject {
 	 * @param time
 	 * The new timeCaught
 	 */
-	public final void setTimeCaught(float time) {
+	public void setTimeCaught(float time) {
 		timeCaught = time;
 	}
-	
+
 	/**
-	 * Sets the time needed to break free from a bubble
+	 * Sets the time needed to break free from a bubble.
 	 * @param time
 	 * The time needed
 	 */
-	public final void setTimeUntillBreakFree(float time) {
+	public void setTimeUntillBreakFree(float time) {
 		timeUntillBreakFree = time;
 	}
-	
+
 	/**
-	 * Gets the time needed to break free from a bubble
+	 * Gets the time needed to break free from a bubble.
 	 * @return timeUntillBreakFree
 	 * The time needed
 	 */

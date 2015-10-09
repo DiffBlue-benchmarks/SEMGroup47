@@ -100,8 +100,9 @@ public class Level1Enemy extends Enemy {
 		}
 		if (isCaught()) {
 			setDy(getDy() - getFloatSpeed());
-			if (getDy() < getMaxFloatSpeed())
+			if (getDy() < getMaxFloatSpeed()) {
 			 setDy(getMaxFloatSpeed());
+			}
 			setDx(0);
 		} else if (isFalling()) {
 			setDy(getDy() + getFallSpeed());
@@ -149,6 +150,10 @@ public class Level1Enemy extends Enemy {
 		getNextYPosition();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
+		updateStates();
+	}
+
+	public final void updateStates() {
 		if(isCaught() && (System.nanoTime() - getTimeCaught())/1000000000 > getTimeUntillBreakFree()) {
 			setCaught(false);
 		}
