@@ -2,7 +2,6 @@ package sem.group47.entity.enemies;
 
 import java.awt.image.BufferedImage;
 
-import sem.group47.entity.Player;
 import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
@@ -50,17 +49,6 @@ public class Enemy extends MapObject {
 	public Enemy(final TileMap tm) {
 		super(tm);
 		setAlive(true);
-
-		try {
-			spritesheet = ImageIO.read(
-					getClass().getResourceAsStream(
-							"/enemies/level1.gif"
-					)
-			);
-			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -99,11 +87,6 @@ public class Enemy extends MapObject {
 	 * @param isCaught
 	 * Whether or not the enemy is caught
 	 */
-
-	public void setCaught() {
-		caught = true;
-		setSprite(spritesheet.getSubimage(90, 0, 30, 30));
-
 	public void setCaught(boolean isCaught) {
 		caught = isCaught;
 		setIsAngry(false);

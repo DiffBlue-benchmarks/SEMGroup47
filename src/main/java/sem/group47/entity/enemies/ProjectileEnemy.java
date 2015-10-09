@@ -39,11 +39,10 @@ public class ProjectileEnemy extends GroundEnemy {
 		setJumpStart(-10.0);
 		setStopJumpSpeed(.3);
 		setFacingRight(true);
+
 		
 		projSpeed = 2.5;
-		
 		fireDelay = 1500;
-		
 		projectiles = new ArrayList<EnemyProjectile>();
 
 		try {
@@ -53,6 +52,10 @@ public class ProjectileEnemy extends GroundEnemy {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		setIsAngry(false);
+		setTimeCaught(0);
+		setTimeUntillBreakFree(10);
 	}
 	
 	public void update() {
@@ -96,10 +99,28 @@ public class ProjectileEnemy extends GroundEnemy {
 	
 	/**
 	 * Sets the caught.
+	 * @param isCaught
+	 * Whether or not the enemy is caught
 	 */
-	public final void setCaught() {
-		super.setCaught();
-		setSprite(getSpriteSheet().getSubimage(36*7, 0, 36, 36));
+	public void setCaught(boolean isCaught) {
+		super.setCaught(isCaught);
+		if (isCaught) {
+			setSprite(getSpriteSheet().getSubimage(7*36, 0, 36, 36));
+		}
+	}
+	
+	/**
+	 * Sets the isAngry.
+	 * @param angry
+	 * whether or not the enemy is angry
+	 */
+	public void setIsAngry(boolean angry) {
+		super.setIsAngry(angry);
+		if (angry) {
+			setSprite(getSpriteSheet().getSubimage(3*36, 0, 36, 36));
+		} else {
+			setSprite(getSpriteSheet().getSubimage(36, 0, 36, 36));
+		}
 	}
 	
 	/**
