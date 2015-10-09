@@ -2,16 +2,16 @@ package sem.group47.gamestate;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import sem.group47.audio.AudioPlayer;
-import sem.group47.entity.Enemy;
 import sem.group47.entity.HUD;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
+import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.Level1Enemy;
+import sem.group47.entity.enemies.ProjectileEnemy;
 import sem.group47.entity.pickups.BubbleSizePowerup;
 import sem.group47.entity.pickups.BubbleSpeedPowerup;
 import sem.group47.entity.pickups.MovementSpeedPowerup;
@@ -24,55 +24,54 @@ import sem.group47.tilemap.TileMap;
  * The Class Level1State.
  */
 public class LevelState extends GameState {
-	
+
 	/** level file names. **/
-	private String[] levelFileNames = new String[] { "level1.map", "level2.map",
-			"level3.map", "level4.map" };
-	
+	private String[] levelFileNames = new String[] { "level1.map",
+			"level2.map", "level3.map", "level4.map" };
+
 	/** file names of music **/
 	private String[] musicFileNames = new String[] { "level1", "level2",
 			"level3", "level4" };
-	
+
 	/** Current level. **/
 	private int level;
-	
+
 	/** Whether multiplayer is on. **/
 	private boolean multiplayer;
-	
-	
+
 	/**
 	 * Paused flag.
 	 **/
 	private boolean paused;
-	
+
 	/** The players. **/
 	public Player player1;
-	
+
 	/** The player 2, only set when multiplayer is true. **/
 	public Player player2;
-	
+
 	/** The enemies. */
 	private ArrayList<Enemy> enemies;
-	
+
 	/** The hud. */
 	private HUD hud;
-	
+
 	/** The tile map. */
 	private TileMap tileMap;
-	
+
 	/** List of pickupobjects in the level. **/
 	private ArrayList<PickupObject> pickups;
-	
+
 	/**
 	 * Instantiates a new level1 state.
 	 * 
 	 * @param gsm
-	 *           the gamestatemanager.
+	 *            the gamestatemanager.
 	 */
 	public LevelState(final GameStateManager gsm) {
 		setGsm(gsm);
 	}
-	
+
 	/**
 	 * Init.
 	 */
@@ -87,12 +86,12 @@ public class LevelState extends GameState {
 		paused = false;
 		
 	}
-	
+
 	/**
 	 * Sets up a certain level.
 	 * 
 	 * @param level
-	 *           number of level to be set
+	 *            number of level to be set
 	 */
 	private void setupLevel(int level) {
 		
@@ -101,22 +100,26 @@ public class LevelState extends GameState {
 		}
 		this.level = level;
 		tileMap.loadMap("/maps/" + levelFileNames[level]);
+
 		addComponent(tileMap);
+
 		pickups = new ArrayList<PickupObject>();
 		int tileSize = tileMap.getTileSize();
-		
+
 		player1 = new Player(tileMap);
 		player1.setPosition(tileSize * (2d + .5d) + 5,
 				tileSize * (tileMap.getNumRows() - 2 + .5d));
 		player1.setLives(PlayerSave.getLivesP1());
 		player1.setScore(PlayerSave.getScoreP1());
 		player1.setExtraLive(PlayerSave.getExtraLiveP1());
+
 		addComponent(player1);
-		
+
 		if (multiplayer) {
 			player2 = new Player(tileMap);
-			player2.setPosition(tileSize * (tileMap.getNumCols() - 3 + .5d) - 5,
-					tileSize * (tileMap.getNumRows() - 2 + .5d));
+			player2.setPosition(
+					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5, tileSize
+							* (tileMap.getNumRows() - 2 + .5d));
 			player2.setLives(PlayerSave.getLivesP2());
 			player2.setScore(PlayerSave.getScoreP2());
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
@@ -125,29 +128,38 @@ public class LevelState extends GameState {
 		}
 		hud = new HUD(player1, player2);
 		addComponent(hud);
+
 		populateEnemies();
 		populatePowerups();
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
 	}
-	
+
 	/**
 	 * populate the game with enemies.
 	 */
 	private void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
-		
-		ArrayList<Point> points = tileMap.getEnemyStartLocations();
-		Level1Enemy enemy;
+		ArrayList<int[]> points = tileMap.getEnemyStartLocations();
+		Enemy enemy;
 		for (int i = 0; i < points.size(); i++) {
-			enemy = new Level1Enemy(tileMap);
-			enemy.setPosition((points.get(i).x + .5d) * 30d,
-					(points.get(i).y + .5d) * 30d);
+			switch(points.get(i)[2]) {
+			case Enemy.LEVEL1_ENEMY:
+				enemy = new Level1Enemy(tileMap);
+				break;
+			case Enemy.PROJECTILE_ENEMEY:
+				enemy = new ProjectileEnemy(tileMap);
+				break;
+			default:
+				enemy = new Level1Enemy(tileMap);
+			}
+			enemy.setPosition((points.get(i)[0] + .5d) * 30,
+					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
 			enemies.add(enemy);
 			addComponent(enemy);
 		}
 	}
-	
+
 	/**
 	 * loads the powerups.
 	 */
@@ -163,7 +175,7 @@ public class LevelState extends GameState {
 		pickups.add(po);
 		addComponent(po);
 	}
-	
+
 	/**
 	 * Update the player and enemies.
 	 */
@@ -186,18 +198,17 @@ public class LevelState extends GameState {
 					removeComponent(player2);
 				}
 			}
-				
-			
-			
+
 			lostCheck();
-			
+
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).update();
 			}
-			
+
 			for (int i = 0; i < pickups.size(); i++) {
 				if (pickups.get(i).checkCollision(player1)
-						|| multiplayer && pickups.get(i).checkCollision(player2)) {
+						|| (multiplayer && pickups.get(i).checkCollision(
+								player2))) {
 					AudioPlayer.play("extraLife");
 					removeComponent(pickups.get(i));
 					pickups.remove(i);
@@ -207,11 +218,11 @@ public class LevelState extends GameState {
 					pickups.get(i).update();
 				}
 			}
-			
+
 			nextLevelCheck();
 		}
 	}
-	
+
 	/**
 	 * checks if the player is dead.
 	 */
@@ -225,7 +236,7 @@ public class LevelState extends GameState {
 			removeComponent(player2);
 		}
 	}
-	
+
 	/**
 	 * Next level.
 	 */
@@ -244,13 +255,13 @@ public class LevelState extends GameState {
 			Log.info("Player Action", "Player reached next level");
 		}
 	}
-	
+
 	/**
 	 * Draw everything of level 1.
 	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
-		
+
 		gr.setColor(Color.BLACK);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
@@ -263,7 +274,7 @@ public class LevelState extends GameState {
 			gr.drawString("PAUSED", 680, 26);
 		}
 	}
-	
+
 	/**
 	 * keyPressed.
 	 */
@@ -280,6 +291,7 @@ public class LevelState extends GameState {
 			player1.setUp(true);
 			return;
 		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_SPACE:
 			player1.setDown(true);
 			return;
 		case KeyEvent.VK_A:
@@ -306,7 +318,7 @@ public class LevelState extends GameState {
 			return;
 		}
 	}
-	
+
 	/**
 	 * keyReleased.
 	 */
@@ -323,6 +335,7 @@ public class LevelState extends GameState {
 			player1.setUp(false);
 			return;
 		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_SPACE:
 			player1.setDown(false);
 			return;
 		case KeyEvent.VK_A:
@@ -398,5 +411,5 @@ public class LevelState extends GameState {
 		}
 
 	}
-	
+
 }

@@ -2,7 +2,6 @@ package sem.group47.gamestate;
 
 import sem.group47.audio.AudioPlayer;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GameStateManager.
  */
@@ -11,6 +10,9 @@ public class GameStateManager {
 	/** The list of game states. */
 	private GameState[] gameStates;
 
+	/** Unique Instance of GamestateManager. */
+	private static GameStateManager uniqueInstance;
+
 	/** The current state. */
 	private int currentState;
 
@@ -18,7 +20,7 @@ public class GameStateManager {
 	private boolean paused;
 
 	/** The number of gamestates. */
-	public static final int NUMGAMESTATES = 4;
+	public static final int NUMGAMESTATES = 5;
 
 	/** The Constant MENUSTATE. */
 	public static final int MENUSTATE = 0;
@@ -32,10 +34,13 @@ public class GameStateManager {
 	/** The Constant HELPSTATE. */
 	public static final int HELPSTATE = 3;
 
+	/** The Constant OPTIONSSTATE. */
+	public static final int OPTIONSSTATE = 4;
+
 	/**
 	 * Instantiates a new game state manager.
 	 */
-	public GameStateManager() {
+	private GameStateManager() {
 		AudioPlayer.init();
 		try {
 			AudioPlayer.load("/music/menu.mp3", "menu");
@@ -63,6 +68,19 @@ public class GameStateManager {
 	}
 
 	/**
+	 * Makes sure GameStateManager is a Singleton, and can't have more than one
+	 * instance running.
+	 * 
+	 * @return
+	 */
+	public static synchronized GameStateManager getInstance() {
+		if (uniqueInstance == null) {
+			uniqueInstance = new GameStateManager();
+		}
+		return uniqueInstance;
+	}
+
+	/**
 	 * Load state.
 	 *
 	 * @param state
@@ -77,6 +95,8 @@ public class GameStateManager {
 			gameStates[state] = new GameOverState(this);
 		} else if (state == HELPSTATE) {
 			gameStates[state] = new HelpState(this);
+		} else if (state == OPTIONSSTATE) {
+			gameStates[state] = new OptionsState(this);
 		}
 		gameStates[state].init();
 	}
