@@ -9,7 +9,7 @@ import sem.group47.audio.AudioPlayer;
 import sem.group47.main.GamePanel;
 
 /**
- * The Class HelpState, which extends the super class GameState.
+ * The Class OptionsState, which extends the super class GameState.
  */
 public class OptionsState extends GameState {
 
@@ -23,7 +23,7 @@ public class OptionsState extends GameState {
 	private String[] options = { "On", "Off" };
 
 	/**
-	 * Instantiates a new menu state.
+	 * Instantiates a new options state.
 	 *
 	 * @param gsm
 	 *            the gamestatemanager
@@ -58,7 +58,7 @@ public class OptionsState extends GameState {
 	}
 
 	/**
-	 * Draws everything of the menu screen.
+	 * Draws everything of the options screen.
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
@@ -85,7 +85,7 @@ public class OptionsState extends GameState {
 	}
 
 	/**
-	 * Select between different menu options.
+	 * Select between different options.
 	 */
 	private void select() {
 		if (currentChoice == 0) {
@@ -105,7 +105,7 @@ public class OptionsState extends GameState {
 	}
 
 	/**
-	 * Lets you scroll through menu options with up and down keys.
+	 * Lets you scroll through options with up and down keys.
 	 */
 	@Override
 	public final void keyPressed(final int k) {
