@@ -11,6 +11,7 @@ import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.Level1Enemy;
+import sem.group47.entity.enemies.Magiron;
 import sem.group47.entity.enemies.ProjectileEnemy;
 import sem.group47.entity.pickups.BubbleSizePowerup;
 import sem.group47.entity.pickups.BubbleSpeedPowerup;
@@ -24,54 +25,56 @@ import sem.group47.tilemap.TileMap;
  * The Class Level1State.
  */
 public class LevelState extends GameState {
-
+	
 	/** level file names. **/
-	private String[] levelFileNames = new String[] { "level1.map",
-			"level2.map", "level3.map", "level4.map" };
-
+	private String[] levelFileNames = new String[] { "level1.map", "level2.map",
+			"level3.map", "level4.map" };
+	
 	/** file names of music **/
 	private String[] musicFileNames = new String[] { "level1", "level2",
 			"level3", "level4" };
-
+	
 	/** Current level. **/
 	private int level;
-
+	
 	/** Whether multiplayer is on. **/
 	private boolean multiplayer;
-
+	
 	/**
 	 * Paused flag.
 	 **/
 	private boolean paused;
-
+	
 	/** The players. **/
 	public Player player1;
-
+	
 	/** The player 2, only set when multiplayer is true. **/
 	public Player player2;
-
+	
 	/** The enemies. */
 	private ArrayList<Enemy> enemies;
-
+	
 	/** The hud. */
 	private HUD hud;
-
+	
 	/** The tile map. */
 	private TileMap tileMap;
-
+	
 	/** List of pickupobjects in the level. **/
 	private ArrayList<PickupObject> pickups;
-
+	
+	private Magiron aaron;
+	
 	/**
 	 * Instantiates a new level1 state.
 	 * 
 	 * @param gsm
-	 *            the gamestatemanager.
+	 *           the gamestatemanager.
 	 */
 	public LevelState(final GameStateManager gsm) {
 		setGsm(gsm);
 	}
-
+	
 	/**
 	 * Init.
 	 */
@@ -86,12 +89,12 @@ public class LevelState extends GameState {
 		paused = false;
 		
 	}
-
+	
 	/**
 	 * Sets up a certain level.
 	 * 
 	 * @param level
-	 *            number of level to be set
+	 *           number of level to be set
 	 */
 	private void setupLevel(int level) {
 		
@@ -100,26 +103,25 @@ public class LevelState extends GameState {
 		}
 		this.level = level;
 		tileMap.loadMap("/maps/" + levelFileNames[level]);
-
+		
 		addComponent(tileMap);
-
+		
 		pickups = new ArrayList<PickupObject>();
 		int tileSize = tileMap.getTileSize();
-
+		
 		player1 = new Player(tileMap);
 		player1.setPosition(tileSize * (2d + .5d) + 5,
 				tileSize * (tileMap.getNumRows() - 2 + .5d));
 		player1.setLives(PlayerSave.getLivesP1());
 		player1.setScore(PlayerSave.getScoreP1());
 		player1.setExtraLive(PlayerSave.getExtraLiveP1());
-
+		
 		addComponent(player1);
-
+		
 		if (multiplayer) {
 			player2 = new Player(tileMap);
-			player2.setPosition(
-					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5, tileSize
-							* (tileMap.getNumRows() - 2 + .5d));
+			player2.setPosition(tileSize * (tileMap.getNumCols() - 3 + .5d) - 5,
+					tileSize * (tileMap.getNumRows() - 2 + .5d));
 			player2.setLives(PlayerSave.getLivesP2());
 			player2.setScore(PlayerSave.getScoreP2());
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
@@ -128,13 +130,15 @@ public class LevelState extends GameState {
 		}
 		hud = new HUD(player1, player2);
 		addComponent(hud);
-
+		
+		aaron = new Magiron(tileMap);
+		
 		populateEnemies();
 		populatePowerups();
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
 	}
-
+	
 	/**
 	 * populate the game with enemies.
 	 */
@@ -142,8 +146,9 @@ public class LevelState extends GameState {
 		enemies = new ArrayList<Enemy>();
 		ArrayList<int[]> points = tileMap.getEnemyStartLocations();
 		Enemy enemy;
-		for (int i = 0; i < points.size(); i++) {
-			switch(points.get(i)[2]) {
+		int j = 0;
+		for (int i = 0; i < points.size() - 1; i++) {
+			switch (points.get(i)[2]) {
 			case Enemy.LEVEL1_ENEMY:
 				enemy = new Level1Enemy(tileMap);
 				break;
@@ -157,9 +162,14 @@ public class LevelState extends GameState {
 					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
 			enemies.add(enemy);
 			addComponent(enemy);
+			j = i;
 		}
+		
+		aaron = new Magiron(tileMap);
+		aaron.setPosition((points.get(j)[0] + .5d) * 30, (points.get(j)[1] + 1)
+				* 30 - .5d * aaron.getCHeight());
 	}
-
+	
 	/**
 	 * loads the powerups.
 	 */
@@ -175,7 +185,7 @@ public class LevelState extends GameState {
 		pickups.add(po);
 		addComponent(po);
 	}
-
+	
 	/**
 	 * Update the player and enemies.
 	 */
@@ -198,17 +208,16 @@ public class LevelState extends GameState {
 					removeComponent(player2);
 				}
 			}
-
+			aaron.update();
 			lostCheck();
-
+			
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).update();
 			}
-
+			
 			for (int i = 0; i < pickups.size(); i++) {
 				if (pickups.get(i).checkCollision(player1)
-						|| (multiplayer && pickups.get(i).checkCollision(
-								player2))) {
+						|| (multiplayer && pickups.get(i).checkCollision(player2))) {
 					AudioPlayer.play("extraLife");
 					removeComponent(pickups.get(i));
 					pickups.remove(i);
@@ -218,11 +227,11 @@ public class LevelState extends GameState {
 					pickups.get(i).update();
 				}
 			}
-
+			
 			nextLevelCheck();
 		}
 	}
-
+	
 	/**
 	 * checks if the player is dead.
 	 */
@@ -236,7 +245,7 @@ public class LevelState extends GameState {
 			removeComponent(player2);
 		}
 	}
-
+	
 	/**
 	 * Next level.
 	 */
@@ -255,18 +264,19 @@ public class LevelState extends GameState {
 			Log.info("Player Action", "Player reached next level");
 		}
 	}
-
+	
 	/**
 	 * Draw everything of level 1.
 	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
-
+		
 		gr.setColor(Color.BLACK);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
 		drawComponents(gr);
-
+		aaron.draw(gr);
+		
 		if (paused) {
 			gr.setColor(new Color(0, 0, 0, 180));
 			gr.fillRect(0, 0, tileMap.getWidth(), tileMap.getHeight());
@@ -274,7 +284,7 @@ public class LevelState extends GameState {
 			gr.drawString("PAUSED", 680, 26);
 		}
 	}
-
+	
 	/**
 	 * keyPressed.
 	 */
@@ -318,7 +328,7 @@ public class LevelState extends GameState {
 			return;
 		}
 	}
-
+	
 	/**
 	 * keyReleased.
 	 */
@@ -374,42 +384,38 @@ public class LevelState extends GameState {
 	
 	/**
 	 * checks what happens when the player directly collides with an enemy.
-	 *
+	 * 
 	 * @param player
-	 * 			the Player object to check collisions with
+	 *           the Player object to check collisions with
 	 */
 	public final void directEnemyCollision(Player player) {
-
+		if (player.intersects(aaron)) {
+			player.kill();
+		}
+		
 		for (int i = 0; i < enemies.size(); i++) {
+			
 			if (player.intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
-
-					player.setScore(
-					  enemies.get(i).getScorePoints());
+					
+					player.setScore(enemies.get(i).getScorePoints());
 					removeComponent(enemies.get(i));
 					enemies.remove(i);
 					
+					Log.info("Player Action", "Player collision with Caught Enemy");
 					
-					Log.info("Player Action",
-							"Player collision with Caught Enemy");
-
 				} else if (player.getLives() > 1) {
 					player.hit(1);
-					Log.info(
-							"Player Action", "Player collision with Enemy"
-							);
+					Log.info("Player Action", "Player collision with Enemy");
 					
 				} else {
 					AudioPlayer.play("crash");
 					player.hit(1);
-					Log.info(
-					  "Player Action",
-					  "Player collision with Enemy"
-					  );
+					Log.info("Player Action", "Player collision with Enemy");
 				}
 			}
 		}
-
+		
 	}
-
+	
 }
