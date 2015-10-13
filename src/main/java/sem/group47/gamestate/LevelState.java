@@ -2,7 +2,6 @@ package sem.group47.gamestate;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Panel;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -142,7 +141,7 @@ public class LevelState extends GameState {
 		populatePowerups();
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
-		
+
 		levelStepCount = 0;
 	}
 
@@ -173,7 +172,7 @@ public class LevelState extends GameState {
 		}
 
 		aaron = new Magiron(tileMap);
-		aaron.setPosition(GamePanel.WIDTH / 2, - 150);
+		aaron.setPosition(GamePanel.WIDTH / 2, -150);
 		addComponent(aaron);
 	}
 
@@ -217,7 +216,7 @@ public class LevelState extends GameState {
 					removeComponent(player2);
 				}
 			}
-			
+
 			if (levelStepCount == GamePanel.FPS * AARON_APPEAR_DELAY) {
 				targetAaron();
 			}
@@ -260,7 +259,13 @@ public class LevelState extends GameState {
 		if (player1.getLives() <= 0) {
 			removeComponent(player1);
 			if (!multiplayer || player2.getLives() <= 0) {
-				getGsm().setState(GameStateManager.GAMEOVERSTATE);
+
+				PlayerSave.setScoreP1(player1.getScore());
+				if (multiplayer) {
+					PlayerSave.setScoreP2(player2.getScore());
+				}
+
+				getGsm().setState(GameStateManager.HIGHSCORESTATE);
 			}
 		} else if (multiplayer && player2.getLives() <= 0) {
 			removeComponent(player2);
@@ -400,11 +405,11 @@ public class LevelState extends GameState {
 			return;
 		}
 	}
-	
+
 	private void targetAaron() {
 		if (multiplayer) {
 			if (player1.getLives() > 0) {
-				if(Math.random() > .5d || player2.getLives() <= 0) {
+				if (Math.random() > .5d || player2.getLives() <= 0) {
 					aaron.setTarget(player1);
 				} else {
 					aaron.setTarget(player2);
