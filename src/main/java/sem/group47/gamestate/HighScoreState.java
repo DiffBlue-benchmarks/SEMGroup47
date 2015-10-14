@@ -100,11 +100,11 @@ public class HighScoreState extends GameState {
 		g.setFont(font2);
 		drawString(g, highScore, 280, 150);
 
-		c1 = "" + alphabet1[Math.floorMod(choice1, 26)];
+		c1 = "" + alphabet1[(((choice1 % 26) + 26) % 26)];
 		g.drawString(c1, 280, 550);
-		c2 = "" + alphabet2[Math.floorMod(choice2, 26)];
+		c2 = "" + alphabet2[(((choice2 % 26) + 26) % 26)];
 		g.drawString(c2, 300, 550);
-		c3 = "" + alphabet3[Math.floorMod(choice3, 26)];
+		c3 = "" + alphabet3[(((choice3 % 26) + 26) % 26)];
 		g.drawString(c3, 320, 550);
 		g.drawString("" + PlayerSave.getScoreP1(), 360, 550);
 	}
@@ -170,10 +170,10 @@ public class HighScoreState extends GameState {
 			}
 		}
 		if (k == KeyEvent.VK_RIGHT) {
-			i = Math.floorMod(i + 1, 3);
+			i = (i + 1) % 3;
 		}
 		if (k == KeyEvent.VK_LEFT) {
-			i = Math.floorMod(i - 1, 3);
+			i = ((((i - 1) % 3) + 3) % 3);
 		}
 
 	}
