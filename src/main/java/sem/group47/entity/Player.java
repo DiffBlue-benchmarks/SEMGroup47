@@ -441,7 +441,8 @@ public class Player extends MapObject {
 		}
 
 		Log.info("Player Action", "Player received " + points + " points");
-		if (score == extraLive) {
+		if (score >= extraLive) {
+			System.out.println("true");
 			AudioPlayer.play("extraLife");
 			lives++;
 			extraLive += 300;

@@ -15,6 +15,7 @@ import sem.group47.entity.enemies.Magiron;
 import sem.group47.entity.enemies.ProjectileEnemy;
 import sem.group47.entity.pickups.BubbleSizePowerup;
 import sem.group47.entity.pickups.BubbleSpeedPowerup;
+import sem.group47.entity.pickups.Fruit;
 import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.entity.pickups.PickupObject;
 import sem.group47.main.GamePanel;
@@ -59,6 +60,9 @@ public class LevelState extends GameState {
 
 	/** The tile map. */
 	private TileMap tileMap;
+
+	/** The levelScore. */
+	private int levelScore;
 
 	/** List of pickupobjects in the level. **/
 	private ArrayList<PickupObject> pickups;
@@ -118,7 +122,15 @@ public class LevelState extends GameState {
 		player1.setPosition(tileSize * (2d + .5d) + 5,
 				tileSize * (tileMap.getNumRows() - 2 + .5d));
 		player1.setLives(PlayerSave.getLivesP1());
-		player1.setScore(PlayerSave.getScoreP1());
+		if (level == 1) {
+			player1.setScore(PlayerSave.getScoreP1() + 100);
+		} else if (level == 2) {
+			player1.setScore(PlayerSave.getScoreP1() + 200);
+		} else if (level == 3) {
+			player1.setScore(PlayerSave.getScoreP1() + 300);
+		} else if (level == 0 && PlayerSave.getScoreP1() != 0) {
+			player1.setScore(PlayerSave.getScoreP1() + 400);
+		}
 		player1.setExtraLive(PlayerSave.getExtraLiveP1());
 
 		addComponent(player1);
@@ -129,7 +141,15 @@ public class LevelState extends GameState {
 					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5, tileSize
 							* (tileMap.getNumRows() - 2 + .5d));
 			player2.setLives(PlayerSave.getLivesP2());
-			player2.setScore(PlayerSave.getScoreP2());
+			if (level == 1) {
+				player2.setScore(PlayerSave.getScoreP2() + 100);
+			} else if (level == 2) {
+				player2.setScore(PlayerSave.getScoreP2() + 200);
+			} else if (level == 3) {
+				player2.setScore(PlayerSave.getScoreP2() + 300);
+			} else if (level == 0 && PlayerSave.getScoreP2() != 0) {
+				player2.setScore(PlayerSave.getScoreP2() + 400);
+			}
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
 			player2.setFacingRight(false);
 			addComponent(player2);
@@ -438,6 +458,17 @@ public class LevelState extends GameState {
 
 			if (player.intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
+					Fruit fr = new Fruit(tileMap);
+
+					if (enemies.get(i).getXpos() > 400) {
+						fr.setPosition(enemies.get(i).getXpos() - 100, enemies
+								.get(i).getYpos());
+					} else {
+						fr.setPosition(enemies.get(i).getXpos() + 100, enemies
+								.get(i).getYpos());
+					}
+					pickups.add(fr);
+					addComponent(fr);
 
 					player.setScore(enemies.get(i).getScorePoints());
 					removeComponent(enemies.get(i));
