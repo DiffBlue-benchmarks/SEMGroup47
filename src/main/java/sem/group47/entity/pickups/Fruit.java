@@ -21,7 +21,7 @@ public class Fruit extends PickupObject {
 	}
 
 	/**
-	 * Score + 25 on pickup.
+	 * Score +25 on pickup.
 	 * 
 	 * @param p
 	 *            Player object
