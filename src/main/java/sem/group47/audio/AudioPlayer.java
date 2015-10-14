@@ -12,9 +12,8 @@ import javax.sound.sampled.DataLine;
 
 /**
  * AudioPlayer, for playing audio in the game.
- * 
- * @author Bas
  *
+ * @author Bas
  */
 public class AudioPlayer {
 
@@ -49,18 +48,18 @@ public class AudioPlayer {
 				return;
 			}
 			Clip clip;
-			AudioInputStream ais = AudioSystem
-					.getAudioInputStream(AudioPlayer.class
-							.getResourceAsStream(s));
+			AudioInputStream ais = AudioSystem.getAudioInputStream(
+					AudioPlayer.class.getResourceAsStream(s));
 			AudioFormat baseFormat = ais.getFormat();
 			AudioFormat decodeFormat = new AudioFormat(
 					AudioFormat.Encoding.PCM_SIGNED,
-					baseFormat.getSampleRate(), 16, baseFormat.getChannels(),
-					baseFormat.getChannels() * 2, baseFormat.getSampleRate(),
-					false);
-			AudioInputStream dais = AudioSystem.getAudioInputStream(
-					decodeFormat, ais);
-			DataLine.Info info = new DataLine.Info(Clip.class, decodeFormat);
+					baseFormat.getSampleRate(), 16,
+					baseFormat.getChannels(), baseFormat.getChannels() * 2,
+					baseFormat.getSampleRate(), false);
+			AudioInputStream dais = AudioSystem
+					.getAudioInputStream(decodeFormat, ais);
+			DataLine.Info info = new DataLine.Info(Clip.class,
+					decodeFormat);
 			clip = (Clip) AudioSystem.getLine(info);
 			clip.open(dais);
 			clips.put(n, clip);
@@ -211,7 +210,8 @@ public class AudioPlayer {
 	 * @param end
 	 *            the end
 	 */
-	public static void loop(final String s, final int start, final int end) {
+	public static void loop(final String s, final int start,
+			final int end) {
 		try {
 			loop(s, gap, start, end);
 		} catch (Exception e) {
@@ -231,8 +231,8 @@ public class AudioPlayer {
 	 * @param end
 	 *            the end
 	 */
-	public static void loop(final String s, final int frame, final int start,
-			final int end) {
+	public static void loop(final String s, final int frame,
+			final int start, final int end) {
 		try {
 			stop(s);
 			if (mute) {

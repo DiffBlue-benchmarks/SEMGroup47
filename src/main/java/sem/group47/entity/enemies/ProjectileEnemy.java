@@ -11,16 +11,17 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 public class ProjectileEnemy extends GroundEnemy {
-	
+
 	/** The fire delay. */
 	private int fireDelay;
-	
+
 	/** The last fire time. */
 	private long lastFireTime;
-	
+
 	private double projSpeed;
-	
+
 	ArrayList<EnemyProjectile> projectiles;
+
 	public ProjectileEnemy(TileMap tm) {
 		super(tm);
 		setScorePoints(100);
@@ -41,29 +42,29 @@ public class ProjectileEnemy extends GroundEnemy {
 		setStopJumpSpeed(.3);
 		setFacingRight(true);
 
-		
 		projSpeed = 2.5;
 		fireDelay = 1500;
 		projectiles = new ArrayList<EnemyProjectile>();
 
 		try {
-			this.setSpriteSheet(ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/enemy2.png")));
+			this.setSpriteSheet(ImageIO.read(getClass()
+					.getResourceAsStream("/enemies/enemy2.png")));
 			setSprite(getSpriteSheet().getSubimage(36, 0, 36, 36));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		setIsAngry(false);
 		setTimeCaught(0);
 		setTimeUntillBreakFree(10);
 	}
-	
+
+	@Override
 	public void update() {
 		super.update();
 		updateProjectiles();
 	}
-	
+
 	/**
 	 * Update projectiles.
 	 */
@@ -77,82 +78,93 @@ public class ProjectileEnemy extends GroundEnemy {
 			}
 		}
 	}
-	
+
 	/**
 	 * Draw.
 	 *
 	 * @param gr
 	 *            the graphics
 	 */
+	@Override
 	public void draw(final Graphics2D gr) {
 		if (!facingRight) {
-			gr.drawImage(getSprite(), (int) (getx() - getWidth() / (double) 2),
+			gr.drawImage(getSprite(),
+					(int) (getx() - getWidth() / (double) 2),
 					(int) (gety() - getHeight() / (double) 2), null);
 		} else {
-			gr.drawImage(getSprite(), (int) (getx() + getHeight() / (double) 2),
-					(int) (gety() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
+			gr.drawImage(getSprite(),
+					(int) (getx() + getHeight() / (double) 2),
+					(int) (gety() - getHeight() / (double) 2), -getWidth(),
+					getHeight(), null);
 		}
-		
+
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).draw(gr);
 		}
 	}
-	
+
 	/**
 	 * Sets the caught.
+	 * 
 	 * @param isCaught
-	 * Whether or not the enemy is caught
+	 *            Whether or not the enemy is caught
 	 */
+	@Override
 	public void setCaught(boolean isCaught) {
 		super.setCaught(isCaught);
 		if (isCaught) {
-			setSprite(getSpriteSheet().getSubimage(7*36, 0, 36, 36));
+			setSprite(getSpriteSheet().getSubimage(7 * 36, 0, 36, 36));
 		}
 	}
-	
+
 	/**
 	 * Sets the isAngry.
+	 * 
 	 * @param angry
-	 * whether or not the enemy is angry
+	 *            whether or not the enemy is angry
 	 */
+	@Override
 	public void setIsAngry(boolean angry) {
 		super.setIsAngry(angry);
 		if (angry) {
-			setSprite(getSpriteSheet().getSubimage(3*36, 0, 36, 36));
+			setSprite(getSpriteSheet().getSubimage(3 * 36, 0, 36, 36));
 		} else {
 			setSprite(getSpriteSheet().getSubimage(36, 0, 36, 36));
 		}
 	}
-	
+
 	/**
-	 * Checks if player is in front of us and fires and checks projectile collision
+	 * Checks if player is in front of us and fires and checks projectile
+	 * collision
 	 */
+	@Override
 	public boolean projectileCollision(MapObject o) {
-		if (!this.isCaught() && lastFireTime + fireDelay < System.currentTimeMillis()) {
-			if(Math.abs(o.gety() - this.gety()) < 30 && 
-					((facingRight && o.getx() > this.getx() ) ||
-							(!facingRight && o.gety() > this.gety()))) {
+		if (!this.isCaught()
+				&& lastFireTime + fireDelay < System.currentTimeMillis()) {
+			if (Math.abs(o.gety() - this.gety()) < 30
+					&& ((facingRight && o.getx() > this.getx())
+							|| (!facingRight && o.gety() > this.gety()))) {
 				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
-				EnemyProjectile projectile =
-				  new EnemyProjectile(getTileMap());
+				EnemyProjectile projectile = new EnemyProjectile(
+						getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
 					projectile.setDx(projSpeed * -1);
 				} else {
-				 projectile.setDx(projSpeed);
+					projectile.setDx(projSpeed);
 				}
 				projectiles.add(projectile);
 				Log.info("Enemy Action", "Projectile fired");
 			}
 		}
-		
-		for(int i = 0; i < projectiles.size(); i++) {
-			if(projectiles.get(i).intersects(o)) {
+
+		for (int i = 0; i < projectiles.size(); i++) {
+			if (projectiles.get(i).intersects(o)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 }

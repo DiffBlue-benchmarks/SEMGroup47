@@ -1,4 +1,5 @@
 package sem.group47.entity;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -24,7 +25,7 @@ public class Animation {
 	/**
 	 * Constructor.
 	 */
-	public final void Animation() {
+	public final void animation() {
 		playedOnce = false;
 	}
 

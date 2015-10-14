@@ -30,7 +30,7 @@ public class LevelState extends GameState {
 	private String[] levelFileNames = new String[] { "level1.map",
 			"level2.map", "level3.map", "level4.map" };
 
-	/** file names of music **/
+	/** file names of music. **/
 	private String[] musicFileNames = new String[] { "level1", "level2",
 			"level3", "level4" };
 
@@ -125,8 +125,8 @@ public class LevelState extends GameState {
 		if (multiplayer) {
 			player2 = new Player(tileMap);
 			player2.setPosition(
-					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5, tileSize
-							* (tileMap.getNumRows() - 2 + .5d));
+					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5,
+					tileSize * (tileMap.getNumRows() - 2 + .5d));
 			player2.setLives(PlayerSave.getLivesP2());
 			player2.setScore(PlayerSave.getScoreP2());
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
@@ -164,15 +164,16 @@ public class LevelState extends GameState {
 				enemy = new Level1Enemy(tileMap);
 			}
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
-					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
+					(points.get(i)[1] + 1) * 30
+							- .5d * enemy.getCHeight());
 			enemies.add(enemy);
 			addComponent(enemy);
 			j = i;
 		}
 
 		aaron = new Magiron(tileMap);
-		aaron.setPosition((points.get(j)[0] + .5d) * 30, (points.get(j)[1] + 1)
-				* 30 - .5d * aaron.getCHeight());
+		aaron.setPosition((points.get(j)[0] + .5d) * 30,
+				(points.get(j)[1] + 1) * 30 - .5d * aaron.getCHeight());
 	}
 
 	/**
@@ -223,16 +224,18 @@ public class LevelState extends GameState {
 
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).update();
-				if (enemies.get(i).projectileCollision(player1))
+				if (enemies.get(i).projectileCollision(player1)) {
 					player1.kill();
-				if (multiplayer && enemies.get(i).projectileCollision(player2))
+				}
+				if (multiplayer
+						&& enemies.get(i).projectileCollision(player2)) {
 					player2.kill();
+				}
 			}
 
 			for (int i = 0; i < pickups.size(); i++) {
-				if (pickups.get(i).checkCollision(player1)
-						|| (multiplayer && pickups.get(i).checkCollision(
-								player2))) {
+				if (pickups.get(i).checkCollision(player1) || (multiplayer
+						&& pickups.get(i).checkCollision(player2))) {
 					AudioPlayer.play("extraLife");
 					removeComponent(pickups.get(i));
 					pickups.remove(i);
@@ -423,12 +426,14 @@ public class LevelState extends GameState {
 
 				} else if (player.getLives() > 1) {
 					player.hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info("Player Action",
+							"Player collision with Enemy");
 
 				} else {
 					AudioPlayer.play("crash");
 					player.hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info("Player Action",
+							"Player collision with Enemy");
 				}
 			}
 		}

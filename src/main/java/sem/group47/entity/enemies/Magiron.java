@@ -31,8 +31,8 @@ public class Magiron extends Enemy {
 		}
 
 		try {
-			setSprite(ImageIO.read(getClass().getResourceAsStream(
-					"/hud/Bubble_Heart.png")));
+			setSprite(ImageIO.read(getClass()
+					.getResourceAsStream("/hud/Bubble_Heart.png")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -153,8 +153,8 @@ public class Magiron extends Enemy {
 
 	@Override
 	public final void draw(final Graphics2D g) {
-		 if (System.currentTimeMillis() - LevelState.time > 9000) {
-		super.draw(g);
+		if (System.currentTimeMillis() - LevelState.time > 9000) {
+			super.draw(g);
 		}
 	}
 

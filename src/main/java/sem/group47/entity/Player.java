@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 
 import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.enemies.Enemy;
-import sem.group47.gamestate.GameStateManager;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
@@ -54,9 +53,7 @@ public class Player extends MapObject {
 	private ArrayList<BufferedImage[]> sprites;
 
 	/** Number of frames for each animation action in order. */
-	private final int[] numFrames = {
-		3, 2, 3
-	};
+	private final int[] numFrames = { 3, 2, 3 };
 
 	/** Animation actions # for idle state. */
 	public static final int IDLE = 0;
@@ -111,25 +108,17 @@ public class Player extends MapObject {
 
 		try {
 
-			BufferedImage spritesheet = ImageIO.read(
-				getClass().getResourceAsStream(
-						"/player/playerv2.png"
-				)
-			);
+			BufferedImage spritesheet = ImageIO.read(getClass()
+					.getResourceAsStream("/player/playerv2.png"));
 
 			sprites = new ArrayList<BufferedImage[]>();
 			for (int i = 0; i < 3; i++) {
 
-				BufferedImage[] bi =
-					new BufferedImage[numFrames[i]];
+				BufferedImage[] bi = new BufferedImage[numFrames[i]];
 
 				for (int j = 0; j < numFrames[i]; j++) {
-						bi[j] = spritesheet.getSubimage(
-								j * getWidth(),
-								i * getHeight(),
-								getWidth(),
-								getHeight()
-						);
+					bi[j] = spritesheet.getSubimage(j * getWidth(),
+							i * getHeight(), getWidth(), getHeight());
 				}
 				sprites.add(bi);
 			}
@@ -154,10 +143,10 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Update. Called every frame. Updates player position,
-	 * looks for collision and then puts the player in the
-	 * new position
+	 * Update. Called every frame. Updates player position, looks for collision
+	 * and then puts the player in the new position
 	 */
+	@Override
 	public final void update() {
 		updateProjectiles();
 		getNextXPosition();
@@ -192,13 +181,12 @@ public class Player extends MapObject {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
 				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
-				Projectile projectile =
-				  new Projectile(getTileMap());
+				Projectile projectile = new Projectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
 					projectile.setDx(bubbleSpeed * -1);
 				} else {
-				 projectile.setDx(bubbleSpeed);
+					projectile.setDx(bubbleSpeed);
 				}
 
 				isAttacking = true;
@@ -206,10 +194,8 @@ public class Player extends MapObject {
 
 				projectile.setWidth(getBubbleSize());
 				projectile.setHeight(getBubbleSize());
-				projectile.setCwidth(
-				  (int) (getBubbleSize() / 1.6f));
-				projectile.setCheight(
-				  (int) (getBubbleSize() / 1.6f));
+				projectile.setCwidth((int) (getBubbleSize() / 1.6f));
+				projectile.setCheight((int) (getBubbleSize() / 1.6f));
 
 				projectiles.add(projectile);
 				Log.info("Player Action", "Bubble fired");
@@ -217,27 +203,21 @@ public class Player extends MapObject {
 		}
 	}
 
-
 	/**
 	 * takes a life, or ends the game
 	 */
 	public final void kill() {
 		if (getLives() > 1) {
 			hit(1);
-			Log.info(
-					"Player Action", "Player collision with Enemy"
-					);
-			
+			Log.info("Player Action", "Player collision with Enemy");
+
 		} else {
 			AudioPlayer.play("crash");
 			hit(1);
-			Log.info(
-			  "Player Action",
-			  "Player collision with Enemy"
-			  );
+			Log.info("Player Action", "Player collision with Enemy");
 		}
 	}
-	
+
 	/**
 	 * lets the player interact with a projectile, enabling him to jump on it
 	 * and lift upwards, or kick against it.
@@ -273,11 +253,13 @@ public class Player extends MapObject {
 	 * @param enemies
 	 *            enemies
 	 */
-	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
+	public final void indirectEnemyCollision(
+			final ArrayList<Enemy> enemies) {
 		for (int i = 0; i < enemies.size(); i++) {
 			for (int j = 0; j < getProjectiles().size(); j++) {
-				if (getProjectiles().get(j).getDy() == 0 && 
-				  getProjectiles().get(j).intersects(enemies.get(i))) {
+				if (getProjectiles().get(j).getDy() == 0
+						&& getProjectiles().get(j)
+								.intersects(enemies.get(i))) {
 					getProjectiles().remove(j);
 					j--;
 					Log.info("Player Action", "Fired bubble hit enemy");
@@ -319,17 +301,16 @@ public class Player extends MapObject {
 					"Amount of lives of player was <0. Set back to 0");
 		}
 		if (lives == 0) {
-		 AudioPlayer.stopAll();
+			AudioPlayer.stopAll();
 			AudioPlayer.play("dead");
 			setAlive(false);
 			Log.info("Player Action", "Player died");
 			// TODO GameOver screen
 		}
 
-		setPosition(
-    getTileMap().getWidth() / 2,
-    getTileMap().getHeight() / 2);
-		setVector(0 , 0);
+		setPosition(getTileMap().getWidth() / 2,
+				getTileMap().getHeight() / 2);
+		setVector(0, 0);
 		flinching = true;
 		flinchTimer = System.nanoTime();
 
@@ -432,13 +413,17 @@ public class Player extends MapObject {
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
-		if(!flinching || Math.round(Math.random()*1) == 0) {
+		if (!flinching || Math.round(Math.random() * 1) == 0) {
 			if (facingRight) {
-				g.drawImage(animation.getImage(), (int) (getXpos() - getWidth() / (double) 2),
-						(int) (getYpos() - getHeight() / (double) 2), null);
+				g.drawImage(animation.getImage(),
+						(int) (getXpos() - getWidth() / (double) 2),
+						(int) (getYpos() - getHeight() / (double) 2),
+						null);
 			} else {
-				g.drawImage(animation.getImage(), (int) (getXpos() + getWidth() / (double) 2),
-						(int) (getYpos() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
+				g.drawImage(animation.getImage(),
+						(int) (getXpos() + getWidth() / (double) 2),
+						(int) (getYpos() - getHeight() / (double) 2),
+						-getWidth(), getHeight(), null);
 			}
 		}
 
@@ -540,10 +525,10 @@ public class Player extends MapObject {
 	 * Sets the bubble speed.
 	 *
 	 * @param speed
-	 *  The bubble speed
+	 *            The bubble speed
 	 */
 	public final void setBubbleSpeed(final double speed) {
-	 this.bubbleSpeed = speed;
+		this.bubbleSpeed = speed;
 	}
 
 	/**
@@ -552,24 +537,25 @@ public class Player extends MapObject {
 	 * @return bubbleSpeed
 	 */
 	public final double getBubbleSpeed() {
-	 return bubbleSpeed;
+		return bubbleSpeed;
 	}
 
 	/**
 	 * Sets the bubble size.
 	 *
 	 * @param size
-	 *  The bubble size
+	 *            The bubble size
 	 */
 	public final void setBubbleSize(final int size) {
-	 bubbleSize = size;
+		bubbleSize = size;
 	}
 
 	/**
 	 * Gets the bubble size.
+	 * 
 	 * @return bubblesize
 	 */
 	public final int getBubbleSize() {
-	 return bubbleSize;
+		return bubbleSize;
 	}
 }

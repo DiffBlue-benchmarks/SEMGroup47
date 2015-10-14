@@ -126,7 +126,7 @@ public class GameStateManager {
 	/**
 	 * Updates the current state.
 	 */
-	public synchronized final void update() {
+	public final synchronized void update() {
 
 		if (gameStates[currentState] != null) {
 			gameStates[currentState].update();
