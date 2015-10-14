@@ -122,16 +122,9 @@ public class LevelState extends GameState {
 		player1.setPosition(tileSize * (2d + .5d) + 5,
 				tileSize * (tileMap.getNumRows() - 2 + .5d));
 		player1.setLives(PlayerSave.getLivesP1());
-		if (level == 1) {
-			player1.setScore(PlayerSave.getScoreP1() + 100);
-		} else if (level == 2) {
-			player1.setScore(PlayerSave.getScoreP1() + 200);
-		} else if (level == 3) {
-			player1.setScore(PlayerSave.getScoreP1() + 300);
-		} else if (level == 0 && PlayerSave.getScoreP1() != 0) {
-			player1.setScore(PlayerSave.getScoreP1() + 400);
-		}
+
 		player1.setExtraLive(PlayerSave.getExtraLiveP1());
+		player1.setScore(PlayerSave.getScoreP1());
 
 		addComponent(player1);
 
@@ -141,16 +134,8 @@ public class LevelState extends GameState {
 					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5, tileSize
 							* (tileMap.getNumRows() - 2 + .5d));
 			player2.setLives(PlayerSave.getLivesP2());
-			if (level == 1) {
-				player2.setScore(PlayerSave.getScoreP2() + 100);
-			} else if (level == 2) {
-				player2.setScore(PlayerSave.getScoreP2() + 200);
-			} else if (level == 3) {
-				player2.setScore(PlayerSave.getScoreP2() + 300);
-			} else if (level == 0 && PlayerSave.getScoreP2() != 0) {
-				player2.setScore(PlayerSave.getScoreP2() + 400);
-			}
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
+			player2.setScore(PlayerSave.getScoreP2());
 			player2.setFacingRight(false);
 			addComponent(player2);
 		}
@@ -298,13 +283,29 @@ public class LevelState extends GameState {
 	public final void nextLevelCheck() {
 		if (enemies.size() == 0) {
 			PlayerSave.setLivesP1(player1.getLives());
-			PlayerSave.setScoreP1(player1.getScore());
+			if (level == 0) {
+				PlayerSave.setScoreP1(player1.getScore() + 100);
+			} else if (level == 1) {
+				PlayerSave.setScoreP1(player1.getScore() + 200);
+			} else if (level == 2) {
+				PlayerSave.setScoreP1(player1.getScore() + 300);
+			} else if (level == 3) {
+				PlayerSave.setScoreP1(player1.getScore() + 400);
+			}
 			PlayerSave.setExtraLiveP1(player1.getExtraLive());
+
 			if (multiplayer) {
 				PlayerSave.setLivesP2(player2.getLives());
-				PlayerSave.setScoreP2(player2.getScore());
+				if (level == 0) {
+					PlayerSave.setScoreP2(player2.getScore() + 100);
+				} else if (level == 1) {
+					PlayerSave.setScoreP2(player2.getScore() + 200);
+				} else if (level == 2) {
+					PlayerSave.setScoreP2(player2.getScore() + 300);
+				} else if (level == 3) {
+					PlayerSave.setScoreP2(player2.getScore() + 400);
+				}
 				PlayerSave.setExtraLiveP2(player2.getExtraLive());
-				System.out.println(PlayerSave.getExtraLiveP2());
 			}
 			setupLevel(level + 1);
 			Log.info("Player Action", "Player reached next level");
