@@ -19,6 +19,7 @@ import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.entity.pickups.PickupObject;
 import sem.group47.main.GamePanel;
 import sem.group47.main.Log;
+import sem.group47.tilemap.Background;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -59,6 +60,9 @@ public class LevelState extends GameState {
 
 	/** The tile map. */
 	private TileMap tileMap;
+	
+	/** The Background. */
+	private Background bg;
 
 	/** List of pickupobjects in the level. **/
 	private ArrayList<PickupObject> pickups;
@@ -89,7 +93,7 @@ public class LevelState extends GameState {
 		level = 0;
 		setupLevel(level);
 		paused = false;
-
+		bg = new Background("/backgrounds/rainbow.gif");
 	}
 
 	/**
@@ -288,9 +292,10 @@ public class LevelState extends GameState {
 	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
-		gr.setColor(Color.BLACK);
+		gr.setColor(Color.RED);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-
+		bg.draw(gr);
+		
 		drawComponents(gr);
 
 		if (paused) {
