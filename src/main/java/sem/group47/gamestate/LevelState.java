@@ -292,7 +292,7 @@ public class LevelState extends GameState {
 	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
-		gr.setColor(Color.RED);
+		gr.setColor(Color.BLACK);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		bg.draw(gr);
 		
