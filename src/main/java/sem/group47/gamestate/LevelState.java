@@ -2,6 +2,7 @@ package sem.group47.gamestate;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Panel;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -68,8 +69,9 @@ public class LevelState extends GameState {
 	private ArrayList<PickupObject> pickups;
 
 	private Magiron aaron;
-
-	public static double time = System.currentTimeMillis();
+	/** Time in seconds before Aaron appears **/
+	public static int AARON_APPEAR_DELAY = 45;
+	private long levelStepCount;
 
 	/**
 	 * Instantiates a new level1 state.
@@ -140,12 +142,12 @@ public class LevelState extends GameState {
 		hud = new HUD(player1, player2);
 		addComponent(hud);
 
-		aaron = new Magiron(tileMap);
-
 		populateEnemies();
 		populatePowerups();
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
+		
+		levelStepCount = 0;
 	}
 
 	/**
@@ -175,8 +177,8 @@ public class LevelState extends GameState {
 		}
 
 		aaron = new Magiron(tileMap);
-		aaron.setPosition((points.get(j)[0] + .5d) * 30, (points.get(j)[1] + 1)
-				* 30 - .5d * aaron.getCHeight());
+		aaron.setPosition(GamePanel.WIDTH / 2, - 150);
+		addComponent(aaron);
 	}
 
 	/**
@@ -203,9 +205,6 @@ public class LevelState extends GameState {
 	@Override
 	public final void update() {
 		if (!paused) {
-			// if (System.currentTimeMillis() - time > 89999) {
-			addComponent(aaron);
-			// }
 			if (player1.getLives() > 0) {
 				player1.update();
 				directEnemyCollision(player1);
@@ -222,15 +221,21 @@ public class LevelState extends GameState {
 					removeComponent(player2);
 				}
 			}
+			
+			if (levelStepCount == GamePanel.FPS * AARON_APPEAR_DELAY) {
+				targetAaron();
+			}
 			aaron.update();
 			lostCheck();
 
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).update();
-				if (enemies.get(i).projectileCollision(player1))
+				if (enemies.get(i).projectileCollision(player1)) {
 					player1.kill();
-				if (multiplayer && enemies.get(i).projectileCollision(player2))
+				}
+				if (multiplayer && enemies.get(i).projectileCollision(player2)) {
 					player2.kill();
+				}
 			}
 
 			for (int i = 0; i < pickups.size(); i++) {
@@ -248,6 +253,7 @@ public class LevelState extends GameState {
 			}
 
 			nextLevelCheck();
+			levelStepCount++;
 		}
 	}
 
@@ -260,10 +266,8 @@ public class LevelState extends GameState {
 			if (!multiplayer || player2.getLives() <= 0) {
 				getGsm().setState(GameStateManager.GAMEOVERSTATE);
 			}
-			time = System.currentTimeMillis();
 		} else if (multiplayer && player2.getLives() <= 0) {
 			removeComponent(player2);
-			time = System.currentTimeMillis();
 		}
 	}
 
@@ -281,7 +285,6 @@ public class LevelState extends GameState {
 				PlayerSave.setExtraLiveP2(player2.getExtraLive());
 				System.out.println(PlayerSave.getExtraLiveP2());
 			}
-			time = System.currentTimeMillis();
 			setupLevel(level + 1);
 			Log.info("Player Action", "Player reached next level");
 		}
@@ -402,6 +405,22 @@ public class LevelState extends GameState {
 			return;
 		}
 	}
+	
+	private void targetAaron() {
+		if (multiplayer) {
+			if (player1.getLives() > 0) {
+				if(Math.random() > .5d || player2.getLives() <= 0) {
+					aaron.setTarget(player1);
+				} else {
+					aaron.setTarget(player2);
+				}
+			} else {
+				aaron.setTarget(player2);
+			}
+		} else {
+			aaron.setTarget(player1);
+		}
+	}
 
 	/**
 	 * checks what happens when the player directly collides with an enemy.
@@ -412,6 +431,7 @@ public class LevelState extends GameState {
 	public final void directEnemyCollision(Player player) {
 		if (player.intersects(aaron)) {
 			player.kill();
+			targetAaron();
 		}
 
 		for (int i = 0; i < enemies.size(); i++) {
