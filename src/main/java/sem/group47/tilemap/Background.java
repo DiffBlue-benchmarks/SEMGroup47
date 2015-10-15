@@ -14,9 +14,6 @@ import sem.group47.main.GamePanel;
 
 public class Background {
 
-	/** The background image. */
-	private BufferedImage image;
-
 	/** The animation. */
 	private Animation animation;
 	
@@ -27,7 +24,7 @@ public class Background {
 		BufferedImage[] animationSprites = null;
 		try {
 			ImageReader reader = ImageIO.getImageReadersByFormatName("gif").next();
-			File input = new File("src/main/resources/backgrounds/rainbow.gif");
+			File input = new File("src/main/resources/backgrounds/clouds.gif");
 			ImageInputStream stream = ImageIO.createImageInputStream(input);
 			reader.setInput(stream);
 
@@ -43,7 +40,7 @@ public class Background {
 
 		animation = new Animation();
 		animation.setFrames(animationSprites);
-		animation.setDelay(60);
+		animation.setDelay(500);
 	}
 
 	/** Draw the background.
