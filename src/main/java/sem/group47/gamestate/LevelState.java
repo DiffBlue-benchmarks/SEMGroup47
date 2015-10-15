@@ -95,7 +95,7 @@ public class LevelState extends GameState {
 		level = 0;
 		setupLevel(level);
 		paused = false;
-		bg = new Background("/backgrounds/rainbow.gif");
+		bg = new Background();
 	}
 
 	/**
