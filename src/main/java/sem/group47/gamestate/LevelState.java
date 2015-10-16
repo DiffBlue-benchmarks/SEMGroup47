@@ -537,7 +537,7 @@ public class LevelState extends GameState {
 	 * @return the player1
 	 */
 	public Player getPlayer1() {
-		return player2;
+		return player1;
 	}
 
 	/**
@@ -546,8 +546,8 @@ public class LevelState extends GameState {
 	 * @param pPlayer2
 	 *            the new player1
 	 */
-	public void setPlayer1(Player pPlayer2) {
-		this.player2 = pPlayer2;
+	public void setPlayer1(Player pPlayer1) {
+		this.player1 = pPlayer1;
 	}
 
 }
