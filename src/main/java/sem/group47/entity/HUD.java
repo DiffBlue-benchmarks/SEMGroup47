@@ -31,17 +31,20 @@ public class HUD implements Drawable {
 	private Font font;
 
 	/**
-	 * Instantiates a new hud.
+	 * Initiates.
 	 *
-	 * @param p
-	 *            the p
+	 * @param p1
+	 *            the p1
+	 * @param p2
+	 *            the p2
 	 */
+
 	public HUD(final Player p1, final Player p2) {
 		player1 = p1;
 		player2 = p2;
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream(
-					"/hud/Bubble_Heart.png"));
+			image = ImageIO.read(getClass()
+					.getResourceAsStream("/hud/Bubble_Heart.png"));
 			font = new Font("Arial", Font.PLAIN, 28);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -76,13 +79,14 @@ public class HUD implements Drawable {
 
 		if (player2 != null) {
 			for (int i = 0; i < player2.getLives() && i < 3; i++) {
-				g.drawImage(image, GamePanel.WIDTH - (i + 1) * 30, 0, null);
+				g.drawImage(image, GamePanel.WIDTH - (i + 1) * 30, 0,
+						null);
 			}
 			undrawnLives = player2.getLives() - 3;
 			if (undrawnLives > 0) {
 				g.setColor(Color.WHITE);
-				drawCenteredString("+" + undrawnLives, GamePanel.WIDTH - 50,
-						54, g);
+				drawCenteredString("+" + undrawnLives,
+						GamePanel.WIDTH - 50, 54, g);
 			}
 			g.setColor(Color.GREEN);
 			drawCenteredString("1UP", GamePanel.WIDTH - 130, 26, g);
@@ -92,14 +96,14 @@ public class HUD implements Drawable {
 			g.setColor(Color.RED);
 			drawCenteredString("SCORE", GamePanel.WIDTH - 325, 26, g);
 			g.setColor(Color.WHITE);
-			drawCenteredString("" + player2.getScore(), GamePanel.WIDTH - 325,
-					54, g);
+			drawCenteredString("" + player2.getScore(),
+					GamePanel.WIDTH - 325, 54, g);
 		}
 	}
 
 	/**
-	 * Helper function for drawing a string with center alignment
-	 * 
+	 * Helper function for drawing a string with center alignment.
+	 *
 	 * @param s
 	 *            the string
 	 * @param x

@@ -37,8 +37,8 @@ public class Level1Enemy extends GroundEnemy {
 		setFacingRight(true);
 
 		try {
-			this.setSpriteSheet(ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/level1.gif")));
+			this.setSpriteSheet(ImageIO.read(getClass()
+					.getResourceAsStream("/enemies/level1.gif")));
 			setSprite(getSpriteSheet().getSubimage(0, 0, 30, 30));
 		} catch (Exception e) {
 			e.printStackTrace();

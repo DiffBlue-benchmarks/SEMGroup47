@@ -4,22 +4,30 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
-import org.apache.commons.io.FileUtils;
-
 import sem.group47.entity.Animation;
 import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
-public class Magiron extends Enemy {	
+/**
+ * The Class Magiron.
+ */
+public class Magiron extends Enemy {
+
+	/** The target. */
 	private MapObject target;
 
-	public Magiron(TileMap tm) {
+	/**
+	 * Instantiates a new magiron.
+	 *
+	 * @param tm
+	 *            the tm
+	 */
+	public Magiron(final TileMap tm) {
 		super(tm);
 
 		setScorePoints(100);
@@ -33,9 +41,12 @@ public class Magiron extends Enemy {
 
 		BufferedImage[] animationSprites = null;
 		try {
-			ImageReader reader = ImageIO.getImageReadersByFormatName("gif").next();
-			File input = new File("src/main/resources/enemies/magiaaron.gif");
-			ImageInputStream stream = ImageIO.createImageInputStream(input);
+			ImageReader reader = ImageIO.getImageReadersByFormatName("gif")
+					.next();
+			File input = new File(
+					"src/main/resources/enemies/magiaaron.gif");
+			ImageInputStream stream = ImageIO
+					.createImageInputStream(input);
 			reader.setInput(stream);
 
 			int count = reader.getNumImages(true);
@@ -53,45 +64,75 @@ public class Magiron extends Enemy {
 		animation.setDelay(60);
 	}
 
+	/**
+	 * Draw, draws the image animation.
+	 */
 	@Override
 	public final void draw(final Graphics2D g) {
 		if (facingRight) {
-			g.drawImage(animation.getImage(), (int) (getXpos() - getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2), getWidth(), getHeight(), null);
+			g.drawImage(animation.getImage(),
+					(int) (getXpos() - getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2),
+					getWidth(), getHeight(), null);
 		} else {
-			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
+			g.drawImage(animation.getImage(),
+					(int) (getXpos() + getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2),
+					-getWidth(), getHeight(), null);
 		}
 	}
 
-	public void setTarget(MapObject t) {
+	/**
+	 * Sets the target.
+	 *
+	 * @param t
+	 *            the new target
+	 */
+	public final void setTarget(final MapObject t) {
 		target = t;
 	}
 
+	/**
+	 * Update, updates the animation moving towards the target.
+	 */
 	@Override
-	public void update() {
+	public final void update() {
 		animation.update();
-		if(target != null) {
+		if (target != null) {
 			moveTowards(target);
 		}
 	}
 
-	public void moveTowards(MapObject mo) {
+	/**
+	 * Move towards.
+	 *
+	 * @param mo
+	 *            the mo
+	 */
+	public final void moveTowards(final MapObject mo) {
 		moveTowards(mo.getx(), mo.gety());
 	}
 
-	public void moveTowards(double x, double y) {
+	/**
+	 * Move towards.
+	 *
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 */
+	public final void moveTowards(final double x, final double y) {
 		double newX = getx();
 		double newY = gety();
 		double speed = getMovSpeed();
-		if (x - speed > getx() ) {
+		if (x - speed > getx()) {
 			newX += speed;
 			facingRight = false;
 		} else if (x + speed < getx()) {
 			newX -= speed;
 			facingRight = true;
 		}
-		if(y - speed > gety()) {
+		if (y - speed > gety()) {
 			newY += speed;
 		} else if (y + speed < gety()) {
 			newY -= speed;
@@ -99,18 +140,27 @@ public class Magiron extends Enemy {
 		setPosition(newX, newY);
 	}
 
+	/**
+	 * Hit, sets boolean.
+	 */
 	@Override
-	public void hit() {
+	public final void hit() {
 		caught = false;
 	}
 
+	/**
+	 * setCaught, sets boolean.
+	 */
 	@Override
-	public void setCaught() {
+	public final void setCaught() {
 		caught = false;
 	}
 
+	/**
+	 * isCaught, sets boolean.
+	 */
 	@Override
-	public void setCaught(boolean isCaught) {
+	public final void setCaught(final boolean isCaught) {
 		caught = false;
 	}
 

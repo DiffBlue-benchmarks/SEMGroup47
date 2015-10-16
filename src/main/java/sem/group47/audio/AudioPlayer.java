@@ -12,9 +12,8 @@ import javax.sound.sampled.DataLine;
 
 /**
  * AudioPlayer, for playing audio in the game.
- * 
- * @author Bas
  *
+ * @author Bas
  */
 public class AudioPlayer {
 
@@ -341,7 +340,7 @@ public class AudioPlayer {
 	 * @param pMute
 	 *            the new muted value
 	 */
-	public static void setMute(boolean pMute) {
+	public static void setMute(final boolean pMute) {
 		mute = pMute;
 	}
 

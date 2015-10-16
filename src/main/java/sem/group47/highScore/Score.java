@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * The Class Score, used as an Score object type for the ArrayList in the
  * HighScoreManager class.
- * 
+ *
  * @author Bas
  */
 @SuppressWarnings("serial")

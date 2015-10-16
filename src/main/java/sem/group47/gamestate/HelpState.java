@@ -22,7 +22,7 @@ public class HelpState extends GameState {
 	private Font font, font2;
 
 	/** The options. */
-	private String[] options = { "Return mkay", "Start mkay" };
+	private String[] options = {"Return mkay", "Start mkay" };
 
 	/** The Background. */
 	private String bg = "/backgrounds/Mr_Mackey.png";

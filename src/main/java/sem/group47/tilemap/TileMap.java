@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
-import sem.group47.main.Drawable;
+
 import sem.group47.entity.enemies.Enemy;
+import sem.group47.main.Drawable;
 import sem.group47.main.GamePanel;
 
 /**
@@ -93,13 +94,10 @@ public class TileMap implements Drawable {
 
 			// get the tileset image which has
 			// 2 rows of 2 tiles of 30 pixels each
-			tileset = ImageIO.read(
-					getClass().getResourceAsStream(s));
+			tileset = ImageIO.read(getClass().getResourceAsStream(s));
 
-			numTilesAcross =
-					tileset.getWidth() / tileSize;
-			numTilesLength =
-					tileset.getHeight() / tileSize;
+			numTilesAcross = tileset.getWidth() / tileSize;
+			numTilesLength = tileset.getHeight() / tileSize;
 
 			// Creates a matrix from the tilesheet
 			tiles = new Tile[numTilesLength][numTilesAcross];
@@ -115,20 +113,15 @@ public class TileMap implements Drawable {
 			for (int col = 0; col < numTilesAcross; col++) {
 				// gets the image based on its position
 				// inside the .gif
-				subimage = tileset.getSubimage(
-				  col * tileSize, 0, tileSize,
+				subimage = tileset.getSubimage(col * tileSize, 0, tileSize,
 						tileSize);
 				tiles[0][col] = new Tile(subimage, Tile.NORMAL);
-				subimage = tileset.getSubimage(
-				  col * tileSize, tileSize,
+				subimage = tileset.getSubimage(col * tileSize, tileSize,
 						tileSize, tileSize);
-    tiles[1][col] =
-				  new Tile(subimage, Tile.SEMIBLOCKED);
-				subimage = tileset.getSubimage(
-				  col * tileSize, tileSize,
+				tiles[1][col] = new Tile(subimage, Tile.SEMIBLOCKED);
+				subimage = tileset.getSubimage(col * tileSize, tileSize,
 						tileSize, tileSize);
-				tiles[2][col] =
-				  new Tile(subimage, Tile.BLOCKED);
+				tiles[2][col] = new Tile(subimage, Tile.BLOCKED);
 
 			}
 
@@ -148,8 +141,7 @@ public class TileMap implements Drawable {
 		InputStream in = getClass().getResourceAsStream(s);
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(
-					new InputStreamReader(in, "UTF-8"));
+			br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 			// first row is the num of col
 			numCols = Integer.parseInt(br.readLine());
 			// second row is the num of rows
@@ -177,15 +169,17 @@ public class TileMap implements Drawable {
 
 				// put the values in the map matrix
 				for (int col = 0; col < numCols; col++) {
-				 if (tokens[col].equals("e")) {
-				 	enemyStartLocations.add(new int[]{col, row, Enemy.LEVEL1_ENEMY});
-				 	map[row][col] = 0;
-				 } else if(tokens[col].equals("f")) {
-					 enemyStartLocations.add(new int[]{col, row, Enemy.PROJECTILE_ENEMEY});
-					 map[row][col] = 0;
-				 }else {
-				  map[row][col] = Integer.parseInt(tokens[col]);
-				 }
+					if (tokens[col].equals("e")) {
+						enemyStartLocations.add(new int[] {col, row,
+								Enemy.LEVEL1_ENEMY });
+						map[row][col] = 0;
+					} else if (tokens[col].equals("f")) {
+						enemyStartLocations.add(new int[] {col, row,
+								Enemy.PROJECTILE_ENEMEY });
+						map[row][col] = 0;
+					} else {
+						map[row][col] = Integer.parseInt(tokens[col]);
+					}
 				}
 			}
 		} catch (IOException e) {
@@ -197,11 +191,12 @@ public class TileMap implements Drawable {
 
 	/**
 	 * returns the enemy start locations.
+	 *
 	 * @return enemy start locations
 	 */
 
 	public final ArrayList<int[]> getEnemyStartLocations() {
-	 return enemyStartLocations;
+		return enemyStartLocations;
 	}
 
 	/**
@@ -262,8 +257,7 @@ public class TileMap implements Drawable {
 		// returns the value inside the
 		// multidimensional array e.g. tile 2
 
-		if (row >= this.getNumRows()
-				|| row < 0 || col >= this.getNumCols()
+		if (row >= this.getNumRows() || row < 0 || col >= this.getNumCols()
 				|| col < 0) {
 			return Tile.NORMAL;
 		}
@@ -314,8 +308,8 @@ public class TileMap implements Drawable {
 				int c = rc % numTilesAcross;
 
 				g.drawImage(tiles[r][c].getImage(),
-						(int) x + col * tileSize,
-						(int) y + row * tileSize, null);
+						(int) x + col * tileSize, (int) y + row * tileSize,
+						null);
 
 			}
 
@@ -343,6 +337,7 @@ public class TileMap implements Drawable {
 
 	/**
 	 * Gets a copy of the map in integer array.
+	 *
 	 * @return a copy of the map
 	 */
 	public final int[][] getMap() {
@@ -351,6 +346,7 @@ public class TileMap implements Drawable {
 
 	/**
 	 * Returns a copy of the tiles array.
+	 *
 	 * @return a copy of the tiles array.
 	 */
 	public final Tile[][] getTiles() {

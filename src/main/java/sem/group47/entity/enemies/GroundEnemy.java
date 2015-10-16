@@ -3,9 +3,17 @@ package sem.group47.entity.enemies;
 import sem.group47.audio.AudioPlayer;
 import sem.group47.tilemap.TileMap;
 
-
+/**
+ * The Class GroundEnemy.
+ */
 public class GroundEnemy extends Enemy {
 
+	/**
+	 * Instantiates a new ground enemy.
+	 *
+	 * @param tm
+	 *            the tm
+	 */
 	public GroundEnemy(TileMap tm) {
 		super(tm);
 		if (Math.round(Math.random()) == 0) {
@@ -67,7 +75,7 @@ public class GroundEnemy extends Enemy {
 		if (isCaught()) {
 			setDy(getDy() - getFloatSpeed());
 			if (getDy() < getMaxFloatSpeed()) {
-			 setDy(getMaxFloatSpeed());
+				setDy(getMaxFloatSpeed());
 			}
 			setDx(0);
 		} else if (isFalling()) {
@@ -119,11 +127,16 @@ public class GroundEnemy extends Enemy {
 		updateStates();
 	}
 
+	/**
+	 * Update states.
+	 */
 	public final void updateStates() {
-		if(isCaught() && (System.nanoTime() - getTimeCaught())/1000000000.0d > getTimeUntillBreakFree()) {
+		if (isCaught() && (System.nanoTime() - getTimeCaught())
+				/ 1000000000.0d > getTimeUntillBreakFree()) {
 			setCaught(false);
 		}
-		if(isAngry() && (System.nanoTime() - getAngryTime())/1000000000.0d > 10) {
+		if (isAngry() && (System.nanoTime() - getAngryTime())
+				/ 1000000000.0d > 10) {
 			setIsAngry(false);
 		}
 	}

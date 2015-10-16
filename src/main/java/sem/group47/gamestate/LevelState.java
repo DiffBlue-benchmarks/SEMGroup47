@@ -29,11 +29,11 @@ import sem.group47.tilemap.TileMap;
 public class LevelState extends GameState {
 
 	/** level file names. **/
-	private String[] levelFileNames = new String[] { "level1.map",
+	private String[] levelFileNames = new String[] {"level1.map",
 			"level2.map", "level3.map", "level4.map" };
 
-	/** file names of music **/
-	private String[] musicFileNames = new String[] { "level1", "level2",
+	/** file names of music. **/
+	private String[] musicFileNames = new String[] {"level1", "level2",
 			"level3", "level4" };
 
 	/** Current level. **/
@@ -48,10 +48,10 @@ public class LevelState extends GameState {
 	private boolean paused;
 
 	/** The players. **/
-	public Player player1;
+	private Player player1;
 
 	/** The player 2, only set when multiplayer is true. **/
-	public Player player2;
+	private Player player2;
 
 	/** The enemies. */
 	private ArrayList<Enemy> enemies;
@@ -61,24 +61,24 @@ public class LevelState extends GameState {
 
 	/** The tile map. */
 	private TileMap tileMap;
-	
+
 	/** The Background. */
 	private Background bg;
-
-	/** The levelScore. */
-	private int levelScore;
 
 	/** List of pickupobjects in the level. **/
 	private ArrayList<PickupObject> pickups;
 
+	/** Magiron. */
 	private Magiron aaron;
-	/** Time in seconds before Aaron appears **/
-	public static int AARON_APPEAR_DELAY = 45;
+	/** Time in seconds before Aaron appears. **/
+	private static int AARON_APPEAR_DELAY = 45;
+
+	/** Level step count. */
 	private long levelStepCount;
 
 	/**
 	 * Instantiates a new level1 state.
-	 * 
+	 *
 	 * @param gsm
 	 *            the gamestatemanager.
 	 */
@@ -103,16 +103,16 @@ public class LevelState extends GameState {
 
 	/**
 	 * Sets up a certain level.
-	 * 
-	 * @param level
+	 *
+	 * @param plevel
 	 *            number of level to be set
 	 */
-	private void setupLevel(int level) {
+	private void setupLevel(int plevel) {
 
-		if (level >= levelFileNames.length) {
-			level = 0;
+		if (plevel >= levelFileNames.length) {
+			plevel = 0;
 		}
-		this.level = level;
+		this.level = plevel;
 		tileMap.loadMap("/maps/" + levelFileNames[level]);
 
 		clearComponents();
@@ -133,17 +133,17 @@ public class LevelState extends GameState {
 		addComponent(player1);
 
 		if (multiplayer) {
-			player2 = new Player(tileMap);
-			player2.setPosition(
-					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5, tileSize
-							* (tileMap.getNumRows() - 2 + .5d));
-			player2.setLives(PlayerSave.getLivesP2());
-			player2.setExtraLive(PlayerSave.getExtraLiveP2());
-			player2.setScore(PlayerSave.getScoreP2());
-			player2.setFacingRight(false);
-			addComponent(player2);
+			setPlayer2(new Player(tileMap));
+			getPlayer2().setPosition(
+					tileSize * (tileMap.getNumCols() - 3 + .5d) - 5,
+					tileSize * (tileMap.getNumRows() - 2 + .5d));
+			getPlayer2().setLives(PlayerSave.getLivesP2());
+			getPlayer2().setExtraLive(PlayerSave.getExtraLiveP2());
+			getPlayer2().setScore(PlayerSave.getScoreP2());
+			getPlayer2().setFacingRight(false);
+			addComponent(getPlayer2());
 		}
-		hud = new HUD(player1, player2);
+		hud = new HUD(player1, getPlayer2());
 		addComponent(hud);
 
 		populateEnemies();
@@ -174,7 +174,8 @@ public class LevelState extends GameState {
 				enemy = new Level1Enemy(tileMap);
 			}
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
-					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
+					(points.get(i)[1] + 1) * 30
+							- .5d * enemy.getCHeight());
 			enemies.add(enemy);
 			addComponent(enemy);
 			j = i;
@@ -217,12 +218,12 @@ public class LevelState extends GameState {
 				removeComponent(player1);
 			}
 			if (multiplayer) {
-				if (player2.getLives() > 0) {
-					player2.update();
-					directEnemyCollision(player2);
-					player2.indirectEnemyCollision(enemies);
+				if (getPlayer2().getLives() > 0) {
+					getPlayer2().update();
+					directEnemyCollision(getPlayer2());
+					getPlayer2().indirectEnemyCollision(enemies);
 				} else {
-					removeComponent(player2);
+					removeComponent(getPlayer2());
 				}
 			}
 
@@ -237,15 +238,15 @@ public class LevelState extends GameState {
 				if (enemies.get(i).projectileCollision(player1)) {
 					player1.kill();
 				}
-				if (multiplayer && enemies.get(i).projectileCollision(player2)) {
-					player2.kill();
+				if (multiplayer && enemies.get(i)
+						.projectileCollision(getPlayer2())) {
+					getPlayer2().kill();
 				}
 			}
 
 			for (int i = 0; i < pickups.size(); i++) {
-				if (pickups.get(i).checkCollision(player1)
-						|| (multiplayer && pickups.get(i).checkCollision(
-								player2))) {
+				if (pickups.get(i).checkCollision(player1) || (multiplayer
+						&& pickups.get(i).checkCollision(getPlayer2()))) {
 					AudioPlayer.play("extraLife");
 					removeComponent(pickups.get(i));
 					pickups.remove(i);
@@ -267,17 +268,17 @@ public class LevelState extends GameState {
 	private void lostCheck() {
 		if (player1.getLives() <= 0) {
 			removeComponent(player1);
-			if (!multiplayer || player2.getLives() <= 0) {
+			if (!multiplayer || getPlayer2().getLives() <= 0) {
 
 				PlayerSave.setScoreP1(player1.getScore());
 				if (multiplayer) {
-					PlayerSave.setScoreP2(player2.getScore());
+					PlayerSave.setScoreP2(getPlayer2().getScore());
 				}
 
 				getGsm().setState(GameStateManager.HIGHSCORESTATE);
 			}
-		} else if (multiplayer && player2.getLives() <= 0) {
-			removeComponent(player2);
+		} else if (multiplayer && getPlayer2().getLives() <= 0) {
+			removeComponent(getPlayer2());
 		}
 	}
 
@@ -299,17 +300,17 @@ public class LevelState extends GameState {
 			PlayerSave.setExtraLiveP1(player1.getExtraLive());
 
 			if (multiplayer) {
-				PlayerSave.setLivesP2(player2.getLives());
+				PlayerSave.setLivesP2(getPlayer2().getLives());
 				if (level == 0) {
-					PlayerSave.setScoreP2(player2.getScore() + 100);
+					PlayerSave.setScoreP2(getPlayer2().getScore() + 100);
 				} else if (level == 1) {
-					PlayerSave.setScoreP2(player2.getScore() + 200);
+					PlayerSave.setScoreP2(getPlayer2().getScore() + 200);
 				} else if (level == 2) {
-					PlayerSave.setScoreP2(player2.getScore() + 300);
+					PlayerSave.setScoreP2(getPlayer2().getScore() + 300);
 				} else if (level == 3) {
-					PlayerSave.setScoreP2(player2.getScore() + 400);
+					PlayerSave.setScoreP2(getPlayer2().getScore() + 400);
 				}
-				PlayerSave.setExtraLiveP2(player2.getExtraLive());
+				PlayerSave.setExtraLiveP2(getPlayer2().getExtraLive());
 			}
 			setupLevel(level + 1);
 			Log.info("Player Action", "Player reached next level");
@@ -318,13 +319,16 @@ public class LevelState extends GameState {
 
 	/**
 	 * Draw everything of level 1.
+	 *
+	 * @param gr
+	 *            the gr
 	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
 		gr.setColor(Color.BLACK);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		bg.draw(gr);
-		
+
 		drawComponents(gr);
 
 		if (paused) {
@@ -337,6 +341,9 @@ public class LevelState extends GameState {
 
 	/**
 	 * keyPressed.
+	 *
+	 * @param k
+	 *            the k
 	 */
 	@Override
 	public final void keyPressed(final int k) {
@@ -356,22 +363,22 @@ public class LevelState extends GameState {
 			return;
 		case KeyEvent.VK_A:
 			if (multiplayer) {
-				player2.setLeft(true);
+				getPlayer2().setLeft(true);
 			}
 			return;
 		case KeyEvent.VK_D:
 			if (multiplayer) {
-				player2.setRight(true);
+				getPlayer2().setRight(true);
 			}
 			return;
 		case KeyEvent.VK_W:
 			if (multiplayer) {
-				player2.setUp(true);
+				getPlayer2().setUp(true);
 			}
 			return;
 		case KeyEvent.VK_S:
 			if (multiplayer) {
-				player2.setDown(true);
+				getPlayer2().setDown(true);
 			}
 			return;
 		default:
@@ -381,6 +388,9 @@ public class LevelState extends GameState {
 
 	/**
 	 * keyReleased.
+	 *
+	 * @param k
+	 *            the k
 	 */
 	@Override
 	public final void keyReleased(final int k) {
@@ -400,22 +410,22 @@ public class LevelState extends GameState {
 			return;
 		case KeyEvent.VK_A:
 			if (multiplayer) {
-				player2.setLeft(false);
+				getPlayer2().setLeft(false);
 			}
 			return;
 		case KeyEvent.VK_D:
 			if (multiplayer) {
-				player2.setRight(false);
+				getPlayer2().setRight(false);
 			}
 			return;
 		case KeyEvent.VK_W:
 			if (multiplayer) {
-				player2.setUp(false);
+				getPlayer2().setUp(false);
 			}
 			return;
 		case KeyEvent.VK_S:
 			if (multiplayer) {
-				player2.setDown(false);
+				getPlayer2().setDown(false);
 			}
 			return;
 		case KeyEvent.VK_ESCAPE:
@@ -432,16 +442,19 @@ public class LevelState extends GameState {
 		}
 	}
 
+	/**
+	 * Target aaron.
+	 */
 	private void targetAaron() {
 		if (multiplayer) {
 			if (player1.getLives() > 0) {
-				if (Math.random() > .5d || player2.getLives() <= 0) {
+				if (Math.random() > .5d || getPlayer2().getLives() <= 0) {
 					aaron.setTarget(player1);
 				} else {
-					aaron.setTarget(player2);
+					aaron.setTarget(getPlayer2());
 				}
 			} else {
-				aaron.setTarget(player2);
+				aaron.setTarget(getPlayer2());
 			}
 		} else {
 			aaron.setTarget(player1);
@@ -450,11 +463,11 @@ public class LevelState extends GameState {
 
 	/**
 	 * checks what happens when the player directly collides with an enemy.
-	 * 
+	 *
 	 * @param player
 	 *            the Player object to check collisions with
 	 */
-	public final void directEnemyCollision(Player player) {
+	public final void directEnemyCollision(final Player player) {
 		if (player.intersects(aaron)) {
 			player.kill();
 			targetAaron();
@@ -467,11 +480,11 @@ public class LevelState extends GameState {
 					Fruit fr = new Fruit(tileMap);
 
 					if (enemies.get(i).getXpos() > 400) {
-						fr.setPosition(enemies.get(i).getXpos() - 100, enemies
-								.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() - 100,
+								enemies.get(i).getYpos());
 					} else {
-						fr.setPosition(enemies.get(i).getXpos() + 100, enemies
-								.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() + 100,
+								enemies.get(i).getYpos());
 					}
 					pickups.add(fr);
 					addComponent(fr);
@@ -485,16 +498,56 @@ public class LevelState extends GameState {
 
 				} else if (player.getLives() > 1) {
 					player.hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info("Player Action",
+							"Player collision with Enemy");
 
 				} else {
 					AudioPlayer.play("crash");
 					player.hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info("Player Action",
+							"Player collision with Enemy");
 				}
 			}
 		}
 
+	}
+
+	/**
+	 * Gets the player2.
+	 *
+	 * @return the player2
+	 */
+	public Player getPlayer2() {
+		return player2;
+	}
+
+	/**
+	 * Sets the player2.
+	 *
+	 * @param pPlayer2
+	 *            the new player2
+	 */
+	public void setPlayer2(Player pPlayer2) {
+		this.player2 = pPlayer2;
+	}
+
+	/**
+	 * Gets the player1.
+	 *
+	 * @return the player1
+	 */
+	public Player getPlayer1() {
+		return player1;
+	}
+
+	/**
+	 * Sets the player1.
+	 *
+	 * @param pPlayer2
+	 *            the new player1
+	 */
+	public void setPlayer1(Player pPlayer1) {
+		this.player1 = pPlayer1;
 	}
 
 }

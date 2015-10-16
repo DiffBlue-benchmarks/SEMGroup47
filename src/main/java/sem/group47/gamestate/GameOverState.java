@@ -23,7 +23,7 @@ public class GameOverState extends GameState {
 	private Font font;
 
 	/** The options. */
-	private String[] options = { "Restart", "Main Menu" };
+	private String[] options = {"Restart", "Main Menu" };
 
 	/** The Background. */
 	private String bg = "/backgrounds/BubbleBobble_Logo.gif";

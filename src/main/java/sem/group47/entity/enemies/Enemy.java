@@ -10,7 +10,10 @@ import sem.group47.tilemap.TileMap;
  */
 public class Enemy extends MapObject {
 
+	/** The Constant LEVEL1_ENEMY. */
 	public static final int LEVEL1_ENEMY = 0;
+
+	/** The Constant PROJECTILE_ENEMEY. */
 	public static final int PROJECTILE_ENEMEY = 1;
 
 	/** The caught. */
@@ -40,12 +43,15 @@ public class Enemy extends MapObject {
 	/** The time the enemy got angry after break free from bubble. */
 	private float angryTime;
 
+	/** The angry mov speed. */
 	private double angryMovSpeed;
+
+	/** The normal mov speed. */
 	private double normalMovSpeed;
 
 	/**
 	 * Instantiates a new enemy.
-	 * 
+	 *
 	 * @param tm
 	 *            the tm
 	 */
@@ -56,10 +62,10 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Checks if is caught.
-	 * 
+	 *
 	 * @return true, if is caught
 	 */
-	public boolean isCaught() {
+	public final boolean isCaught() {
 		return caught;
 	}
 
@@ -80,7 +86,11 @@ public class Enemy extends MapObject {
 	}
 
 	/**
-	 * checks for projectile collision with object
+	 * checks for projectile collision with object.
+	 *
+	 * @param o
+	 *            the o
+	 * @return true, if successful
 	 */
 	public boolean projectileCollision(MapObject o) {
 		return false;
@@ -88,7 +98,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Sets the caught.
-	 * 
+	 *
 	 * @param isCaught
 	 *            Whether or not the enemy is caught
 	 */
@@ -105,7 +115,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Sets the isAngry.
-	 * 
+	 *
 	 * @param angry
 	 *            whether or not the enemy is angry
 	 */
@@ -121,17 +131,29 @@ public class Enemy extends MapObject {
 		}
 	}
 
+	/**
+	 * Sets the normal mov speed.
+	 *
+	 * @param s
+	 *            the new normal mov speed
+	 */
 	public final void setNormalMovSpeed(double s) {
 		normalMovSpeed = s;
 	}
 
+	/**
+	 * Sets the angry mov speed.
+	 *
+	 * @param s
+	 *            the new angry mov speed
+	 */
 	public final void setAngryMovSpeed(double s) {
 		angryMovSpeed = s;
 	}
 
 	/**
 	 * Gets isAngry.
-	 * 
+	 *
 	 * @return isAngry
 	 */
 	public final boolean isAngry() {
@@ -140,7 +162,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Gets the timeCaught.
-	 * 
+	 *
 	 * @return timeCaught
 	 */
 	public final float getTimeCaught() {
@@ -149,7 +171,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Gets the Angry Time.
-	 * 
+	 *
 	 * @return angryTime
 	 */
 	public final float getAngryTime() {
@@ -158,37 +180,37 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Sets the Angry Time.
-	 * 
+	 *
 	 * @param time
 	 *            the Angry time set
 	 */
-	public void setAngryTime(float time) {
+	public final void setAngryTime(float time) {
 		angryTime = time;
 	}
 
 	/**
 	 * Sets the timeCaught.
-	 * 
+	 *
 	 * @param time
 	 *            The new timeCaught
 	 */
-	public void setTimeCaught(float time) {
+	public final void setTimeCaught(float time) {
 		timeCaught = time;
 	}
 
 	/**
 	 * Sets the time needed to break free from a bubble.
-	 * 
+	 *
 	 * @param time
 	 *            The time needed
 	 */
-	public void setTimeUntillBreakFree(float time) {
+	public final void setTimeUntillBreakFree(float time) {
 		timeUntillBreakFree = time;
 	}
 
 	/**
 	 * Gets the time needed to break free from a bubble.
-	 * 
+	 *
 	 * @return timeUntillBreakFree The time needed
 	 */
 	public final float getTimeUntillBreakFree() {
@@ -197,7 +219,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Gets the score points.
-	 * 
+	 *
 	 * @return the score points
 	 */
 	public final int getScorePoints() {
@@ -206,7 +228,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Sets the score points.
-	 * 
+	 *
 	 * @param pScorePoints
 	 *            the new score points
 	 */
@@ -216,7 +238,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Sets the float speed.
-	 * 
+	 *
 	 * @param pFloatSpeed
 	 *            the new float speed
 	 */
@@ -226,7 +248,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Gets the float speed.
-	 * 
+	 *
 	 * @return the float speed
 	 */
 	public final double getFloatSpeed() {
@@ -235,7 +257,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Gets the max float speed.
-	 * 
+	 *
 	 * @return the speed
 	 */
 	public final double getMaxFloatSpeed() {
@@ -244,7 +266,7 @@ public class Enemy extends MapObject {
 
 	/**
 	 * Sets the max float speed.
-	 * 
+	 *
 	 * @param speed
 	 *            Speed to be set
 	 */
@@ -252,16 +274,29 @@ public class Enemy extends MapObject {
 		maxFloatSpeed = speed;
 	}
 
+	/**
+	 * Gets the sprite sheet.
+	 *
+	 * @return the sprite sheet
+	 */
 	public final BufferedImage getSpriteSheet() {
 		return spritesheet;
 	}
 
+	/**
+	 * Sets the sprite sheet.
+	 *
+	 * @param bi
+	 *            the new sprite sheet
+	 */
 	public final void setSpriteSheet(BufferedImage bi) {
 		spritesheet = bi;
 	}
 
+	/**
+	 * Sets the caught.
+	 */
 	public void setCaught() {
-		// TODO Auto-generated method stub
 
 	}
 

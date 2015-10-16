@@ -10,16 +10,16 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
- * Object which can be pickedup by the player and has a certain effect
- * 
+ * Object which can be pickedup by the player and has a certain effect.
+ *
  * @author Christian
- * 
+ *
  */
 public abstract class PickupObject extends MapObject {
 
 	/**
-	 * constructor
-	 * 
+	 * constructor.
+	 *
 	 * @param tm
 	 *            TileMap
 	 */
@@ -47,7 +47,7 @@ public abstract class PickupObject extends MapObject {
 	/**
 	 * Checks whether the object collides with the player, if so executes
 	 * onPickup(p), activating the powerup.
-	 * 
+	 *
 	 * @param p
 	 *            Player object
 	 * @return true if collision occurred
@@ -62,7 +62,7 @@ public abstract class PickupObject extends MapObject {
 
 	/**
 	 * Effect of getting picked up.
-	 * 
+	 *
 	 * @param p
 	 *            Player object
 	 */

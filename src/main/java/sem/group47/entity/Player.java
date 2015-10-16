@@ -53,7 +53,7 @@ public class Player extends MapObject {
 	private ArrayList<BufferedImage[]> sprites;
 
 	/** Number of frames for each animation action in order. */
-	private final int[] numFrames = { 3, 2, 3 };
+	private final int[] numFrames = {3, 2, 3};
 
 	/** Animation actions # for idle state. */
 	public static final int IDLE = 0;
@@ -512,5 +512,4 @@ public class Player extends MapObject {
 	public final void setBubbleSize(final int size) {
 		bubbleSize = size;
 	}
-
 }

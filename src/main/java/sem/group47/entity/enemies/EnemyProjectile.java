@@ -1,17 +1,17 @@
 package sem.group47.entity.enemies;
 
-import java.awt.image.BufferedImage;
-
 import javax.imageio.ImageIO;
 
 import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
+/**
+ * The Class EnemyProjectile.
+ */
 public class EnemyProjectile extends MapObject {
 
 	/** The life time in ms. */
 	private int lifeTime;
-
 
 	/** The last update time. */
 	private long lastUpdateTime;
@@ -22,7 +22,7 @@ public class EnemyProjectile extends MapObject {
 	 * @param tm
 	 *            the tm
 	 */
-	public EnemyProjectile(TileMap tm) {
+	public EnemyProjectile(final TileMap tm) {
 		super(tm);
 		setAlive(true);
 		setWidth(32);
@@ -35,9 +35,9 @@ public class EnemyProjectile extends MapObject {
 		lastUpdateTime = System.currentTimeMillis();
 
 		try {
-			this.setSprite(ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/enemy2.png")));
-			setSprite(getSprite().getSubimage(9*36, 0, 36, 36));
+			this.setSprite(ImageIO.read(getClass()
+					.getResourceAsStream("/enemies/enemy2.png")));
+			setSprite(getSprite().getSubimage(9 * 36, 0, 36, 36));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,6 +49,7 @@ public class EnemyProjectile extends MapObject {
 	/**
 	 * Update.
 	 */
+	@Override
 	public final void update() {
 		long timePassed = System.currentTimeMillis() - lastUpdateTime;
 		lifeTime -= timePassed;
@@ -60,7 +61,7 @@ public class EnemyProjectile extends MapObject {
 
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
-		if(getDx() == 0) {
+		if (getDx() == 0) {
 			this.setAlive(false);
 		}
 	}
