@@ -69,25 +69,12 @@ public class HighScoreState extends GameState {
 
 	}
 
-	/**
-	 * Init.
-	 */
-	@Override
-	public void init() {
-	}
-
-	/**
-	 * Update.
-	 */
-	@Override
-	public void update() {
-	}
 
 	/**
 	 * Draws everything of the menu screen.
 	 *
 	 * @param g
-	 *            the g
+	 *            the Graphics2D object
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
@@ -150,16 +137,6 @@ public class HighScoreState extends GameState {
 			y += g.getFontMetrics().getHeight();
 			g.drawString(line, x, y);
 		}
-	}
-
-	/**
-	 * keyReleased.
-	 *
-	 * @param k
-	 *            the k
-	 */
-	@Override
-	public final void keyReleased(final int k) {
 	}
 
 	/**

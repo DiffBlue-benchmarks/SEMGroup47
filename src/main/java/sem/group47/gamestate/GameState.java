@@ -15,12 +15,12 @@ public abstract class GameState extends DrawComposite {
 	/**
 	 * Init.
 	 */
-	public abstract void init();
+	public void init() {};
 
 	/**
 	 * Update.
 	 */
-	public abstract void update();
+	public void update() {};
 
 	/**
 	 * Draw.
@@ -28,7 +28,7 @@ public abstract class GameState extends DrawComposite {
 	 * @param g
 	 *            the g
 	 */
-	public abstract void draw(java.awt.Graphics2D g);
+	public void draw(java.awt.Graphics2D g) {};
 
 	/**
 	 * Key pressed.
@@ -36,7 +36,7 @@ public abstract class GameState extends DrawComposite {
 	 * @param k
 	 *            the k
 	 */
-	public abstract void keyPressed(int k);
+	public void keyPressed(int k) {};
 
 	/**
 	 * Key released.
@@ -44,7 +44,7 @@ public abstract class GameState extends DrawComposite {
 	 * @param k
 	 *            the k
 	 */
-	public abstract void keyReleased(int k);
+	public void keyReleased(int k) {};
 
 	/**
 	 * getGsm.

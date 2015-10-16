@@ -52,20 +52,6 @@ public class HelpState extends GameState {
 	}
 
 	/**
-	 * Init.
-	 */
-	@Override
-	public void init() {
-	}
-
-	/**
-	 * Update.
-	 */
-	@Override
-	public void update() {
-	}
-
-	/**
 	 * Draws everything of the menu screen.
 	 */
 	@Override
@@ -131,12 +117,4 @@ public class HelpState extends GameState {
 			}
 		}
 	}
-
-	/**
-	 * keyReleased.
-	 */
-	@Override
-	public final void keyReleased(final int k) {
-	}
-
 }
