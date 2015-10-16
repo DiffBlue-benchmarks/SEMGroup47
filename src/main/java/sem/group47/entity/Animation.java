@@ -25,6 +25,7 @@ public class Animation {
 	/**
 	 * Constructor.
 	 */
+
 	public final void animation() {
 		playedOnce = false;
 	}
@@ -49,7 +50,7 @@ public class Animation {
 	 *            the delay
 	 */
 	public final void setDelay(long d) {
-		delay = d;
+		this.delay = d;
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class Animation {
 	 *            the frame number
 	 */
 	public final void setFrame(int i) {
-		currentFrame = i;
+		this.currentFrame = i;
 	}
 
 	/**

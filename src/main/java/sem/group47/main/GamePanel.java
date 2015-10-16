@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private boolean running;
 
 	/** The desired Frames per seconds. */
-	private static final int FPS = 60;
+	public static final int FPS = 60;
 
 	/** The target time/ frame period. */
 	private static final long FRAME_PERIOD = 1000 / FPS;

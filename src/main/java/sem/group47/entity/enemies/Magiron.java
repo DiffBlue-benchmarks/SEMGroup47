@@ -1,161 +1,106 @@
 package sem.group47.entity.enemies;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
-import sem.group47.gamestate.LevelState;
+import sem.group47.entity.Animation;
+import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
 public class Magiron extends Enemy {
-
-	public int i;
+	private MapObject target;
 
 	public Magiron(TileMap tm) {
 		super(tm);
 
 		setScorePoints(100);
-		setWidth(30);
-		setHeight(30);
+		setWidth(90);
+		setHeight(112);
 		setCwidth(30);
 		setCheight(30);
-		setMovSpeed(1);
-		setMaxSpeed(2);
+		setMovSpeed(1.3);
 
 		setFacingRight(true);
 
-		if (Math.round(Math.random()) == 0) {
-			setLeft(true);
-		} else {
-			setRight(true);
-		}
-
+		BufferedImage[] animationSprites = null;
 		try {
-			setSprite(ImageIO.read(getClass()
-					.getResourceAsStream("/hud/Bubble_Heart.png")));
-		} catch (Exception e) {
+			ImageReader reader = ImageIO.getImageReadersByFormatName("gif")
+					.next();
+			File input = new File(
+					"src/main/resources/enemies/magiaaron.gif");
+			ImageInputStream stream = ImageIO
+					.createImageInputStream(input);
+			reader.setInput(stream);
+
+			int count = reader.getNumImages(true);
+			animationSprites = new BufferedImage[count];
+			for (int index = 0; index < count; index++) {
+				BufferedImage frame = reader.read(index);
+				animationSprites[index] = frame;
+			}
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
 
-	private void getNextXPosition() {
-		if (isRight()) {
-			setDx(getDx() + getMovSpeed());
-			if (getDx() > getMaxSpeed()) {
-				setDx(getMaxSpeed());
-			}
-		} else if (isLeft()) {
-			setDx(getDx() - getMovSpeed());
-			if (getDx() < -getMaxSpeed()) {
-				setDx(-getMaxSpeed());
-			}
-		}
-		if (getDx() > 0) {
-			setFacingRight(true);
-		} else if (getDx() < 0) {
-			setFacingRight(false);
-		}
-	}
-
-	private void getNextYPosition() {
-		if (isUp()) {
-			setDy(getDy() - getMovSpeed());
-			if (getDy() < -getMaxSpeed()) {
-				setDy(-getMaxSpeed());
-			}
-		} else if (isDown()) {
-			setDy(getDy() + getMovSpeed());
-			if (getDy() > getMaxSpeed()) {
-				setDy(getMaxSpeed());
-			}
-		}
-	}
-
-	private void movementDice() {
-		double dice = Math.random() * 100;
-		if (dice < 25) {
-			setUp(true);
-			setDown(false);
-			setRight(false);
-			setLeft(false);
-		} else if (dice < 50) {
-			setLeft(true);
-			setRight(false);
-			setUp(false);
-			setDown(false);
-		} else if (dice < 75) {
-			setLeft(false);
-			setRight(true);
-			setUp(false);
-			setDown(false);
-		} else {
-			setDown(true);
-			setUp(false);
-			setLeft(false);
-			setRight(false);
-		}
-	}
-
-	@Override
-	public void update() {
-		if (System.currentTimeMillis() - LevelState.time > 9000) {
-
-			i++;
-			if (i == 20) {
-				movementDice();
-				i = 0;
-			}
-			getNextXPosition();
-			getNextYPosition();
-			checkTileMapCollision();
-			setPosition(getXposNew(), getYposNew());
-		}
-	}
-
-	@Override
-	public void checkYCollision() {
-		calculateCorners(xpos, ydest);
-		if (dy < 0) {
-			if (topLeftBlocked || topRightBlocked) {
-				dy = 0;
-				yposNew = currRow * tileSize + cheight / 2;
-			} else {
-				if (yposNew <= 60) {
-					yposNew = 560;
-				} else {
-					yposNew += dy;
-				}
-
-			}
-		} else if (dy > 0) {
-			if (bottomLeftBlocked || bottomRightBlocked) {
-				dy = 0;
-				falling = false;
-				yposNew = (currRow + 1) * tileSize - cheight / 2;
-			} else {
-				falling = true;
-				yposNew += dy;
-
-				if (yposNew >= tileMap.getHeight() - 15) {
-					yposNew = 3 * tileMap.getTileSize();
-				}
-			}
-
-		}
-
-		if (!falling) {
-			calculateCorners(xpos, ydest + 1);
-			if (!bottomLeftBlocked && !bottomRightBlocked) {
-				falling = true;
-			}
-		}
+		animation = new Animation();
+		animation.setFrames(animationSprites);
+		animation.setDelay(60);
 	}
 
 	@Override
 	public final void draw(final Graphics2D g) {
-		if (System.currentTimeMillis() - LevelState.time > 9000) {
-			super.draw(g);
+		if (facingRight) {
+			g.drawImage(animation.getImage(),
+					(int) (getXpos() - getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2),
+					getWidth(), getHeight(), null);
+		} else {
+			g.drawImage(animation.getImage(),
+					(int) (getXpos() + getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2),
+					-getWidth(), getHeight(), null);
 		}
+	}
+
+	public void setTarget(MapObject t) {
+		target = t;
+	}
+
+	@Override
+	public void update() {
+		animation.update();
+		if (target != null) {
+			moveTowards(target);
+		}
+	}
+
+	public void moveTowards(MapObject mo) {
+		moveTowards(mo.getx(), mo.gety());
+	}
+
+	public void moveTowards(double x, double y) {
+		double newX = getx();
+		double newY = gety();
+		double speed = getMovSpeed();
+		if (x - speed > getx()) {
+			newX += speed;
+			facingRight = false;
+		} else if (x + speed < getx()) {
+			newX -= speed;
+			facingRight = true;
+		}
+		if (y - speed > gety()) {
+			newY += speed;
+		} else if (y + speed < gety()) {
+			newY -= speed;
+		}
+		setPosition(newX, newY);
 	}
 
 	@Override

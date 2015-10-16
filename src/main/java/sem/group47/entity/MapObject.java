@@ -308,7 +308,7 @@ public abstract class MapObject implements Drawable {
 	public void draw(final Graphics2D gr) {
 		if (facingRight) {
 			gr.drawImage(sprite, (int) (xpos - width / (double) 2),
-					(int) (ypos - height / (double) 2), null);
+					(int) (ypos - height / (double) 2), width, height, null);
 		} else {
 			gr.drawImage(sprite, (int) (xpos + width / (double) 2),
 					(int) (ypos - height / (double) 2), -width, height,

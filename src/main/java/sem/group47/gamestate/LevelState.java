@@ -19,6 +19,7 @@ import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.entity.pickups.PickupObject;
 import sem.group47.main.GamePanel;
 import sem.group47.main.Log;
+import sem.group47.tilemap.Background;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -60,12 +61,16 @@ public class LevelState extends GameState {
 	/** The tile map. */
 	private TileMap tileMap;
 
+	/** The Background. */
+	private Background bg;
+
 	/** List of pickupobjects in the level. **/
 	private ArrayList<PickupObject> pickups;
 
 	private Magiron aaron;
-
-	public static double time = System.currentTimeMillis();
+	/** Time in seconds before Aaron appears **/
+	public static int AARON_APPEAR_DELAY = 45;
+	private long levelStepCount;
 
 	/**
 	 * Instantiates a new level1 state.
@@ -89,7 +94,7 @@ public class LevelState extends GameState {
 		level = 0;
 		setupLevel(level);
 		paused = false;
-
+		bg = new Background();
 	}
 
 	/**
@@ -136,12 +141,12 @@ public class LevelState extends GameState {
 		hud = new HUD(player1, player2);
 		addComponent(hud);
 
-		aaron = new Magiron(tileMap);
-
 		populateEnemies();
 		populatePowerups();
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
+
+		levelStepCount = 0;
 	}
 
 	/**
@@ -172,8 +177,8 @@ public class LevelState extends GameState {
 		}
 
 		aaron = new Magiron(tileMap);
-		aaron.setPosition((points.get(j)[0] + .5d) * 30,
-				(points.get(j)[1] + 1) * 30 - .5d * aaron.getCHeight());
+		aaron.setPosition(GamePanel.WIDTH / 2, -150);
+		addComponent(aaron);
 	}
 
 	/**
@@ -200,9 +205,6 @@ public class LevelState extends GameState {
 	@Override
 	public final void update() {
 		if (!paused) {
-			// if (System.currentTimeMillis() - time > 89999) {
-			addComponent(aaron);
-			// }
 			if (player1.getLives() > 0) {
 				player1.update();
 				directEnemyCollision(player1);
@@ -218,6 +220,10 @@ public class LevelState extends GameState {
 				} else {
 					removeComponent(player2);
 				}
+			}
+
+			if (levelStepCount == GamePanel.FPS * AARON_APPEAR_DELAY) {
+				targetAaron();
 			}
 			aaron.update();
 			lostCheck();
@@ -247,6 +253,7 @@ public class LevelState extends GameState {
 			}
 
 			nextLevelCheck();
+			levelStepCount++;
 		}
 	}
 
@@ -257,12 +264,16 @@ public class LevelState extends GameState {
 		if (player1.getLives() <= 0) {
 			removeComponent(player1);
 			if (!multiplayer || player2.getLives() <= 0) {
-				getGsm().setState(GameStateManager.GAMEOVERSTATE);
+
+				PlayerSave.setScoreP1(player1.getScore());
+				if (multiplayer) {
+					PlayerSave.setScoreP2(player2.getScore());
+				}
+
+				getGsm().setState(GameStateManager.HIGHSCORESTATE);
 			}
-			time = System.currentTimeMillis();
 		} else if (multiplayer && player2.getLives() <= 0) {
 			removeComponent(player2);
-			time = System.currentTimeMillis();
 		}
 	}
 
@@ -280,7 +291,6 @@ public class LevelState extends GameState {
 				PlayerSave.setExtraLiveP2(player2.getExtraLive());
 				System.out.println(PlayerSave.getExtraLiveP2());
 			}
-			time = System.currentTimeMillis();
 			setupLevel(level + 1);
 			Log.info("Player Action", "Player reached next level");
 		}
@@ -293,6 +303,7 @@ public class LevelState extends GameState {
 	public final void draw(final Graphics2D gr) {
 		gr.setColor(Color.BLACK);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+		bg.draw(gr);
 
 		drawComponents(gr);
 
@@ -401,6 +412,22 @@ public class LevelState extends GameState {
 		}
 	}
 
+	private void targetAaron() {
+		if (multiplayer) {
+			if (player1.getLives() > 0) {
+				if (Math.random() > .5d || player2.getLives() <= 0) {
+					aaron.setTarget(player1);
+				} else {
+					aaron.setTarget(player2);
+				}
+			} else {
+				aaron.setTarget(player2);
+			}
+		} else {
+			aaron.setTarget(player1);
+		}
+	}
+
 	/**
 	 * checks what happens when the player directly collides with an enemy.
 	 *
@@ -410,6 +437,7 @@ public class LevelState extends GameState {
 	public final void directEnemyCollision(Player player) {
 		if (player.intersects(aaron)) {
 			player.kill();
+			targetAaron();
 		}
 
 		for (int i = 0; i < enemies.size(); i++) {

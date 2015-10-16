@@ -305,7 +305,6 @@ public class Player extends MapObject {
 			AudioPlayer.play("dead");
 			setAlive(false);
 			Log.info("Player Action", "Player died");
-			// TODO GameOver screen
 		}
 
 		setPosition(getTileMap().getWidth() / 2,
@@ -551,8 +550,12 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Gets the bubble size.
+	 * Gets the bubble size. <<<<<<< HEAD
 	 *
+	 * =======
+	 * 
+	 * >>>>>>> refs/remotes/origin/master
+	 * 
 	 * @return bubblesize
 	 */
 	public final int getBubbleSize() {
