@@ -103,9 +103,9 @@ public class Projectile extends MapObject {
 	 *
 	 * @return true, if is floating
 	 */
-	public final boolean isFloating() {
-		return floating;
-	}
+	//public final boolean isFloating() {
+	//	return floating;
+	//}
 
 	/**
 	 * Sets the floating.
@@ -113,18 +113,18 @@ public class Projectile extends MapObject {
 	 * @param pFloating
 	 *            the new floating
 	 */
-	public final void setFloating(final boolean pFloating) {
-		this.floating = pFloating;
-	}
+	//public final void setFloating(final boolean pFloating) {
+	//	this.floating = pFloating;
+	//}
 
 	/**
 	 * Gets the float speed.
 	 *
 	 * @return the float speed
 	 */
-	public final double getFloatSpeed() {
-		return floatSpeed;
-	}
+	//public final double getFloatSpeed() {
+	//	return floatSpeed;
+	//}
 
 	/**
 	 * Sets the float speed.
@@ -132,8 +132,8 @@ public class Projectile extends MapObject {
 	 * @param pFloatSpeed
 	 *            the new float speed
 	 */
-	public final void setFloatSpeed(final double pFloatSpeed) {
-		this.floatSpeed = pFloatSpeed;
-	}
+	//public final void setFloatSpeed(final double pFloatSpeed) {
+	//	this.floatSpeed = pFloatSpeed;
+	//}
 
 }
