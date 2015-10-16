@@ -34,7 +34,7 @@ public class Tile {
 	 * @param type
 	 *            the type
 	 */
-	public Tile(BufferedImage image, int type) {
+	public Tile(final BufferedImage image, final int type) {
 		this.image = image;
 		this.type = type;
 	}
@@ -44,7 +44,7 @@ public class Tile {
 	 *
 	 * @return the image
 	 */
-	public BufferedImage getImage() {
+	public final BufferedImage getImage() {
 		return image;
 	}
 
@@ -53,7 +53,7 @@ public class Tile {
 	 *
 	 * @return the type
 	 */
-	public int getType() {
+	public final int getType() {
 		return type;
 	}
 

@@ -202,14 +202,14 @@ public class PlayerTest {
 		PlayerSave.setMultiplayerEnabled(true);
 		LevelState ls = new LevelState(gsm);
 		ls.init();
-		assertEquals(ls.player1.getLives(), ls.player2.getLives());
-		assertEquals(ls.player1.getScore(), ls.player2.getScore());
-		ls.player1.hit(1);
-		assertEquals(ls.player1.getLives(), 2);
-		assertEquals(ls.player2.getLives(), 3);
-		ls.player1.hit(3);
-		assertFalse(ls.player1.getIsAlive());
-		assertFalse(ls.player2.getIsAlive());
+		assertEquals(ls.getPlayer1().getLives(), ls.getPlayer2().getLives());
+		assertEquals(ls.getPlayer1().getScore(), ls.getPlayer2().getScore());
+		ls.getPlayer1().hit(1);
+		assertEquals(ls.getPlayer1().getLives(), 2);
+		assertEquals(ls.getPlayer2().getLives(), 3);
+		ls.getPlayer1().hit(3);
+		assertFalse(ls.getPlayer1().getIsAlive());
+		assertFalse(ls.getPlayer2().getIsAlive());
 	}
 
 }

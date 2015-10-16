@@ -16,7 +16,7 @@ import sem.group47.tilemap.TileMap;
 public class Magiron extends Enemy {
 	private MapObject target;
 
-	public Magiron(TileMap tm) {
+	public Magiron(final TileMap tm) {
 		super(tm);
 
 		setScorePoints(100);
@@ -32,10 +32,8 @@ public class Magiron extends Enemy {
 		try {
 			ImageReader reader = ImageIO.getImageReadersByFormatName("gif")
 					.next();
-			File input = new File(
-					"src/main/resources/enemies/magiaaron.gif");
-			ImageInputStream stream = ImageIO
-					.createImageInputStream(input);
+			File input = new File("src/main/resources/enemies/magiaaron.gif");
+			ImageInputStream stream = ImageIO.createImageInputStream(input);
 			reader.setInput(stream);
 
 			int count = reader.getNumImages(true);
@@ -56,35 +54,35 @@ public class Magiron extends Enemy {
 	@Override
 	public final void draw(final Graphics2D g) {
 		if (facingRight) {
-			g.drawImage(animation.getImage(),
-					(int) (getXpos() - getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2),
-					getWidth(), getHeight(), null);
+			g.drawImage(animation.getImage(), (int) (getXpos() - getWidth()
+					/ (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2), getWidth(),
+					getHeight(), null);
 		} else {
-			g.drawImage(animation.getImage(),
-					(int) (getXpos() + getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2),
-					-getWidth(), getHeight(), null);
+			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth()
+					/ (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2), -getWidth(),
+					getHeight(), null);
 		}
 	}
 
-	public void setTarget(MapObject t) {
+	public final void setTarget(final MapObject t) {
 		target = t;
 	}
 
 	@Override
-	public void update() {
+	public final void update() {
 		animation.update();
 		if (target != null) {
 			moveTowards(target);
 		}
 	}
 
-	public void moveTowards(MapObject mo) {
+	public final void moveTowards(final MapObject mo) {
 		moveTowards(mo.getx(), mo.gety());
 	}
 
-	public void moveTowards(double x, double y) {
+	public final void moveTowards(final double x, final double y) {
 		double newX = getx();
 		double newY = gety();
 		double speed = getMovSpeed();
@@ -104,17 +102,17 @@ public class Magiron extends Enemy {
 	}
 
 	@Override
-	public void hit() {
+	public final void hit() {
 		caught = false;
 	}
 
 	@Override
-	public void setCaught() {
+	public final void setCaught() {
 		caught = false;
 	}
 
 	@Override
-	public void setCaught(boolean isCaught) {
+	public final void setCaught(final boolean isCaught) {
 		caught = false;
 	}
 

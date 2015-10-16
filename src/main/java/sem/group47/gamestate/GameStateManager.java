@@ -5,7 +5,7 @@ import sem.group47.audio.AudioPlayer;
 /**
  * The Class GameStateManager.
  */
-public class GameStateManager {
+public final class GameStateManager {
 
 	/** The list of game states. */
 	private GameState[] gameStates;
@@ -15,9 +15,6 @@ public class GameStateManager {
 
 	/** The current state. */
 	private int currentState;
-
-	/** Paused. */
-	private boolean paused;
 
 	/** The number of gamestates. */
 	public static final int NUMGAMESTATES = 6;
@@ -74,7 +71,7 @@ public class GameStateManager {
 	 * Makes sure GameStateManager is a Singleton, and can't have more than one
 	 * instance running.
 	 *
-	 * @return
+	 * @return instance.
 	 */
 	public static synchronized GameStateManager getInstance() {
 		if (uniqueInstance == null) {
@@ -122,7 +119,7 @@ public class GameStateManager {
 	 * @param state
 	 *            the new state
 	 */
-	public final synchronized void setState(final int state) {
+	public synchronized void setState(final int state) {
 		unloadState(currentState);
 		currentState = state;
 		loadState(currentState);
@@ -131,7 +128,7 @@ public class GameStateManager {
 	/**
 	 * Updates the current state.
 	 */
-	public final synchronized void update() {
+	public synchronized void update() {
 
 		if (gameStates[currentState] != null) {
 			gameStates[currentState].update();
@@ -144,7 +141,7 @@ public class GameStateManager {
 	 * @param g
 	 *            the g
 	 */
-	public final void draw(final java.awt.Graphics2D g) {
+	public void draw(final java.awt.Graphics2D g) {
 		if (gameStates[currentState] != null) {
 			gameStates[currentState].draw(g);
 		}
@@ -156,7 +153,7 @@ public class GameStateManager {
 	 * @param k
 	 *            the k
 	 */
-	public final void keyPressed(final int k) {
+	public void keyPressed(final int k) {
 		if (gameStates[currentState] != null) {
 			gameStates[currentState].keyPressed(k);
 		}
@@ -168,7 +165,7 @@ public class GameStateManager {
 	 * @param k
 	 *            the k
 	 */
-	public final void keyReleased(final int k) {
+	public void keyReleased(final int k) {
 		if (gameStates[currentState] != null) {
 			gameStates[currentState].keyReleased(k);
 		}
@@ -179,7 +176,7 @@ public class GameStateManager {
 	 *
 	 * @return current gameState
 	 */
-	public final int getCurrentState() {
+	public int getCurrentState() {
 		return currentState;
 	}
 }

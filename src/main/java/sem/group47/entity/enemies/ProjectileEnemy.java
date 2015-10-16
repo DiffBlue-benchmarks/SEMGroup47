@@ -22,7 +22,7 @@ public class ProjectileEnemy extends GroundEnemy {
 
 	ArrayList<EnemyProjectile> projectiles;
 
-	public ProjectileEnemy(TileMap tm) {
+	public ProjectileEnemy(final TileMap tm) {
 		super(tm);
 		setScorePoints(100);
 		setWidth(36);
@@ -47,8 +47,8 @@ public class ProjectileEnemy extends GroundEnemy {
 		projectiles = new ArrayList<EnemyProjectile>();
 
 		try {
-			this.setSpriteSheet(ImageIO.read(getClass()
-					.getResourceAsStream("/enemies/enemy2.png")));
+			this.setSpriteSheet(ImageIO.read(getClass().getResourceAsStream(
+					"/enemies/enemy2.png")));
 			setSprite(getSpriteSheet().getSubimage(36, 0, 36, 36));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,7 +60,7 @@ public class ProjectileEnemy extends GroundEnemy {
 	}
 
 	@Override
-	public void update() {
+	public final void update() {
 		super.update();
 		updateProjectiles();
 	}
@@ -86,10 +86,9 @@ public class ProjectileEnemy extends GroundEnemy {
 	 *            the graphics
 	 */
 	@Override
-	public void draw(final Graphics2D gr) {
+	public final void draw(final Graphics2D gr) {
 		if (!facingRight) {
-			gr.drawImage(getSprite(),
-					(int) (getx() - getWidth() / (double) 2),
+			gr.drawImage(getSprite(), (int) (getx() - getWidth() / (double) 2),
 					(int) (gety() - getHeight() / (double) 2), null);
 		} else {
 			gr.drawImage(getSprite(),
@@ -110,7 +109,7 @@ public class ProjectileEnemy extends GroundEnemy {
 	 *            Whether or not the enemy is caught
 	 */
 	@Override
-	public void setCaught(boolean isCaught) {
+	public final void setCaught(final boolean isCaught) {
 		super.setCaught(isCaught);
 		if (isCaught) {
 			setSprite(getSpriteSheet().getSubimage(7 * 36, 0, 36, 36));
@@ -124,7 +123,7 @@ public class ProjectileEnemy extends GroundEnemy {
 	 *            whether or not the enemy is angry
 	 */
 	@Override
-	public void setIsAngry(boolean angry) {
+	public final void setIsAngry(final boolean angry) {
 		super.setIsAngry(angry);
 		if (angry) {
 			setSprite(getSpriteSheet().getSubimage(3 * 36, 0, 36, 36));
@@ -138,16 +137,15 @@ public class ProjectileEnemy extends GroundEnemy {
 	 * collision
 	 */
 	@Override
-	public boolean projectileCollision(MapObject o) {
+	public final boolean projectileCollision(final MapObject o) {
 		if (!this.isCaught()
 				&& lastFireTime + fireDelay < System.currentTimeMillis()) {
 			if (Math.abs(o.gety() - this.gety()) < 30
-					&& ((facingRight && o.getx() > this.getx())
-							|| (!facingRight && o.gety() > this.gety()))) {
+					&& ((facingRight && o.getx() > this.getx()) || (!facingRight && o
+							.gety() > this.gety()))) {
 				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
-				EnemyProjectile projectile = new EnemyProjectile(
-						getTileMap());
+				EnemyProjectile projectile = new EnemyProjectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
 					projectile.setDx(projSpeed * -1);

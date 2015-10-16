@@ -36,7 +36,7 @@ public class Animation {
 	 * @param frames
 	 *            the frames
 	 */
-	public final void setFrames(BufferedImage[] frames) {
+	public final void setFrames(final BufferedImage[] frames) {
 		this.frames = frames;
 		currentFrame = 0;
 		startTime = System.nanoTime();
@@ -49,7 +49,7 @@ public class Animation {
 	 * @param d
 	 *            the delay
 	 */
-	public final void setDelay(long d) {
+	public final void setDelay(final long d) {
 		this.delay = d;
 	}
 
@@ -59,7 +59,7 @@ public class Animation {
 	 * @param i
 	 *            the frame number
 	 */
-	public final void setFrame(int i) {
+	public final void setFrame(final int i) {
 		this.currentFrame = i;
 	}
 

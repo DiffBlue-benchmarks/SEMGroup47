@@ -13,7 +13,7 @@ public class ScoreComparator implements Comparator<Score> {
 	/**
 	 * Compare method for comparing score1 with score2.
 	 */
-	public int compare(Score score1, Score score2) {
+	public final int compare(final Score score1, final Score score2) {
 		int sc1 = score1.getScore();
 		int sc2 = score2.getScore();
 

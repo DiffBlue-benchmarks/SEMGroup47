@@ -19,7 +19,7 @@ public class EnemyProjectile extends MapObject {
 	 * @param tm
 	 *            the tm
 	 */
-	public EnemyProjectile(TileMap tm) {
+	public EnemyProjectile(final TileMap tm) {
 		super(tm);
 		setAlive(true);
 		setWidth(32);
@@ -32,8 +32,8 @@ public class EnemyProjectile extends MapObject {
 		lastUpdateTime = System.currentTimeMillis();
 
 		try {
-			this.setSprite(ImageIO.read(getClass()
-					.getResourceAsStream("/enemies/enemy2.png")));
+			this.setSprite(ImageIO.read(getClass().getResourceAsStream(
+					"/enemies/enemy2.png")));
 			setSprite(getSprite().getSubimage(9 * 36, 0, 36, 36));
 		} catch (Exception e) {
 			e.printStackTrace();

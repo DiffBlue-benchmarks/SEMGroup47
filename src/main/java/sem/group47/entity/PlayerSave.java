@@ -7,14 +7,20 @@ public class PlayerSave {
 
 	/** The lives. */
 	private static int livesp1 = 3;
+
+	/** The livesp2. */
 	private static int livesp2 = 3;
 
 	/** The score. */
 	private static int scorep1;
+
+	/** The scorep2. */
 	private static int scorep2;
 
 	/** The extra live. */
 	private static int extraLivep1;
+
+	/** The extra livep2. */
 	private static int extraLivep2;
 
 	/** Whether multiplayer is enabled. **/
@@ -158,10 +164,10 @@ public class PlayerSave {
 	/**
 	 * sets the mutli player mode.
 	 *
-	 * @param true
-	 *            = on, false = off
+	 * @param b
+	 *            the new multiplayer enabled
 	 */
-	public static void setMultiplayerEnabled(boolean b) {
+	public static void setMultiplayerEnabled(final boolean b) {
 		multiplayer = b;
 	}
 }
