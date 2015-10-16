@@ -262,5 +262,7 @@ public class Enemy extends MapObject {
 
 	public void setCaught() {
 		// TODO Auto-generated method stub
+
 	}
+
 }

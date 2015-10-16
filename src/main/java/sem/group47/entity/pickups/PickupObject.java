@@ -29,7 +29,7 @@ public abstract class PickupObject extends MapObject {
 		setHeight(32);
 		setCwidth(32);
 		setCheight(32);
-		setFallSpeed(.35);
+		setFallSpeed(3);
 		setMaxFallSpeed(6.0);
 
 		try {
@@ -70,8 +70,13 @@ public abstract class PickupObject extends MapObject {
 
 	@Override
 	public final void update() {
+
 		setDy(getDy() + getFallSpeed());
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
+
+		if (getDy() < this.getMaxFallSpeed()) {
+			setDy(this.getMaxSpeed());
+		}
 	}
 }
