@@ -16,12 +16,12 @@ import sem.group47.tilemap.TileMap;
  * 
  */
 public abstract class PickupObject extends MapObject {
-	
+
 	/**
 	 * constructor
 	 * 
 	 * @param tm
-	 *           TileMap
+	 *            TileMap
 	 */
 	public PickupObject(final TileMap tm) {
 		super(tm);
@@ -29,9 +29,9 @@ public abstract class PickupObject extends MapObject {
 		setHeight(32);
 		setCwidth(32);
 		setCheight(32);
-		setFallSpeed(.35);
+		setFallSpeed(3);
 		setMaxFallSpeed(6.0);
-		
+
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/items/items.png"));
@@ -43,13 +43,13 @@ public abstract class PickupObject extends MapObject {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Checks whether the object collides with the player, if so executes
 	 * onPickup(p), activating the powerup.
 	 * 
 	 * @param p
-	 *           Player object
+	 *            Player object
 	 * @return true if collision occurred
 	 */
 	public final boolean checkCollision(final Player p) {
@@ -59,19 +59,24 @@ public abstract class PickupObject extends MapObject {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Effect of getting picked up.
 	 * 
 	 * @param p
-	 *           Player object
+	 *            Player object
 	 */
 	public abstract void onPickup(final Player p);
-	
+
 	@Override
 	public final void update() {
+
 		setDy(getDy() + getFallSpeed());
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
+
+		if (getDy() < this.getMaxFallSpeed()) {
+			setDy(this.getMaxSpeed());
+		}
 	}
 }
