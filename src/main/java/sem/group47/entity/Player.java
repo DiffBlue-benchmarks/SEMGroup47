@@ -552,7 +552,7 @@ public class Player extends MapObject {
 
 	/**
 	 * Gets the bubble size.
-	 * 
+	 *
 	 * @return bubblesize
 	 */
 	public final int getBubbleSize() {

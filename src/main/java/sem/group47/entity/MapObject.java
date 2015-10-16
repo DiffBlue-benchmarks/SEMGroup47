@@ -153,7 +153,7 @@ public abstract class MapObject implements Drawable {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param tm
 	 *            TileMap in which this object lives
 	 */
@@ -169,7 +169,7 @@ public abstract class MapObject implements Drawable {
 
 	/**
 	 * Determines if this MapObject intersects with another object.
-	 * 
+	 *
 	 * @param obj
 	 *            the obj
 	 * @return true if they intersect
@@ -180,7 +180,7 @@ public abstract class MapObject implements Drawable {
 
 	/**
 	 * returns a Rectangle object describing the collisionbox of the MapObject.
-	 * 
+	 *
 	 * @return Rectangle
 	 */
 	public final Rectangle getRectangle() {

@@ -9,4 +9,8 @@
              files="[a-zA-Z0-9]*"/>
   <suppress checks="MagicNumber"
              files="[a-zA-Z0-9]*"/>
+  <suppress checks="LineLength"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="VisibilityModifier"
+             files="[a-zA-Z0-9]*"/>
 </suppressions>

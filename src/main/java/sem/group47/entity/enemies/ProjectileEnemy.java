@@ -105,7 +105,7 @@ public class ProjectileEnemy extends GroundEnemy {
 
 	/**
 	 * Sets the caught.
-	 * 
+	 *
 	 * @param isCaught
 	 *            Whether or not the enemy is caught
 	 */
@@ -119,7 +119,7 @@ public class ProjectileEnemy extends GroundEnemy {
 
 	/**
 	 * Sets the isAngry.
-	 * 
+	 *
 	 * @param angry
 	 *            whether or not the enemy is angry
 	 */

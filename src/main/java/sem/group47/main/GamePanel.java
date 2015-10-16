@@ -78,7 +78,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * Initializes everything separately from the constructor.
 	 */
 	private void init() {
-		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH, HEIGHT,
+				BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		gsm = GameStateManager.getInstance();
 		running = true;
@@ -165,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	/**
 	 * keyTyped event handler.
-	 * 
+	 *
 	 * @param key
 	 *            The key event to be handled.
 	 */
@@ -174,7 +175,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	/**
 	 * keyPressed event handler.
-	 * 
+	 *
 	 * @param key
 	 *            The key event to be handled.
 	 */
@@ -186,7 +187,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	/**
 	 * keyReleased event handler.
-	 * 
+	 *
 	 * @param key
 	 *            The key event to be handled.
 	 */

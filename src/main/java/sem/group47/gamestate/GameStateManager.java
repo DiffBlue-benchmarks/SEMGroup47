@@ -70,7 +70,7 @@ public class GameStateManager {
 	/**
 	 * Makes sure GameStateManager is a Singleton, and can't have more than one
 	 * instance running.
-	 * 
+	 *
 	 * @return
 	 */
 	public static synchronized GameStateManager getInstance() {
@@ -171,7 +171,7 @@ public class GameStateManager {
 
 	/**
 	 * Returns current gameState.
-	 * 
+	 *
 	 * @return current gameState
 	 */
 	public final int getCurrentState() {

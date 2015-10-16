@@ -1,7 +1,6 @@
 package sem.group47.gamestate;
 
 import sem.group47.main.DrawComposite;
-import sem.group47.main.Drawable;
 
 /**
  * The Class GameState. Acts as a Superclass for the separate gamestates e.g.
@@ -28,6 +27,7 @@ public abstract class GameState extends DrawComposite {
 	 * @param g
 	 *            the g
 	 */
+	@Override
 	public abstract void draw(java.awt.Graphics2D g);
 
 	/**
@@ -48,7 +48,7 @@ public abstract class GameState extends DrawComposite {
 
 	/**
 	 * getGsm.
-	 * 
+	 *
 	 * @return gsm
 	 */
 	public final GameStateManager getGsm() {
@@ -57,7 +57,7 @@ public abstract class GameState extends DrawComposite {
 
 	/**
 	 * setGsm.
-	 * 
+	 *
 	 * @param pGsm
 	 *            gsm
 	 */

@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  * Utility class to log actions in a logfile.
- * 
+ *
  * @author Rogier
  *
  */
@@ -32,18 +32,15 @@ public final class Log {
 		/**
 		 * Debug message.
 		 */
-		DEBUG("Debug", 0),
-		/**
-		 * Info message.
-		 */
-		INFO("Info", 1),
-		/**
-		 * Warnings.
-		 */
-		WARNING("Warning", 2),
-		/**
-		 * Error messages.
-		 */
+		DEBUG("Debug", 0), /**
+							 * Info message.
+							 */
+		INFO("Info", 1), /**
+							 * Warnings.
+							 */
+		WARNING("Warning", 2), /**
+								 * Error messages.
+								 */
 		ERROR("Error", 3);
 
 		/**
@@ -115,8 +112,8 @@ public final class Log {
 		}
 
 		try {
-			Log.setPrintStream(new PrintStream(new File("logfiles/" + filename
-					+ ".txt"), "UTF-8"));
+			Log.setPrintStream(new PrintStream(
+					new File("logfiles/" + filename + ".txt"), "UTF-8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,7 +121,8 @@ public final class Log {
 		Log.info("Document name", "LOGFILE");
 		Log.info("Program name & version", "Bubble Bobble V0.0.1");
 		Log.info("Date & time", datestamp + "\n");
-		Log.ps.println("_________________________________________________________");
+		Log.ps.println(
+				"_________________________________________________________");
 	}
 
 	/**
@@ -142,7 +140,7 @@ public final class Log {
 
 	/**
 	 * Log a message at the WARNING level.
-	 * 
+	 *
 	 * @param module
 	 *            module the message originated from.
 	 * @param message
@@ -154,7 +152,7 @@ public final class Log {
 
 	/**
 	 * Log a message at the ERROR level.
-	 * 
+	 *
 	 * @param module
 	 *            module the message originated from.
 	 * @param message

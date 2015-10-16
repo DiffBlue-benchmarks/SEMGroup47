@@ -69,7 +69,7 @@ public class LevelState extends GameState {
 
 	/**
 	 * Instantiates a new level1 state.
-	 * 
+	 *
 	 * @param gsm
 	 *            the gamestatemanager.
 	 */
@@ -94,7 +94,7 @@ public class LevelState extends GameState {
 
 	/**
 	 * Sets up a certain level.
-	 * 
+	 *
 	 * @param level
 	 *            number of level to be set
 	 */
@@ -403,7 +403,7 @@ public class LevelState extends GameState {
 
 	/**
 	 * checks what happens when the player directly collides with an enemy.
-	 * 
+	 *
 	 * @param player
 	 *            the Player object to check collisions with
 	 */
