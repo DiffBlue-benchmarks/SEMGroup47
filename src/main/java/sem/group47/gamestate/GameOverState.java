@@ -58,20 +58,6 @@ public class GameOverState extends GameState {
 	}
 
 	/**
-	 * Init.
-	 */
-	@Override
-	public void init() {
-	}
-
-	/**
-	 * Update.
-	 */
-	@Override
-	public void update() {
-	}
-
-	/**
 	 * Draws everything of the menu screen.
 	 */
 	@Override
@@ -135,12 +121,4 @@ public class GameOverState extends GameState {
 			}
 		}
 	}
-
-	/**
-	 * keyReleased.
-	 */
-	@Override
-	public final void keyReleased(final int k) {
-	}
-
 }
