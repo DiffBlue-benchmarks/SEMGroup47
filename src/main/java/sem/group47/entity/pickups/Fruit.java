@@ -5,14 +5,14 @@ import sem.group47.tilemap.TileMap;
 
 /**
  * Gives extra points to the player.
- * 
+ *
  * @author Bas
- * 
+ *
  */
 public class Fruit extends PickupObject {
 	/**
 	 * constructor.
-	 * 
+	 *
 	 * @param tm
 	 *            TileMap
 	 */
@@ -22,7 +22,7 @@ public class Fruit extends PickupObject {
 
 	/**
 	 * Score +25 on pickup.
-	 * 
+	 *
 	 * @param p
 	 *            Player object
 	 */

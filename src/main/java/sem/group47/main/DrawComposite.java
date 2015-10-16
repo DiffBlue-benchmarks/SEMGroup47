@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 /**
  * Keeps a list of elements to draw, which may be added or removed.
- * 
+ *
  * @author Karin
  *
  */
@@ -16,7 +16,7 @@ public abstract class DrawComposite implements Drawable {
 
 	/**
 	 * Draw all components to the screen. Must be implemented locally.
-	 * 
+	 *
 	 * @param gr
 	 *            The graphics helper.
 	 */
@@ -25,7 +25,7 @@ public abstract class DrawComposite implements Drawable {
 	/**
 	 * Draw all components to the screen. Call this when a subclass needs
 	 * additional logic in the draw method.
-	 * 
+	 *
 	 * @param gr
 	 *            The graphics helper.
 	 */
@@ -42,7 +42,7 @@ public abstract class DrawComposite implements Drawable {
 
 	/**
 	 * Add an item to the list.
-	 * 
+	 *
 	 * @param dr
 	 *            Any class that implements Drawable.
 	 */
@@ -55,7 +55,7 @@ public abstract class DrawComposite implements Drawable {
 
 	/**
 	 * Remove an element from the list.
-	 * 
+	 *
 	 * @param dr
 	 *            Any class that implements Drawable.
 	 */
@@ -67,7 +67,7 @@ public abstract class DrawComposite implements Drawable {
 	}
 
 	/**
-	 * Clears the entire drawable list
+	 * Clears the entire drawable list.
 	 */
 	public final void clearComponents() {
 		if (drawComponents == null) {
@@ -78,7 +78,7 @@ public abstract class DrawComposite implements Drawable {
 
 	/**
 	 * Get the i'th element of the list.
-	 * 
+	 *
 	 * @param i
 	 *            The index of the element.
 	 * @return The drawable on index i.

@@ -29,11 +29,11 @@ import sem.group47.tilemap.TileMap;
 public class LevelState extends GameState {
 
 	/** level file names. **/
-	private String[] levelFileNames = new String[] { "level1.map",
+	private String[] levelFileNames = new String[] {"level1.map",
 			"level2.map", "level3.map", "level4.map" };
 
 	/** file names of music. **/
-	private String[] musicFileNames = new String[] { "level1", "level2",
+	private String[] musicFileNames = new String[] {"level1", "level2",
 			"level3", "level4" };
 
 	/** Current level. **/
@@ -104,15 +104,15 @@ public class LevelState extends GameState {
 	/**
 	 * Sets up a certain level.
 	 *
-	 * @param level
+	 * @param plevel
 	 *            number of level to be set
 	 */
-	private void setupLevel(int level) {
+	private void setupLevel(int plevel) {
 
-		if (level >= levelFileNames.length) {
-			level = 0;
+		if (plevel >= levelFileNames.length) {
+			plevel = 0;
 		}
-		this.level = level;
+		this.level = plevel;
 		tileMap.loadMap("/maps/" + levelFileNames[level]);
 
 		clearComponents();
@@ -174,7 +174,8 @@ public class LevelState extends GameState {
 				enemy = new Level1Enemy(tileMap);
 			}
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
-					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
+					(points.get(i)[1] + 1) * 30
+							- .5d * enemy.getCHeight());
 			enemies.add(enemy);
 			addComponent(enemy);
 			j = i;
@@ -237,16 +238,15 @@ public class LevelState extends GameState {
 				if (enemies.get(i).projectileCollision(player1)) {
 					player1.kill();
 				}
-				if (multiplayer
-						&& enemies.get(i).projectileCollision(getPlayer2())) {
+				if (multiplayer && enemies.get(i)
+						.projectileCollision(getPlayer2())) {
 					getPlayer2().kill();
 				}
 			}
 
 			for (int i = 0; i < pickups.size(); i++) {
-				if (pickups.get(i).checkCollision(player1)
-						|| (multiplayer && pickups.get(i).checkCollision(
-								getPlayer2()))) {
+				if (pickups.get(i).checkCollision(player1) || (multiplayer
+						&& pickups.get(i).checkCollision(getPlayer2()))) {
 					AudioPlayer.play("extraLife");
 					removeComponent(pickups.get(i));
 					pickups.remove(i);
@@ -480,11 +480,11 @@ public class LevelState extends GameState {
 					Fruit fr = new Fruit(tileMap);
 
 					if (enemies.get(i).getXpos() > 400) {
-						fr.setPosition(enemies.get(i).getXpos() - 100, enemies
-								.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() - 100,
+								enemies.get(i).getYpos());
 					} else {
-						fr.setPosition(enemies.get(i).getXpos() + 100, enemies
-								.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() + 100,
+								enemies.get(i).getYpos());
 					}
 					pickups.add(fr);
 					addComponent(fr);
@@ -498,12 +498,14 @@ public class LevelState extends GameState {
 
 				} else if (player.getLives() > 1) {
 					player.hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info("Player Action",
+							"Player collision with Enemy");
 
 				} else {
 					AudioPlayer.play("crash");
 					player.hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info("Player Action",
+							"Player collision with Enemy");
 				}
 			}
 		}

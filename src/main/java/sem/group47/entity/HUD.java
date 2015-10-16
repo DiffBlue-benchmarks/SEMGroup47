@@ -34,14 +34,9 @@ public class HUD implements Drawable {
 	 * Initiates.
 	 *
 	 * @param p1
-	 *            the p
-	 */
-
-	/**
-	 * Initiates.
-	 *
+	 *            the p1
 	 * @param p2
-	 *            the p
+	 *            the p2
 	 */
 
 	public HUD(final Player p1, final Player p2) {
@@ -107,8 +102,8 @@ public class HUD implements Drawable {
 	}
 
 	/**
-	 * Helper function for drawing a string with center alignment
-	 * 
+	 * Helper function for drawing a string with center alignment.
+	 *
 	 * @param s
 	 *            the string
 	 * @param x

@@ -10,6 +10,9 @@ import sem.group47.entity.MapObject;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
+/**
+ * The Class ProjectileEnemy.
+ */
 public class ProjectileEnemy extends GroundEnemy {
 
 	/** The fire delay. */
@@ -18,10 +21,18 @@ public class ProjectileEnemy extends GroundEnemy {
 	/** The last fire time. */
 	private long lastFireTime;
 
+	/** The proj speed. */
 	private double projSpeed;
 
+	/** The projectiles. */
 	ArrayList<EnemyProjectile> projectiles;
 
+	/**
+	 * Instantiates a new projectile enemy.
+	 *
+	 * @param tm
+	 *            the tm
+	 */
 	public ProjectileEnemy(final TileMap tm) {
 		super(tm);
 		setScorePoints(100);
@@ -47,8 +58,8 @@ public class ProjectileEnemy extends GroundEnemy {
 		projectiles = new ArrayList<EnemyProjectile>();
 
 		try {
-			this.setSpriteSheet(ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/enemy2.png")));
+			this.setSpriteSheet(ImageIO.read(getClass()
+					.getResourceAsStream("/enemies/enemy2.png")));
 			setSprite(getSpriteSheet().getSubimage(36, 0, 36, 36));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,6 +70,9 @@ public class ProjectileEnemy extends GroundEnemy {
 		setTimeUntillBreakFree(10);
 	}
 
+	/**
+	 * Update, updates projectiles.
+	 */
 	@Override
 	public final void update() {
 		super.update();
@@ -88,7 +102,8 @@ public class ProjectileEnemy extends GroundEnemy {
 	@Override
 	public final void draw(final Graphics2D gr) {
 		if (!facingRight) {
-			gr.drawImage(getSprite(), (int) (getx() - getWidth() / (double) 2),
+			gr.drawImage(getSprite(),
+					(int) (getx() - getWidth() / (double) 2),
 					(int) (gety() - getHeight() / (double) 2), null);
 		} else {
 			gr.drawImage(getSprite(),
@@ -134,18 +149,23 @@ public class ProjectileEnemy extends GroundEnemy {
 
 	/**
 	 * Checks if player is in front of us and fires and checks projectile
-	 * collision
+	 * collision.
+	 *
+	 * @param o
+	 *            the o
+	 * @return true, if successful
 	 */
 	@Override
 	public final boolean projectileCollision(final MapObject o) {
 		if (!this.isCaught()
 				&& lastFireTime + fireDelay < System.currentTimeMillis()) {
 			if (Math.abs(o.gety() - this.gety()) < 30
-					&& ((facingRight && o.getx() > this.getx()) || (!facingRight && o
-							.gety() > this.gety()))) {
+					&& ((facingRight && o.getx() > this.getx())
+							|| (!facingRight && o.gety() > this.gety()))) {
 				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
-				EnemyProjectile projectile = new EnemyProjectile(getTileMap());
+				EnemyProjectile projectile = new EnemyProjectile(
+						getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
 					projectile.setDx(projSpeed * -1);

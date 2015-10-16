@@ -23,20 +23,21 @@ public class Tile {
 	/** The Constant BLOCKED. */
 	public static final int SEMIBLOCKED = 1;
 
+	/** The Constant BLOCKED. */
 	// third row
 	public static final int BLOCKED = 2;
 
 	/**
 	 * Instantiates a new tile.
 	 *
-	 * @param image
+	 * @param pimage
 	 *            the image
-	 * @param type
+	 * @param ptype
 	 *            the type
 	 */
-	public Tile(final BufferedImage image, final int type) {
-		this.image = image;
-		this.type = type;
+	public Tile(final BufferedImage pimage, final int ptype) {
+		this.image = pimage;
+		this.type = ptype;
 	}
 
 	/**

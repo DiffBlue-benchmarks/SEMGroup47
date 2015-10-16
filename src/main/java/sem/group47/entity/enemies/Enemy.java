@@ -10,7 +10,10 @@ import sem.group47.tilemap.TileMap;
  */
 public class Enemy extends MapObject {
 
+	/** The Constant LEVEL1_ENEMY. */
 	public static final int LEVEL1_ENEMY = 0;
+
+	/** The Constant PROJECTILE_ENEMEY. */
 	public static final int PROJECTILE_ENEMEY = 1;
 
 	/** The caught. */
@@ -40,7 +43,10 @@ public class Enemy extends MapObject {
 	/** The time the enemy got angry after break free from bubble. */
 	private float angryTime;
 
+	/** The angry mov speed. */
 	private double angryMovSpeed;
+
+	/** The normal mov speed. */
 	private double normalMovSpeed;
 
 	/**
@@ -59,7 +65,7 @@ public class Enemy extends MapObject {
 	 *
 	 * @return true, if is caught
 	 */
-	public boolean isCaught() {
+	public final boolean isCaught() {
 		return caught;
 	}
 
@@ -80,7 +86,11 @@ public class Enemy extends MapObject {
 	}
 
 	/**
-	 * checks for projectile collision with object
+	 * checks for projectile collision with object.
+	 *
+	 * @param o
+	 *            the o
+	 * @return true, if successful
 	 */
 	public boolean projectileCollision(MapObject o) {
 		return false;
@@ -121,10 +131,22 @@ public class Enemy extends MapObject {
 		}
 	}
 
+	/**
+	 * Sets the normal mov speed.
+	 *
+	 * @param s
+	 *            the new normal mov speed
+	 */
 	public final void setNormalMovSpeed(double s) {
 		normalMovSpeed = s;
 	}
 
+	/**
+	 * Sets the angry mov speed.
+	 *
+	 * @param s
+	 *            the new angry mov speed
+	 */
 	public final void setAngryMovSpeed(double s) {
 		angryMovSpeed = s;
 	}
@@ -162,7 +184,7 @@ public class Enemy extends MapObject {
 	 * @param time
 	 *            the Angry time set
 	 */
-	public void setAngryTime(float time) {
+	public final void setAngryTime(float time) {
 		angryTime = time;
 	}
 
@@ -172,7 +194,7 @@ public class Enemy extends MapObject {
 	 * @param time
 	 *            The new timeCaught
 	 */
-	public void setTimeCaught(float time) {
+	public final void setTimeCaught(float time) {
 		timeCaught = time;
 	}
 
@@ -182,7 +204,7 @@ public class Enemy extends MapObject {
 	 * @param time
 	 *            The time needed
 	 */
-	public void setTimeUntillBreakFree(float time) {
+	public final void setTimeUntillBreakFree(float time) {
 		timeUntillBreakFree = time;
 	}
 
@@ -252,16 +274,29 @@ public class Enemy extends MapObject {
 		maxFloatSpeed = speed;
 	}
 
+	/**
+	 * Gets the sprite sheet.
+	 *
+	 * @return the sprite sheet
+	 */
 	public final BufferedImage getSpriteSheet() {
 		return spritesheet;
 	}
 
+	/**
+	 * Sets the sprite sheet.
+	 *
+	 * @param bi
+	 *            the new sprite sheet
+	 */
 	public final void setSpriteSheet(BufferedImage bi) {
 		spritesheet = bi;
 	}
 
+	/**
+	 * Sets the caught.
+	 */
 	public void setCaught() {
-		// TODO Auto-generated method stub
 
 	}
 

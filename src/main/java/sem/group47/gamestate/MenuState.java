@@ -21,8 +21,8 @@ public class MenuState extends GameState {
 	private int currentChoice = 0;
 
 	/** The options. */
-	private String[] options = { "Start", "2 Player Mode", "Help", "Options",
-			"Quit" };
+	private String[] options = {"Start", "2 Player Mode", "Help",
+			"Options", "Quit" };
 
 	/** The font. */
 	private Font font;

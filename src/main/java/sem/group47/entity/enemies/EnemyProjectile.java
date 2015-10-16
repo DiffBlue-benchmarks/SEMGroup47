@@ -5,6 +5,9 @@ import javax.imageio.ImageIO;
 import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
+/**
+ * The Class EnemyProjectile.
+ */
 public class EnemyProjectile extends MapObject {
 
 	/** The life time in ms. */
@@ -32,8 +35,8 @@ public class EnemyProjectile extends MapObject {
 		lastUpdateTime = System.currentTimeMillis();
 
 		try {
-			this.setSprite(ImageIO.read(getClass().getResourceAsStream(
-					"/enemies/enemy2.png")));
+			this.setSprite(ImageIO.read(getClass()
+					.getResourceAsStream("/enemies/enemy2.png")));
 			setSprite(getSprite().getSubimage(9 * 36, 0, 36, 36));
 		} catch (Exception e) {
 			e.printStackTrace();

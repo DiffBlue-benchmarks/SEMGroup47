@@ -210,7 +210,7 @@ public abstract class MapObject implements Drawable {
 	 * Check when the MapObject is moving upwards/ downwards if it is colliding
 	 * with anything.
 	 */
-	public void checkYCollision() {
+	public final void checkYCollision() {
 		calculateCorners(xpos, ydest);
 		if (dy < 0) {
 			if (topLeftBlocked || topRightBlocked) {
@@ -308,7 +308,8 @@ public abstract class MapObject implements Drawable {
 	public void draw(final Graphics2D gr) {
 		if (facingRight) {
 			gr.drawImage(sprite, (int) (xpos - width / (double) 2),
-					(int) (ypos - height / (double) 2), width, height, null);
+					(int) (ypos - height / (double) 2), width, height,
+					null);
 		} else {
 			gr.drawImage(sprite, (int) (xpos + width / (double) 2),
 					(int) (ypos - height / (double) 2), -width, height,

@@ -53,7 +53,7 @@ public class Player extends MapObject {
 	private ArrayList<BufferedImage[]> sprites;
 
 	/** Number of frames for each animation action in order. */
-	private final int[] numFrames = { 3, 2, 3 };
+	private final int[] numFrames = {3, 2, 3};
 
 	/** Animation actions # for idle state. */
 	public static final int IDLE = 0;
@@ -204,7 +204,7 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * takes a life, or ends the game
+	 * takes a life, or ends the game.
 	 */
 	public final void kill() {
 		if (getLives() > 1) {
@@ -550,12 +550,8 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Gets the bubble size. <<<<<<< HEAD
+	 * Gets the bubble size.
 	 *
-	 * =======
-	 * 
-	 * >>>>>>> refs/remotes/origin/master
-	 * 
 	 * @return bubblesize
 	 */
 	public final int getBubbleSize() {

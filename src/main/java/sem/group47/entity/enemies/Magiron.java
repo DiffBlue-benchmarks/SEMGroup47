@@ -13,9 +13,20 @@ import sem.group47.entity.Animation;
 import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
+/**
+ * The Class Magiron.
+ */
 public class Magiron extends Enemy {
+
+	/** The target. */
 	private MapObject target;
 
+	/**
+	 * Instantiates a new magiron.
+	 *
+	 * @param tm
+	 *            the tm
+	 */
 	public Magiron(final TileMap tm) {
 		super(tm);
 
@@ -32,8 +43,10 @@ public class Magiron extends Enemy {
 		try {
 			ImageReader reader = ImageIO.getImageReadersByFormatName("gif")
 					.next();
-			File input = new File("src/main/resources/enemies/magiaaron.gif");
-			ImageInputStream stream = ImageIO.createImageInputStream(input);
+			File input = new File(
+					"src/main/resources/enemies/magiaaron.gif");
+			ImageInputStream stream = ImageIO
+					.createImageInputStream(input);
 			reader.setInput(stream);
 
 			int count = reader.getNumImages(true);
@@ -51,25 +64,37 @@ public class Magiron extends Enemy {
 		animation.setDelay(60);
 	}
 
+	/**
+	 * Draw, draws the image animation.
+	 */
 	@Override
 	public final void draw(final Graphics2D g) {
 		if (facingRight) {
-			g.drawImage(animation.getImage(), (int) (getXpos() - getWidth()
-					/ (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2), getWidth(),
-					getHeight(), null);
+			g.drawImage(animation.getImage(),
+					(int) (getXpos() - getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2),
+					getWidth(), getHeight(), null);
 		} else {
-			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth()
-					/ (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2), -getWidth(),
-					getHeight(), null);
+			g.drawImage(animation.getImage(),
+					(int) (getXpos() + getWidth() / (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2),
+					-getWidth(), getHeight(), null);
 		}
 	}
 
+	/**
+	 * Sets the target.
+	 *
+	 * @param t
+	 *            the new target
+	 */
 	public final void setTarget(final MapObject t) {
 		target = t;
 	}
 
+	/**
+	 * Update, updates the animation moving towards the target.
+	 */
 	@Override
 	public final void update() {
 		animation.update();
@@ -78,10 +103,24 @@ public class Magiron extends Enemy {
 		}
 	}
 
+	/**
+	 * Move towards.
+	 *
+	 * @param mo
+	 *            the mo
+	 */
 	public final void moveTowards(final MapObject mo) {
 		moveTowards(mo.getx(), mo.gety());
 	}
 
+	/**
+	 * Move towards.
+	 *
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 */
 	public final void moveTowards(final double x, final double y) {
 		double newX = getx();
 		double newY = gety();
@@ -101,16 +140,25 @@ public class Magiron extends Enemy {
 		setPosition(newX, newY);
 	}
 
+	/**
+	 * Hit, sets boolean.
+	 */
 	@Override
 	public final void hit() {
 		caught = false;
 	}
 
+	/**
+	 * setCaught, sets boolean.
+	 */
 	@Override
 	public final void setCaught() {
 		caught = false;
 	}
 
+	/**
+	 * isCaught, sets boolean.
+	 */
 	@Override
 	public final void setCaught(final boolean isCaught) {
 		caught = false;

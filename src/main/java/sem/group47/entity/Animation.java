@@ -33,11 +33,11 @@ public class Animation {
 	/**
 	 * Set the frames.
 	 *
-	 * @param frames
+	 * @param pframes
 	 *            the frames
 	 */
-	public final void setFrames(final BufferedImage[] frames) {
-		this.frames = frames;
+	public final void setFrames(final BufferedImage[] pframes) {
+		this.frames = pframes;
 		currentFrame = 0;
 		startTime = System.nanoTime();
 		playedOnce = false;

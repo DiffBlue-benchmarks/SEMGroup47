@@ -20,7 +20,7 @@ public class OptionsState extends GameState {
 	private Font font, font2;
 
 	/** The options. */
-	private String[] options = { "On", "Off" };
+	private String[] options = {"On", "Off" };
 
 	/**
 	 * Instantiates a new options state.

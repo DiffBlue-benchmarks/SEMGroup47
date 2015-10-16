@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 
 import sem.group47.tilemap.TileMap;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Projectile.
  */
@@ -61,6 +60,7 @@ public class Projectile extends MapObject {
 	/**
 	 * Update.
 	 */
+	@Override
 	public final void update() {
 		long timePassed = System.currentTimeMillis() - lastUpdateTime;
 		floatDelay -= timePassed;
