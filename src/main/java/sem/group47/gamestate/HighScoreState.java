@@ -129,6 +129,7 @@ public class HighScoreState extends GameState {
 
 		g.setColor(Color.WHITE);
 		g.drawString("" + PlayerSave.getScoreP1(), 450, 550);
+
 	}
 
 	/**
