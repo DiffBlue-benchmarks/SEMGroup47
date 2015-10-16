@@ -40,10 +40,12 @@ public class HighScoreState extends GameState {
 			.toCharArray();
 
 	/** The alphabet2. */
-	private char[] alphabet2 = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+	private char[] alphabet2 = "abcdefghijklmnopqrstuvwxyz".toUpperCase()
+			.toCharArray();
 
 	/** The alphabet3. */
-	private char[] alphabet3 = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+	private char[] alphabet3 = "abcdefghijklmnopqrstuvwxyz".toUpperCase()
+			.toCharArray();
 
 	/**
 	 * Instantiates a new menu state.
@@ -100,13 +102,33 @@ public class HighScoreState extends GameState {
 		g.setFont(font2);
 		drawString(g, highScore, 280, 150);
 
+		if (i == 0) {
+			g.setColor(Color.GREEN);
+		} else {
+			g.setColor(Color.WHITE);
+		}
+
 		c1 = "" + alphabet1[(((choice1 % 26) + 26) % 26)];
-		g.drawString(c1, 280, 550);
+		g.drawString(c1, 330, 550);
+
+		if (i == 1) {
+			g.setColor(Color.GREEN);
+		} else {
+			g.setColor(Color.WHITE);
+		}
 		c2 = "" + alphabet2[(((choice2 % 26) + 26) % 26)];
-		g.drawString(c2, 300, 550);
+		g.drawString(c2, 350, 550);
+
+		if (i == 2) {
+			g.setColor(Color.GREEN);
+		} else {
+			g.setColor(Color.WHITE);
+		}
 		c3 = "" + alphabet3[(((choice3 % 26) + 26) % 26)];
-		g.drawString(c3, 320, 550);
-		g.drawString("" + PlayerSave.getScoreP1(), 360, 550);
+		g.drawString(c3, 370, 550);
+
+		g.setColor(Color.WHITE);
+		g.drawString("" + PlayerSave.getScoreP1(), 450, 550);
 	}
 
 	/**
