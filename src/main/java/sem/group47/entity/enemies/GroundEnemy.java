@@ -160,12 +160,23 @@ public class GroundEnemy extends Enemy {
 	 * Update the to be loaded sprite.
 	 */
 	private void updateAnimation() {
-		if(!isCaught() && !isAngry()) {
-			if(System.nanoTime() - 1e8 > animationChangeTime) {
-				animationChangeTime = System.nanoTime();
-				currentSprite = (currentSprite + 1) % 3;
-				setSprite(getSpriteSheet().getSubimage(currentSprite*36, 0, 36, 36));
+		if (!getProperties().canFire()) {
+			if (!isCaught() && !isAngry()) {
+				if(System.nanoTime() - 1e8 > animationChangeTime) {
+					animationChangeTime = System.nanoTime();
+					currentSprite = (currentSprite + 1) % 3;
+					setSprite(getSpriteSheet().getSubimage(currentSprite*36, 0, 36, 36));
+				}
 			}
+		
+			if (!isCaught() && isAngry()) {
+				if(System.nanoTime() - 1e8 > animationChangeTime) {
+					animationChangeTime = System.nanoTime();
+					currentSprite = (((currentSprite-3) + 1) % 2) + 3;
+					setSprite(getSpriteSheet().getSubimage(currentSprite*36, 0, 36, 36));
+				}	
+			}
+		
 		}
 	}
 
