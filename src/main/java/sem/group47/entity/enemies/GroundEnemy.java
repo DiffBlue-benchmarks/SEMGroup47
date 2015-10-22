@@ -20,23 +20,25 @@ public class GroundEnemy extends Enemy {
 
 	/** The projectiles. */
 	ArrayList<EnemyProjectile> projectiles;
-	
+
 	/** The current sprite. */
-	int currentSprite;	
-	
+	int currentSprite;
+
 	/** The animation Delay. */
 	long animationChangeTime;
-	
+
 	/**
 	 * Instantiates a new ground enemy.
 	 *
 	 * @param tm
 	 *            the tm
+	 * @param properties
+	 *            the properties
 	 */
 	public GroundEnemy(final TileMap tm, final EnemyProperty properties) {
 		super(tm);
 		projectiles = new ArrayList<EnemyProjectile>();
-		
+
 		currentSprite = 0;
 		animationChangeTime = System.nanoTime();
 
@@ -155,28 +157,28 @@ public class GroundEnemy extends Enemy {
 		updateAnimation();
 		updateProjectiles();
 	}
-	
+
 	/**
 	 * Update the to be loaded sprite.
 	 */
 	private void updateAnimation() {
 		if (!getProperties().canFire()) {
 			if (!isCaught() && !isAngry()) {
-				if(System.nanoTime() - 1e8 > animationChangeTime) {
+				if (System.nanoTime() - 1e8 > animationChangeTime) {
 					animationChangeTime = System.nanoTime();
 					currentSprite = (currentSprite + 1) % 3;
-					setSprite(getSpriteSheet().getSubimage(currentSprite*36, 0, 36, 36));
+					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, 0, 36, 36));
 				}
 			}
-		
+
 			if (!isCaught() && isAngry()) {
-				if(System.nanoTime() - 1e8 > animationChangeTime) {
+				if (System.nanoTime() - 1e8 > animationChangeTime) {
 					animationChangeTime = System.nanoTime();
-					currentSprite = (((currentSprite-3) + 1) % 2) + 3;
-					setSprite(getSpriteSheet().getSubimage(currentSprite*36, 0, 36, 36));
-				}	
+					currentSprite = (currentSprite - 3 + 1 % 2) + 3;
+					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, 0, 36, 36));
+				}
 			}
-		
+
 		}
 	}
 
@@ -219,8 +221,9 @@ public class GroundEnemy extends Enemy {
 	 */
 	@Override
 	public final boolean projectileCollision(final MapObject o) {
-		if(getProperties().canFire() == false)
+		if (getProperties().canFire() == false) {
 			return false;
+		}
 		
 		if (!this.isCaught()
 				&& lastFireTime + getProperties().getFireDelay() < System.currentTimeMillis()) {
@@ -231,10 +234,10 @@ public class GroundEnemy extends Enemy {
 				lastFireTime = System.currentTimeMillis();
 				EnemyProjectile projectile = new EnemyProjectile(
 						getTileMap());
-				projectile.setSprite(getSpriteSheet().getSubimage(9*36, getProperties().getSpriteSheetY()*36, 36, 36));
+				projectile.setSprite(getSpriteSheet().getSubimage(9 * 36, getProperties().getSpriteSheetY() * 36, 36, 36));
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
-					projectile.setDx(getProperties().getProjectileSpeed() * -1);
+					projectile.setDx(getProperties().getProjectileSpeed() * - 1);
 				} else {
 					projectile.setDx(getProperties().getProjectileSpeed());
 				}
