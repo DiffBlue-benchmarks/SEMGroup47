@@ -190,6 +190,14 @@ public class LevelState extends GameState {
 	}
 
 	/**
+	 * Returns the current Level object.
+	 * @return - the current Level object.
+	 */
+	public final Level getCurrentLevel() {
+		return currentLevel;
+	}
+
+	/**
 	 * keyPressed.
 	 *
 	 * @param k
