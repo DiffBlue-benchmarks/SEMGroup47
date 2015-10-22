@@ -130,4 +130,12 @@ public class ProjectileList extends DrawComposite {
 		}
 	}
 
+	/**
+	 * returns the size of the list.
+	 * @return - the size of the list.
+	 */
+	public final int getSize() {
+		return projectiles.size();
+	}
+
 }

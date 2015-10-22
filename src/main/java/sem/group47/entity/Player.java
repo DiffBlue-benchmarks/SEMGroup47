@@ -512,4 +512,11 @@ public class Player extends MapObject {
 	public final void setBubbleSize(final int size) {
 		bubbleSize = size;
 	}
+
+	/** Returns the projectilelist.
+	 * @return - the projectilelist object.
+	 */
+	public final ProjectileList getProjectiles() {
+		return projectileList;
+	}
 }
