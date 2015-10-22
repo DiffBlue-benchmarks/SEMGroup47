@@ -70,6 +70,9 @@ public class Score implements Drawable  {
 		if (System.nanoTime() - timeOfBirth > timeVisible) {
 			return true;
 		}
+		if (score == 0 || score > 100) {
+			return true;
+		}
 		return false;
 	}
 
