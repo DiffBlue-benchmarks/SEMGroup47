@@ -5,14 +5,21 @@ import java.util.ArrayList;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
 import sem.group47.entity.enemies.Enemy;
-import sem.group47.entity.enemies.Level1Enemy;
+import sem.group47.entity.enemies.GroundEnemy;
 import sem.group47.entity.enemies.Magiron;
-import sem.group47.entity.enemies.ProjectileEnemy;
+import sem.group47.entity.enemies.property.BaseEnemyProperty;
+import sem.group47.entity.enemies.property.CanFireProperty;
 import sem.group47.entity.pickups.BubbleSizePowerup;
 import sem.group47.entity.pickups.BubbleSpeedPowerup;
 import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.entity.pickups.PickupObject;
 import sem.group47.tilemap.TileMap;
+import sem.group47.entity.enemies.property.BaseEnemyProperty;
+import sem.group47.entity.enemies.property.BonusPointsProperty;
+import sem.group47.entity.enemies.property.CanFireProperty;
+import sem.group47.entity.enemies.property.EnemyProperty;
+import sem.group47.entity.enemies.property.FasterProperty;
+import sem.group47.entity.enemies.property.SpriteProperty;
 
 /**
  * The basicLevelFactory initialises a standard level.
@@ -23,6 +30,35 @@ public class BasicLevelFactory implements LevelFactory {
 
 	/** The tileMap being used. */
 	private TileMap tileMap;
+	private EnemyProperty[] enemyProperties;
+
+	public BasicLevelFactory() {
+		enemyProperties = new EnemyProperty[5];
+		enemyProperties[0] = new BaseEnemyProperty();
+		enemyProperties[1] = new CanFireProperty(
+				new SpriteProperty(
+						new BaseEnemyProperty(),
+						3));
+		enemyProperties[2] = new FasterProperty(
+				new CanFireProperty(
+						new SpriteProperty(
+								new BaseEnemyProperty(),
+								1)));
+		enemyProperties[3] = new BonusPointsProperty(
+				new FasterProperty(
+						new CanFireProperty(
+								new SpriteProperty(
+										new BaseEnemyProperty(),
+										7))));
+		enemyProperties[4] = new FasterProperty(
+				new FasterProperty(
+						new BonusPointsProperty(
+								new FasterProperty(
+										new CanFireProperty(
+												new SpriteProperty(
+														new BaseEnemyProperty(),
+														2))))));
+	}
 
 	/** method used to make the level.
 	 * @param filename - the filename for the tilemap.
@@ -63,13 +99,23 @@ public class BasicLevelFactory implements LevelFactory {
 		for (int i = 0; i < points.size() - 1; i++) {
 			switch (points.get(i)[2]) {
 			case Enemy.LEVEL1_ENEMY:
-				enemy = new Level1Enemy(tileMap);
+				enemy =
+				new GroundEnemy(tileMap,
+						enemyProperties[0]);
 				break;
 			case Enemy.PROJECTILE_ENEMEY:
-				enemy = new ProjectileEnemy(tileMap);
+				int r = (int) Math.round(Math.random()*3);
+				enemy =
+				new GroundEnemy(tileMap,
+						new CanFireProperty(
+								enemyProperties[1+r])
+						);
 				break;
 			default:
-				enemy = new Level1Enemy(tileMap);
+				enemy =
+				new GroundEnemy(tileMap,
+						new BaseEnemyProperty());
+			
 			}
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
 					(points.get(i)[1] + 1) * 30

@@ -163,7 +163,7 @@ public class Level extends DrawComposite{
 					addComponent(fr);
 
 					player.setScore(enemies.get(i).
-							getScorePoints());
+							getProperties().getPoints());
 					removeComponent(enemies.get(i));
 					enemies.remove(i);
 

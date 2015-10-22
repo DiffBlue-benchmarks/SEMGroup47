@@ -8,6 +8,7 @@ import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.HUD;
 import sem.group47.entity.PlayerSave;
 import sem.group47.main.BasicLevelFactory;
+import sem.group47.entity.enemies.property.EnemyProperty;
 import sem.group47.main.GamePanel;
 import sem.group47.main.Level;
 import sem.group47.main.Log;
@@ -26,6 +27,8 @@ public class LevelState extends GameState {
 	private String[] musicFileNames = new String[] {"level1", "level2",
 			"level3", "level4" };
 
+	private EnemyProperty[] enemyProperties;
+	
 	/** Current level. **/
 	private int level;
 
@@ -66,6 +69,7 @@ public class LevelState extends GameState {
 	@Override
 	public final void init() {
 		PlayerSave.init();
+		
 		multiplayer = PlayerSave.getMultiplayerEnabled();
 		level = 0;
 		setupLevel(level, multiplayer);
@@ -98,7 +102,6 @@ public class LevelState extends GameState {
 		addComponent(hud);
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
-
 	}
 
 	/**
@@ -303,5 +306,6 @@ public class LevelState extends GameState {
 			return;
 		}
 	}
+
 
 }
