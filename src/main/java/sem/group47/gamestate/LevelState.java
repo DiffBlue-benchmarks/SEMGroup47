@@ -83,6 +83,7 @@ public class LevelState extends GameState {
 
 		if (currentLevel != null) {
 			removeComponent(currentLevel);
+			removeComponent(hud);
 		}
 		if (plevel >= levelFileNames.length) {
 			plevel = 0;
