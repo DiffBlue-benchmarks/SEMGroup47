@@ -45,6 +45,7 @@ public class Level extends DrawComposite{
 	 * and level count.
 	 */
 	public Level() {
+		clearComponents();
 		enemies = new ArrayList<Enemy>();
 		pickups = new ArrayList<PickupObject>();
 		levelStepCount = 0;

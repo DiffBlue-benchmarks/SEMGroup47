@@ -81,6 +81,9 @@ public class LevelState extends GameState {
 	 */
 	private void setupLevel(int plevel, final boolean multiplayer) {
 
+		if (currentLevel != null) {
+			removeComponent(currentLevel);
+		}
 		if (plevel >= levelFileNames.length) {
 			plevel = 0;
 		}
