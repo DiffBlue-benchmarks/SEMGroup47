@@ -30,91 +30,29 @@ public class Level extends DrawComposite{
 	/** Time in seconds before Aaron appears. **/
 	private static int AARON_APPEAR_DELAY = 45;
 	
-	public Level(String levelFileName) {
+	public Level() {
 		enemies = new ArrayList<Enemy>();
 		pickups = new ArrayList<PickupObject>();
-		loadTileMap(levelFileName);
-		loadPlayers();
-		populateEnemies();
-		populatePowerups();
 		levelStepCount = 0;
 	}
 	
-	private void populateEnemies() {
-		ArrayList<int[]> points = tileMap.getEnemyStartLocations();
-		Enemy enemy;
-		int j = 0;
-		for (int i = 0; i < points.size() - 1; i++) {
-			switch (points.get(i)[2]) {
-			case Enemy.LEVEL1_ENEMY:
-				enemy = new Level1Enemy(tileMap);
-				break;
-			case Enemy.PROJECTILE_ENEMEY:
-				enemy = new ProjectileEnemy(tileMap);
-				break;
-			default:
-				enemy = new Level1Enemy(tileMap);
-			}
-			enemy.setPosition((points.get(i)[0] + .5d) * 30,
-					(points.get(i)[1] + 1) * 30
-							- .5d * enemy.getCHeight());
-			enemies.add(enemy);
-			addComponent(enemy);
-			j = i;
-		}
-
-		aaron = new Magiron(tileMap);
-		aaron.setPosition(GamePanel.WIDTH / 2, -150);
-		addComponent(aaron);
-	};
 	
-	private void loadTileMap(final String levelFileName) {
-		tileMap = new TileMap(30);
-		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
-		tileMap.loadMap("/maps/" + levelFileName);
-		addComponent(tileMap);
-	};
-	
-	public void loadPlayers() {
-		player1 = new Player(tileMap);
-		player1.setPosition(tileMap.getTileSize() * (2d + .5d) + 5,
-				tileMap.getTileSize() * (tileMap.getNumRows() - 2 + .5d));
-		player1.setLives(PlayerSave.getLivesP1());
-
-		player1.setExtraLive(PlayerSave.getExtraLiveP1());
-		player1.setScore(PlayerSave.getScoreP1());
-		addComponent(player1);
-
-		if (multiplayer) {
-			player2 = new Player(tileMap);
-			player2.setPosition(
-					tileMap.getTileSize() * (tileMap.getNumCols() - 3 + .5d) - 5,
-					tileMap.getTileSize() * (tileMap.getNumRows() - 2 + .5d));
-			player2.setLives(PlayerSave.getLivesP2());
-			player2.setExtraLive(PlayerSave.getExtraLiveP2());
-			player2.setScore(PlayerSave.getScoreP2());
-			player2.setFacingRight(false);
-			addComponent(player2);
-		}
-	};
-	
-	/**
-	 * loads the powerups.
-	 */
-	private void populatePowerups() {
-		PickupObject po = new MovementSpeedPowerup(tileMap);
-		po.setPosition(100, 100);
-		pickups.add(po);
-		addComponent(po);
-		po = new BubbleSizePowerup(tileMap);
-		po.setPosition(tileMap.getWidth() - 100, 100);
-		pickups.add(po);
-		addComponent(po);
-		po = new BubbleSpeedPowerup(tileMap);
-		po.setPosition(tileMap.getWidth() / 2, 100);
-		pickups.add(po);
-		addComponent(po);
+	public void addEnemy(Enemy newEnemy) {
+		enemies.add(newEnemy);
+		addComponent(newEnemy);
 	}
+	
+	public void addAaron(Magiron newEnemy) {
+		aaron = newEnemy;
+		addComponent(aaron);
+	}
+	
+	public void addPickup(PickupObject pu) {
+		pickups.add(pu);
+		addComponent(pu);
+	}
+	
+	
 	
 	public void update() {
 		if (player1.getLives() > 0) {
@@ -258,6 +196,10 @@ public class Level extends DrawComposite{
 
 	public boolean hasWon() {
 		if (enemies.size() == 0) {
+			removeComponent(player1);
+			if (multiplayer) {
+				removeComponent(player2);
+			}
 			return true;
 		} else {
 			return false;
@@ -273,12 +215,36 @@ public class Level extends DrawComposite{
 		return player1;
 	}
 	
+	public void setPlayer1(Player player) {
+		if (player1 != null) {
+			removeComponent(player1);
+		}
+		player1 = player;
+		addComponent(player);
+	}
+	
+	public void setPlayer2(Player player) {
+		if (player2 != null) {
+			removeComponent(player1);
+		}
+		player2 = player;
+		addComponent(player);
+	}
+	
 	public Player getPlayer2() {
 		return player2;
 	}
 	
 	public TileMap getTileMap() {
 		return tileMap;
+	}
+	
+	public void setTileMap(TileMap tilemap) {
+		if (tileMap != null) {
+			removeComponent(tileMap);
+		}
+		tileMap = tilemap;
+		addComponent(tileMap);
 	}
 
 

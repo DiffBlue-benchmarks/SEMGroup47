@@ -18,8 +18,10 @@ import sem.group47.entity.pickups.BubbleSpeedPowerup;
 import sem.group47.entity.pickups.Fruit;
 import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.entity.pickups.PickupObject;
+import sem.group47.main.BasicLevelFactory;
 import sem.group47.main.GamePanel;
 import sem.group47.main.Level;
+import sem.group47.main.LevelFactory;
 import sem.group47.main.Log;
 import sem.group47.tilemap.Background;
 import sem.group47.tilemap.TileMap;
@@ -56,6 +58,8 @@ public class LevelState extends GameState {
 	
 	private Level currentLevel;
 
+	private BasicLevelFactory levelFactory;
+
 	/**
 	 * Instantiates a new level1 state.
 	 *
@@ -64,6 +68,7 @@ public class LevelState extends GameState {
 	 */
 	public LevelState(final GameStateManager gsm) {
 		setGsm(gsm);
+		levelFactory = new BasicLevelFactory();
 	}
 
 	/**
@@ -74,7 +79,7 @@ public class LevelState extends GameState {
 		PlayerSave.init();
 		multiplayer = PlayerSave.getMultiplayerEnabled();
 		level = 0;
-		setupLevel(level);
+		setupLevel(level, multiplayer);
 		paused = false;
 		bg = new Background();
 	}
@@ -85,13 +90,13 @@ public class LevelState extends GameState {
 	 * @param plevel
 	 *            number of level to be set
 	 */
-	private void setupLevel(int plevel) {
+	private void setupLevel(int plevel, boolean multiplayer) {
 
 		if (plevel >= levelFileNames.length) {
 			plevel = 0;
 		}
 		this.level = plevel;
-		currentLevel = new Level(levelFileNames[level]);
+		currentLevel = levelFactory.makeLevel(levelFileNames[level], multiplayer);
 		addComponent(currentLevel);
 		
 		hud = new HUD(currentLevel.getPlayer1(), currentLevel.getPlayer2());
@@ -153,7 +158,7 @@ public class LevelState extends GameState {
 				}
 				PlayerSave.setExtraLiveP2(currentLevel.getPlayer2().getExtraLive());
 			}
-			setupLevel(level + 1);
+			setupLevel(level + 1, multiplayer);
 			Log.info("Player Action", "Player reached next level");
 		}
 	}
