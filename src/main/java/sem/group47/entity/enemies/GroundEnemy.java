@@ -21,6 +21,12 @@ public class GroundEnemy extends Enemy {
 	/** The projectiles. */
 	ArrayList<EnemyProjectile> projectiles;
 	
+	/** The current sprite. */
+	int currentSprite;	
+	
+	/** The animation Delay. */
+	long animationChangeTime;
+	
 	/**
 	 * Instantiates a new ground enemy.
 	 *
@@ -31,6 +37,9 @@ public class GroundEnemy extends Enemy {
 		super(tm);
 		projectiles = new ArrayList<EnemyProjectile>();
 		
+		currentSprite = 0;
+		animationChangeTime = System.nanoTime();
+
 		setProperties(properties);
 		setTimeCaught(0);
 		this.setIsAngry(false);
@@ -143,7 +152,21 @@ public class GroundEnemy extends Enemy {
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
 		updateStates();
+		updateAnimation();
 		updateProjectiles();
+	}
+	
+	/**
+	 * Update the to be loaded sprite.
+	 */
+	private void updateAnimation() {
+		if(!isCaught() && !isAngry()) {
+			if(System.nanoTime() - 1e8 > animationChangeTime) {
+				animationChangeTime = System.nanoTime();
+				currentSprite = (currentSprite + 1) % 3;
+				setSprite(getSpriteSheet().getSubimage(currentSprite*36, 0, 36, 36));
+			}
+		}
 	}
 
 	/**
