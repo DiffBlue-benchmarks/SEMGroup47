@@ -70,11 +70,20 @@ public abstract class PickupObject extends MapObject {
 
 	@Override
 	public final void update() {
-
 		setDy(getDy() + getFallSpeed());
 		checkTileMapCollision();
+		if (getYposNew() == gety())
+			setDx(0);
 		setPosition(getXposNew(), getYposNew());
-
+		
+		if (getDx() > .1f) {
+			setDx(getDx() - .1f);
+		} else if (getDx() < - .1f){
+			setDx(getDx() + .1f);
+		} else {
+			setDx(0f);
+		}
+		
 		if (getDy() < this.getMaxFallSpeed()) {
 			setDy(this.getMaxSpeed());
 		}
