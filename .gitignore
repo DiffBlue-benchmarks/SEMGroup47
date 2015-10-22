@@ -42,4 +42,3 @@ local.properties
 src/main/java/sem/group47/gamestate/Level1State.java
 src/main/java/sem/group47/gamestate/Level2State.java
 /logfiles/
-/highscore/
