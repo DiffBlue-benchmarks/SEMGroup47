@@ -2,7 +2,11 @@ package sem.group47.entity.enemies;
 
 import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
+
 import sem.group47.entity.MapObject;
+import sem.group47.entity.enemies.property.BaseEnemyProperty;
+import sem.group47.entity.enemies.property.EnemyProperty;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -19,15 +23,6 @@ public class Enemy extends MapObject {
 	/** The caught. */
 	protected boolean caught;
 
-	/** The score points. */
-	private int scorePoints;
-
-	/** The float speed. */
-	private double floatSpeed;
-
-	/** The max float speed. */
-	private double maxFloatSpeed;
-
 	/** The spritesheet. */
 	private BufferedImage spritesheet;
 
@@ -37,17 +32,11 @@ public class Enemy extends MapObject {
 	/** The time the enemy got caught. */
 	private float timeCaught;
 
-	/** The time the enemy needs to break free from the bubble. */
-	private float timeUntillBreakFree;
+	/** The time the enemy stays angry after break free from bubble. */
+	private float angryStartTime;
 
-	/** The time the enemy got angry after break free from bubble. */
-	private float angryTime;
-
-	/** The angry mov speed. */
-	private double angryMovSpeed;
-
-	/** The normal mov speed. */
-	private double normalMovSpeed;
+	/** Holds all the enemy properties. */
+	private EnemyProperty properties;
 
 	/**
 	 * Instantiates a new enemy.
@@ -57,7 +46,30 @@ public class Enemy extends MapObject {
 	 */
 	public Enemy(final TileMap tm) {
 		super(tm);
+		setWidth(36);
+		setHeight(36);
+		setCwidth(36);
+		setCheight(36);
+		setMovSpeed(0.3);
+		setStopSpeed(.4);
+
+		setFallSpeed(.35);
+		setMaxFallSpeed(6.0);
+		setJumpStart(-10.0);
+		setStopJumpSpeed(.3);
+		
 		setAlive(true);
+		properties = new BaseEnemyProperty();
+		
+		if(spritesheet == null) {
+			try {
+				this.setSpriteSheet(ImageIO.read(getClass()
+						.getResourceAsStream("/enemies/monsters_sprite.png")));
+				setSprite(getSpriteSheet().getSubimage(1, 0, 36, 36));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -107,7 +119,7 @@ public class Enemy extends MapObject {
 		setIsAngry(false);
 		setTimeCaught(System.nanoTime());
 		if (isCaught) {
-			setSprite(spritesheet.getSubimage(90, 0, 30, 30));
+			setSprite(spritesheet.getSubimage(8*36, properties.getSpriteSheetY()*36, 36, 36));
 		} else {
 			setIsAngry(true);
 		}
@@ -122,33 +134,23 @@ public class Enemy extends MapObject {
 	public void setIsAngry(boolean angry) {
 		isAngry = angry;
 		if (angry) {
-			setAngryTime(System.nanoTime());
-			setSprite(spritesheet.getSubimage(120, 0, 30, 30));
-			setMaxSpeed(angryMovSpeed);
+			angryStartTime = System.nanoTime();
+			setSprite(spritesheet.getSubimage(4*36, properties.getSpriteSheetY()*36, 36, 36));
+			setInverseDraw(true);
+			setMaxSpeed(properties.getAngryMovSpeed());
 		} else {
-			setSprite(spritesheet.getSubimage(0, 0, 30, 30));
-			setMaxSpeed(normalMovSpeed);
+			setSprite(spritesheet.getSubimage(0*36, properties.getSpriteSheetY()*36, 36, 36));
+			setInverseDraw(false);
+			setMaxSpeed(properties.getNormalMovSpeed());
 		}
 	}
-
-	/**
-	 * Sets the normal mov speed.
-	 *
-	 * @param s
-	 *            the new normal mov speed
-	 */
-	public final void setNormalMovSpeed(double s) {
-		normalMovSpeed = s;
+	
+	public final EnemyProperty getProperties() {
+		return properties;
 	}
-
-	/**
-	 * Sets the angry mov speed.
-	 *
-	 * @param s
-	 *            the new angry mov speed
-	 */
-	public final void setAngryMovSpeed(double s) {
-		angryMovSpeed = s;
+	
+	public final void setProperties(EnemyProperty properties) {
+		this.properties = properties;
 	}
 
 	/**
@@ -170,25 +172,6 @@ public class Enemy extends MapObject {
 	}
 
 	/**
-	 * Gets the Angry Time.
-	 *
-	 * @return angryTime
-	 */
-	public final float getAngryTime() {
-		return angryTime;
-	}
-
-	/**
-	 * Sets the Angry Time.
-	 *
-	 * @param time
-	 *            the Angry time set
-	 */
-	public final void setAngryTime(float time) {
-		angryTime = time;
-	}
-
-	/**
 	 * Sets the timeCaught.
 	 *
 	 * @param time
@@ -196,82 +179,6 @@ public class Enemy extends MapObject {
 	 */
 	public final void setTimeCaught(float time) {
 		timeCaught = time;
-	}
-
-	/**
-	 * Sets the time needed to break free from a bubble.
-	 *
-	 * @param time
-	 *            The time needed
-	 */
-	public final void setTimeUntillBreakFree(float time) {
-		timeUntillBreakFree = time;
-	}
-
-	/**
-	 * Gets the time needed to break free from a bubble.
-	 *
-	 * @return timeUntillBreakFree The time needed
-	 */
-	public final float getTimeUntillBreakFree() {
-		return timeUntillBreakFree;
-	}
-
-	/**
-	 * Gets the score points.
-	 *
-	 * @return the score points
-	 */
-	public final int getScorePoints() {
-		return scorePoints;
-	}
-
-	/**
-	 * Sets the score points.
-	 *
-	 * @param pScorePoints
-	 *            the new score points
-	 */
-	public final void setScorePoints(final int pScorePoints) {
-		this.scorePoints = pScorePoints;
-	}
-
-	/**
-	 * Sets the float speed.
-	 *
-	 * @param pFloatSpeed
-	 *            the new float speed
-	 */
-	public final void setFloatSpeed(final double pFloatSpeed) {
-		this.floatSpeed = pFloatSpeed;
-	}
-
-	/**
-	 * Gets the float speed.
-	 *
-	 * @return the float speed
-	 */
-	public final double getFloatSpeed() {
-		return floatSpeed;
-	}
-
-	/**
-	 * Gets the max float speed.
-	 *
-	 * @return the speed
-	 */
-	public final double getMaxFloatSpeed() {
-		return maxFloatSpeed;
-	}
-
-	/**
-	 * Sets the max float speed.
-	 *
-	 * @param speed
-	 *            Speed to be set
-	 */
-	public final void setMaxFloatSpeed(final double speed) {
-		maxFloatSpeed = speed;
 	}
 
 	/**
@@ -292,6 +199,16 @@ public class Enemy extends MapObject {
 	public final void setSpriteSheet(BufferedImage bi) {
 		spritesheet = bi;
 	}
+	
+	/**
+	 * Returns the time at which the enemy became angry
+	 * 
+	 * @return
+	 * time
+	 */
+	public final float getAngryStartTime() {
+		return angryStartTime;
+	}
 
 	/**
 	 * Sets the caught.
@@ -299,5 +216,4 @@ public class Enemy extends MapObject {
 	public void setCaught() {
 
 	}
-
 }
