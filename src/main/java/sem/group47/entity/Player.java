@@ -53,7 +53,7 @@ public class Player extends MapObject {
 	private ArrayList<BufferedImage[]> sprites;
 
 	/** Number of frames for each animation action in order. */
-	private final int[] numFrames = {3, 2, 3};
+	private final int[] numFrames = { 3, 2, 3 };
 
 	/** Animation actions # for idle state. */
 	public static final int IDLE = 0;
@@ -69,6 +69,9 @@ public class Player extends MapObject {
 
 	/** The size of bubbles fired. **/
 	private int bubbleSize;
+
+	/** Player movement. **/
+	private boolean canMove = true;
 
 	/**
 	 * Instantiates a new player.
@@ -109,18 +112,16 @@ public class Player extends MapObject {
 		try {
 
 			BufferedImage spritesheet = ImageIO.read(getClass()
-				.getResourceAsStream("/player/playerv2.png"));
+					.getResourceAsStream("/player/playerv2.png"));
 
 			sprites = new ArrayList<BufferedImage[]>();
 			for (int i = 0; i < 3; i++) {
 
-				BufferedImage[] bi =
-						new BufferedImage[numFrames[i]];
+				BufferedImage[] bi = new BufferedImage[numFrames[i]];
 
 				for (int j = 0; j < numFrames[i]; j++) {
-					bi[j] = spritesheet.getSubimage(
-							j * getWidth(),	i * getHeight(),
-							getWidth(), getHeight());
+					bi[j] = spritesheet.getSubimage(j * getWidth(), i
+							* getHeight(), getWidth(), getHeight());
 				}
 				sprites.add(bi);
 			}
@@ -136,14 +137,16 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Update. Called every frame. Updates player position,
-	 * looks for collision and then puts the player in the new position
+	 * Update. Called every frame. Updates player position, looks for collision
+	 * and then puts the player in the new position
 	 */
 	@Override
 	public final void update() {
 		projectileList.update();
-		getNextXPosition();
-		getNextYPosition();
+		if (canMove) {
+			getNextXPosition();
+			getNextYPosition();
+		}
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
 		updateAnimation();
@@ -158,8 +161,7 @@ public class Player extends MapObject {
 	 * @param enemies
 	 *            enemies
 	 */
-	public final void indirectEnemyCollision(
-			final ArrayList<Enemy> enemies) {
+	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
 		projectileList.indirectEnemyCollision(enemies);
 	}
 
@@ -168,12 +170,10 @@ public class Player extends MapObject {
 	 */
 	public final void fireProjectile() {
 		if (getDown()) {
-			if (lastFireTime + fireDelay
-					< System.currentTimeMillis()) {
+			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
 				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
-				Projectile projectile = new Projectile(
-						getTileMap());
+				Projectile projectile = new Projectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
 					projectile.setDx(bubbleSpeed * -1);
@@ -187,8 +187,7 @@ public class Player extends MapObject {
 				projectile.setWidth(bubbleSize);
 				projectile.setHeight(bubbleSize);
 				projectile.setCwidth((int) (bubbleSize / 1.6f));
-				projectile.setCheight((int)
-						(bubbleSize / 1.6f));
+				projectile.setCheight((int) (bubbleSize / 1.6f));
 
 				projectileList.addProjectile(projectile);
 				Log.info("Player Action", "Bubble fired");
@@ -202,20 +201,17 @@ public class Player extends MapObject {
 	public final void kill() {
 		if (getLives() > 1) {
 			hit(1);
-			Log.info("Player Action",
-					"Player collision with Enemy");
+			Log.info("Player Action", "Player collision with Enemy");
 
 		} else {
 			AudioPlayer.play("crash");
 			hit(1);
-			Log.info("Player Action",
-					"Player collision with Enemy");
+			Log.info("Player Action", "Player collision with Enemy");
 		}
 	}
 
 	/**
-	 * lets the player interact with a projectile,
-	 * enabling him to jump on it
+	 * lets the player interact with a projectile, enabling him to jump on it
 	 * and lift upwards, or kick against it.
 	 */
 	public final void interactWithProjectile() {
@@ -227,8 +223,7 @@ public class Player extends MapObject {
 	 */
 	public final void flinching() {
 		if (flinching) {
-			long elapsed = (System.nanoTime() - flinchTimer)
-					/ 1000000;
+			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
 			if (elapsed > 2500) {
 				flinching = false;
 			}
@@ -251,8 +246,7 @@ public class Player extends MapObject {
 		if (lives < 0) {
 			lives = 0;
 			Log.warning("Player info wrong",
-				"Amount of lives of player was <0. "
-				+ "Set back to 0");
+					"Amount of lives of player was <0. " + "Set back to 0");
 		}
 		if (lives == 0) {
 			AudioPlayer.stopAll();
@@ -261,8 +255,7 @@ public class Player extends MapObject {
 			Log.info("Player Action", "Player died");
 		}
 
-		setPosition(getTileMap().getWidth() / 2,
-				getTileMap().getHeight() / 2);
+		setPosition(getTileMap().getWidth() / 2, getTileMap().getHeight() / 2);
 		setVector(0, 0);
 		flinching = true;
 		flinchTimer = System.nanoTime();
@@ -343,15 +336,14 @@ public class Player extends MapObject {
 				isAttacking = false;
 			}
 		} else if (isIdle && currentAction != IDLE) {
-				currentAction = IDLE;
-				animation.setFrames(sprites.get(IDLE));
-				animation.setDelay(400);
-		} else if ((isLeft() || isRight())
-				&& currentAction != WALKING) {
-				currentAction = WALKING;
-				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(200);
-			}
+			currentAction = IDLE;
+			animation.setFrames(sprites.get(IDLE));
+			animation.setDelay(400);
+		} else if ((isLeft() || isRight()) && currentAction != WALKING) {
+			currentAction = WALKING;
+			animation.setFrames(sprites.get(WALKING));
+			animation.setDelay(200);
+		}
 
 		animation.update();
 	}
@@ -366,22 +358,21 @@ public class Player extends MapObject {
 	public final void draw(final Graphics2D g) {
 		if (!flinching || Math.round(Math.random() * 1) == 0) {
 			if (facingRight) {
-				g.drawImage(animation.getImage(),
-						(int) (getXpos() - getWidth()
-						/ (double) 2),
-						(int) (getYpos() - getHeight()
+				g.drawImage(animation.getImage(), (int) (getXpos() - getWidth()
+						/ (double) 2), (int) (getYpos() - getHeight()
 						/ (double) 2), null);
 			} else {
-				g.drawImage(animation.getImage(),
-						(int) (getXpos() + getWidth()
-						/ (double) 2),
-						(int) (getYpos() - getHeight()
-						/ (double) 2),
-						-getWidth(), getHeight(), null);
+				g.drawImage(animation.getImage(), (int) (getXpos() + getWidth()
+						/ (double) 2), (int) (getYpos() - getHeight()
+						/ (double) 2), -getWidth(), getHeight(), null);
 			}
 		}
 
 		projectileList.draw(g);
+	}
+
+	public final void canMove(boolean pCanMove) {
+		this.canMove = pCanMove;
 	}
 
 	/**
@@ -398,8 +389,7 @@ public class Player extends MapObject {
 			AudioPlayer.play("bubblePop");
 		}
 
-		Log.info("Player Action", "Player received "
-				+ points + " points");
+		Log.info("Player Action", "Player received " + points + " points");
 		if (score >= extraLive) {
 			AudioPlayer.play("extraLife");
 			lives++;
@@ -447,6 +437,7 @@ public class Player extends MapObject {
 
 	/**
 	 * Gets the bubble speed.
+	 * 
 	 * @return the bubble speed
 	 */
 	public final double getBubbleSpeed() {
@@ -455,12 +446,12 @@ public class Player extends MapObject {
 
 	/**
 	 * Gets the bubble size.
+	 * 
 	 * @return the bubble size.
 	 */
 	public final int getBubbleSize() {
 		return bubbleSize;
 	}
-
 
 	/**
 	 * Gets the score.
@@ -500,8 +491,6 @@ public class Player extends MapObject {
 	public final void setBubbleSpeed(final double speed) {
 		this.bubbleSpeed = speed;
 	}
-
-
 
 	/**
 	 * Sets the bubble size.

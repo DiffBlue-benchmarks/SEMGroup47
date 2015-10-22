@@ -10,7 +10,6 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
 import sem.group47.entity.Animation;
-import sem.group47.main.GamePanel;
 
 /**
  * The Class Background.
@@ -28,10 +27,8 @@ public class Background {
 		try {
 			ImageReader reader = ImageIO.getImageReadersByFormatName("gif")
 					.next();
-			File input = new File(
-					"src/main/resources/backgrounds/clouds.gif");
-			ImageInputStream stream = ImageIO
-					.createImageInputStream(input);
+			File input = new File("src/main/resources/backgrounds/clouds.gif");
+			ImageInputStream stream = ImageIO.createImageInputStream(input);
 			reader.setInput(stream);
 
 			int count = reader.getNumImages(true);
@@ -56,9 +53,9 @@ public class Background {
 	 *            the graphics to draw;
 	 */
 	public final void draw(final Graphics2D g) {
-		animation.update();
-		g.drawImage(animation.getImage(), 0, 60, GamePanel.WIDTH,
-				GamePanel.HEIGHT - 60, null);
+		// animation.update();
+		// g.drawImage(animation.getImage(), 0, 60, GamePanel.WIDTH,
+		// GamePanel.HEIGHT - 60, null);
 	}
 
 }

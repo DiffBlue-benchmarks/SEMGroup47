@@ -9,6 +9,7 @@ import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.HUD;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
+import sem.group47.entity.Waterfall;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.GroundEnemy;
 import sem.group47.entity.enemies.Magiron;
@@ -19,7 +20,6 @@ import sem.group47.entity.enemies.property.EnemyProperty;
 import sem.group47.entity.enemies.property.FasterProperty;
 import sem.group47.entity.enemies.property.SpriteProperty;
 import sem.group47.entity.pickups.BubbleSizePowerup;
-import sem.group47.entity.pickups.BubbleSpeedPowerup;
 import sem.group47.entity.pickups.Fruit;
 import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.entity.pickups.PickupObject;
@@ -34,15 +34,15 @@ import sem.group47.tilemap.TileMap;
 public class LevelState extends GameState {
 
 	/** level file names. **/
-	private String[] levelFileNames = new String[] {"level1.map",
+	private String[] levelFileNames = new String[] { "level1.map",
 			"level2.map", "level3.map", "level4.map" };
 
 	/** file names of music. **/
-	private String[] musicFileNames = new String[] {"level1", "level2",
+	private String[] musicFileNames = new String[] { "level1", "level2",
 			"level3", "level4" };
 
 	private EnemyProperty[] enemyProperties;
-	
+
 	/** Current level. **/
 	private int level;
 
@@ -77,6 +77,10 @@ public class LevelState extends GameState {
 
 	/** Magiron. */
 	private Magiron aaron;
+
+	/** Waterfall. */
+	private Waterfall waterfall;
+
 	/** Time in seconds before Aaron appears. **/
 	private static int AARON_APPEAR_DELAY = 45;
 
@@ -102,30 +106,17 @@ public class LevelState extends GameState {
 
 		enemyProperties = new EnemyProperty[5];
 		enemyProperties[0] = new BaseEnemyProperty();
-		enemyProperties[1] = new CanFireProperty(
-				new SpriteProperty(
-						new BaseEnemyProperty(),
-						3));
-		enemyProperties[2] = new FasterProperty(
-				new CanFireProperty(
-						new SpriteProperty(
-								new BaseEnemyProperty(),
-								1)));
-		enemyProperties[3] = new BonusPointsProperty(
-				new FasterProperty(
-						new CanFireProperty(
-								new SpriteProperty(
-										new BaseEnemyProperty(),
-										7))));
-		enemyProperties[4] = new FasterProperty(
-				new FasterProperty(
-						new BonusPointsProperty(
-								new FasterProperty(
-										new CanFireProperty(
-												new SpriteProperty(
-														new BaseEnemyProperty(),
-														2))))));
-		
+		enemyProperties[1] = new CanFireProperty(new SpriteProperty(
+				new BaseEnemyProperty(), 3));
+		enemyProperties[2] = new FasterProperty(new CanFireProperty(
+				new SpriteProperty(new BaseEnemyProperty(), 1)));
+		enemyProperties[3] = new BonusPointsProperty(new FasterProperty(
+				new CanFireProperty(new SpriteProperty(new BaseEnemyProperty(),
+						7))));
+		enemyProperties[4] = new FasterProperty(new FasterProperty(
+				new BonusPointsProperty(new FasterProperty(new CanFireProperty(
+						new SpriteProperty(new BaseEnemyProperty(), 2))))));
+
 		multiplayer = PlayerSave.getMultiplayerEnabled();
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
@@ -199,26 +190,18 @@ public class LevelState extends GameState {
 		for (int i = 0; i < points.size() - 1; i++) {
 			switch (points.get(i)[2]) {
 			case Enemy.LEVEL1_ENEMY:
-				enemy =
-				new GroundEnemy(tileMap,
-						enemyProperties[0]);
+				enemy = new GroundEnemy(tileMap, enemyProperties[0]);
 				break;
 			case Enemy.PROJECTILE_ENEMEY:
-				int r = (int) Math.round(Math.random()*3);
-				enemy =
-				new GroundEnemy(tileMap,
-						new CanFireProperty(
-								enemyProperties[1+r])
-						);
+				int r = (int) Math.round(Math.random() * 3);
+				enemy = new GroundEnemy(tileMap, new CanFireProperty(
+						enemyProperties[1 + r]));
 				break;
 			default:
-				enemy =
-				new GroundEnemy(tileMap,
-						new BaseEnemyProperty());
+				enemy = new GroundEnemy(tileMap, new BaseEnemyProperty());
 			}
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
-					(points.get(i)[1] + 1) * 30
-							- .5d * enemy.getCHeight());
+					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
 			enemies.add(enemy);
 			addComponent(enemy);
 			j = i;
@@ -227,12 +210,17 @@ public class LevelState extends GameState {
 		aaron = new Magiron(tileMap);
 		aaron.setPosition(GamePanel.WIDTH / 2, -150);
 		addComponent(aaron);
+
 	}
 
 	/**
 	 * loads the powerups.
 	 */
 	private void populatePowerups() {
+		waterfall = new Waterfall(tileMap);
+		waterfall.setPosition(tileMap.getWidth() / 2, 100);
+		addComponent(waterfall);
+
 		PickupObject po = new MovementSpeedPowerup(tileMap);
 		po.setPosition(100, 100);
 		pickups.add(po);
@@ -241,10 +229,10 @@ public class LevelState extends GameState {
 		po.setPosition(tileMap.getWidth() - 100, 100);
 		pickups.add(po);
 		addComponent(po);
-		po = new BubbleSpeedPowerup(tileMap);
-		po.setPosition(tileMap.getWidth() / 2, 100);
-		pickups.add(po);
-		addComponent(po);
+		// po = new BubbleSpeedPowerup(tileMap);
+		// po.setPosition(tileMap.getWidth() / 2, 100);
+		// pickups.add(po);
+		// addComponent(po);
 	}
 
 	/**
@@ -274,6 +262,17 @@ public class LevelState extends GameState {
 				targetAaron();
 			}
 			aaron.update();
+
+			if (waterfall != null) {
+				waterfall.update();
+				waterfall.playerInteraction(player1);
+
+				if (waterfall.getYpos() < 100) {
+					removeComponent(waterfall);
+					waterfall = null;
+				}
+			}
+
 			lostCheck();
 
 			for (int i = 0; i < enemies.size(); i++) {
@@ -281,15 +280,16 @@ public class LevelState extends GameState {
 				if (enemies.get(i).projectileCollision(player1)) {
 					player1.kill();
 				}
-				if (multiplayer && enemies.get(i)
-						.projectileCollision(getPlayer2())) {
+				if (multiplayer
+						&& enemies.get(i).projectileCollision(getPlayer2())) {
 					getPlayer2().kill();
 				}
 			}
 
 			for (int i = 0; i < pickups.size(); i++) {
-				if (pickups.get(i).checkCollision(player1) || (multiplayer
-						&& pickups.get(i).checkCollision(getPlayer2()))) {
+				if (pickups.get(i).checkCollision(player1)
+						|| (multiplayer && pickups.get(i).checkCollision(
+								getPlayer2()))) {
 					AudioPlayer.play("extraLife");
 					removeComponent(pickups.get(i));
 					pickups.remove(i);
@@ -523,11 +523,11 @@ public class LevelState extends GameState {
 					Fruit fr = new Fruit(tileMap);
 
 					if (enemies.get(i).getXpos() > 400) {
-						fr.setPosition(enemies.get(i).getXpos() - 100,
-								enemies.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() - 100, enemies
+								.get(i).getYpos());
 					} else {
-						fr.setPosition(enemies.get(i).getXpos() + 100,
-								enemies.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() + 100, enemies
+								.get(i).getYpos());
 					}
 					pickups.add(fr);
 					addComponent(fr);
@@ -541,14 +541,12 @@ public class LevelState extends GameState {
 
 				} else if (player.getLives() > 1) {
 					player.hit(1);
-					Log.info("Player Action",
-							"Player collision with Enemy");
+					Log.info("Player Action", "Player collision with Enemy");
 
 				} else {
 					AudioPlayer.play("crash");
 					player.hit(1);
-					Log.info("Player Action",
-							"Player collision with Enemy");
+					Log.info("Player Action", "Player collision with Enemy");
 				}
 			}
 		}
