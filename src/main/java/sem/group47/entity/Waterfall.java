@@ -7,8 +7,17 @@ import javax.imageio.ImageIO;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
+/**
+ * Waterfall class.
+ * 
+ * @author Bas
+ *
+ */
 public class Waterfall extends MapObject {
 
+	/**
+	 * xpos and xpos2.
+	 */
 	private double xpos, xpos2 = 0;
 
 	/**
@@ -32,14 +41,14 @@ public class Waterfall extends MapObject {
 
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/waterfall/waterfallunit.png"));
-			setSprite(spritesheet);
+					.getResourceAsStream("/waterfall/waterfall.png"));
+			setSprite(spritesheet.getSubimage(68, 0, 15, 15));
+
 		} catch (Exception e) {
 			Log.error("IO Read", "Could not file waterfall sprite");
 			e.printStackTrace();
 		}
 
-		setLeft(true);
 	}
 
 	/**
@@ -87,13 +96,10 @@ public class Waterfall extends MapObject {
 	 */
 	private void getNextYPosition() {
 		if (isFalling()) {
+			setLeft(true);
+			setDx(0);
 			setDy(getDy() + getFallSpeed());
-			if (getDy() > 0) {
-				setJumping(false);
-			}
-			if (getDy() < 0 && !isJumping()) {
-				setDy(getDy() + getStopJumpSpeed());
-			}
+
 			if (getDy() > getMaxFallSpeed()) {
 				setDy(getMaxFallSpeed());
 			}
@@ -104,6 +110,9 @@ public class Waterfall extends MapObject {
 
 	/**
 	 * Lets the player interact with the waterfall.
+	 * 
+	 * @param player
+	 *            .
 	 */
 	public final void playerInteraction(final Player player) {
 
@@ -111,9 +120,7 @@ public class Waterfall extends MapObject {
 			player.canMove(false);
 			player.setDx(this.getDx());
 			player.setDy(this.getDy());
-		}
-
-		else {
+		} else {
 			player.canMove(true);
 		}
 

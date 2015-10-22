@@ -7,8 +7,6 @@ import java.awt.event.KeyEvent;
 import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.HUD;
 import sem.group47.entity.PlayerSave;
-import sem.group47.entity.Waterfall;
-import sem.group47.entity.enemies.property.EnemyProperty;
 import sem.group47.main.BasicLevelFactory;
 import sem.group47.main.GamePanel;
 import sem.group47.main.Level;
@@ -28,8 +26,6 @@ public class LevelState extends GameState {
 	private String[] musicFileNames = new String[] { "level1", "level2",
 			"level3", "level4" };
 
-	private EnemyProperty[] enemyProperties;
-
 	/** Current level. **/
 	private int level;
 
@@ -46,9 +42,6 @@ public class LevelState extends GameState {
 
 	/** The Background. */
 	private Background bg;
-
-	/** Waterfall. */
-	private Waterfall waterfall;
 
 	/** the current Level. */
 	private Level currentLevel;
@@ -113,16 +106,6 @@ public class LevelState extends GameState {
 	public final void update() {
 		if (!paused) {
 			currentLevel.update();
-			if (waterfall != null) {
-				waterfall.update();
-				// waterfall.playerInteraction(player1);
-
-				if (waterfall.getYpos() < 100) {
-					removeComponent(waterfall);
-					waterfall = null;
-				}
-			}
-
 			lostCheck();
 			nextLevelCheck();
 		}
