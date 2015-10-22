@@ -10,9 +10,14 @@ import sem.group47.entity.HUD;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
 import sem.group47.entity.enemies.Enemy;
-import sem.group47.entity.enemies.Level1Enemy;
+import sem.group47.entity.enemies.GroundEnemy;
 import sem.group47.entity.enemies.Magiron;
-import sem.group47.entity.enemies.ProjectileEnemy;
+import sem.group47.entity.enemies.property.BaseEnemyProperty;
+import sem.group47.entity.enemies.property.BonusPointsProperty;
+import sem.group47.entity.enemies.property.CanFireProperty;
+import sem.group47.entity.enemies.property.EnemyProperty;
+import sem.group47.entity.enemies.property.FasterProperty;
+import sem.group47.entity.enemies.property.SpriteProperty;
 import sem.group47.entity.pickups.BubbleSizePowerup;
 import sem.group47.entity.pickups.BubbleSpeedPowerup;
 import sem.group47.entity.pickups.Fruit;
@@ -36,6 +41,8 @@ public class LevelState extends GameState {
 	private String[] musicFileNames = new String[] {"level1", "level2",
 			"level3", "level4" };
 
+	private EnemyProperty[] enemyProperties;
+	
 	/** Current level. **/
 	private int level;
 
@@ -92,6 +99,33 @@ public class LevelState extends GameState {
 	@Override
 	public final void init() {
 		PlayerSave.init();
+
+		enemyProperties = new EnemyProperty[5];
+		enemyProperties[0] = new BaseEnemyProperty();
+		enemyProperties[1] = new CanFireProperty(
+				new SpriteProperty(
+						new BaseEnemyProperty(),
+						3));
+		enemyProperties[2] = new FasterProperty(
+				new CanFireProperty(
+						new SpriteProperty(
+								new BaseEnemyProperty(),
+								1)));
+		enemyProperties[3] = new BonusPointsProperty(
+				new FasterProperty(
+						new CanFireProperty(
+								new SpriteProperty(
+										new BaseEnemyProperty(),
+										7))));
+		enemyProperties[4] = new FasterProperty(
+				new FasterProperty(
+						new BonusPointsProperty(
+								new FasterProperty(
+										new CanFireProperty(
+												new SpriteProperty(
+														new BaseEnemyProperty(),
+														2))))));
+		
 		multiplayer = PlayerSave.getMultiplayerEnabled();
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
@@ -165,13 +199,22 @@ public class LevelState extends GameState {
 		for (int i = 0; i < points.size() - 1; i++) {
 			switch (points.get(i)[2]) {
 			case Enemy.LEVEL1_ENEMY:
-				enemy = new Level1Enemy(tileMap);
+				enemy =
+				new GroundEnemy(tileMap,
+						enemyProperties[0]);
 				break;
 			case Enemy.PROJECTILE_ENEMEY:
-				enemy = new ProjectileEnemy(tileMap);
+				int r = (int) Math.round(Math.random()*3);
+				enemy =
+				new GroundEnemy(tileMap,
+						new CanFireProperty(
+								enemyProperties[1+r])
+						);
 				break;
 			default:
-				enemy = new Level1Enemy(tileMap);
+				enemy =
+				new GroundEnemy(tileMap,
+						new BaseEnemyProperty());
 			}
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
 					(points.get(i)[1] + 1) * 30
@@ -489,7 +532,7 @@ public class LevelState extends GameState {
 					pickups.add(fr);
 					addComponent(fr);
 
-					player.setScore(enemies.get(i).getScorePoints());
+					player.setScore(enemies.get(i).getProperties().getPoints());
 					removeComponent(enemies.get(i));
 					enemies.remove(i);
 
