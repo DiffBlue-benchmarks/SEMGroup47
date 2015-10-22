@@ -14,10 +14,23 @@ import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.entity.pickups.PickupObject;
 import sem.group47.tilemap.TileMap;
 
+/**
+ * The basicLevelFactory initialises a standard level.
+ * @author Karin
+ *
+ */
 public class BasicLevelFactory implements LevelFactory {
 
+	/** The tileMap being used. */
 	private TileMap tileMap;
-	public Level makeLevel(String filename, boolean multiplayer) {
+
+	/** method used to make the level.
+	 * @param filename - the filename for the tilemap.
+	 * @param multiplayer - true if there need to be two players.
+	 * @return - the level which has been initialised.
+	 */
+	public final Level makeLevel(final String filename,
+				final boolean multiplayer) {
 		Level newlevel = new Level();
 		loadTileMap(filename, newlevel);
 		loadPlayers(newlevel, multiplayer);
@@ -25,15 +38,25 @@ public class BasicLevelFactory implements LevelFactory {
 		populatePowerups(newlevel);
 		return newlevel;
 	}
-	
-	private void loadTileMap(final String levelFileName, Level level) {
+
+	/**
+	 * Loads the tileMap.
+	 * @param levelFileName - the filename
+	 * @param level - the level to add it to.
+	 */
+	private void loadTileMap(final String levelFileName,
+				final Level level) {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		tileMap.loadMap("/maps/" + levelFileName);
 		level.setTileMap(tileMap);
 	};
-	
-	private void populateEnemies(Level level) {
+
+	/**
+	 * Adds enemies to the level.
+	 * @param level - the level to add them to.
+	 */
+	private void populateEnemies(final Level level) {
 		ArrayList<int[]> points = tileMap.getEnemyStartLocations();
 		Enemy enemy;
 		int j = 0;
@@ -59,11 +82,18 @@ public class BasicLevelFactory implements LevelFactory {
 		aaron.setPosition(GamePanel.WIDTH / 2, -150);
 		level.addAaron(aaron);
 	};
-	
+
+	/**
+	 * Loads te players. Two if it is a multiplayer game,
+	 * one otherwise.
+	 * @param level - the level to add them to.
+	 * @param multiplayer - true if two players are required.
+	 */
 	public void loadPlayers(Level level, boolean multiplayer) {
 		Player player1 = new Player(tileMap);
 		player1.setPosition(tileMap.getTileSize() * (2d + .5d) + 5,
-				tileMap.getTileSize() * (tileMap.getNumRows() - 2 + .5d));
+				tileMap.getTileSize()
+					* (tileMap.getNumRows() - 2 + .5d));
 		player1.setLives(PlayerSave.getLivesP1());
 
 		player1.setExtraLive(PlayerSave.getExtraLiveP1());
@@ -73,8 +103,10 @@ public class BasicLevelFactory implements LevelFactory {
 		if (multiplayer) {
 			Player player2 = new Player(tileMap);
 			player2.setPosition(
-					tileMap.getTileSize() * (tileMap.getNumCols() - 3 + .5d) - 5,
-					tileMap.getTileSize() * (tileMap.getNumRows() - 2 + .5d));
+					tileMap.getTileSize()
+					* (tileMap.getNumCols() - 3 + .5d) - 5,
+					tileMap.getTileSize()
+					* (tileMap.getNumRows() - 2 + .5d));
 			player2.setLives(PlayerSave.getLivesP2());
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
 			player2.setScore(PlayerSave.getScoreP2());
@@ -82,11 +114,12 @@ public class BasicLevelFactory implements LevelFactory {
 			level.setPlayer2(player2);
 		}
 	};
-	
+
 	/**
 	 * loads the powerups.
+	 * @param level - the level to add them to.
 	 */
-	private void populatePowerups(Level level) {
+	private void populatePowerups(final Level level) {
 		PickupObject po = new MovementSpeedPowerup(tileMap);
 		po.setPosition(100, 100);
 		level.addPickup(po);
