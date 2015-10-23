@@ -174,7 +174,7 @@ public class GroundEnemy extends Enemy {
 			if (!isCaught() && isAngry()) {
 				if (System.nanoTime() - 1e8 > animationChangeTime) {
 					animationChangeTime = System.nanoTime();
-					currentSprite = (currentSprite - 3 + 1 % 2) + 3;
+					currentSprite = ((currentSprite - 3 + 1) % 2) + 3;
 					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, 0, 36, 36));
 				}
 			}
