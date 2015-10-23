@@ -138,6 +138,27 @@ public class Magiron extends Enemy {
 	}
 
 	/**
+	 * Draws the MapObject
+	 */
+	@Override
+	public final void draw(final Graphics2D g) {
+		if (facingRight) {
+			g.drawImage(animation.getImage(),
+					(int) (getXpos() - getWidth()
+							/ (double) 2),
+							(int) (getYpos() - getHeight()
+									/ (double) 2), getWidth(), getHeight(), null);
+		} else {
+			g.drawImage(animation.getImage(),
+					(int) (getXpos() + getWidth()
+							/ (double) 2),
+							(int) (getYpos() - getHeight()
+									/ (double) 2),
+									-getWidth(), getHeight(), null);
+		}
+	}
+
+	/**
 	 * isCaught, sets boolean.
 	 */
 	@Override

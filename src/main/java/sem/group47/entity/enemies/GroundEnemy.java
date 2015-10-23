@@ -162,12 +162,14 @@ public class GroundEnemy extends Enemy {
 	 * Update the to be loaded sprite.
 	 */
 	private void updateAnimation() {
-		if (!getProperties().canFire()) {
 			if (!isCaught() && !isAngry()) {
 				if (System.nanoTime() - 1e8 > animationChangeTime) {
 					animationChangeTime = System.nanoTime();
-					currentSprite = (currentSprite + 1) % 3;
-					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, 0, 36, 36));
+					currentSprite += 1;
+					if(currentSprite > 2)
+						currentSprite = 1;
+					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, getProperties().getSpriteSheetY()*36, 36, 36));
+					setInverseDraw(true);
 				}
 			}
 
@@ -175,11 +177,10 @@ public class GroundEnemy extends Enemy {
 				if (System.nanoTime() - 1e8 > animationChangeTime) {
 					animationChangeTime = System.nanoTime();
 					currentSprite = ((currentSprite - 3 + 1) % 2) + 3;
-					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, 0, 36, 36));
+					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, getProperties().getSpriteSheetY()*36, 36, 36));
+					setInverseDraw(true);
 				}
 			}
-
-		}
 	}
 
 	/**
