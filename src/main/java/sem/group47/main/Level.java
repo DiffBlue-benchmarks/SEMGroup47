@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
+import sem.group47.entity.Waterfall;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.Magiron;
 import sem.group47.entity.pickups.Fruit;
@@ -13,13 +14,13 @@ import sem.group47.entity.pickups.PickupObject;
 import sem.group47.tilemap.TileMap;
 
 /**
- * Level contains the logic of objects and their
- * interactions. It requires a LevelFactory to initialise it.
+ * Level contains the logic of objects and their interactions. It requires a
+ * LevelFactory to initialise it.
  *
  * @author Karin
  *
  */
-public class Level extends DrawComposite{
+public class Level extends DrawComposite {
 
 	/** List of enemies in the level. */
 	private ArrayList<Enemy> enemies;
@@ -40,9 +41,14 @@ public class Level extends DrawComposite{
 	/** Time in seconds before Aaron appears. **/
 	private static int AARON_APPEAR_DELAY = 45;
 
+	/** Waterfall move delay. **/
+	private static int WATERFALL_MOVE_DELAY = 5;
+
+	/** The Waterfall. */
+	private Waterfall waterfall;
+
 	/**
-	 * Constructor - initialises the lists
-	 * and level count.
+	 * Constructor - initialises the lists and level count.
 	 */
 	public Level() {
 		clearComponents();
@@ -53,31 +59,47 @@ public class Level extends DrawComposite{
 
 	/**
 	 * Adds an enemy to the level.
-	 * @param newEnemy - a Magiron
+	 * 
+	 * @param newEnemy
+	 *            - a Magiron
 	 */
-	public final void addEnemy(Enemy newEnemy) {
+	public final void addEnemy(final Enemy newEnemy) {
 		enemies.add(newEnemy);
 		addComponent(newEnemy);
 	}
 
 	/**
 	 * Adds the Magiron to the level.
-	 * @param newEnemy - a Magiron
+	 * 
+	 * @param newEnemy
+	 *            - a Magiron
 	 */
-	public final void addAaron(Magiron newEnemy) {
+	public final void addAaron(final Magiron newEnemy) {
 		aaron = newEnemy;
 		addComponent(aaron);
 	}
 
 	/**
-	 * Adds a pickup to the level.
-	 * @param pu - the PickupObject
+	 * Adds the Waterfall to the level.
+	 * 
+	 * @param pwaterfall
+	 *            - a Waterfall
 	 */
-	public final void addPickup(PickupObject pu) {
+	public final void addWaterfall(final Waterfall pwaterfall) {
+		waterfall = pwaterfall;
+		addComponent(waterfall);
+	}
+
+	/**
+	 * Adds a pickup to the level.
+	 * 
+	 * @param pu
+	 *            - the PickupObject
+	 */
+	public final void addPickup(final PickupObject pu) {
 		pickups.add(pu);
 		addComponent(pu);
 	}
-
 
 	/**
 	 * Updates the level and the things it contains.
@@ -104,6 +126,22 @@ public class Level extends DrawComposite{
 			targetAaron();
 		}
 		aaron.update();
+
+		removeComponent(waterfall);
+		if (levelStepCount >= GamePanel.FPS * WATERFALL_MOVE_DELAY) {
+			if (waterfall != null) {
+				addComponent(waterfall);
+
+				waterfall.update();
+				waterfall.playerInteraction(player1);
+
+				if (waterfall.getYpos() < 100) {
+					removeComponent(waterfall);
+					waterfall = null;
+				}
+			}
+		}
+
 		levelStepCount++;
 
 		for (int i = 0; i < enemies.size(); i++) {
@@ -111,16 +149,14 @@ public class Level extends DrawComposite{
 			if (enemies.get(i).projectileCollision(player1)) {
 				player1.kill();
 			}
-			if (multiplayer && enemies.get(i)
-					.projectileCollision(player2)) {
+			if (multiplayer && enemies.get(i).projectileCollision(player2)) {
 				player2.kill();
 			}
 		}
 
 		for (int i = 0; i < pickups.size(); i++) {
 			if (pickups.get(i).checkCollision(player1)
-					 || (multiplayer && pickups.get(i)
-						.checkCollision(player2))) {
+					|| (multiplayer && pickups.get(i).checkCollision(player2))) {
 				AudioPlayer.play("extraLife");
 				removeComponent(pickups.get(i));
 				pickups.remove(i);
@@ -151,37 +187,32 @@ public class Level extends DrawComposite{
 					Fruit fr = new Fruit(tileMap);
 
 					if (enemies.get(i).getXpos() > 400) {
-						fr.setPosition(enemies.get(i).
-							getXpos() - 72,
-							enemies.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() - 72, enemies
+								.get(i).getYpos());
 						fr.setDx(-4);
 					} else {
-						fr.setPosition(enemies.get(i).
-							getXpos() + 72,
-							enemies.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() + 72, enemies
+								.get(i).getYpos());
 						fr.setDx(4);
 					}
 					pickups.add(fr);
 					addComponent(fr);
 
-					player.setScore(enemies.get(i).
-							getProperties().getPoints());
+					player.setScore(enemies.get(i).getProperties().getPoints());
 					removeComponent(enemies.get(i));
 					enemies.remove(i);
 
 					Log.info("Player Action",
-					"Player collision with Caught Enemy");
+							"Player collision with Caught Enemy");
 
 				} else if (player.getLives() > 1) {
 					player.hit(1);
-					Log.info("Player Action",
-						"Player collision with Enemy");
+					Log.info("Player Action", "Player collision with Enemy");
 
 				} else {
 					AudioPlayer.play("crash");
 					player.hit(1);
-					Log.info("Player Action",
-						"Player collision with Enemy");
+					Log.info("Player Action", "Player collision with Enemy");
 				}
 			}
 		}
@@ -194,8 +225,7 @@ public class Level extends DrawComposite{
 	private void targetAaron() {
 		if (multiplayer) {
 			if (player1.getLives() > 0) {
-				if (Math.random() > .5d ||
-						player2.getLives() <= 0) {
+				if (Math.random() > .5d || player2.getLives() <= 0) {
 					aaron.setTarget(player1);
 				} else {
 					aaron.setTarget(player2);
@@ -210,8 +240,8 @@ public class Level extends DrawComposite{
 
 	/**
 	 * checks if the player is dead.
-	 * 	@return
-	 * 		boolean true if the player has lost.
+	 * 
+	 * @return boolean true if the player has lost.
 	 */
 	public final boolean hasLost() {
 		if (player1.getLives() <= 0) {
@@ -220,8 +250,7 @@ public class Level extends DrawComposite{
 
 				PlayerSave.setScoreP1(player1.getScore());
 				if (multiplayer) {
-					PlayerSave.setScoreP2(
-							player2.getScore());
+					PlayerSave.setScoreP2(player2.getScore());
 				}
 
 				return true;
@@ -234,8 +263,8 @@ public class Level extends DrawComposite{
 
 	/**
 	 * Returns whether the level has been won.
-	 * @return
-	 * 		boolean true if the level has been won.
+	 * 
+	 * @return boolean true if the level has been won.
 	 */
 	public final boolean hasWon() {
 		if (enemies.size() == 0) {
@@ -256,8 +285,8 @@ public class Level extends DrawComposite{
 
 	/**
 	 * Returns the player 1 or null if there is none.
-	 * @return
-	 * 		Player object for player 1 or null.
+	 * 
+	 * @return Player object for player 1 or null.
 	 */
 	public final Player getPlayer1() {
 		return player1;
@@ -265,7 +294,9 @@ public class Level extends DrawComposite{
 
 	/**
 	 * Sets the player 1.
-	 * @param player - a player object.
+	 * 
+	 * @param player
+	 *            - a player object.
 	 */
 	public final void setPlayer1(final Player player) {
 		if (player1 != null) {
@@ -277,7 +308,9 @@ public class Level extends DrawComposite{
 
 	/**
 	 * Sets the player 2.
-	 * @param player - a player object.
+	 * 
+	 * @param player
+	 *            - a player object.
 	 */
 	public final void setPlayer2(final Player player) {
 		if (player2 != null) {
@@ -287,19 +320,20 @@ public class Level extends DrawComposite{
 		addComponent(player);
 	}
 
-
 	/**
 	 * Returns the player 2 or null if there is none.
-	 * @return
-	 * 		Player object for player 2 or null.
+	 * 
+	 * @return Player object for player 2 or null.
 	 */
 	public final Player getPlayer2() {
 		return player2;
 	}
 
-	/** Get the current TileMap.
-	 * @return
-	 * 		A tileMap object. */
+	/**
+	 * Get the current TileMap.
+	 * 
+	 * @return A tileMap object.
+	 */
 	public final TileMap getTileMap() {
 		return tileMap;
 	}
@@ -312,6 +346,5 @@ public class Level extends DrawComposite{
 		tileMap = tilemap;
 		addComponent(tileMap);
 	}
-
 
 }
