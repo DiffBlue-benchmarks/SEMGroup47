@@ -51,6 +51,8 @@ public class Level extends DrawComposite {
 	 * Constructor - initialises the lists and level count.
 	 */
 	public Level() {
+		PlayerSave.init();
+		multiplayer = PlayerSave.getMultiplayerEnabled();
 		clearComponents();
 		enemies = new ArrayList<Enemy>();
 		pickups = new ArrayList<PickupObject>();
