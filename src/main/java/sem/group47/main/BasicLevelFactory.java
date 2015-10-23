@@ -8,18 +8,16 @@ import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.GroundEnemy;
 import sem.group47.entity.enemies.Magiron;
 import sem.group47.entity.enemies.property.BaseEnemyProperty;
-import sem.group47.entity.enemies.property.CanFireProperty;
-import sem.group47.entity.pickups.BubbleSizePowerup;
-import sem.group47.entity.pickups.BubbleSpeedPowerup;
-import sem.group47.entity.pickups.MovementSpeedPowerup;
-import sem.group47.entity.pickups.PickupObject;
-import sem.group47.tilemap.TileMap;
-import sem.group47.entity.enemies.property.BaseEnemyProperty;
 import sem.group47.entity.enemies.property.BonusPointsProperty;
 import sem.group47.entity.enemies.property.CanFireProperty;
 import sem.group47.entity.enemies.property.EnemyProperty;
 import sem.group47.entity.enemies.property.FasterProperty;
 import sem.group47.entity.enemies.property.SpriteProperty;
+import sem.group47.entity.pickups.BubbleSizePowerup;
+import sem.group47.entity.pickups.BubbleSpeedPowerup;
+import sem.group47.entity.pickups.MovementSpeedPowerup;
+import sem.group47.entity.pickups.PickupObject;
+import sem.group47.tilemap.TileMap;
 
 /**
  * The basicLevelFactory initialises a standard level.
@@ -107,9 +105,7 @@ public class BasicLevelFactory implements LevelFactory {
 				int r = (int) Math.round(Math.random()*3);
 				enemy =
 				new GroundEnemy(tileMap,
-						new CanFireProperty(
-								enemyProperties[1+r])
-						);
+								enemyProperties[1+r]);
 				break;
 			default:
 				enemy =

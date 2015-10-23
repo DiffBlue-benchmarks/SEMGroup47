@@ -26,8 +26,6 @@ public class LevelState extends GameState {
 	/** file names of music. **/
 	private String[] musicFileNames = new String[] {"level1", "level2",
 			"level3", "level4" };
-
-	private EnemyProperty[] enemyProperties;
 	
 	/** Current level. **/
 	private int level;
