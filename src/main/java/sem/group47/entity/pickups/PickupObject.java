@@ -33,8 +33,8 @@ public abstract class PickupObject extends MapObject {
 		setMaxFallSpeed(6.0);
 
 		try {
-			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/items/items.png"));
+			BufferedImage spritesheet = ImageIO.read(
+					getClass().getResourceAsStream("/items/items.png"));
 			setSprite(spritesheet.getSubimage(
 					(int) Math.round(Math.random() * 7) * 32,
 					(int) Math.round(Math.random() * 7) * 32, 32, 32));
@@ -72,18 +72,18 @@ public abstract class PickupObject extends MapObject {
 	public final void update() {
 		setDy(getDy() + getFallSpeed());
 		checkTileMapCollision();
-		if (getYposNew() == gety())
+		if (getYposNew() == gety()) {
 			setDx(0);
-		setPosition(getXposNew(), getYposNew());
-		
+			setPosition(getXposNew(), getYposNew());
+		}
 		if (getDx() > .1f) {
 			setDx(getDx() - .1f);
-		} else if (getDx() < - .1f){
+		} else if (getDx() < -.1f) {
 			setDx(getDx() + .1f);
 		} else {
 			setDx(0f);
 		}
-		
+
 		if (getDy() < this.getMaxFallSpeed()) {
 			setDy(this.getMaxSpeed());
 		}

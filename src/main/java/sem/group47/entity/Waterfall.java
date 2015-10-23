@@ -9,7 +9,7 @@ import sem.group47.tilemap.TileMap;
 
 /**
  * Waterfall class.
- * 
+ *
  * @author Bas
  *
  */
@@ -110,7 +110,7 @@ public class Waterfall extends MapObject {
 
 	/**
 	 * Lets the player interact with the waterfall.
-	 * 
+	 *
 	 * @param player
 	 *            .
 	 */

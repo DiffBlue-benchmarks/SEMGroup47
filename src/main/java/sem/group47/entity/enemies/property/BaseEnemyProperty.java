@@ -1,7 +1,8 @@
 package sem.group47.entity.enemies.property;
 
 /**
- * The base enemy properties
+ * The base enemy properties.
+ *
  * @author Christian
  *
  */
@@ -13,10 +14,10 @@ public class BaseEnemyProperty implements EnemyProperty {
 	public BaseEnemyProperty() {
 	}
 
-	/** The y coordinate of the sprite to use in enemies/monster_sprite.png.
+	/**
+	 * The y coordinate of the sprite to use in enemies/monster_sprite.png.
 	 *
-	 * @return
-	 *  y coord
+	 * @return y coord
 	 */
 	public int getSpriteSheetY() {
 		return 0;
@@ -24,8 +25,8 @@ public class BaseEnemyProperty implements EnemyProperty {
 
 	/**
 	 * Wether the enemy can fire.
-	 * @return
-	 * a boolean
+	 *
+	 * @return a boolean
 	 */
 	public boolean canFire() {
 		return false;
@@ -33,8 +34,8 @@ public class BaseEnemyProperty implements EnemyProperty {
 
 	/**
 	 * The projectile speed.
-	 * @return
-	 * speed
+	 *
+	 * @return speed
 	 */
 	public float getProjectileSpeed() {
 		return 2.5f;
@@ -42,69 +43,80 @@ public class BaseEnemyProperty implements EnemyProperty {
 
 	/**
 	 * the fire delay.
-	 * @return
-	 * in seconds
+	 *
+	 * @return in seconds
 	 */
 	public int getFireDelay() {
 		return 1500;
 	}
 
-	/** The angry movement speed.
-	 * @return
-	 *  the angry movement speed*/
+	/**
+	 * The angry movement speed.
+	 *
+	 * @return the angry movement speed
+	 */
 	public double getAngryMovSpeed() {
 		return 2.0d;
 	}
 
-	/** The normal movement speed.
-	 * @return
-	 *  the normal movement speed*/
+	/**
+	 * The normal movement speed.
+	 *
+	 * @return the normal movement speed
+	 */
 	public final double getNormalMovSpeed() {
 		return 1.2d;
 	}
 
-	/** The max movement speed.
-	 * @return
-	 *  the max movement speed*/
+	/**
+	 * The max movement speed.
+	 *
+	 * @return the max movement speed
+	 */
 	public final double getMaxMovSpeed() {
 		return 3d;
 	}
 
-	/** Gets the point value.
-	 * @return
-	 *  how much points the enemy is worth
+	/**
+	 * Gets the point value.
+	 *
+	 * @return how much points the enemy is worth
 	 **/
 	public int getPoints() {
 		return 10;
 	}
 
-	/** Gets the float speed.
-	 * @return
-	 *  float speed
+	/**
+	 * Gets the float speed.
+	 *
+	 * @return float speed
 	 **/
 	public double getFloatSpeed() {
 		return .1;
 	}
 
-	/** Gets the maximum float speed.
-	 * @return
-	 *  the maximum float speed
+	/**
+	 * Gets the maximum float speed.
+	 *
+	 * @return the maximum float speed
 	 **/
 	public double getMaxFloatSpeed() {
 		return -4.5;
 	}
 
-	/** Gets how long the enemy stays trapped.
-	 * @return
-	 *  time in seconds
+	/**
+	 * Gets how long the enemy stays trapped.
+	 *
+	 * @return time in seconds
 	 **/
 	public float getBreakFreeTime() {
 		return 10;
 	}
 
-	/** Gets the tiem the enemy stays angry.
-	 * @return
-	 *  time in seconds
+	/**
+	 * Gets the time the enemy stays angry.
+	 *
+	 * @return time in seconds
 	 **/
 	public float getAngryTime() {
 		return 10;
