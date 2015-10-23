@@ -1,6 +1,12 @@
 package sem.group47.entity.enemies;
 
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import sem.group47.audio.AudioPlayer;
+import sem.group47.entity.MapObject;
+import sem.group47.entity.enemies.property.EnemyProperty;
+import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -8,14 +14,37 @@ import sem.group47.tilemap.TileMap;
  */
 public class GroundEnemy extends Enemy {
 
+
+	/** The last fire time. */
+	private long lastFireTime;
+
+	/** The projectiles. */
+	ArrayList<EnemyProjectile> projectiles;
+
+	/** The current sprite. */
+	int currentSprite;
+
+	/** The animation Delay. */
+	long animationChangeTime;
+
 	/**
 	 * Instantiates a new ground enemy.
 	 *
 	 * @param tm
 	 *            the tm
+	 * @param properties
+	 *            the properties
 	 */
-	public GroundEnemy(TileMap tm) {
+	public GroundEnemy(final TileMap tm, final EnemyProperty properties) {
 		super(tm);
+		projectiles = new ArrayList<EnemyProjectile>();
+
+		currentSprite = 0;
+		animationChangeTime = System.nanoTime();
+
+		setProperties(properties);
+		setTimeCaught(0);
+		this.setIsAngry(false);
 		if (Math.round(Math.random()) == 0) {
 			setLeft(true);
 		} else {
@@ -73,9 +102,9 @@ public class GroundEnemy extends Enemy {
 			AudioPlayer.play("jump");
 		}
 		if (isCaught()) {
-			setDy(getDy() - getFloatSpeed());
-			if (getDy() < getMaxFloatSpeed()) {
-				setDy(getMaxFloatSpeed());
+			setDy(getDy() - getProperties().getFloatSpeed());
+			if (getDy() < getProperties().getMaxFloatSpeed()) {
+				setDy(getProperties().getMaxFloatSpeed());
 			}
 			setDx(0);
 		} else if (isFalling()) {
@@ -125,6 +154,104 @@ public class GroundEnemy extends Enemy {
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
 		updateStates();
+		updateAnimation();
+		updateProjectiles();
+	}
+
+	/**
+	 * Update the to be loaded sprite.
+	 */
+	private void updateAnimation() {
+		if (!getProperties().canFire()) {
+			if (!isCaught() && !isAngry()) {
+				if (System.nanoTime() - 1e8 > animationChangeTime) {
+					animationChangeTime = System.nanoTime();
+					currentSprite = (currentSprite + 1) % 3;
+					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, 0, 36, 36));
+				}
+			}
+
+			if (!isCaught() && isAngry()) {
+				if (System.nanoTime() - 1e8 > animationChangeTime) {
+					animationChangeTime = System.nanoTime();
+					currentSprite = ((currentSprite - 3 + 1) % 2) + 3;
+					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, 0, 36, 36));
+				}
+			}
+
+		}
+	}
+
+	/**
+	 * Update projectiles.
+	 */
+	public final void updateProjectiles() {
+		for (int i = 0; i < projectiles.size(); i++) {
+			if (projectiles.get(i).getIsAlive()) {
+				projectiles.get(i).update();
+			} else {
+				projectiles.remove(i);
+				i--;
+			}
+		}
+	}
+
+	/**
+	 * Draw.
+	 *
+	 * @param gr
+	 *            the graphics
+	 */
+	@Override
+	public final void draw(final Graphics2D gr) {
+		super.draw(gr);
+
+		for (int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).draw(gr);
+		}
+	}
+
+	/**
+	 * Checks if player is in front of us and fires and checks projectile
+	 * collision.
+	 *
+	 * @param o
+	 *            the o
+	 * @return true, if successful
+	 */
+	@Override
+	public final boolean projectileCollision(final MapObject o) {
+		if (getProperties().canFire() == false) {
+			return false;
+		}
+		
+		if (!this.isCaught()
+				&& lastFireTime + getProperties().getFireDelay() < System.currentTimeMillis()) {
+			if (Math.abs(o.gety() - this.gety()) < 30
+					&& ((facingRight && o.getx() > this.getx())
+							|| (!facingRight && o.gety() > this.gety()))) {
+				AudioPlayer.play("fire");
+				lastFireTime = System.currentTimeMillis();
+				EnemyProjectile projectile = new EnemyProjectile(
+						getTileMap());
+				projectile.setSprite(getSpriteSheet().getSubimage(9 * 36, getProperties().getSpriteSheetY() * 36, 36, 36));
+				projectile.setPosition(getXpos(), getYpos());
+				if (!isFacingRight()) {
+					projectile.setDx(getProperties().getProjectileSpeed() * - 1);
+				} else {
+					projectile.setDx(getProperties().getProjectileSpeed());
+				}
+				projectiles.add(projectile);
+				Log.info("Enemy Action", "Projectile fired");
+			}
+		}
+
+		for (int i = 0; i < projectiles.size(); i++) {
+			if (projectiles.get(i).intersects(o)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -132,10 +259,10 @@ public class GroundEnemy extends Enemy {
 	 */
 	public final void updateStates() {
 		if (isCaught() && (System.nanoTime() - getTimeCaught())
-				/ 1000000000.0d > getTimeUntillBreakFree()) {
+				/ 1000000000.0d > getProperties().getBreakFreeTime()) {
 			setCaught(false);
 		}
-		if (isAngry() && (System.nanoTime() - getAngryTime())
+		if (isAngry() && (System.nanoTime() - getAngryStartTime())
 				/ 1000000000.0d > 10) {
 			setIsAngry(false);
 		}

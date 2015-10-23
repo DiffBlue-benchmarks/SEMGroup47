@@ -29,8 +29,6 @@ public class Magiron extends Enemy {
 	 */
 	public Magiron(final TileMap tm) {
 		super(tm);
-
-		setScorePoints(100);
 		setWidth(90);
 		setHeight(112);
 		setCwidth(30);
@@ -58,28 +56,11 @@ public class Magiron extends Enemy {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		setInverseDraw(true);
 
 		animation = new Animation();
 		animation.setFrames(animationSprites);
 		animation.setDelay(60);
-	}
-
-	/**
-	 * Draw, draws the image animation.
-	 */
-	@Override
-	public final void draw(final Graphics2D g) {
-		if (facingRight) {
-			g.drawImage(animation.getImage(),
-					(int) (getXpos() - getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2),
-					getWidth(), getHeight(), null);
-		} else {
-			g.drawImage(animation.getImage(),
-					(int) (getXpos() + getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2),
-					-getWidth(), getHeight(), null);
-		}
 	}
 
 	/**

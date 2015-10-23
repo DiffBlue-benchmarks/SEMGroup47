@@ -28,10 +28,8 @@ public class Background {
 		try {
 			ImageReader reader = ImageIO.getImageReadersByFormatName("gif")
 					.next();
-			File input = new File(
-					"src/main/resources/backgrounds/clouds.gif");
-			ImageInputStream stream = ImageIO
-					.createImageInputStream(input);
+			File input = new File("src/main/resources/backgrounds/clouds.gif");
+			ImageInputStream stream = ImageIO.createImageInputStream(input);
 			reader.setInput(stream);
 
 			int count = reader.getNumImages(true);

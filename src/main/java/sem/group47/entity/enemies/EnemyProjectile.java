@@ -59,6 +59,13 @@ public class EnemyProjectile extends MapObject {
 			return;
 		}
 
+		if(getDx() > 0) {
+			this.setInverseDraw(true);
+		}
+		else {
+			this.setInverseDraw(false);
+		}
+		
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
 		if (getDx() == 0) {

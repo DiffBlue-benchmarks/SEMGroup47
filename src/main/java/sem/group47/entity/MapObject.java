@@ -103,6 +103,9 @@ public abstract class MapObject implements Drawable {
 	/** The facing right. */
 	protected boolean facingRight;
 
+	/** Wether we inverse the x draw direction */
+	protected boolean inverseDraw;
+
 	// MOVEMENT
 
 	/** The left. */
@@ -307,13 +310,27 @@ public abstract class MapObject implements Drawable {
 	 */
 	public void draw(final Graphics2D gr) {
 		if (facingRight) {
-			gr.drawImage(sprite, (int) (xpos - width / (double) 2),
-					(int) (ypos - height / (double) 2), width, height,
-					null);
+			if(inverseDraw) {
+				gr.drawImage(sprite, (int) (xpos + width / (double) 2),
+						(int) (ypos - height / (double) 2), -width, height,
+						null);
+			}
+			else {
+				gr.drawImage(sprite, (int) (xpos - width / (double) 2),
+						(int) (ypos - height / (double) 2), width, height,
+						null);
+			}
 		} else {
-			gr.drawImage(sprite, (int) (xpos + width / (double) 2),
-					(int) (ypos - height / (double) 2), -width, height,
-					null);
+			if(inverseDraw) {
+				gr.drawImage(sprite, (int) (xpos - width / (double) 2),
+						(int) (ypos - height / (double) 2), width, height,
+						null);
+			}
+			else {
+				gr.drawImage(sprite, (int) (xpos + width / (double) 2),
+						(int) (ypos - height / (double) 2), -width, height,
+						null);
+			}
 		}
 	}
 
@@ -843,6 +860,15 @@ public abstract class MapObject implements Drawable {
 	 */
 	public final void setHeight(final int pHeight) {
 		this.height = pHeight;
+	}
+
+	/**
+	 * Sets the wether to inverse drawing along the x axis
+	 * @param b
+	 *  new value
+	 */
+	public final void setInverseDraw(final boolean b) {
+		inverseDraw = b;
 	}
 
 	/**

@@ -15,6 +15,7 @@ import sem.group47.entity.pickups.BubbleSpeedPowerup;
 import sem.group47.entity.pickups.MovementSpeedPowerup;
 import sem.group47.gamestate.GameStateManager;
 import sem.group47.gamestate.LevelState;
+import sem.group47.main.Level;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
@@ -46,7 +47,7 @@ public class PlayerTest {
 
 	/**
 	 * SetUp.
-	 * 
+	 *
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
@@ -68,13 +69,13 @@ public class PlayerTest {
 	/**
 	 * Update test.
 	 */
-	//@Test
-	//public final void updateTest() {
-		//player.setDown(true);
-		//player.update();
-		//assertEquals(player.projectileList.size(), 1);
+	@Test
+	public final void updateTest() {
+		player.setDown(true);
+		player.update();
+		assertEquals(player.getProjectiles().getSize(), 1);
 
-	//}
+	}
 
 	/**
 	 * Hit test.
@@ -202,14 +203,15 @@ public class PlayerTest {
 		PlayerSave.setMultiplayerEnabled(true);
 		LevelState ls = new LevelState(gsm);
 		ls.init();
-		assertEquals(ls.getPlayer1().getLives(), ls.getPlayer2().getLives());
-		assertEquals(ls.getPlayer1().getScore(), ls.getPlayer2().getScore());
-		ls.getPlayer1().hit(1);
-		assertEquals(ls.getPlayer1().getLives(), 2);
-		assertEquals(ls.getPlayer2().getLives(), 3);
-		ls.getPlayer1().hit(3);
-		assertFalse(ls.getPlayer1().getIsAlive());
-		assertFalse(ls.getPlayer2().getIsAlive());
+		Level level = ls.getCurrentLevel();
+		assertEquals(level.getPlayer1().getLives(), level.getPlayer2().getLives());
+		assertEquals(level.getPlayer1().getScore(), level.getPlayer2().getScore());
+		level.getPlayer1().hit(1);
+		assertEquals(level.getPlayer1().getLives(), 2);
+		assertEquals(level.getPlayer2().getLives(), 3);
+		level.getPlayer1().hit(3);
+		assertFalse(level.getPlayer1().getIsAlive());
+		assertFalse(level.getPlayer2().getIsAlive());
 	}
 
 }
