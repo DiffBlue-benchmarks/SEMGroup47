@@ -96,7 +96,7 @@ public class Waterfall extends MapObject {
 	 */
 	private void getNextYPosition() {
 		if (isFalling()) {
-			setLeft(true);
+			setRight(true);
 			setDx(0);
 			setDy(getDy() + getFallSpeed());
 
@@ -114,14 +114,15 @@ public class Waterfall extends MapObject {
 	 * @param player
 	 *            .
 	 */
-	public final void playerInteraction(final Player player) {
+	public final boolean playerInteraction(final Player player) {
 
 		if (player.intersects(this)) {
 			player.canMove(false);
-			player.setDx(this.getDx());
-			player.setDy(this.getDy());
+			player.setPosition(getx(), gety()-15);
+			return true;
 		} else {
 			player.canMove(true);
+			return false;
 		}
 
 	}
@@ -132,7 +133,6 @@ public class Waterfall extends MapObject {
 		getNextYPosition();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
-
 	}
 
 }

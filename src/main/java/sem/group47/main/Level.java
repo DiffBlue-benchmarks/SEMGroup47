@@ -7,6 +7,7 @@ import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
 import sem.group47.entity.Waterfall;
+import sem.group47.entity.WaterfallSpawner;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.Magiron;
 import sem.group47.entity.pickups.Fruit;
@@ -45,7 +46,7 @@ public class Level extends DrawComposite {
 	private static int WATERFALL_MOVE_DELAY = 5;
 
 	/** The Waterfall. */
-	private Waterfall waterfall;
+	private WaterfallSpawner waterfall;
 
 	/**
 	 * Constructor - initialises the lists and level count.
@@ -85,7 +86,7 @@ public class Level extends DrawComposite {
 	 * @param pwaterfall
 	 *            - a Waterfall
 	 */
-	public final void addWaterfall(final Waterfall pwaterfall) {
+	public final void addWaterfall(final WaterfallSpawner pwaterfall) {
 		waterfall = pwaterfall;
 		addComponent(waterfall);
 	}
@@ -127,18 +128,11 @@ public class Level extends DrawComposite {
 		}
 		aaron.update();
 
-		removeComponent(waterfall);
-		if (levelStepCount >= GamePanel.FPS * WATERFALL_MOVE_DELAY) {
-			if (waterfall != null) {
-				addComponent(waterfall);
-
-				waterfall.update();
-				waterfall.playerInteraction(player1);
-
-				if (waterfall.getYpos() < 100) {
-					removeComponent(waterfall);
-					waterfall = null;
-				}
+		if (waterfall != null) {
+			waterfall.update();
+			waterfall.playerInteraction(player1);
+			if(multiplayer) {
+				waterfall.playerInteraction(player2);
 			}
 		}
 

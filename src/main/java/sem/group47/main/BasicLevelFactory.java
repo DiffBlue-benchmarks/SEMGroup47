@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
 import sem.group47.entity.Waterfall;
+import sem.group47.entity.WaterfallSpawner;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.GroundEnemy;
 import sem.group47.entity.enemies.Magiron;
@@ -116,8 +117,7 @@ public class BasicLevelFactory implements LevelFactory {
 		aaron.setPosition(GamePanel.WIDTH / 2, -150);
 		level.addAaron(aaron);
 
-		Waterfall waterfall = new Waterfall(tileMap);
-		waterfall.setPosition(GamePanel.WIDTH / 2, 100);
+		WaterfallSpawner waterfall = new WaterfallSpawner(tileMap, GamePanel.WIDTH / 2, 0);
 		level.addWaterfall(waterfall);
 
 	};
