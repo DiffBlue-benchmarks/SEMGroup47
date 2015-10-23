@@ -38,7 +38,6 @@ public class Waterfall extends MapObject {
 		setMaxSpeed(3);
 		setFallSpeed(.35);
 		setMaxFallSpeed(6.0);
-
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/waterfall/waterfall.png"));
@@ -56,7 +55,6 @@ public class Waterfall extends MapObject {
 	 *
 	 */
 	private void getNextXPosition() {
-
 		if (isLeft()) {
 			if (getDx() == 0.3) {
 				setDx(0.0);
@@ -87,7 +85,6 @@ public class Waterfall extends MapObject {
 				setDx(getMaxSpeed());
 			}
 		}
-
 	}
 
 	/**
@@ -96,7 +93,7 @@ public class Waterfall extends MapObject {
 	 */
 	private void getNextYPosition() {
 		if (isFalling()) {
-			setRight(true);
+			setLeft(true);
 			setDx(0);
 			setDy(getDy() + getFallSpeed());
 
@@ -115,7 +112,6 @@ public class Waterfall extends MapObject {
 	 *            .
 	 */
 	public final boolean playerInteraction(final Player player) {
-
 		if (player.intersects(this)) {
 			player.canMove(false);
 			player.setPosition(getx(), gety()-15);

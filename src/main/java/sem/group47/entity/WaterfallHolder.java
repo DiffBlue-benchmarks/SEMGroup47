@@ -22,7 +22,7 @@ public class WaterfallHolder extends MapObject {
 			Waterfall part = new Waterfall(tm);
 			parts.add(part);
 			part.setPosition(getx(), gety() + yy);
-			yy -= 16;
+			yy -= 15;
 		}
 	}
 
