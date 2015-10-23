@@ -15,7 +15,13 @@ import javax.sound.sampled.DataLine;
  *
  * @author Bas
  */
-public class AudioPlayer {
+public final class AudioPlayer {
+
+	/**
+	 * Hidden constructor.
+	 */
+	private AudioPlayer() {
+	}
 
 	/** The clips. */
 	private static HashMap<String, Clip> clips;

@@ -1,19 +1,19 @@
 package sem.group47.entity;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Font;
+import java.awt.Graphics2D;
 
 import sem.group47.main.Drawable;
 
 /**
  * The Class Score.
  */
-public class Score implements Drawable  {
-	
+public class Score implements Drawable {
+
 	/** The visible time. */
 	private long timeVisible;
-	
+
 	/** The creation time. */
 	private long timeOfBirth;
 
@@ -22,18 +22,18 @@ public class Score implements Drawable  {
 
 	/** The x position. */
 	private double x;
-	
+
 	/** The y position. */
 	private double y;
-	
+
 	public Score(int points, double x, double y) {
 		score = points;
-		this.x = x-18;
-		this.y = y-36;
+		this.x = x - 18;
+		this.y = y - 36;
 		timeOfBirth = System.nanoTime();
 		timeVisible = (long) 2e9;
 	}
-	
+
 	/**
 	 * Gets the score.
 	 *
@@ -60,7 +60,7 @@ public class Score implements Drawable  {
 	public final double gety() {
 		return y;
 	}
-	
+
 	/**
 	 * If the score must disappear or not.
 	 *
@@ -80,7 +80,7 @@ public class Score implements Drawable  {
 	 * Draw the score on the screen.
 	 *
 	 * @param gr
-	 * 			the graphics
+	 *            the graphics
 	 */
 	public void draw(Graphics2D gr) {
 		gr.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -88,6 +88,5 @@ public class Score implements Drawable  {
 		gr.setColor(Color.RED);
 		gr.drawString(Integer.toString(score), (int) x, (int) y);
 	}
-
 
 }

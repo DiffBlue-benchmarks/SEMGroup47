@@ -1,7 +1,6 @@
 package sem.group47.gamestate;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -12,6 +11,7 @@ import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.PlayerSave;
 import sem.group47.main.GamePanel;
 
+@SuppressWarnings("PMD")
 /**
  * The Class MenuState, which extends the super class GameState.
  */
@@ -23,9 +23,6 @@ public class MenuState extends GameState {
 	/** The options. */
 	private String[] options = {"Start", "2 Player Mode", "Help",
 			"Options", "Quit" };
-
-	/** The font. */
-	private Font font;
 
 	/** The Background. */
 	private String bg = "/backgrounds/BubbleBobble_Logo.gif";
@@ -45,7 +42,6 @@ public class MenuState extends GameState {
 
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(bg));
-			font = new Font("Arial", Font.PLAIN, 30);
 			AudioPlayer.resumeLoop("menu");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,11 +56,9 @@ public class MenuState extends GameState {
 	public final void draw(final Graphics2D g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-
 		int x = (GamePanel.WIDTH - image.getWidth(null)) / 2;
 		int y = (GamePanel.HEIGHT - image.getHeight(null)) / 5;
 		g.drawImage(image, x, y, null);
-
 		g.setFont(font);
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentChoice) {

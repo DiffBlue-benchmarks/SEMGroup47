@@ -14,7 +14,6 @@ import sem.group47.tilemap.TileMap;
  */
 public class GroundEnemy extends Enemy {
 
-
 	/** The last fire time. */
 	private long lastFireTime;
 
@@ -162,25 +161,30 @@ public class GroundEnemy extends Enemy {
 	 * Update the to be loaded sprite.
 	 */
 	private void updateAnimation() {
-			if (!isCaught() && !isAngry()) {
-				if (System.nanoTime() - 1e8 > animationChangeTime) {
-					animationChangeTime = System.nanoTime();
-					currentSprite += 1;
-					if(currentSprite > 2)
-						currentSprite = 1;
-					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, getProperties().getSpriteSheetY()*36, 36, 36));
+		if (!isCaught() && !isAngry()) {
+			if (System.nanoTime() - 1e8 > animationChangeTime) {
+				animationChangeTime = System.nanoTime();
+				currentSprite += 1;
+				if (currentSprite > 2) {
+					currentSprite = 1;
+					setSprite(getSpriteSheet().getSubimage(
+							currentSprite * 36,
+							getProperties().getSpriteSheetY() * 36, 36,
+							36));
 					setInverseDraw(true);
 				}
 			}
+		}
 
-			if (!isCaught() && isAngry()) {
-				if (System.nanoTime() - 1e8 > animationChangeTime) {
-					animationChangeTime = System.nanoTime();
-					currentSprite = ((currentSprite - 3 + 1) % 2) + 3;
-					setSprite(getSpriteSheet().getSubimage(currentSprite * 36, getProperties().getSpriteSheetY()*36, 36, 36));
-					setInverseDraw(true);
-				}
+		if (!isCaught() && isAngry()) {
+			if (System.nanoTime() - 1e8 > animationChangeTime) {
+				animationChangeTime = System.nanoTime();
+				currentSprite = ((currentSprite - 3 + 1) % 2) + 3;
+				setSprite(getSpriteSheet().getSubimage(currentSprite * 36,
+						getProperties().getSpriteSheetY() * 36, 36, 36));
+				setInverseDraw(true);
 			}
+		}
 	}
 
 	/**
@@ -225,9 +229,10 @@ public class GroundEnemy extends Enemy {
 		if (getProperties().canFire() == false) {
 			return false;
 		}
-		
+
 		if (!this.isCaught()
-				&& lastFireTime + getProperties().getFireDelay() < System.currentTimeMillis()) {
+				&& lastFireTime + getProperties().getFireDelay() < System
+						.currentTimeMillis()) {
 			if (Math.abs(o.gety() - this.gety()) < 30
 					&& ((facingRight && o.getx() > this.getx())
 							|| (!facingRight && o.gety() > this.gety()))) {
@@ -235,10 +240,12 @@ public class GroundEnemy extends Enemy {
 				lastFireTime = System.currentTimeMillis();
 				EnemyProjectile projectile = new EnemyProjectile(
 						getTileMap());
-				projectile.setSprite(getSpriteSheet().getSubimage(9 * 36, getProperties().getSpriteSheetY() * 36, 36, 36));
+				projectile.setSprite(getSpriteSheet().getSubimage(9 * 36,
+						getProperties().getSpriteSheetY() * 36, 36, 36));
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
-					projectile.setDx(getProperties().getProjectileSpeed() * - 1);
+					projectile.setDx(
+							getProperties().getProjectileSpeed() * -1);
 				} else {
 					projectile.setDx(getProperties().getProjectileSpeed());
 				}

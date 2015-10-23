@@ -42,7 +42,7 @@ public class OptionsState extends GameState {
 		}
 
 	}
-	
+
 	/**
 	 * Draws everything of the options screen.
 	 */

@@ -52,19 +52,18 @@ public class Enemy extends MapObject {
 		setCheight(36);
 		setMovSpeed(0.3);
 		setStopSpeed(.4);
-
 		setFallSpeed(.35);
 		setMaxFallSpeed(6.0);
 		setJumpStart(-10.0);
 		setStopJumpSpeed(.3);
-		
 		setAlive(true);
 		properties = new BaseEnemyProperty();
-		
-		if(spritesheet == null) {
+
+		if (spritesheet == null) {
 			try {
-				this.setSpriteSheet(ImageIO.read(getClass()
-						.getResourceAsStream("/enemies/monsters_sprite.png")));
+				this.setSpriteSheet(
+						ImageIO.read(getClass().getResourceAsStream(
+								"/enemies/monsters_sprite.png")));
 				setSprite(getSpriteSheet().getSubimage(1, 0, 36, 36));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -119,7 +118,8 @@ public class Enemy extends MapObject {
 		setIsAngry(false);
 		setTimeCaught(System.nanoTime());
 		if (isCaught) {
-			setSprite(spritesheet.getSubimage(8*36, properties.getSpriteSheetY()*36, 36, 36));
+			setSprite(spritesheet.getSubimage(8 * 36,
+					properties.getSpriteSheetY() * 36, 36, 36));
 		} else {
 			setIsAngry(true);
 		}
@@ -135,20 +135,22 @@ public class Enemy extends MapObject {
 		isAngry = angry;
 		if (angry) {
 			angryStartTime = System.nanoTime();
-			setSprite(spritesheet.getSubimage(4*36, properties.getSpriteSheetY()*36, 36, 36));
+			setSprite(spritesheet.getSubimage(4 * 36,
+					properties.getSpriteSheetY() * 36, 36, 36));
 			setInverseDraw(true);
 			setMaxSpeed(properties.getAngryMovSpeed());
 		} else {
-			setSprite(spritesheet.getSubimage(0*36, properties.getSpriteSheetY()*36, 36, 36));
+			setSprite(spritesheet.getSubimage(0 * 36,
+					properties.getSpriteSheetY() * 36, 36, 36));
 			setInverseDraw(false);
 			setMaxSpeed(properties.getNormalMovSpeed());
 		}
 	}
-	
+
 	public final EnemyProperty getProperties() {
 		return properties;
 	}
-	
+
 	public final void setProperties(EnemyProperty properties) {
 		this.properties = properties;
 	}
@@ -199,12 +201,11 @@ public class Enemy extends MapObject {
 	public final void setSpriteSheet(BufferedImage bi) {
 		spritesheet = bi;
 	}
-	
+
 	/**
-	 * Returns the time at which the enemy became angry
-	 * 
-	 * @return
-	 * time
+	 * Returns the time at which the enemy became angry.
+	 *
+	 * @return time
 	 */
 	public final float getAngryStartTime() {
 		return angryStartTime;
