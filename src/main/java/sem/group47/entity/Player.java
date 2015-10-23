@@ -147,6 +147,11 @@ public class Player extends MapObject {
 	@Override
 	public final void update() {
 		projectileList.update();
+		if (canMove) {
+			getNextXPosition();
+			getNextYPosition();
+		}
+		scoreList.update();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
 		updateAnimation();
