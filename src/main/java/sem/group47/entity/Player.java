@@ -49,6 +49,9 @@ public class Player extends MapObject {
 	/** Projectile list contained in ProjectileList class. */
 	private ProjectileList projectileList;
 
+	/** The scores. */
+	private ScoreList scoreList;
+
 	/** The animation. */
 	private ArrayList<BufferedImage[]> sprites;
 
@@ -108,6 +111,7 @@ public class Player extends MapObject {
 		isAttacking = false;
 
 		projectileList = new ProjectileList();
+		scoreList = new ScoreList();
 
 		try {
 
@@ -143,10 +147,6 @@ public class Player extends MapObject {
 	@Override
 	public final void update() {
 		projectileList.update();
-		if (canMove) {
-			getNextXPosition();
-			getNextYPosition();
-		}
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
 		updateAnimation();
@@ -369,6 +369,7 @@ public class Player extends MapObject {
 		}
 
 		projectileList.draw(g);
+		scoreList.draw(g);
 	}
 
 	public final void canMove(boolean pCanMove) {
@@ -388,6 +389,8 @@ public class Player extends MapObject {
 		if (score != 0) {
 			AudioPlayer.play("bubblePop");
 		}
+
+		scoreList.addScore(new Score(points, getx(), gety()));
 
 		Log.info("Player Action", "Player received " + points + " points");
 		if (score >= extraLive) {
@@ -502,7 +505,9 @@ public class Player extends MapObject {
 		bubbleSize = size;
 	}
 
-	/** Returns the projectilelist.
+	/**
+	 * Returns the projectilelist.
+	 * 
 	 * @return - the projectilelist object.
 	 */
 	public final ProjectileList getProjectiles() {
