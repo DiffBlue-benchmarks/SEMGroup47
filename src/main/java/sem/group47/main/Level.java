@@ -187,11 +187,13 @@ public class Level extends DrawComposite {
 					Fruit fr = new Fruit(tileMap);
 
 					if (enemies.get(i).getXpos() > 400) {
-						fr.setPosition(enemies.get(i).getXpos() - 100, enemies
+						fr.setPosition(enemies.get(i).getXpos() - 72, enemies
 								.get(i).getYpos());
+						fr.setDx(-4);
 					} else {
-						fr.setPosition(enemies.get(i).getXpos() + 100, enemies
+						fr.setPosition(enemies.get(i).getXpos() + 72, enemies
 								.get(i).getYpos());
+						fr.setDx(4);
 					}
 					pickups.add(fr);
 					addComponent(fr);
