@@ -1,5 +1,7 @@
 package sem.group47.gamestate;
 
+import java.awt.Font;
+
 import sem.group47.main.DrawComposite;
 
 /**
@@ -11,15 +13,20 @@ public abstract class GameState extends DrawComposite {
 	/** The gamestate manager. */
 	private GameStateManager gsm;
 
+	/** The font. */
+	protected Font font = new Font("Arial", Font.PLAIN, 30);
+
 	/**
 	 * Init.
 	 */
-	public void init() {};
+	public void init() {
+	};
 
 	/**
 	 * Update.
 	 */
-	public void update() {};
+	public void update() {
+	};
 
 	/**
 	 * Draw.
@@ -36,7 +43,8 @@ public abstract class GameState extends DrawComposite {
 	 * @param k
 	 *            the k
 	 */
-	public void keyPressed(int k) {};
+	public void keyPressed(int k) {
+	};
 
 	/**
 	 * Key released.
@@ -44,7 +52,8 @@ public abstract class GameState extends DrawComposite {
 	 * @param k
 	 *            the k
 	 */
-	public void keyReleased(int k) {};
+	public void keyReleased(int k) {
+	};
 
 	/**
 	 * getGsm.

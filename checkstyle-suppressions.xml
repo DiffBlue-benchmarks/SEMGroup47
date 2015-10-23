@@ -13,4 +13,22 @@
              files="[a-zA-Z0-9]*"/>
   <suppress checks="VisibilityModifier"
              files="[a-zA-Z0-9]*"/>
+  <suppress checks="FinalParameters"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="DesignForExtension"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="HiddenField"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="JavadocMethod"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="JavadocType"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="JavadocStyle"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="JavadocVariable"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="SimplifyBooleanExpression"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="StaticVariableName"
+             files="[a-zA-Z0-9]*"/>
 </suppressions>

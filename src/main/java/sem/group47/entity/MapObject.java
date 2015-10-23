@@ -103,7 +103,7 @@ public abstract class MapObject implements Drawable {
 	/** The facing right. */
 	protected boolean facingRight;
 
-	/** Wether we inverse the x draw direction */
+	/** Whether we inverse the x draw direction. */
 	protected boolean inverseDraw;
 
 	// MOVEMENT
@@ -308,25 +308,24 @@ public abstract class MapObject implements Drawable {
 	 * @param gr
 	 *            the graphics
 	 */
+	// CHECKSTYLE:OFF: checkstyle:designforextension
 	public void draw(final Graphics2D gr) {
 		if (facingRight) {
-			if(inverseDraw) {
+			if (inverseDraw) {
 				gr.drawImage(sprite, (int) (xpos + width / (double) 2),
 						(int) (ypos - height / (double) 2), -width, height,
 						null);
-			}
-			else {
+			} else {
 				gr.drawImage(sprite, (int) (xpos - width / (double) 2),
 						(int) (ypos - height / (double) 2), width, height,
 						null);
 			}
 		} else {
-			if(inverseDraw) {
+			if (inverseDraw) {
 				gr.drawImage(sprite, (int) (xpos - width / (double) 2),
 						(int) (ypos - height / (double) 2), width, height,
 						null);
-			}
-			else {
+			} else {
 				gr.drawImage(sprite, (int) (xpos + width / (double) 2),
 						(int) (ypos - height / (double) 2), -width, height,
 						null);
@@ -334,6 +333,7 @@ public abstract class MapObject implements Drawable {
 		}
 	}
 
+	// CHECKSTYLE:ON: checkstyle:designforextension
 	/**
 	 * Gets the checks if is alive.
 	 *
@@ -863,9 +863,10 @@ public abstract class MapObject implements Drawable {
 	}
 
 	/**
-	 * Sets the wether to inverse drawing along the x axis
+	 * Sets the whether to inverse drawing along the x axis.
+	 *
 	 * @param b
-	 *  new value
+	 *            new value
 	 */
 	public final void setInverseDraw(final boolean b) {
 		inverseDraw = b;

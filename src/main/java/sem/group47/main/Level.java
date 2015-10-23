@@ -61,7 +61,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Adds an enemy to the level.
-	 * 
+	 *
 	 * @param newEnemy
 	 *            - a Magiron
 	 */
@@ -72,7 +72,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Adds the Magiron to the level.
-	 * 
+	 *
 	 * @param newEnemy
 	 *            - a Magiron
 	 */
@@ -83,7 +83,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Adds the Waterfall to the level.
-	 * 
+	 *
 	 * @param pwaterfall
 	 *            - a Waterfall
 	 */
@@ -94,7 +94,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Adds a pickup to the level.
-	 * 
+	 *
 	 * @param pu
 	 *            - the PickupObject
 	 */
@@ -151,14 +151,15 @@ public class Level extends DrawComposite {
 			if (enemies.get(i).projectileCollision(player1)) {
 				player1.kill();
 			}
-			if (multiplayer && enemies.get(i).projectileCollision(player2)) {
+			if (multiplayer
+					&& enemies.get(i).projectileCollision(player2)) {
 				player2.kill();
 			}
 		}
 
 		for (int i = 0; i < pickups.size(); i++) {
-			if (pickups.get(i).checkCollision(player1)
-					|| (multiplayer && pickups.get(i).checkCollision(player2))) {
+			if (pickups.get(i).checkCollision(player1) || (multiplayer
+					&& pickups.get(i).checkCollision(player2))) {
 				AudioPlayer.play("extraLife");
 				removeComponent(pickups.get(i));
 				pickups.remove(i);
@@ -189,18 +190,19 @@ public class Level extends DrawComposite {
 					Fruit fr = new Fruit(tileMap);
 
 					if (enemies.get(i).getXpos() > 400) {
-						fr.setPosition(enemies.get(i).getXpos() - 72, enemies
-								.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() - 72,
+								enemies.get(i).getYpos());
 						fr.setDx(-4);
 					} else {
-						fr.setPosition(enemies.get(i).getXpos() + 72, enemies
-								.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() + 72,
+								enemies.get(i).getYpos());
 						fr.setDx(4);
 					}
 					pickups.add(fr);
 					addComponent(fr);
 
-					player.setScore(enemies.get(i).getProperties().getPoints());
+					player.setScore(
+							enemies.get(i).getProperties().getPoints());
 					removeComponent(enemies.get(i));
 					enemies.remove(i);
 
@@ -209,12 +211,14 @@ public class Level extends DrawComposite {
 
 				} else if (player.getLives() > 1) {
 					player.hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info("Player Action",
+							"Player collision with Enemy");
 
 				} else {
 					AudioPlayer.play("crash");
 					player.hit(1);
-					Log.info("Player Action", "Player collision with Enemy");
+					Log.info("Player Action",
+							"Player collision with Enemy");
 				}
 			}
 		}
@@ -242,7 +246,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * checks if the player is dead.
-	 * 
+	 *
 	 * @return boolean true if the player has lost.
 	 */
 	public final boolean hasLost() {
@@ -265,7 +269,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Returns whether the level has been won.
-	 * 
+	 *
 	 * @return boolean true if the level has been won.
 	 */
 	public final boolean hasWon() {
@@ -287,7 +291,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Returns the player 1 or null if there is none.
-	 * 
+	 *
 	 * @return Player object for player 1 or null.
 	 */
 	public final Player getPlayer1() {
@@ -296,7 +300,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Sets the player 1.
-	 * 
+	 *
 	 * @param player
 	 *            - a player object.
 	 */
@@ -310,7 +314,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Sets the player 2.
-	 * 
+	 *
 	 * @param player
 	 *            - a player object.
 	 */
@@ -324,7 +328,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Returns the player 2 or null if there is none.
-	 * 
+	 *
 	 * @return Player object for player 2 or null.
 	 */
 	public final Player getPlayer2() {
@@ -333,7 +337,7 @@ public class Level extends DrawComposite {
 
 	/**
 	 * Get the current TileMap.
-	 * 
+	 *
 	 * @return A tileMap object.
 	 */
 	public final TileMap getTileMap() {
