@@ -152,12 +152,14 @@ public class Level extends DrawComposite{
 
 					if (enemies.get(i).getXpos() > 400) {
 						fr.setPosition(enemies.get(i).
-							getXpos() - 100,
+							getXpos() - 72,
 							enemies.get(i).getYpos());
+						fr.setDx(-4);
 					} else {
 						fr.setPosition(enemies.get(i).
-							getXpos() + 100,
+							getXpos() + 72,
 							enemies.get(i).getYpos());
+						fr.setDx(4);
 					}
 					pickups.add(fr);
 					addComponent(fr);
