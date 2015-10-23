@@ -23,7 +23,7 @@ public class GameOverState extends GameState {
 	private Font font;
 
 	/** The options. */
-	private String[] options = { "Restart", "Main Menu" };
+	private String[] options = {"Restart", "Main Menu" };
 
 	/** The Background. */
 	private String bg = "/backgrounds/BubbleBobble_Logo.gif";
@@ -55,20 +55,6 @@ public class GameOverState extends GameState {
 			e.printStackTrace();
 		}
 
-	}
-
-	/**
-	 * Init.
-	 */
-	@Override
-	public void init() {
-	}
-
-	/**
-	 * Update.
-	 */
-	@Override
-	public void update() {
 	}
 
 	/**
@@ -135,12 +121,4 @@ public class GameOverState extends GameState {
 			}
 		}
 	}
-
-	/**
-	 * keyReleased.
-	 */
-	@Override
-	public final void keyReleased(final int k) {
-	}
-
 }

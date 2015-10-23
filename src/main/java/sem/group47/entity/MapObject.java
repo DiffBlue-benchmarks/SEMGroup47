@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import sem.group47.main.Drawable;
 import sem.group47.tilemap.Tile;
 import sem.group47.tilemap.TileMap;
 
@@ -12,143 +13,146 @@ import sem.group47.tilemap.TileMap;
  * gameworld.
  */
 
-public abstract class MapObject {
+public abstract class MapObject implements Drawable {
 
 	// TILEMAP
 
 	/** The tile map. */
-	private TileMap tileMap;
+	protected TileMap tileMap;
 
 	/** The tile size. */
-	private int tileSize;
+	protected int tileSize;
 
 	// POSITION AND VECTOR
 
 	/** The actual x position. */
-	private double xpos;
+	protected double xpos;
 
 	/** The actual y position. */
-	private double ypos;
+	protected double ypos;
 
 	/** Vector in x direction. */
-	private double dx;
+	protected double dx;
 
 	/** Vector in y direction. */
-	private double dy;
+	protected double dy;
 
 	// SPRITE DIMENSION
 
 	/** The width. */
-	private int width;
+	protected int width;
 
 	/** The height. */
-	private int height;
+	protected int height;
 
 	// COLLISION
 
 	/** The cwidth. */
-	private int cwidth;
+	protected int cwidth;
 
 	/** The cheight. */
-	private int cheight;
+	protected int cheight;
 
 	/** The curr row. */
-	private int currRow;
+	protected int currRow;
 
 	/** The curr col. */
-	private int currCol;
+	protected int currCol;
 
 	/** The xdest: x position + x vector(x+dx). */
-	private double xdest;
+	protected double xdest;
 
 	/** The ydest: y position + y vector(y+dy). */
-	private double ydest;
+	protected double ydest;
 
 	/** The xposNew: new actual x position. */
-	private double xposNew;
+	protected double xposNew;
 
 	/** The yposNew. new actual y position. */
-	private double yposNew;
+	protected double yposNew;
 
 	/** The top left. */
-	private boolean topLeftBlocked;
+	protected boolean topLeftBlocked;
 
 	/** The top right. */
-	private boolean topRightBlocked;
+	protected boolean topRightBlocked;
 
 	/** The bottom left. */
-	private boolean bottomLeftBlocked;
+	protected boolean bottomLeftBlocked;
 
 	/** The bottom right. */
-	private boolean bottomRightBlocked;
+	protected boolean bottomRightBlocked;
 
 	/** The bottom left. */
-	private boolean bottomLeftSemiBlocked;
+	protected boolean bottomLeftSemiBlocked;
 
 	/** The bottom right. */
-	private boolean bottomRightSemiBlocked;
+	protected boolean bottomRightSemiBlocked;
 
 	// ANIMATION
 
 	/** The animation. */
 	protected Animation animation;
-	
+
 	/** The current Action. */
 	protected int currentAction;
-	
+
 	/** The previous action. */
 	protected int previousAction;
-	
+
 	/** The facing right. */
 	protected boolean facingRight;
-	
+
+	/** Wether we inverse the x draw direction */
+	protected boolean inverseDraw;
+
 	// MOVEMENT
 
 	/** The left. */
-	private boolean left;
+	protected boolean left;
 
 	/** The right. */
-	private boolean right;
+	protected boolean right;
 
 	/** The up. */
-	private boolean up;
+	protected boolean up;
 
 	/** The down. */
-	private boolean down;
+	protected boolean down;
 
 	/** The jumping. */
-	private boolean jumping;
+	protected boolean jumping;
 
 	/** The falling. */
-	private boolean falling;
+	protected boolean falling;
 
 	/** The mov speed. */
-	private double movSpeed;
+	protected double movSpeed;
 
 	/** The max speed. */
-	private double maxSpeed;
+	protected double maxSpeed;
 
 	/** The stop speed. */
-	private double stopSpeed;
+	protected double stopSpeed;
 
 	/** The fall speed. */
-	private double fallSpeed;
+	protected double fallSpeed;
 
 	/** The max fall speed. */
-	private double maxFallSpeed;
+	protected double maxFallSpeed;
 
 	/** The jump start. */
-	private double jumpStart;
+	protected double jumpStart;
 
 	/** The stop jump speed. */
-	private double stopJumpSpeed;
+	protected double stopJumpSpeed;
 
 	/** The is alive. */
-	private boolean isAlive;
+	protected boolean isAlive;
 
 	// GRAPHICS
 	/** The sprite. */
-	private BufferedImage sprite;
+	protected BufferedImage sprite;
 
 	/**
 	 * Constructor.
@@ -183,8 +187,8 @@ public abstract class MapObject {
 	 * @return Rectangle
 	 */
 	public final Rectangle getRectangle() {
-		return new Rectangle((int) xpos - cwidth / 2, (int) ypos - cheight / 2,
-				cwidth, cheight);
+		return new Rectangle((int) xpos - cwidth / 2,
+				(int) ypos - cheight / 2, cwidth, cheight);
 	}
 
 	/**
@@ -221,7 +225,6 @@ public abstract class MapObject {
 				} else {
 					yposNew += dy;
 				}
-
 			}
 		} else if (dy > 0) {
 			if (bottomLeftBlocked || bottomRightBlocked
@@ -232,12 +235,10 @@ public abstract class MapObject {
 			} else {
 				falling = true;
 				yposNew += dy;
-
 				if (yposNew >= tileMap.getHeight() - 15) {
 					yposNew = 3 * tileMap.getTileSize();
 				}
 			}
-
 		}
 
 		if (!falling) {
@@ -269,7 +270,6 @@ public abstract class MapObject {
 				xposNew += dx;
 			}
 		}
-
 	}
 
 	/**
@@ -282,7 +282,8 @@ public abstract class MapObject {
 	 * @param yin
 	 *            yposition to check
 	 */
-	public final void calculateCorners(final double xin, final double yin) {
+	public final void calculateCorners(final double xin,
+			final double yin) {
 		int leftTile = (int) ((xin - cwidth / 2) / tileSize);
 		int rightTile = (int) ((xin - cwidth / 2 + cwidth - 1) / tileSize);
 		int topTile = (int) ((yin - cheight / 2) / tileSize);
@@ -309,11 +310,27 @@ public abstract class MapObject {
 	 */
 	public void draw(final Graphics2D gr) {
 		if (facingRight) {
-			gr.drawImage(sprite, (int) (xpos - width / (double) 2),
-					(int) (ypos - height / (double) 2), null);
+			if(inverseDraw) {
+				gr.drawImage(sprite, (int) (xpos + width / (double) 2),
+						(int) (ypos - height / (double) 2), -width, height,
+						null);
+			}
+			else {
+				gr.drawImage(sprite, (int) (xpos - width / (double) 2),
+						(int) (ypos - height / (double) 2), width, height,
+						null);
+			}
 		} else {
-			gr.drawImage(sprite, (int) (xpos + width / (double) 2),
-					(int) (ypos - height / (double) 2), -width, height, null);
+			if(inverseDraw) {
+				gr.drawImage(sprite, (int) (xpos - width / (double) 2),
+						(int) (ypos - height / (double) 2), width, height,
+						null);
+			}
+			else {
+				gr.drawImage(sprite, (int) (xpos + width / (double) 2),
+						(int) (ypos - height / (double) 2), -width, height,
+						null);
+			}
 		}
 	}
 
@@ -761,6 +778,15 @@ public abstract class MapObject {
 	}
 
 	/**
+	 * Returns the sprite.
+	 *
+	 * @return the sprite
+	 */
+	public final BufferedImage getSprite() {
+		return sprite;
+	}
+
+	/**
 	 * Checks if is left.
 	 *
 	 * @return true, if is left
@@ -818,7 +844,7 @@ public abstract class MapObject {
 
 	/**
 	 * setWidth.
-	 * 
+	 *
 	 * @param pWidth
 	 *            .
 	 */
@@ -828,12 +854,21 @@ public abstract class MapObject {
 
 	/**
 	 * setHeight.
-	 * 
+	 *
 	 * @param pHeight
 	 *            .
 	 */
 	public final void setHeight(final int pHeight) {
 		this.height = pHeight;
+	}
+
+	/**
+	 * Sets the wether to inverse drawing along the x axis
+	 * @param b
+	 *  new value
+	 */
+	public final void setInverseDraw(final boolean b) {
+		inverseDraw = b;
 	}
 
 	/**
@@ -845,5 +880,4 @@ public abstract class MapObject {
 	public final void setAlive(final boolean pIsAlive) {
 		this.isAlive = pIsAlive;
 	}
-
 }

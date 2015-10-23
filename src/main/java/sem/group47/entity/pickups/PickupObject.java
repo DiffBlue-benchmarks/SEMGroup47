@@ -10,18 +10,18 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
- * Object which can be pickedup by the player and has a certain effect
- * 
+ * Object which can be pickedup by the player and has a certain effect.
+ *
  * @author Christian
- * 
+ *
  */
 public abstract class PickupObject extends MapObject {
-	
+
 	/**
-	 * constructor
-	 * 
+	 * constructor.
+	 *
 	 * @param tm
-	 *           TileMap
+	 *            TileMap
 	 */
 	public PickupObject(final TileMap tm) {
 		super(tm);
@@ -29,9 +29,9 @@ public abstract class PickupObject extends MapObject {
 		setHeight(32);
 		setCwidth(32);
 		setCheight(32);
-		setFallSpeed(.35);
+		setFallSpeed(3);
 		setMaxFallSpeed(6.0);
-		
+
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/items/items.png"));
@@ -43,13 +43,13 @@ public abstract class PickupObject extends MapObject {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Checks whether the object collides with the player, if so executes
 	 * onPickup(p), activating the powerup.
-	 * 
+	 *
 	 * @param p
-	 *           Player object
+	 *            Player object
 	 * @return true if collision occurred
 	 */
 	public final boolean checkCollision(final Player p) {
@@ -59,19 +59,33 @@ public abstract class PickupObject extends MapObject {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Effect of getting picked up.
-	 * 
+	 *
 	 * @param p
-	 *           Player object
+	 *            Player object
 	 */
 	public abstract void onPickup(final Player p);
-	
+
 	@Override
 	public final void update() {
 		setDy(getDy() + getFallSpeed());
 		checkTileMapCollision();
+		if (getYposNew() == gety())
+			setDx(0);
 		setPosition(getXposNew(), getYposNew());
+		
+		if (getDx() > .1f) {
+			setDx(getDx() - .1f);
+		} else if (getDx() < - .1f){
+			setDx(getDx() + .1f);
+		} else {
+			setDx(0f);
+		}
+		
+		if (getDy() < this.getMaxFallSpeed()) {
+			setDy(this.getMaxSpeed());
+		}
 	}
 }

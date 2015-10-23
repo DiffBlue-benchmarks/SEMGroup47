@@ -1,10 +1,12 @@
 package sem.group47.gamestate;
 
+import sem.group47.main.DrawComposite;
+
 /**
  * The Class GameState. Acts as a Superclass for the separate gamestates e.g.
  * MenuState.
  */
-public abstract class GameState {
+public abstract class GameState extends DrawComposite {
 
 	/** The gamestate manager. */
 	private GameStateManager gsm;
@@ -12,12 +14,12 @@ public abstract class GameState {
 	/**
 	 * Init.
 	 */
-	public abstract void init();
+	public void init() {};
 
 	/**
 	 * Update.
 	 */
-	public abstract void update();
+	public void update() {};
 
 	/**
 	 * Draw.
@@ -25,6 +27,7 @@ public abstract class GameState {
 	 * @param g
 	 *            the g
 	 */
+	@Override
 	public abstract void draw(java.awt.Graphics2D g);
 
 	/**
@@ -33,7 +36,7 @@ public abstract class GameState {
 	 * @param k
 	 *            the k
 	 */
-	public abstract void keyPressed(int k);
+	public void keyPressed(int k) {};
 
 	/**
 	 * Key released.
@@ -41,11 +44,11 @@ public abstract class GameState {
 	 * @param k
 	 *            the k
 	 */
-	public abstract void keyReleased(int k);
+	public void keyReleased(int k) {};
 
 	/**
 	 * getGsm.
-	 * 
+	 *
 	 * @return gsm
 	 */
 	public final GameStateManager getGsm() {
@@ -54,7 +57,7 @@ public abstract class GameState {
 
 	/**
 	 * setGsm.
-	 * 
+	 *
 	 * @param pGsm
 	 *            gsm
 	 */

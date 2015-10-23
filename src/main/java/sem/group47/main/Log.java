@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * Utility class to log actions in a logfile.
+ *
  * @author Rogier
  *
  */
@@ -31,18 +32,15 @@ public final class Log {
 		/**
 		 * Debug message.
 		 */
-		DEBUG("Debug", 0),
-		/**
-		 * Info message.
-		 */
-		INFO("Info", 1),
-		/**
-		 * Warnings.
-		 */
-		WARNING("Warning", 2),
-		/**
-		 * Error messages.
-		 */
+		DEBUG("Debug", 0), /**
+							 * Info message.
+							 */
+		INFO("Info", 1), /**
+							 * Warnings.
+							 */
+		WARNING("Warning", 2), /**
+								 * Error messages.
+								 */
 		ERROR("Error", 3);
 
 		/**
@@ -91,12 +89,13 @@ public final class Log {
 	}
 
 	/**
-	 * Initializes the logfile.
+	 * Initializes the logfile. By adding the synchronized keyword, we force
+	 * every thread to wait its turn before it can enter the method.
 	 */
-	public static void setLog() {
+	public static synchronized void setLog() {
 		String filename = "log_";
 		String datestamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-			.format(new Date());
+				.format(new Date());
 		filename += datestamp;
 
 		File[] files;
@@ -104,9 +103,9 @@ public final class Log {
 			files = new File("logfiles/").listFiles();
 			if (files != null && files.length > 10) {
 				File file = new File(files[1].toString());
-		    	if (!file.delete()) {
-		    		throw new IOException();
-		    	}
+				if (!file.delete()) {
+					throw new IOException();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,8 +113,7 @@ public final class Log {
 
 		try {
 			Log.setPrintStream(new PrintStream(
-				new File("logfiles/" + filename + ".txt"),
-				"UTF-8"));
+					new File("logfiles/" + filename + ".txt"), "UTF-8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,14 +122,14 @@ public final class Log {
 		Log.info("Program name & version", "Bubble Bobble V0.0.1");
 		Log.info("Date & time", datestamp + "\n");
 		Log.ps.println(
-		"_________________________________________________________");
+				"_________________________________________________________");
 	}
 
 	/**
 	 * Log a message at the INFO level.
 	 *
 	 * @param module
-	 * 			  module the message originated from.
+	 *            module the message originated from.
 	 * @param message
 	 *            message to be logged.
 	 *
@@ -142,8 +140,9 @@ public final class Log {
 
 	/**
 	 * Log a message at the WARNING level.
+	 *
 	 * @param module
-	 * 			  module the message originated from.
+	 *            module the message originated from.
 	 * @param message
 	 *            message to be logged.
 	 */
@@ -153,8 +152,9 @@ public final class Log {
 
 	/**
 	 * Log a message at the ERROR level.
+	 *
 	 * @param module
-	 * 			  module the message originated from.
+	 *            module the message originated from.
 	 * @param message
 	 *            message to be logged.
 	 */
@@ -191,22 +191,21 @@ public final class Log {
 	 * @param message
 	 *            message to be logged.
 	 */
-	public static void logMessage(final Level level,
-			final String module, final String message) {
+	public static void logMessage(final Level level, final String module,
+			final String message) {
 
-			// construct the message
-			String logMessage = "#" + currentLogID + "\t";
-			logMessage +=
-				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+		// construct the message
+		String logMessage = "#" + currentLogID + "\t";
+		logMessage += new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 				.format(new Date()) + "\t";
-			logMessage += level.getName() + "\t";
-			logMessage += " (" + module + "): ";
-			logMessage += message;
+		logMessage += level.getName() + "\t";
+		logMessage += " (" + module + "): ";
+		logMessage += message;
 
-			currentLogID++;
+		currentLogID++;
 
-			ps.println(logMessage);
-			ps.flush();
+		ps.println(logMessage);
+		ps.flush();
 
 	}
 }

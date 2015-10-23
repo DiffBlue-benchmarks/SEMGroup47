@@ -1,4 +1,5 @@
 package sem.group47.entity;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -24,18 +25,19 @@ public class Animation {
 	/**
 	 * Constructor.
 	 */
-	public final void Animation() {
+
+	public final void animation() {
 		playedOnce = false;
 	}
 
 	/**
 	 * Set the frames.
 	 *
-	 * @param frames
+	 * @param pframes
 	 *            the frames
 	 */
-	public final void setFrames(BufferedImage[] frames) {
-		this.frames = frames;
+	public final void setFrames(final BufferedImage[] pframes) {
+		this.frames = pframes;
 		currentFrame = 0;
 		startTime = System.nanoTime();
 		playedOnce = false;
@@ -47,8 +49,8 @@ public class Animation {
 	 * @param d
 	 *            the delay
 	 */
-	public final void setDelay(long d) {
-		delay = d;
+	public final void setDelay(final long d) {
+		this.delay = d;
 	}
 
 	/**
@@ -57,8 +59,8 @@ public class Animation {
 	 * @param i
 	 *            the frame number
 	 */
-	public final void setFrame(int i) {
-		currentFrame = i;
+	public final void setFrame(final int i) {
+		this.currentFrame = i;
 	}
 
 	/**

@@ -22,7 +22,7 @@ public class HelpState extends GameState {
 	private Font font, font2;
 
 	/** The options. */
-	private String[] options = { "Return mkay", "Start mkay" };
+	private String[] options = {"Return mkay", "Start mkay" };
 
 	/** The Background. */
 	private String bg = "/backgrounds/Mr_Mackey.png";
@@ -49,20 +49,6 @@ public class HelpState extends GameState {
 			e.printStackTrace();
 		}
 
-	}
-
-	/**
-	 * Init.
-	 */
-	@Override
-	public void init() {
-	}
-
-	/**
-	 * Update.
-	 */
-	@Override
-	public void update() {
 	}
 
 	/**
@@ -131,12 +117,4 @@ public class HelpState extends GameState {
 			}
 		}
 	}
-
-	/**
-	 * keyReleased.
-	 */
-	@Override
-	public final void keyReleased(final int k) {
-	}
-
 }

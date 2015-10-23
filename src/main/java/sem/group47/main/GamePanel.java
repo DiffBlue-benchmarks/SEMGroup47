@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private boolean running;
 
 	/** The desired Frames per seconds. */
-	private static final int FPS = 60;
+	public static final int FPS = 60;
 
 	/** The target time/ frame period. */
 	private static final long FRAME_PERIOD = 1000 / FPS;
@@ -78,9 +78,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * Initializes everything separately from the constructor.
 	 */
 	private void init() {
-		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH, HEIGHT,
+				BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
-		gsm = new GameStateManager();
+		gsm = GameStateManager.getInstance();
 		running = true;
 	}
 
@@ -165,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	/**
 	 * keyTyped event handler.
-	 * 
+	 *
 	 * @param key
 	 *            The key event to be handled.
 	 */
@@ -174,26 +175,26 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	/**
 	 * keyPressed event handler.
-	 * 
+	 *
 	 * @param key
 	 *            The key event to be handled.
 	 */
 	public final void keyPressed(final KeyEvent key) {
-	 if (running) {
-		 gsm.keyPressed(key.getKeyCode());
-	 }
+		if (running) {
+			gsm.keyPressed(key.getKeyCode());
+		}
 	}
 
 	/**
 	 * keyReleased event handler.
-	 * 
+	 *
 	 * @param key
 	 *            The key event to be handled.
 	 */
 	public final void keyReleased(final KeyEvent key) {
-	 if (running) {
-		 gsm.keyReleased(key.getKeyCode());
-	 }
+		if (running) {
+			gsm.keyReleased(key.getKeyCode());
+		}
 	}
 
 }

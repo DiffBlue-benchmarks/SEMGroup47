@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import sem.group47.audio.AudioPlayer;
-import sem.group47.gamestate.GameStateManager;
+import sem.group47.entity.enemies.Enemy;
 import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
@@ -46,16 +46,17 @@ public class Player extends MapObject {
 	/** If the player is idle or not. */
 	private boolean isIdle;
 
-	/** The projectiles. */
-	private ArrayList<Projectile> projectiles;
+	/** Projectile list contained in ProjectileList class. */
+	private ProjectileList projectileList;
+
+	/** The scores. */
+	private ScoreList scoreList;
 
 	/** The animation. */
 	private ArrayList<BufferedImage[]> sprites;
 
 	/** Number of frames for each animation action in order. */
-	private final int[] numFrames = {
-		3, 2, 3
-	};
+	private final int[] numFrames = { 3, 2, 3 };
 
 	/** Animation actions # for idle state. */
 	public static final int IDLE = 0;
@@ -71,6 +72,9 @@ public class Player extends MapObject {
 
 	/** The size of bubbles fired. **/
 	private int bubbleSize;
+
+	/** Player movement. **/
+	private boolean canMove = true;
 
 	/**
 	 * Instantiates a new player.
@@ -106,29 +110,22 @@ public class Player extends MapObject {
 		fireDelay = 500;
 		isAttacking = false;
 
-		projectiles = new ArrayList<Projectile>();
+		projectileList = new ProjectileList();
+		scoreList = new ScoreList();
 
 		try {
 
-			BufferedImage spritesheet = ImageIO.read(
-				getClass().getResourceAsStream(
-						"/player/playerv2.png"
-				)
-			);
+			BufferedImage spritesheet = ImageIO.read(getClass()
+					.getResourceAsStream("/player/playerv2.png"));
 
 			sprites = new ArrayList<BufferedImage[]>();
 			for (int i = 0; i < 3; i++) {
 
-				BufferedImage[] bi =
-					new BufferedImage[numFrames[i]];
+				BufferedImage[] bi = new BufferedImage[numFrames[i]];
 
 				for (int j = 0; j < numFrames[i]; j++) {
-						bi[j] = spritesheet.getSubimage(
-								j * getWidth(),
-								i * getHeight(),
-								getWidth(),
-								getHeight()
-						);
+					bi[j] = spritesheet.getSubimage(j * getWidth(), i
+							* getHeight(), getWidth(), getHeight());
 				}
 				sprites.add(bi);
 			}
@@ -144,23 +141,17 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Gets the projectiles.
-	 *
-	 * @return the projectiles
+	 * Update. Called every frame. Updates player position, looks for collision
+	 * and then puts the player in the new position
 	 */
-	public final ArrayList<Projectile> getProjectiles() {
-		return projectiles;
-	}
-
-	/**
-	 * Update. Called every frame. Updates player position,
-	 * looks for collision and then puts the player in the
-	 * new position
-	 */
+	@Override
 	public final void update() {
-		updateProjectiles();
-		getNextXPosition();
-		getNextYPosition();
+		projectileList.update();
+		if (canMove) {
+			getNextXPosition();
+			getNextYPosition();
+		}
+		scoreList.update();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
 		updateAnimation();
@@ -170,17 +161,13 @@ public class Player extends MapObject {
 	}
 
 	/**
-	 * Update projectiles.
+	 * Checks collision for all projectiles.
+	 *
+	 * @param enemies
+	 *            enemies
 	 */
-	public final void updateProjectiles() {
-		for (int i = 0; i < projectiles.size(); i++) {
-			if (projectiles.get(i).getIsAlive()) {
-				projectiles.get(i).update();
-			} else {
-				projectiles.remove(i);
-				i--;
-			}
-		}
+	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
+		projectileList.indirectEnemyCollision(enemies);
 	}
 
 	/**
@@ -191,70 +178,41 @@ public class Player extends MapObject {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
 				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
-				Projectile projectile =
-				  new Projectile(getTileMap());
+				Projectile projectile = new Projectile(getTileMap());
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
 					projectile.setDx(bubbleSpeed * -1);
 				} else {
-				 projectile.setDx(bubbleSpeed);
+					projectile.setDx(bubbleSpeed);
 				}
 
 				isAttacking = true;
 				isIdle = false;
 
-				projectile.setWidth(getBubbleSize());
-				projectile.setHeight(getBubbleSize());
-				projectile.setCwidth(
-				  (int) (getBubbleSize() / 1.6f));
-				projectile.setCheight(
-				  (int) (getBubbleSize() / 1.6f));
+				projectile.setWidth(bubbleSize);
+				projectile.setHeight(bubbleSize);
+				projectile.setCwidth((int) (bubbleSize / 1.6f));
+				projectile.setCheight((int) (bubbleSize / 1.6f));
 
-				projectiles.add(projectile);
+				projectileList.addProjectile(projectile);
 				Log.info("Player Action", "Bubble fired");
 			}
 		}
 	}
 
 	/**
-	 * checks what happens when the player directly collides with an enemy.
-	 *
-	 * @param enemies
-	 *            enemies
-	 * @param gsm
-	 *            the gsm
+	 * takes a life, or ends the game.
 	 */
-	public final void directEnemyCollision(final ArrayList<Enemy> enemies,
-			final GameStateManager gsm) {
+	public final void kill() {
+		if (getLives() > 1) {
+			hit(1);
+			Log.info("Player Action", "Player collision with Enemy");
 
-		for (int i = 0; i < enemies.size(); i++) {
-			if (intersects(enemies.get(i))) {
-				if (enemies.get(i).isCaught()) {
-
-					setScore(
-					  enemies.get(i).getScorePoints());
-					enemies.remove(i);
-					
-					Log.info("Player Action",
-							"Player collision with Caught Enemy");
-
-				} else if (getLives() > 1) {
-					hit(1);
-					Log.info(
-							"Player Action", "Player collision with Enemy"
-							);
-					
-				} else {
-					AudioPlayer.play("crash");
-					hit(1);
-					Log.info(
-					  "Player Action",
-					  "Player collision with Enemy"
-					  );
-				}
-			}
+		} else {
+			AudioPlayer.play("crash");
+			hit(1);
+			Log.info("Player Action", "Player collision with Enemy");
 		}
-
 	}
 
 	/**
@@ -262,49 +220,7 @@ public class Player extends MapObject {
 	 * and lift upwards, or kick against it.
 	 */
 	public final void interactWithProjectile() {
-		for (int j = 0; j < getProjectiles().size(); j++) {
-
-			if (intersects(getProjectiles().get(j))) {
-
-				if (getProjectiles().get(j).getFloatDelay() <= 0) {
-
-					if (getYpos() <= getProjectiles().get(j).getYpos()) {
-						setFalling(false);
-						setDy((getProjectiles().get(j).getDy() - 0.1));
-					} else if (isRight() || (isJumping() && isRight())) {
-						getProjectiles().get(j).setDx(2);
-						getProjectiles().get(j).setFloatDelay(1000);
-					} else if (isLeft() || (isJumping() && isLeft())) {
-						getProjectiles().get(j).setDx(-2);
-						getProjectiles().get(j).setFloatDelay(1000);
-					}
-
-				}
-
-			}
-		}
-	}
-
-	/**
-	 * checks what happens when the player indirectly (projectile) collides with
-	 * an enemy.
-	 *
-	 * @param enemies
-	 *            enemies
-	 */
-	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
-		for (int i = 0; i < enemies.size(); i++) {
-			for (int j = 0; j < getProjectiles().size(); j++) {
-				if (getProjectiles().get(j).getDy() == 0 && 
-				  getProjectiles().get(j).intersects(enemies.get(i))) {
-					getProjectiles().remove(j);
-					j--;
-					Log.info("Player Action", "Fired bubble hit enemy");
-					enemies.get(i).setCaught();
-
-				}
-			}
-		}
+		projectileList.playerInteraction(this);
 	}
 
 	/**
@@ -313,7 +229,7 @@ public class Player extends MapObject {
 	public final void flinching() {
 		if (flinching) {
 			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
-			if (elapsed > 1000) {
+			if (elapsed > 2500) {
 				flinching = false;
 			}
 		}
@@ -335,20 +251,17 @@ public class Player extends MapObject {
 		if (lives < 0) {
 			lives = 0;
 			Log.warning("Player info wrong",
-					"Amount of lives of player was <0. Set back to 0");
+					"Amount of lives of player was <0. " + "Set back to 0");
 		}
 		if (lives == 0) {
-		 AudioPlayer.stopAll();
+			AudioPlayer.stopAll();
 			AudioPlayer.play("dead");
 			setAlive(false);
 			Log.info("Player Action", "Player died");
-			// TODO GameOver screen
 		}
 
-		setPosition(
-    getTileMap().getWidth() / 2,
-    getTileMap().getHeight() / 2);
-		setVector(0 , 0);
+		setPosition(getTileMap().getWidth() / 2, getTileMap().getHeight() / 2);
+		setVector(0, 0);
 		flinching = true;
 		flinchTimer = System.nanoTime();
 
@@ -427,19 +340,16 @@ public class Player extends MapObject {
 				isIdle = true;
 				isAttacking = false;
 			}
-		} else if (isIdle) {
-			if (currentAction != IDLE) {
-				currentAction = IDLE;
-				animation.setFrames(sprites.get(IDLE));
-				animation.setDelay(400);
-			}
-		} else if (isLeft() || isRight()) {
-			if (currentAction != WALKING) {
-				currentAction = WALKING;
-				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(200);
-			}
+		} else if (isIdle && currentAction != IDLE) {
+			currentAction = IDLE;
+			animation.setFrames(sprites.get(IDLE));
+			animation.setDelay(400);
+		} else if ((isLeft() || isRight()) && currentAction != WALKING) {
+			currentAction = WALKING;
+			animation.setFrames(sprites.get(WALKING));
+			animation.setDelay(200);
 		}
+
 		animation.update();
 	}
 
@@ -451,17 +361,24 @@ public class Player extends MapObject {
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {
-		if (facingRight) {
-			g.drawImage(animation.getImage(), (int) (getXpos() - getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2), null);
-		} else {
-			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2), -getWidth(), getHeight(), null);
+		if (!flinching || Math.round(Math.random() * 1) == 0) {
+			if (facingRight) {
+				g.drawImage(animation.getImage(), (int) (getXpos() - getWidth()
+						/ (double) 2), (int) (getYpos() - getHeight()
+						/ (double) 2), null);
+			} else {
+				g.drawImage(animation.getImage(), (int) (getXpos() + getWidth()
+						/ (double) 2), (int) (getYpos() - getHeight()
+						/ (double) 2), -getWidth(), getHeight(), null);
+			}
 		}
 
-		for (int i = 0; i < projectiles.size(); i++) {
-			projectiles.get(i).draw(g);
-		}
+		projectileList.draw(g);
+		scoreList.draw(g);
+	}
+
+	public final void canMove(boolean pCanMove) {
+		this.canMove = pCanMove;
 	}
 
 	/**
@@ -478,8 +395,10 @@ public class Player extends MapObject {
 			AudioPlayer.play("bubblePop");
 		}
 
+		scoreList.addScore(new Score(points, getx(), gety()));
+
 		Log.info("Player Action", "Player received " + points + " points");
-		if (score == extraLive) {
+		if (score >= extraLive) {
 			AudioPlayer.play("extraLife");
 			lives++;
 			extraLive += 300;
@@ -525,6 +444,24 @@ public class Player extends MapObject {
 	}
 
 	/**
+	 * Gets the bubble speed.
+	 * 
+	 * @return the bubble speed
+	 */
+	public final double getBubbleSpeed() {
+		return bubbleSpeed;
+	}
+
+	/**
+	 * Gets the bubble size.
+	 * 
+	 * @return the bubble size.
+	 */
+	public final int getBubbleSize() {
+		return bubbleSize;
+	}
+
+	/**
 	 * Gets the score.
 	 *
 	 * @return the score
@@ -557,36 +494,28 @@ public class Player extends MapObject {
 	 * Sets the bubble speed.
 	 *
 	 * @param speed
-	 *  The bubble speed
+	 *            The bubble speed
 	 */
 	public final void setBubbleSpeed(final double speed) {
-	 this.bubbleSpeed = speed;
-	}
-
-	/**
-	 * Returns the bubble speed.
-	 *
-	 * @return bubbleSpeed
-	 */
-	public final double getBubbleSpeed() {
-	 return bubbleSpeed;
+		this.bubbleSpeed = speed;
 	}
 
 	/**
 	 * Sets the bubble size.
 	 *
 	 * @param size
-	 *  The bubble size
+	 *            The bubble size
 	 */
 	public final void setBubbleSize(final int size) {
-	 bubbleSize = size;
+		bubbleSize = size;
 	}
 
 	/**
-	 * Gets the bubble size.
-	 * @return bubblesize
+	 * Returns the projectilelist.
+	 * 
+	 * @return - the projectilelist object.
 	 */
-	public final int getBubbleSize() {
-	 return bubbleSize;
+	public final ProjectileList getProjectiles() {
+		return projectileList;
 	}
 }
