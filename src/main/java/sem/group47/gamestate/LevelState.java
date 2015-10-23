@@ -142,6 +142,7 @@ public class LevelState extends GameState {
 			PlayerSave.setExtraLiveP1(currentLevel.getPlayer1().getExtraLive());
 
 			if (multiplayer) {
+
 				PlayerSave.setLivesP2(currentLevel.getPlayer2().getLives());
 				if (level == 0) {
 					PlayerSave
