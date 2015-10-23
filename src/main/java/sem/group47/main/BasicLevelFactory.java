@@ -97,9 +97,10 @@ public class BasicLevelFactory implements LevelFactory {
 				enemy = new GroundEnemy(tileMap, enemyProperties[0]);
 				break;
 			case Enemy.PROJECTILE_ENEMEY:
-				int r = (int) Math.round(Math.random() * 3);
-				enemy = new GroundEnemy(tileMap, new CanFireProperty(
-						enemyProperties[1 + r]));
+				int r = (int) Math.round(Math.random()*3);
+				enemy =
+				new GroundEnemy(tileMap,
+								enemyProperties[1+r]);
 				break;
 			default:
 				enemy = new GroundEnemy(tileMap, new BaseEnemyProperty());
