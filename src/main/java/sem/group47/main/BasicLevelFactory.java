@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
 import sem.group47.entity.Waterfall;
-import sem.group47.entity.WaterfallSpawner;
+import sem.group47.entity.WaterfallHolder;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.GroundEnemy;
 import sem.group47.entity.enemies.Magiron;
@@ -93,7 +93,6 @@ public class BasicLevelFactory implements LevelFactory {
 	private void populateEnemies(final Level level) {
 		ArrayList<int[]> points = tileMap.getEnemyStartLocations();
 		Enemy enemy;
-		int j = 0;
 		for (int i = 0; i < points.size() - 1; i++) {
 			switch (points.get(i)[2]) {
 			case Enemy.LEVEL1_ENEMY:
@@ -111,14 +110,13 @@ public class BasicLevelFactory implements LevelFactory {
 					(points.get(i)[1] + 1) * 30
 							- .5d * enemy.getCHeight());
 			level.addEnemy(enemy);
-			j = i;
 		}
 
 		Magiron aaron = new Magiron(tileMap);
 		aaron.setPosition(GamePanel.WIDTH / 2, -150);
 		level.addAaron(aaron);
 
-		WaterfallSpawner waterfall = new WaterfallSpawner(tileMap, GamePanel.WIDTH / 2, 0);
+		WaterfallHolder waterfall = new WaterfallHolder(tileMap, GamePanel.WIDTH / 2, 0);
 		level.addWaterfall(waterfall);
 
 	};
