@@ -23,7 +23,7 @@ import sem.group47.tilemap.TileMap;
 
 /**
  * The basicLevelFactory initialises a standard level.
- * 
+ *
  * @author Karin
  *
  */
@@ -36,21 +36,22 @@ public class BasicLevelFactory implements LevelFactory {
 	public BasicLevelFactory() {
 		enemyProperties = new EnemyProperty[5];
 		enemyProperties[0] = new BaseEnemyProperty();
-		enemyProperties[1] = new CanFireProperty(new SpriteProperty(
-				new BaseEnemyProperty(), 3));
+		enemyProperties[1] = new CanFireProperty(
+				new SpriteProperty(new BaseEnemyProperty(), 3));
 		enemyProperties[2] = new FasterProperty(new CanFireProperty(
 				new SpriteProperty(new BaseEnemyProperty(), 1)));
-		enemyProperties[3] = new BonusPointsProperty(new FasterProperty(
-				new CanFireProperty(new SpriteProperty(new BaseEnemyProperty(),
-						7))));
+		enemyProperties[3] = new BonusPointsProperty(
+				new FasterProperty(new CanFireProperty(
+						new SpriteProperty(new BaseEnemyProperty(), 7))));
 		enemyProperties[4] = new FasterProperty(new FasterProperty(
-				new BonusPointsProperty(new FasterProperty(new CanFireProperty(
-						new SpriteProperty(new BaseEnemyProperty(), 2))))));
+				new BonusPointsProperty(new FasterProperty(
+						new CanFireProperty(new SpriteProperty(
+								new BaseEnemyProperty(), 2))))));
 	}
 
 	/**
 	 * method used to make the level.
-	 * 
+	 *
 	 * @param filename
 	 *            - the filename for the tilemap.
 	 * @param multiplayer
@@ -69,13 +70,14 @@ public class BasicLevelFactory implements LevelFactory {
 
 	/**
 	 * Loads the tileMap.
-	 * 
+	 *
 	 * @param levelFileName
 	 *            - the filename
 	 * @param level
 	 *            - the level to add it to.
 	 */
-	private void loadTileMap(final String levelFileName, final Level level) {
+	private void loadTileMap(final String levelFileName,
+			final Level level) {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		tileMap.loadMap("/maps/" + levelFileName);
@@ -84,7 +86,7 @@ public class BasicLevelFactory implements LevelFactory {
 
 	/**
 	 * Adds enemies to the level.
-	 * 
+	 *
 	 * @param level
 	 *            - the level to add them to.
 	 */
@@ -98,17 +100,16 @@ public class BasicLevelFactory implements LevelFactory {
 				enemy = new GroundEnemy(tileMap, enemyProperties[0]);
 				break;
 			case Enemy.PROJECTILE_ENEMEY:
-				int r = (int) Math.round(Math.random()*3);
-				enemy =
-				new GroundEnemy(tileMap,
-								enemyProperties[1+r]);
+				int r = (int) Math.round(Math.random() * 3);
+				enemy = new GroundEnemy(tileMap, enemyProperties[1 + r]);
 				break;
 			default:
 				enemy = new GroundEnemy(tileMap, new BaseEnemyProperty());
 
 			}
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
-					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
+					(points.get(i)[1] + 1) * 30
+							- .5d * enemy.getCHeight());
 			level.addEnemy(enemy);
 			j = i;
 		}
@@ -124,7 +125,7 @@ public class BasicLevelFactory implements LevelFactory {
 
 	/**
 	 * Loads te players. Two if it is a multiplayer game, one otherwise.
-	 * 
+	 *
 	 * @param level
 	 *            - the level to add them to.
 	 * @param multiplayer
@@ -142,9 +143,11 @@ public class BasicLevelFactory implements LevelFactory {
 
 		if (multiplayer) {
 			Player player2 = new Player(tileMap);
-			player2.setPosition(tileMap.getTileSize()
-					* (tileMap.getNumCols() - 3 + .5d) - 5,
-					tileMap.getTileSize() * (tileMap.getNumRows() - 2 + .5d));
+			player2.setPosition(
+					tileMap.getTileSize()
+							* (tileMap.getNumCols() - 3 + .5d) - 5,
+					tileMap.getTileSize()
+							* (tileMap.getNumRows() - 2 + .5d));
 			player2.setLives(PlayerSave.getLivesP2());
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
 			player2.setScore(PlayerSave.getScoreP2());
@@ -155,7 +158,7 @@ public class BasicLevelFactory implements LevelFactory {
 
 	/**
 	 * loads the powerups.
-	 * 
+	 *
 	 * @param level
 	 *            - the level to add them to.
 	 */

@@ -5,12 +5,13 @@ public class CanFireProperty extends EnemyPropertyDecorator {
 	public CanFireProperty(EnemyProperty newProperty) {
 		super(newProperty);
 	}
-	
+
 	/**
-	 * Wether the enemy can fire.
+	 * Whether the enemy can fire.
 	 * @return
 	 * a boolean
 	 */
+	@Override
 	public boolean canFire() {
 		return true;
 	}

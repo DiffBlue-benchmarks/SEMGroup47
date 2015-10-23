@@ -1,7 +1,6 @@
 package sem.group47.gamestate;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -14,13 +13,13 @@ import sem.group47.main.GamePanel;
 /**
  * The Class GameOverState, which extends the super class GameState.
  */
+
+@SuppressWarnings("PMD")
+
 public class GameOverState extends GameState {
 
 	/** The current choice. */
 	private int currentChoice = 0;
-
-	/** The font. */
-	private Font font;
 
 	/** The options. */
 	private String[] options = {"Restart", "Main Menu" };
@@ -48,9 +47,6 @@ public class GameOverState extends GameState {
 
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(bg));
-
-			font = new Font("Arial", Font.PLAIN, 40);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -3,7 +3,13 @@ package sem.group47.entity;
 /**
  * The Class PlayerSave.
  */
-public class PlayerSave {
+public final class PlayerSave {
+
+	/**
+	 * Hidden constructor.
+	 */
+	private PlayerSave() {
+		}
 
 	/** The lives. */
 	private static int livesp1 = 3;

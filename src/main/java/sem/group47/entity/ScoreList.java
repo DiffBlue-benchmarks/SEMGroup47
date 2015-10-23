@@ -16,18 +16,18 @@ public class ScoreList extends DrawComposite {
 	public ScoreList() {
 		scores = new ArrayList<Score>();
 	}
-	
-	
+
 	/**
 	 * Add a Score to the list.
+	 *
 	 * @param p
-	 * 			the Score object.
+	 *            the Score object.
 	 */
 	public final void addScore(final Score s) {
 		scores.add(s);
 		addComponent(s);
 	}
-	
+
 	/**
 	 * Draws the scores.
 	 */
@@ -48,6 +48,5 @@ public class ScoreList extends DrawComposite {
 			}
 		}
 	}
-
 
 }

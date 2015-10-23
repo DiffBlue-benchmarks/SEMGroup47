@@ -19,11 +19,11 @@ import sem.group47.tilemap.Background;
 public class LevelState extends GameState {
 
 	/** level file names. **/
-	private String[] levelFileNames = new String[] { "level1.map",
+	private String[] levelFileNames = new String[] {"level1.map",
 			"level2.map", "level3.map", "level4.map" };
 
 	/** file names of music. **/
-	private String[] musicFileNames = new String[] { "level1", "level2",
+	private String[] musicFileNames = new String[] {"level1", "level2",
 			"level3", "level4" };
 
 	/** Current level. **/
@@ -93,7 +93,8 @@ public class LevelState extends GameState {
 				multiplayer);
 		addComponent(currentLevel);
 
-		hud = new HUD(currentLevel.getPlayer1(), currentLevel.getPlayer2());
+		hud = new HUD(currentLevel.getPlayer1(),
+				currentLevel.getPlayer2());
 		addComponent(hud);
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
@@ -127,38 +128,40 @@ public class LevelState extends GameState {
 		if (currentLevel.hasWon()) {
 			PlayerSave.setLivesP1(currentLevel.getPlayer1().getLives());
 			if (level == 0) {
-				PlayerSave
-						.setScoreP1(currentLevel.getPlayer1().getScore() + 100);
+				PlayerSave.setScoreP1(
+						currentLevel.getPlayer1().getScore() + 100);
 			} else if (level == 1) {
-				PlayerSave
-						.setScoreP1(currentLevel.getPlayer1().getScore() + 200);
+				PlayerSave.setScoreP1(
+						currentLevel.getPlayer1().getScore() + 200);
 			} else if (level == 2) {
-				PlayerSave
-						.setScoreP1(currentLevel.getPlayer1().getScore() + 300);
+				PlayerSave.setScoreP1(
+						currentLevel.getPlayer1().getScore() + 300);
 			} else if (level == 3) {
-				PlayerSave
-						.setScoreP1(currentLevel.getPlayer1().getScore() + 400);
+				PlayerSave.setScoreP1(
+						currentLevel.getPlayer1().getScore() + 400);
 			}
-			PlayerSave.setExtraLiveP1(currentLevel.getPlayer1().getExtraLive());
+			PlayerSave.setExtraLiveP1(
+					currentLevel.getPlayer1().getExtraLive());
 
 			if (multiplayer) {
 
-				PlayerSave.setLivesP2(currentLevel.getPlayer2().getLives());
+				PlayerSave
+						.setLivesP2(currentLevel.getPlayer2().getLives());
 				if (level == 0) {
-					PlayerSave
-							.setScoreP2(currentLevel.getPlayer2().getScore() + 100);
+					PlayerSave.setScoreP2(
+							currentLevel.getPlayer2().getScore() + 100);
 				} else if (level == 1) {
-					PlayerSave
-							.setScoreP2(currentLevel.getPlayer2().getScore() + 200);
+					PlayerSave.setScoreP2(
+							currentLevel.getPlayer2().getScore() + 200);
 				} else if (level == 2) {
-					PlayerSave
-							.setScoreP2(currentLevel.getPlayer2().getScore() + 300);
+					PlayerSave.setScoreP2(
+							currentLevel.getPlayer2().getScore() + 300);
 				} else if (level == 3) {
-					PlayerSave
-							.setScoreP2(currentLevel.getPlayer2().getScore() + 400);
+					PlayerSave.setScoreP2(
+							currentLevel.getPlayer2().getScore() + 400);
 				}
-				PlayerSave.setExtraLiveP2(currentLevel.getPlayer2()
-						.getExtraLive());
+				PlayerSave.setExtraLiveP2(
+						currentLevel.getPlayer2().getExtraLive());
 			}
 			setupLevel(level + 1, multiplayer);
 			Log.info("Player Action", "Player reached next level");
@@ -190,7 +193,7 @@ public class LevelState extends GameState {
 
 	/**
 	 * Returns the current Level object.
-	 * 
+	 *
 	 * @return - the current Level object.
 	 */
 	public final Level getCurrentLevel() {
