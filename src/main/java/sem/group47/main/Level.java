@@ -114,9 +114,7 @@ public class Level extends DrawComposite {
 		} else {
 			removeComponent(player1);
 		}
-		System.out.println(multiplayer);
 		if (multiplayer) {
-			System.out.println("update ");
 			if (player2.getLives() > 0) {
 				player2.update();
 				directEnemyCollision(player2);
