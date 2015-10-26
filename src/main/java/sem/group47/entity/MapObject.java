@@ -213,7 +213,7 @@ public abstract class MapObject implements Drawable {
 	 * Check when the MapObject is moving upwards/ downwards if it is colliding
 	 * with anything.
 	 */
-	public final void checkYCollision() {
+	public void checkYCollision() {
 		calculateCorners(xpos, ydest);
 		if (dy < 0) {
 			if (topLeftBlocked || topRightBlocked) {

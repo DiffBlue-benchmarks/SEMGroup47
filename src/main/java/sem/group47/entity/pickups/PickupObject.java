@@ -83,7 +83,7 @@ public abstract class PickupObject extends MapObject {
 		} else {
 			setDx(0f);
 		}
-
+		setPosition(getXposNew(), getYposNew());
 		if (getDy() < this.getMaxFallSpeed()) {
 			setDy(this.getMaxSpeed());
 		}
