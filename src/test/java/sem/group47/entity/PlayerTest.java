@@ -22,50 +22,50 @@ import sem.group47.tilemap.TileMap;
 /**
  * The Class PlayerTest.
  */
-public class PlayerTest {
-
+public class PlayerTest extends MapObjectTest {
+	
 	/** The tile map. */
 	private TileMap tileMap;
-
+	
 	/** The tile size. */
 	private int tileSize = 30;
-
+	
 	/** The num of cols. */
 	private int numOfCols = 2;
-
+	
 	/** The num of rows. */
 	private int numOfRows = 2;
-
+	
 	/** The player. */
 	private Player player;
-
+	
 	/** The player save state. */
 	private PlayerSave playerSave;
-
+	
 	/** The projectile. */
 	private Projectile projectile;
-
+	
 	/**
 	 * SetUp.
-	 *
+	 * 
 	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 *            Signals that an I/O exception has occurred.
 	 */
 	@Before
 	public final void setUp() throws IOException {
-
+		
 		Log.setLog();
 		AudioPlayer.init();
-
+		
 		tileMap = new TileMap(tileSize);
-
+		
 		tileMap.loadTiles("/test/Test_Tile.gif");
 		tileMap.loadMap("/test/Test_Map.map");
 		player = new Player(tileMap);
 		projectile = new Projectile(tileMap);
-
+		
 	}
-
+	
 	/**
 	 * Update test.
 	 */
@@ -74,9 +74,9 @@ public class PlayerTest {
 		player.setDown(true);
 		player.update();
 		assertEquals(player.getProjectiles().getSize(), 1);
-
+		
 	}
-
+	
 	/**
 	 * Hit test.
 	 */
@@ -85,7 +85,7 @@ public class PlayerTest {
 		player.hit(1);
 		assertEquals(PlayerSave.getLivesP1(), 3);
 	}
-
+	
 	/**
 	 * Hit dead test.
 	 */
@@ -95,7 +95,7 @@ public class PlayerTest {
 		assertEquals(player.getIsAlive(), false);
 		assertEquals(player.getLives(), 0);
 	}
-
+	
 	/**
 	 * Hit out of bounds test.
 	 */
@@ -105,7 +105,7 @@ public class PlayerTest {
 		assertEquals(player.getIsAlive(), false);
 		assertEquals(player.getLives(), 0);
 	}
-
+	
 	/**
 	 * Hit flinch test.
 	 */
@@ -115,7 +115,7 @@ public class PlayerTest {
 		player.hit(1);
 		assertEquals(playerSave.getLivesP1(), 3);
 	}
-
+	
 	/**
 	 * Next position left test.
 	 */
@@ -127,7 +127,7 @@ public class PlayerTest {
 		player.getNextXPosition();
 		assertEquals(player.getDx(), -2.0, 0.1);
 	}
-
+	
 	/**
 	 * Next position right test.
 	 */
@@ -139,7 +139,7 @@ public class PlayerTest {
 		player.getNextXPosition();
 		assertEquals(player.getDx(), 2.0, 0.1);
 	}
-
+	
 	/**
 	 * Next position stop test.
 	 */
@@ -150,7 +150,7 @@ public class PlayerTest {
 		player.getNextXPosition();
 		assertEquals(player.getDx(), 0, 0);
 	}
-
+	
 	/**
 	 * Next position up test.
 	 */
@@ -160,7 +160,7 @@ public class PlayerTest {
 		player.getNextYPosition();
 		assertTrue(player.isJumping());
 	}
-
+	
 	/**
 	 * Next position falling test.
 	 */
@@ -171,7 +171,7 @@ public class PlayerTest {
 		player.getNextYPosition();
 		assertTrue(!player.isJumping());
 	}
-
+	
 	@Test
 	public final void BubbleSpeedPowerup() {
 		BubbleSpeedPowerup p = new BubbleSpeedPowerup(tileMap);
@@ -179,14 +179,14 @@ public class PlayerTest {
 		int bs = (int) player.getBubbleSpeed() * 10;
 		assertEquals(bs, 90);
 	}
-
+	
 	@Test
 	public final void BubbleSizePowerup() {
 		BubbleSizePowerup p = new BubbleSizePowerup(tileMap);
 		p.onPickup(player);
 		assertEquals(player.getBubbleSize(), 48);
 	}
-
+	
 	@Test
 	public final void MovementSpeedPowerup() {
 		MovementSpeedPowerup p = new MovementSpeedPowerup(tileMap);
@@ -196,7 +196,7 @@ public class PlayerTest {
 		assertEquals(ms, 10);
 		assertEquals(maxs, 40);
 	}
-
+	
 	@Test
 	public final void multiplayerTest() {
 		GameStateManager gsm = GameStateManager.getInstance();
@@ -213,5 +213,5 @@ public class PlayerTest {
 		assertFalse(level.getPlayer1().getIsAlive());
 		assertFalse(level.getPlayer2().getIsAlive());
 	}
-
+	
 }

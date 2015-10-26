@@ -1,23 +1,26 @@
 package sem.group47.main;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+
 import java.awt.Graphics2D;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 /**
- * This abstract test class must be extended
- * by any test class of a DrawComposite extension.
- * Please note that supplyDrawComposite() must be 
+ * This abstract test class must be extended by any test class of a
+ * DrawComposite extension. Please note that supplyDrawComposite() must be
  * implemented and should return the class under test.
+ * 
  * @author Karin
- *
+ * 
  */
 public abstract class DrawCompositeTest {
-
+	
 	/** The drawables */
 	private Drawable d1;
 	private Drawable d2;
@@ -27,8 +30,7 @@ public abstract class DrawCompositeTest {
 	private DrawComposite comp;
 	
 	/**
-	 * Collects the class under test and
-	 * mocks all required objects.
+	 * Collects the class under test and mocks all required objects.
 	 */
 	@Before
 	public void setUp() {
@@ -40,14 +42,13 @@ public abstract class DrawCompositeTest {
 	
 	/**
 	 * Should be implemented by concrete test class.
-	 * @return
-	 * 		An object of the class being tested.
+	 * 
+	 * @return An object of the class being tested.
 	 */
-	abstract DrawComposite supplyDrawComposite();
+	public abstract DrawComposite supplyDrawComposite();
 	
 	/**
-	 * Tests adding components and checks that
-	 * they are being drawn.
+	 * Tests adding components and checks that they are being drawn.
 	 */
 	@Test
 	public void testAddDraw() {
@@ -59,8 +60,8 @@ public abstract class DrawCompositeTest {
 	}
 	
 	/**
-	 * Tests the possibility to remove components
-	 * and checks that they are not drawn.
+	 * Tests the possibility to remove components and checks that they are not
+	 * drawn.
 	 */
 	@Test
 	public void testRemoveDraw() {
@@ -70,7 +71,7 @@ public abstract class DrawCompositeTest {
 		verify(d1, never()).draw(gr);
 	}
 	
-	/** 
+	/**
 	 * Tests the ability to get a child component.
 	 */
 	@Test
@@ -81,10 +82,9 @@ public abstract class DrawCompositeTest {
 	}
 	
 	/**
-	 * Checks the result of asking for a child
-	 * that does not exist.
+	 * Checks the result of asking for a child that does not exist.
 	 */
-	@Test(expected=IndexOutOfBoundsException.class)
+	@Test(expected = IndexOutOfBoundsException.class)
 	public void testGetChildWrong() {
 		comp.getChild(0);
 	}
@@ -93,5 +93,6 @@ public abstract class DrawCompositeTest {
 	 * No teardown necessary for now.
 	 */
 	@After
-	public void tearDown() {}
+	public void tearDown() {
+	}
 }
