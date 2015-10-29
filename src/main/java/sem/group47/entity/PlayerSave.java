@@ -1,7 +1,7 @@
 package sem.group47.entity;
 
 /**
- * The Class PlayerSave.
+ * The Class PlayerSave, creates a saveState of the Player.
  */
 public final class PlayerSave {
 
@@ -9,7 +9,7 @@ public final class PlayerSave {
 	 * Hidden constructor.
 	 */
 	private PlayerSave() {
-		}
+	}
 
 	/** The lives. */
 	private static int livesp1 = 3;
@@ -33,7 +33,7 @@ public final class PlayerSave {
 	private static boolean multiplayer = false;
 
 	/**
-	 * Inits the.
+	 * Initializes the attributes to be saved.
 	 */
 	public static void init() {
 		livesp1 = 3;

@@ -10,7 +10,8 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
- * Object which can be pickedup by the player and has a certain effect.
+ * The class PickupObject, object which can be picked up by the player and has a
+ * certain effect.
  *
  * @author Christian
  *
@@ -33,8 +34,8 @@ public abstract class PickupObject extends MapObject {
 		setMaxFallSpeed(6.0);
 
 		try {
-			BufferedImage spritesheet = ImageIO.read(
-					getClass().getResourceAsStream("/items/items.png"));
+			BufferedImage spritesheet = ImageIO.read(getClass()
+					.getResourceAsStream("/items/items.png"));
 			setSprite(spritesheet.getSubimage(
 					(int) Math.round(Math.random() * 7) * 32,
 					(int) Math.round(Math.random() * 7) * 32, 32, 32));

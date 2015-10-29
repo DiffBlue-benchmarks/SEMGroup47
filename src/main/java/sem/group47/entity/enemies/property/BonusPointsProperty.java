@@ -1,16 +1,22 @@
 package sem.group47.entity.enemies.property;
 
+/**
+ * The Class BonusPointsProperty.
+ */
 public class BonusPointsProperty extends EnemyPropertyDecorator {
 
-	public BonusPointsProperty(EnemyProperty newProperty) {
+	/**
+	 * Instantiates a new bonus points property.
+	 *
+	 * @param newProperty
+	 *            the new property
+	 */
+	public BonusPointsProperty(final EnemyProperty newProperty) {
 		super(newProperty);
 	}
 
-	/** Gets the point value.
-	 * @return
-	 *  how much points the enemy is worth
-	 **/
-	public int getPoints() {
+	@Override
+	public final int getPoints() {
 		return tempProperty.getPoints() + 15;
 	}
 }

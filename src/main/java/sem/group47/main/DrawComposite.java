@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Keeps a list of elements to draw, which may be added or removed.
+ * The Class DrawComposite, keeps a list of elements to draw, which may be added
+ * or removed.
  *
  * @author Karin
  *

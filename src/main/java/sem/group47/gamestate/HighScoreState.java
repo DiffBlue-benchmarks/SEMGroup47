@@ -48,7 +48,7 @@ public class HighScoreState extends GameState {
 			.toCharArray();
 
 	/**
-	 * Instantiates a new menu state.
+	 * Instantiates a new highscore state.
 	 *
 	 * @param gsm
 	 *            the gamestatemanager
@@ -68,7 +68,6 @@ public class HighScoreState extends GameState {
 		}
 
 	}
-
 
 	/**
 	 * Draws everything of the menu screen.

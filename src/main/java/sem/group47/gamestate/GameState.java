@@ -43,7 +43,7 @@ public abstract class GameState extends DrawComposite {
 	 * @param k
 	 *            the k
 	 */
-	public void keyPressed(int k) {
+	public void keyPressed(final int k) {
 	};
 
 	/**
@@ -52,7 +52,7 @@ public abstract class GameState extends DrawComposite {
 	 * @param k
 	 *            the k
 	 */
-	public void keyReleased(int k) {
+	public void keyReleased(final int k) {
 	};
 
 	/**

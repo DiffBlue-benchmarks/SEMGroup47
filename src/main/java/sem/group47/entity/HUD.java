@@ -14,14 +14,14 @@ import sem.group47.main.Drawable;
 import sem.group47.main.GamePanel;
 
 /**
- * The Class HUD.
+ * The Class HUD, which is used to create a heads up display.
  */
 public class HUD implements Drawable {
 
 	/** The player. */
 	private Player player1;
 
-	/** Player2. */
+	/** The player2. */
 	private Player player2;
 
 	/** The image. */
@@ -31,20 +31,19 @@ public class HUD implements Drawable {
 	private Font font;
 
 	/**
-	 * Initiates.
+	 * Constructor, which initiates the players, image and font.
 	 *
 	 * @param p1
 	 *            the p1
 	 * @param p2
 	 *            the p2
 	 */
-
 	public HUD(final Player p1, final Player p2) {
 		player1 = p1;
 		player2 = p2;
 		try {
-			image = ImageIO.read(getClass()
-					.getResourceAsStream("/hud/Bubble_Heart.png"));
+			image = ImageIO.read(getClass().getResourceAsStream(
+					"/hud/Bubble_Heart.png"));
 			font = new Font("Arial", Font.PLAIN, 28);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,10 +52,10 @@ public class HUD implements Drawable {
 	}
 
 	/**
-	 * Draw the HUD.
+	 * Draws the HUD for one player game and two player games.
 	 *
 	 * @param g
-	 *            the g
+	 *            the Graphics2D object g
 	 */
 	public final void draw(final Graphics2D g) {
 		g.setFont(font);
@@ -79,14 +78,13 @@ public class HUD implements Drawable {
 
 		if (player2 != null) {
 			for (int i = 0; i < player2.getLives() && i < 3; i++) {
-				g.drawImage(image, GamePanel.WIDTH - (i + 1) * 30, 0,
-						null);
+				g.drawImage(image, GamePanel.WIDTH - (i + 1) * 30, 0, null);
 			}
 			undrawnLives = player2.getLives() - 3;
 			if (undrawnLives > 0) {
 				g.setColor(Color.WHITE);
-				drawCenteredString("+" + undrawnLives,
-						GamePanel.WIDTH - 50, 54, g);
+				drawCenteredString("+" + undrawnLives, GamePanel.WIDTH - 50,
+						54, g);
 			}
 			g.setColor(Color.GREEN);
 			drawCenteredString("1UP", GamePanel.WIDTH - 130, 26, g);
@@ -96,8 +94,8 @@ public class HUD implements Drawable {
 			g.setColor(Color.RED);
 			drawCenteredString("SCORE", GamePanel.WIDTH - 325, 26, g);
 			g.setColor(Color.WHITE);
-			drawCenteredString("" + player2.getScore(),
-					GamePanel.WIDTH - 325, 54, g);
+			drawCenteredString("" + player2.getScore(), GamePanel.WIDTH - 325,
+					54, g);
 		}
 	}
 

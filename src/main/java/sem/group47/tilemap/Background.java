@@ -13,7 +13,7 @@ import sem.group47.entity.Animation;
 import sem.group47.main.GamePanel;
 
 /**
- * The Class Background.
+ * The Class Background, creates a background for the level.
  */
 public class Background {
 

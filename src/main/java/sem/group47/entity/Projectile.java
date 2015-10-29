@@ -7,7 +7,8 @@ import javax.imageio.ImageIO;
 import sem.group47.tilemap.TileMap;
 
 /**
- * The Class Projectile.
+ * The Class Projectile, represents a projectile that can be fired by the
+ * Player.
  */
 public class Projectile extends MapObject {
 
@@ -19,9 +20,6 @@ public class Projectile extends MapObject {
 
 	/** The last update time. */
 	private long lastUpdateTime;
-
-	/** The floating. */
-	private boolean floating;
 
 	/** The float speed. */
 	private double floatSpeed;
@@ -40,17 +38,14 @@ public class Projectile extends MapObject {
 		setCwidth(20);
 		setCheight(20);
 		setDx(4.7);
-
 		lifeTime = 7500;
 		floatDelay = 700;
 		lastUpdateTime = System.currentTimeMillis();
-		floating = false;
 		floatSpeed = .02;
 
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream(
-					  "/player/bubbles.png"));
+					.getResourceAsStream("/player/bubbles.png"));
 			setSprite(spritesheet.getSubimage(96, 0, 32, 32));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,43 +92,5 @@ public class Projectile extends MapObject {
 	public final void setFloatDelay(final int pFloatDelay) {
 		this.floatDelay = pFloatDelay;
 	}
-
-	/**
-	 * Checks if is floating.
-	 *
-	 * @return true, if is floating
-	 */
-	//public final boolean isFloating() {
-	//	return floating;
-	//}
-
-	/**
-	 * Sets the floating.
-	 *
-	 * @param pFloating
-	 *            the new floating
-	 */
-	//public final void setFloating(final boolean pFloating) {
-	//	this.floating = pFloating;
-	//}
-
-	/**
-	 * Gets the float speed.
-	 *
-	 * @return the float speed
-	 */
-	//public final double getFloatSpeed() {
-	//	return floatSpeed;
-	//}
-
-	/**
-	 * Sets the float speed.
-	 *
-	 * @param pFloatSpeed
-	 *            the new float speed
-	 */
-	//public final void setFloatSpeed(final double pFloatSpeed) {
-	//	this.floatSpeed = pFloatSpeed;
-	//}
 
 }
