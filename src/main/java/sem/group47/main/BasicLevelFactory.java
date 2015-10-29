@@ -113,9 +113,9 @@ public class BasicLevelFactory implements LevelFactory {
 			level.addEnemy(enemy);
 		}
 
-		Magiron aaron = new Magiron(tileMap);
-		aaron.setPosition(GamePanel.WIDTH / 2, -150);
-		level.addAaron(aaron);
+		Magiron magiron = new Magiron(tileMap);
+		magiron.setPosition(GamePanel.WIDTH / 2, -150);
+		level.addMagiron(magiron);
 
 		WaterfallHolder waterfall = new WaterfallHolder(tileMap,
 				GamePanel.WIDTH / 2, 0);

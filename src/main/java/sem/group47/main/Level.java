@@ -27,7 +27,7 @@ public class Level extends DrawComposite {
 	/** List of pickups in the level. */
 	private ArrayList<PickupObject> pickups;
 	/** The Magiron. */
-	private Magiron aaron;
+	private Magiron magiron;
 	/** The current tileMap. */
 	private TileMap tileMap;
 	/** The player 1. */
@@ -38,17 +38,16 @@ public class Level extends DrawComposite {
 	private Player player2;
 	/** The current level count. */
 	private int levelStepCount;
-	/** Time in seconds before Aaron appears. */
-	private static int AARON_APPEAR_DELAY = 45;
+	/** Time in seconds before magiron appears. */
+	private static int magiron_APPEAR_DELAY = 30;
 
 	/** The Waterfall. */
 	private WaterfallHolder waterfall;
 
 	/**
-	 * Constructor - initialises the lists and level count.
+	 * Constructor - initializes the lists and level count.
 	 */
 	public Level() {
-		PlayerSave.init();
 		multiplayer = PlayerSave.getMultiplayerEnabled();
 		clearComponents();
 		enemies = new ArrayList<Enemy>();
@@ -73,9 +72,9 @@ public class Level extends DrawComposite {
 	 * @param newEnemy
 	 *            - a Magiron
 	 */
-	public final void addAaron(final Magiron newEnemy) {
-		aaron = newEnemy;
-		addComponent(aaron);
+	public final void addMagiron(final Magiron newEnemy) {
+		magiron = newEnemy;
+		addComponent(magiron);
 	}
 
 	/**
@@ -104,6 +103,18 @@ public class Level extends DrawComposite {
 	 * Updates the level and the things it contains.
 	 */
 	public final void update() {
+		updatePlayers();
+		updateMagiron();
+		updateWaterfall();
+		updateEnemies();
+		updatePickups();
+		levelStepCount++;
+	}
+
+	/**
+	 * Updates the Players.
+	 */
+	public final void updatePlayers() {
 		if (player1.getLives() > 0) {
 			player1.update();
 			directEnemyCollision(player1);
@@ -120,12 +131,22 @@ public class Level extends DrawComposite {
 				removeComponent(player2);
 			}
 		}
+	}
 
-		if (levelStepCount == GamePanel.FPS * AARON_APPEAR_DELAY) {
-			targetAaron();
+	/**
+	 * Updates the Magiron.
+	 */
+	public final void updateMagiron() {
+		if (levelStepCount == GamePanel.FPS * magiron_APPEAR_DELAY) {
+			targetmagiron();
 		}
-		aaron.update();
+		magiron.update();
+	}
 
+	/**
+	 * Updates the waterfall.
+	 */
+	public final void updateWaterfall() {
 		if (waterfall != null) {
 			waterfall.update();
 			waterfall.playerInteraction(player1);
@@ -133,9 +154,12 @@ public class Level extends DrawComposite {
 				waterfall.playerInteraction(player2);
 			}
 		}
+	}
 
-		levelStepCount++;
-
+	/**
+	 * Updates the enemies.
+	 */
+	public final void updateEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 			if (enemies.get(i).projectileCollision(player1)) {
@@ -145,7 +169,12 @@ public class Level extends DrawComposite {
 				player2.kill();
 			}
 		}
+	}
 
+	/**
+	 * Updates the pickups.
+	 */
+	public final void updatePickups() {
 		for (int i = 0; i < pickups.size(); i++) {
 			if (pickups.get(i).checkCollision(player1)
 					|| (multiplayer && pickups.get(i).checkCollision(player2))) {
@@ -167,9 +196,9 @@ public class Level extends DrawComposite {
 	 *            the Player object to check collisions with
 	 */
 	public final void directEnemyCollision(final Player player) {
-		if (player.intersects(aaron)) {
+		if (player.intersects(magiron)) {
 			player.kill();
-			targetAaron();
+			targetmagiron();
 		}
 
 		for (int i = 0; i < enemies.size(); i++) {
@@ -212,21 +241,21 @@ public class Level extends DrawComposite {
 	}
 
 	/**
-	 * Target aaron.
+	 * Target magiron.
 	 */
-	private void targetAaron() {
+	private void targetmagiron() {
 		if (multiplayer) {
 			if (player1.getLives() > 0) {
 				if (Math.random() > .5d || player2.getLives() <= 0) {
-					aaron.setTarget(player1);
+					magiron.setTarget(player1);
 				} else {
-					aaron.setTarget(player2);
+					magiron.setTarget(player2);
 				}
 			} else {
-				aaron.setTarget(player2);
+				magiron.setTarget(player2);
 			}
 		} else {
-			aaron.setTarget(player1);
+			magiron.setTarget(player1);
 		}
 	}
 
@@ -241,6 +270,7 @@ public class Level extends DrawComposite {
 			if (!multiplayer || player2.getLives() <= 0) {
 
 				PlayerSave.setScoreP1(player1.getScore());
+
 				if (multiplayer) {
 					PlayerSave.setScoreP2(player2.getScore());
 				}
