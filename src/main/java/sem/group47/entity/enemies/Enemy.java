@@ -75,7 +75,7 @@ public class Enemy extends MapObject {
 	 *
 	 * @return true, if is caught
 	 */
-	public final boolean isCaught() {
+	public boolean isCaught() {
 		return caught;
 	}
 
@@ -148,7 +148,7 @@ public class Enemy extends MapObject {
 	 *
 	 * @return the properties
 	 */
-	public final EnemyProperty getProperties() {
+	public EnemyProperty getProperties() {
 		return properties;
 	}
 

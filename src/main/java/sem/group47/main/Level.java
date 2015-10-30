@@ -336,11 +336,44 @@ public class Level extends DrawComposite {
 	 */
 	public final void setPlayer2(final Player player) {
 		if (player2 != null) {
-			removeComponent(player1);
+			removeComponent(player2);
 		}
 		player2 = player;
 		addComponent(player);
 	}
+	
+	/**
+	 * Returns the list of enemies for testing purposes.
+	 * @return ArrayList of Enemy objects
+	 */
+	public final ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+	
+	/**
+	 * Returns the Magiron for testing purposes.
+	 * @return Magiron object
+	 */
+	public final Magiron getMagiron() {
+		return magiron;
+	}
+	
+	/**
+	 * Returns the list of pickups for testing purposes.
+	 * @return ArrayList of PickupObjects
+	 */
+	public final ArrayList<PickupObject> getPickups() {
+		return pickups;
+	}
+	
+	/**
+	 * Returns the waterfall holder.
+	 * @return WatterfallHolder object
+	 */
+	public final WaterfallHolder getWaterfall() {
+		return waterfall;
+	}
+
 
 	/**
 	 * Returns the player 2 or null if there is none.

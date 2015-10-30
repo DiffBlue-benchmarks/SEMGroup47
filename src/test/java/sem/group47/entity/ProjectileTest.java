@@ -13,30 +13,32 @@ import sem.group47.tilemap.TileMap;
 /**
  * The Class ProjectileTest.
  */
-public class ProjectileTest {
-
+public class ProjectileTest extends MapObjectTest {
+	
 	/** The tile map. */
 	private TileMap tileMap;
-
+	
 	/** The tile size. */
 	private int tileSize = 30;
-
+	
 	/** The projectile. */
 	private Projectile projectile;
-
+	
 	/**
 	 * Sets the up.
-	 *
+	 * 
 	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 *            Signals that an I/O exception has occurred.
 	 */
 	@Before
 	public final void setUp() throws IOException {
 		tileMap = new TileMap(tileSize);
 		tileMap.loadTiles("/test/Test_Tile.gif");
 		tileMap.loadMap("/test/Test_Map.map");
+		projectile = new Projectile(tileMap);
+		super.setup();
 	}
-
+	
 	/**
 	 * Test constructor.
 	 */
@@ -45,15 +47,28 @@ public class ProjectileTest {
 		projectile = new Projectile(tileMap);
 		assertEquals(projectile.getIsAlive(), true);
 	}
-
+	
 	/**
 	 * Test update.
 	 */
 	@Test
-	public final void testUpdate() {
-		projectile = new Projectile(tileMap);
+	public final void updateTest() {
+		double prevX = projectile.getx();
 		projectile.update();
-		assertTrue(projectile.getDx() > 0);
+		assertTrue(projectile.getx() != prevX);
 	}
-
+	
+	@Test
+	public final void floatTest() {
+		double prevY = projectile.getDy();
+		projectile.setFloatDelay(0);
+		projectile.update();
+		assertTrue(projectile.getDy() != prevY);
+	}
+	
+	@Override
+	public MapObject supplyMapObject() {
+		return projectile;
+	}
+	
 }
