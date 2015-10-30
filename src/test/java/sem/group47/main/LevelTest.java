@@ -1,24 +1,23 @@
 package sem.group47.main;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.stub;
+import static org.mockito.Mockito.verify;
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.stub;
-import static org.mockito.Mockito.verify;
 import sem.group47.entity.Player;
 import sem.group47.entity.WaterfallHolder;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.Magiron;
 import sem.group47.entity.pickups.PickupObject;
-
 
 public class LevelTest extends DrawCompositeTest {
 	
@@ -34,7 +33,7 @@ public class LevelTest extends DrawCompositeTest {
 	@Before
 	public void setUpLevelTest() {
 		gr = mock(Graphics2D.class);
-		setUp();
+		super.setUp();
 		level = new Level();
 	}
 	

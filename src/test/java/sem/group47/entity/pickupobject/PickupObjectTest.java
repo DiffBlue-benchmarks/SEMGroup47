@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import sem.group47.entity.MapObject;
 import sem.group47.entity.MapObjectTest;
@@ -19,15 +18,14 @@ public abstract class PickupObjectTest extends MapObjectTest {
 	
 	@Override
 	public MapObject supplyMapObject() {
-		return pickupObject;
+		return supplyPickupObject();
 	}
 	
 	public abstract PickupObject supplyPickupObject();
 	
 	@Before
 	public void setup() {
-		pickupObject = supplyPickupObject();
-		player = Mockito.mock(Player.class);
+		player = new Player(tileMap);
 	}
 	
 	@Test

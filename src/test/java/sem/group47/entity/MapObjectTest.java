@@ -22,7 +22,6 @@ public abstract class MapObjectTest {
 		mapobject = supplyMapObject();
 	}
 	
-	// doet het niet
 	// @Test
 	// public void getRectangleTest() {
 	// mapobject.setCheight(2);
@@ -43,7 +42,6 @@ public abstract class MapObjectTest {
 		assertTrue(r1.intersects(r3));
 	}
 	
-	// @Test
 	// public void calculateCornersTest() {
 	// TileMap tilemap = Mockito.mock(TileMap.class);
 	// int row = 0;
