@@ -80,20 +80,14 @@ public class LevelState extends GameState {
 	 */
 	private void setupLevel(int plevel, final boolean pmultiplayer) {
 
-		if (currentLevel != null) {
-			removeComponent(currentLevel);
-			removeComponent(hud);
-		}
 		if (plevel >= levelFileNames.length) {
 			plevel = 0;
 		}
 		this.level = plevel;
 		currentLevel = levelFactory.makeLevel(levelFileNames[level],
 				pmultiplayer);
-		addComponent(currentLevel);
 
 		hud = new HUD(currentLevel.getPlayer1(), currentLevel.getPlayer2());
-		addComponent(hud);
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
 	}
@@ -167,7 +161,9 @@ public class LevelState extends GameState {
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		bg.draw(gr);
 
-		drawComponents(gr);
+		currentLevel.draw(gr);
+		hud.draw(gr);
+		
 
 		if (paused) {
 			gr.setColor(new Color(0, 0, 0, 180));
