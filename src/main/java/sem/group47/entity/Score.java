@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import sem.group47.main.Drawable;
 
 /**
- * The Class Score.
+ * The Class Score, contains the logic for drawing the score.
  */
 public class Score implements Drawable {
 

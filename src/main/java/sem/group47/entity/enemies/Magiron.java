@@ -14,7 +14,7 @@ import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
 /**
- * The Class Magiron.
+ * The Class Magiron, contains the logic for creating a Magiron object.
  */
 public class Magiron extends Enemy {
 
@@ -41,10 +41,8 @@ public class Magiron extends Enemy {
 		try {
 			ImageReader reader = ImageIO.getImageReadersByFormatName("gif")
 					.next();
-			File input = new File(
-					"src/main/resources/enemies/magiaaron.gif");
-			ImageInputStream stream = ImageIO
-					.createImageInputStream(input);
+			File input = new File("src/main/resources/enemies/magiaaron.gif");
+			ImageInputStream stream = ImageIO.createImageInputStream(input);
 			reader.setInput(stream);
 
 			int count = reader.getNumImages(true);
@@ -66,11 +64,11 @@ public class Magiron extends Enemy {
 	/**
 	 * Sets the target.
 	 *
-	 * @param t
+	 * @param ptarget
 	 *            the new target
 	 */
-	public final void setTarget(final MapObject t) {
-		target = t;
+	public final void setTarget(final MapObject ptarget) {
+		target = ptarget;
 	}
 
 	/**
@@ -143,15 +141,15 @@ public class Magiron extends Enemy {
 	@Override
 	public final void draw(final Graphics2D g) {
 		if (facingRight) {
-			g.drawImage(animation.getImage(),
-					(int) (getXpos() - getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2),
-					getWidth(), getHeight(), null);
+			g.drawImage(animation.getImage(), (int) (getXpos() - getWidth()
+					/ (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2), getWidth(),
+					getHeight(), null);
 		} else {
-			g.drawImage(animation.getImage(),
-					(int) (getXpos() + getWidth() / (double) 2),
-					(int) (getYpos() - getHeight() / (double) 2),
-					-getWidth(), getHeight(), null);
+			g.drawImage(animation.getImage(), (int) (getXpos() + getWidth()
+					/ (double) 2),
+					(int) (getYpos() - getHeight() / (double) 2), -getWidth(),
+					getHeight(), null);
 		}
 	}
 

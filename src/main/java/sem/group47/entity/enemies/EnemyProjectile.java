@@ -6,7 +6,8 @@ import sem.group47.entity.MapObject;
 import sem.group47.tilemap.TileMap;
 
 /**
- * The Class EnemyProjectile.
+ * The Class EnemyProjectile, contains the logic for creating an enemy
+ * projectile object.
  */
 public class EnemyProjectile extends MapObject {
 
@@ -35,17 +36,14 @@ public class EnemyProjectile extends MapObject {
 		lastUpdateTime = System.currentTimeMillis();
 
 		try {
-			this.setSprite(ImageIO.read(getClass()
-					.getResourceAsStream("/enemies/enemy2.png")));
+			this.setSprite(ImageIO.read(getClass().getResourceAsStream(
+					"/enemies/enemy2.png")));
 			setSprite(getSprite().getSubimage(9 * 36, 0, 36, 36));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * Update.
-	 */
 	/**
 	 * Update.
 	 */

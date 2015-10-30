@@ -12,7 +12,7 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
- * The Class Player.
+ * The Class Player, contains all logic for creating a Player object.
  */
 public class Player extends MapObject {
 
@@ -56,7 +56,7 @@ public class Player extends MapObject {
 	private ArrayList<BufferedImage[]> sprites;
 
 	/** Number of frames for each animation action in order. */
-	private final int[] numFrames = {3, 2, 3 };
+	private final int[] numFrames = { 3, 2, 3 };
 
 	/** Animation actions # for idle state. */
 	public static final int IDLE = 0;
@@ -124,8 +124,8 @@ public class Player extends MapObject {
 				BufferedImage[] bi = new BufferedImage[numFrames[i]];
 
 				for (int j = 0; j < numFrames[i]; j++) {
-					bi[j] = spritesheet.getSubimage(j * getWidth(),
-							i * getHeight(), getWidth(), getHeight());
+					bi[j] = spritesheet.getSubimage(j * getWidth(), i
+							* getHeight(), getWidth(), getHeight());
 				}
 				sprites.add(bi);
 			}
@@ -166,8 +166,7 @@ public class Player extends MapObject {
 	 * @param enemies
 	 *            enemies
 	 */
-	public final void indirectEnemyCollision(
-			final ArrayList<Enemy> enemies) {
+	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
 		projectileList.indirectEnemyCollision(enemies);
 	}
 
@@ -252,8 +251,7 @@ public class Player extends MapObject {
 		if (lives < 0) {
 			lives = 0;
 			Log.warning("Player info wrong",
-					"Amount of lives of player was <0. "
-							+ "Set back to 0");
+					"Amount of lives of player was <0. " + "Set back to 0");
 		}
 		if (lives == 0) {
 			AudioPlayer.stopAll();
@@ -262,8 +260,7 @@ public class Player extends MapObject {
 			Log.info("Player Action", "Player died");
 		}
 
-		setPosition(getTileMap().getWidth() / 2,
-				getTileMap().getHeight() / 2);
+		setPosition(getTileMap().getWidth() / 2, getTileMap().getHeight() / 2);
 		setVector(0, 0);
 		flinching = true;
 		flinchTimer = System.nanoTime();
@@ -366,15 +363,13 @@ public class Player extends MapObject {
 	public final void draw(final Graphics2D g) {
 		if (!flinching || Math.round(Math.random() * 1) == 0) {
 			if (facingRight) {
-				g.drawImage(animation.getImage(),
-						(int) (getXpos() - getWidth() / (double) 2),
-						(int) (getYpos() - getHeight() / (double) 2),
-						null);
+				g.drawImage(animation.getImage(), (int) (getXpos() - getWidth()
+						/ (double) 2), (int) (getYpos() - getHeight()
+						/ (double) 2), null);
 			} else {
-				g.drawImage(animation.getImage(),
-						(int) (getXpos() + getWidth() / (double) 2),
-						(int) (getYpos() - getHeight() / (double) 2),
-						-getWidth(), getHeight(), null);
+				g.drawImage(animation.getImage(), (int) (getXpos() + getWidth()
+						/ (double) 2), (int) (getYpos() - getHeight()
+						/ (double) 2), -getWidth(), getHeight(), null);
 			}
 		}
 		projectileList.draw(g);
@@ -438,7 +433,7 @@ public class Player extends MapObject {
 	/**
 	 * Gets the lives.
 	 *
-	 *@return the lives
+	 * @return the lives
 	 */
 	public final int getLives() {
 		return lives;
@@ -447,7 +442,7 @@ public class Player extends MapObject {
 	/**
 	 * Gets the max lives.
 	 *
-	 *@return the max lives
+	 * @return the max lives
 	 */
 	public final int getMaxLives() {
 		return maxLives;
@@ -456,7 +451,7 @@ public class Player extends MapObject {
 	/**
 	 * Gets the bubble speed.
 	 *
-	 *@return the bubble speed
+	 * @return the bubble speed
 	 */
 	public final double getBubbleSpeed() {
 		return bubbleSpeed;

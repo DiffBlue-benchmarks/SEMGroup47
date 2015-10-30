@@ -91,28 +91,16 @@ public class TileMap implements Drawable {
 	 */
 	public final void loadTiles(final String s) {
 		try {
-
-			// get the tileset image which has
-			// 2 rows of 2 tiles of 30 pixels each
 			tileset = ImageIO.read(getClass().getResourceAsStream(s));
 
 			numTilesAcross = tileset.getWidth() / tileSize;
 			numTilesLength = tileset.getHeight() / tileSize;
 
-			// Creates a matrix from the tilesheet
 			tiles = new Tile[numTilesLength][numTilesAcross];
 
 			BufferedImage subimage;
 
-			// first row of tiles becomes normal typed
-			// (not able to collide)
-			// second row of tiles becomes semiblocked typed
-			// (able to collide on top)
-			// third row of tiles becomes blocked typed
-			// (able to collide)
 			for (int col = 0; col < numTilesAcross; col++) {
-				// gets the image based on its position
-				// inside the .gif
 				subimage = tileset.getSubimage(col * tileSize, 0, tileSize,
 						tileSize);
 				tiles[0][col] = new Tile(subimage, Tile.NORMAL);
@@ -142,39 +130,32 @@ public class TileMap implements Drawable {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-			// first row is the num of col
 			numCols = Integer.parseInt(br.readLine());
-			// second row is the num of rows
 			numRows = Integer.parseInt(br.readLine());
 
-			// map matrix
 			map = new int[numRows][numCols];
 			width = numCols * tileSize;
 			height = numRows * tileSize;
 
-			// enemies
 			enemyStartLocations = new ArrayList<int[]>();
 
-			// white spaces
 			String delims = "\\s+";
 
-			// read all lines
 			for (int row = 0; row < numRows; row++) {
 				String line = br.readLine();
-				// use white spaces to split as tokens
+
 				String[] tokens = null;
 				if (line != null) {
 					tokens = line.split(delims);
 				}
 
-				// put the values in the map matrix
 				for (int col = 0; col < numCols; col++) {
 					if (tokens[col].equals("e")) {
-						enemyStartLocations.add(new int[] {col, row,
+						enemyStartLocations.add(new int[] { col, row,
 								Enemy.LEVEL1_ENEMY });
 						map[row][col] = 0;
 					} else if (tokens[col].equals("f")) {
-						enemyStartLocations.add(new int[] {col, row,
+						enemyStartLocations.add(new int[] { col, row,
 								Enemy.PROJECTILE_ENEMEY });
 						map[row][col] = 0;
 					} else {
@@ -194,7 +175,6 @@ public class TileMap implements Drawable {
 	 *
 	 * @return enemy start locations
 	 */
-
 	public final ArrayList<int[]> getEnemyStartLocations() {
 		return enemyStartLocations;
 	}
@@ -254,20 +234,14 @@ public class TileMap implements Drawable {
 	 * @return the type
 	 */
 	public final int getType(final int row, final int col) {
-		// returns the value inside the
-		// multidimensional array e.g. tile 2
-
 		if (row >= this.getNumRows() || row < 0 || col >= this.getNumCols()
 				|| col < 0) {
 			return Tile.NORMAL;
 		}
 		int rc = map[row][col];
-
-		// 2 / 2 = 1
 		int r = rc / numTilesAcross;
-
-		// 2 % 2 = 0
 		int c = rc % numTilesAcross;
+
 		return tiles[r][c].getType();
 	}
 
@@ -280,36 +254,26 @@ public class TileMap implements Drawable {
 	public final void draw(final Graphics2D g) {
 
 		for (int row = 0; row < numRowsToDraw; row++) {
-
-			// all rows are drawn
 			if (row >= numRows) {
 				break;
 			}
 
 			for (int col = 0; col < numColsToDraw; col++) {
 
-				// all columns are drawn
 				if (col >= numCols) {
 					break;
 				}
 
-				// don't bother drawing it,
-				// cause its transparent
-				// (first block in .gif is a transparent image)
 				if (map[row][col] == 0) {
 					continue;
 				}
 
-				// translate the tile at the map
-				// coordinate into a coordinate in
-				// the tiles coordinate
 				int rc = map[row][col];
 				int r = rc / numTilesAcross;
 				int c = rc % numTilesAcross;
 
-				g.drawImage(tiles[r][c].getImage(),
-						(int) x + col * tileSize, (int) y + row * tileSize,
-						null);
+				g.drawImage(tiles[r][c].getImage(), (int) x + col * tileSize,
+						(int) y + row * tileSize, null);
 
 			}
 

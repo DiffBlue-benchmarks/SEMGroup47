@@ -3,7 +3,7 @@ package sem.group47.gamestate;
 import sem.group47.audio.AudioPlayer;
 
 /**
- * The Class GameStateManager.
+ * The Class GameStateManager, acts as a manager for all gamestates.
  */
 public final class GameStateManager {
 

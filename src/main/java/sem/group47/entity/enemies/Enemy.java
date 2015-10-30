@@ -10,7 +10,7 @@ import sem.group47.entity.enemies.property.EnemyProperty;
 import sem.group47.tilemap.TileMap;
 
 /**
- * The Class Enemy.
+ * The Class Enemy, contains the logic for creating an Enemy object.
  */
 public class Enemy extends MapObject {
 
@@ -61,9 +61,8 @@ public class Enemy extends MapObject {
 
 		if (spritesheet == null) {
 			try {
-				this.setSpriteSheet(
-						ImageIO.read(getClass().getResourceAsStream(
-								"/enemies/monsters_sprite.png")));
+				this.setSpriteSheet(ImageIO.read(getClass()
+						.getResourceAsStream("/enemies/monsters_sprite.png")));
 				setSprite(getSpriteSheet().getSubimage(1, 0, 36, 36));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -89,9 +88,6 @@ public class Enemy extends MapObject {
 		}
 	}
 
-	/**
-	 * Update.
-	 */
 	@Override
 	public void update() {
 	}
@@ -147,10 +143,21 @@ public class Enemy extends MapObject {
 		}
 	}
 
+	/**
+	 * Gets the properties.
+	 *
+	 * @return the properties
+	 */
 	public final EnemyProperty getProperties() {
 		return properties;
 	}
 
+	/**
+	 * Sets the properties.
+	 *
+	 * @param properties
+	 *            the new properties
+	 */
 	public final void setProperties(EnemyProperty properties) {
 		this.properties = properties;
 	}
@@ -179,7 +186,7 @@ public class Enemy extends MapObject {
 	 * @param time
 	 *            The new timeCaught
 	 */
-	public final void setTimeCaught(float time) {
+	public final void setTimeCaught(final float time) {
 		timeCaught = time;
 	}
 
@@ -198,7 +205,7 @@ public class Enemy extends MapObject {
 	 * @param bi
 	 *            the new sprite sheet
 	 */
-	public final void setSpriteSheet(BufferedImage bi) {
+	public final void setSpriteSheet(final BufferedImage bi) {
 		spritesheet = bi;
 	}
 
@@ -212,9 +219,10 @@ public class Enemy extends MapObject {
 	}
 
 	/**
-	 * Sets the caught.
+	 * Sets the enemy to caught.
 	 */
 	public void setCaught() {
 
 	}
+
 }

@@ -31,4 +31,8 @@
              files="[a-zA-Z0-9]*"/>
   <suppress checks="StaticVariableName"
              files="[a-zA-Z0-9]*"/>
+  <suppress checks="RegexpSingleline"
+             files="[a-zA-Z0-9]*"/>
+  <suppress checks="NoWhitespaceAfter"
+             files="[a-zA-Z0-9]*"/>
 </suppressions>

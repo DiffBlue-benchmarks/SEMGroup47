@@ -5,6 +5,10 @@ import java.util.ArrayList;
 
 import sem.group47.main.DrawComposite;
 
+/**
+ * The class ScoreList.
+ *
+ */
 public class ScoreList extends DrawComposite {
 
 	/** The scorelist. */
