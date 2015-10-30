@@ -9,22 +9,26 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.stub;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import sem.group47.entity.Player;
 import sem.group47.entity.WaterfallHolder;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.Magiron;
+import sem.group47.entity.enemies.property.EnemyProperty;
 import sem.group47.entity.pickups.PickupObject;
+import sem.group47.tilemap.TileMap;
 
 
 public class LevelTest extends DrawCompositeTest {
 	
 	private Level level;
+	private TileMap tm;
+	private Magiron magiron;
+	private Enemy enemy;
+	private Player player;
 	/** A graphics driver to be passed */
 	private Graphics2D gr;
+	private PickupObject pickup;
 	
 	@Override
 	public DrawComposite supplyDrawComposite() {
@@ -34,13 +38,19 @@ public class LevelTest extends DrawCompositeTest {
 	@Before
 	public void setUpLevelTest() {
 		gr = mock(Graphics2D.class);
+		tm = mock(TileMap.class);
 		setUp();
 		level = new Level();
+		level.setTileMap(tm);
+		Log.setLog();
+		magiron = mock(Magiron.class);
+		enemy = mock(Enemy.class);
+		player = mock(Player.class);
+		pickup = mock(PickupObject.class);
 	}
 	
 	@Test
 	public void addEnemyTest() {
-		Enemy enemy = mock(Enemy.class);
 		level.addEnemy(enemy);
 		ArrayList<Enemy> enemies = level.getEnemies();
 		level.draw(gr);
@@ -50,23 +60,19 @@ public class LevelTest extends DrawCompositeTest {
 	
 	@Test
 	public void addAaronTest() {
-		Magiron aaron = mock(Magiron.class);
-		level.addMagiron(aaron);
-		assertEquals(level.getMagiron(), aaron);
+		level.addMagiron(magiron);
+		assertEquals(level.getMagiron(), magiron);
 	}
 	
 	@Test
 	public void addWaterfallTest() {
 		WaterfallHolder waterfall = mock(WaterfallHolder.class);
 		level.addWaterfall(waterfall);
-		level.draw(gr);
 		assertEquals(level.getWaterfall(), waterfall);
-		verify(waterfall).draw(gr);
 	}
 	
 	@Test
 	public void addPickupTest() {
-		PickupObject pickup = mock(PickupObject.class);
 		level.addPickup(pickup);
 		level.draw(gr);
 		assertEquals(level.getPickups().get(0), pickup);
@@ -88,21 +94,18 @@ public class LevelTest extends DrawCompositeTest {
 	
 	@Test
 	public void setPlayer1Test() {
-		Player player = mock(Player.class);
 		level.setPlayer1(player);
 		assertEquals(level.getPlayer1(), player);
 	}
 	
 	@Test
 	public void setPlayer2Test() {
-		Player player = mock(Player.class);
 		level.setPlayer2(player);
 		assertEquals(level.getPlayer2(), player);
 	}
 	
 	@Test
 	public void hasLostFalseTest1Player() {
-		Player player = mock(Player.class);
 		level.setPlayer1(player);
 		stub(player.getLives()).toReturn(1);
 		assertFalse(level.hasLost());
@@ -110,10 +113,78 @@ public class LevelTest extends DrawCompositeTest {
 	
 	@Test
 	public void hasLostTrueTest1Player() {
-		Player player = mock(Player.class);
 		level.setPlayer1(player);
 		stub(player.getLives()).toReturn(0);
 		assertTrue(level.hasLost());
+	}
+	
+	@Test
+	public void directEnemyCollisionTest() {
+		level.setPlayer1(player);
+		level.addEnemy(enemy);
+		level.addMagiron(magiron);
+		stub(player.intersects(enemy)).toReturn(true);
+		stub(enemy.isCaught()).toReturn(true);
+		EnemyProperty property = mock(EnemyProperty.class);
+		stub(enemy.getProperties()).toReturn(property);
+		stub(property.getPoints()).toReturn(1);
+		level.directEnemyCollision(player);
+		verify(player).setScore(1);	
+	}
+	
+	@Test
+	public void directEnemyCollisionMagironTest() {
+		level.setPlayer1(player);
+		level.addEnemy(enemy);
+		level.addMagiron(magiron);
+		stub(player.intersects(magiron)).toReturn(true);
+		stub(player.intersects(enemy)).toReturn(false);
+		level.directEnemyCollision(player);
+		verify(player).kill();	
+		verify(magiron).setTarget(player);
+	}
+	
+	@Test
+	public void directEnemyCollisionHitTest() {
+		level.setPlayer1(player);
+		level.addEnemy(enemy);
+		level.addMagiron(magiron);
+		stub(player.intersects(magiron)).toReturn(false);
+		stub(player.intersects(enemy)).toReturn(true);
+		stub(enemy.isCaught()).toReturn(false);
+		stub(player.getLives()).toReturn(2);
+		level.directEnemyCollision(player);
+		verify(player).hit(1);	
+	}
+	
+	@Test
+	public void directEnemyCollisionHitKillTest() {
+		level.setPlayer1(player);
+		level.addEnemy(enemy);
+		level.addMagiron(magiron);
+		stub(player.intersects(magiron)).toReturn(false);
+		stub(player.intersects(enemy)).toReturn(true);
+		stub(enemy.isCaught()).toReturn(false);
+		stub(player.getLives()).toReturn(1);
+		level.directEnemyCollision(player);
+		verify(player).hit(1);	
+	}
+	
+	@Test
+	public void updateTest() {
+		level.setPlayer1(player);
+		level.addPickup(pickup);
+		level.addEnemy(enemy);
+		level.addMagiron(magiron);
+		WaterfallHolder waterfall = mock(WaterfallHolder.class);
+		level.addWaterfall(waterfall);
+		stub(player.getLives()).toReturn(1);
+		level.update();
+		verify(player).update();
+		verify(pickup).update();
+		verify(enemy).update();
+		verify(magiron).update();
+		verify(waterfall).update();
 	}
 	
 }
