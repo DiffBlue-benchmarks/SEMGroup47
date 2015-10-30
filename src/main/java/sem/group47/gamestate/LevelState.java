@@ -75,8 +75,8 @@ public class LevelState extends GameState {
 	 *
 	 * @param plevel
 	 *            number of level to be set
-	 * @param multiplayer
-	 *            the multiplayer
+	 * @param pmultiplayer
+	 *            the pmultiplayer
 	 */
 	private void setupLevel(int plevel, final boolean pmultiplayer) {
 
@@ -92,6 +92,11 @@ public class LevelState extends GameState {
 		AudioPlayer.loop(musicFileNames[level]);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sem.group47.gamestate.GameState#update()
+	 */
 	@Override
 	public final void update() {
 		if (!paused) {
@@ -132,27 +137,28 @@ public class LevelState extends GameState {
 			PlayerSave.setExtraLiveP1(currentLevel.getPlayer1().getExtraLive());
 
 			if (multiplayer) {
-
-				PlayerSave.setLivesP2(currentLevel.getPlayer2().getLives());
-				if (level == 0) {
-					PlayerSave
-							.setScoreP2(currentLevel.getPlayer2().getScore() + 100);
-				} else if (level == 1) {
-					PlayerSave
-							.setScoreP2(currentLevel.getPlayer2().getScore() + 200);
-				} else if (level == 2) {
-					PlayerSave
-							.setScoreP2(currentLevel.getPlayer2().getScore() + 300);
-				} else if (level == 3) {
-					PlayerSave
-							.setScoreP2(currentLevel.getPlayer2().getScore() + 400);
-				}
-				PlayerSave.setExtraLiveP2(currentLevel.getPlayer2()
-						.getExtraLive());
+				nextLevelMultiplayerCheck();
 			}
 			setupLevel(level + 1, multiplayer);
 			Log.info("Player Action", "Player reached next level");
 		}
+	}
+
+	/**
+	 * Next level multiplayer check.
+	 */
+	public final void nextLevelMultiplayerCheck() {
+		PlayerSave.setLivesP2(currentLevel.getPlayer2().getLives());
+		if (level == 0) {
+			PlayerSave.setScoreP2(currentLevel.getPlayer2().getScore() + 100);
+		} else if (level == 1) {
+			PlayerSave.setScoreP2(currentLevel.getPlayer2().getScore() + 200);
+		} else if (level == 2) {
+			PlayerSave.setScoreP2(currentLevel.getPlayer2().getScore() + 300);
+		} else if (level == 3) {
+			PlayerSave.setScoreP2(currentLevel.getPlayer2().getScore() + 400);
+		}
+		PlayerSave.setExtraLiveP2(currentLevel.getPlayer2().getExtraLive());
 	}
 
 	@Override
@@ -163,7 +169,6 @@ public class LevelState extends GameState {
 
 		currentLevel.draw(gr);
 		hud.draw(gr);
-		
 
 		if (paused) {
 			gr.setColor(new Color(0, 0, 0, 180));

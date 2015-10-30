@@ -142,17 +142,26 @@ public class BasicLevelFactory implements LevelFactory {
 		level.setPlayer1(player1);
 
 		if (multiplayer) {
-			Player player2 = new Player(tileMap);
-			player2.setPosition(tileMap.getTileSize()
-					* (tileMap.getNumCols() - 3 + .5d) - 5,
-					tileMap.getTileSize() * (tileMap.getNumRows() - 2 + .5d));
-			player2.setLives(PlayerSave.getLivesP2());
-			player2.setExtraLive(PlayerSave.getExtraLiveP2());
-			player2.setScore(PlayerSave.getScoreP2());
-			player2.setFacingRight(false);
-			level.setPlayer2(player2);
+			loadMultiPlayers(level);
 		}
 	};
+
+	/**
+	 * Loads the player2.
+	 * 
+	 * @param level
+	 */
+	public final void loadMultiPlayers(final Level level) {
+		Player player2 = new Player(tileMap);
+		player2.setPosition(tileMap.getTileSize()
+				* (tileMap.getNumCols() - 3 + .5d) - 5, tileMap.getTileSize()
+				* (tileMap.getNumRows() - 2 + .5d));
+		player2.setLives(PlayerSave.getLivesP2());
+		player2.setExtraLive(PlayerSave.getExtraLiveP2());
+		player2.setScore(PlayerSave.getScoreP2());
+		player2.setFacingRight(false);
+		level.setPlayer2(player2);
+	}
 
 	/**
 	 * loads the powerups.
