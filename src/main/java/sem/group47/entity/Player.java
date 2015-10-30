@@ -273,19 +273,9 @@ public class Player extends MapObject {
 	 */
 	public final void getNextXPosition() {
 		if (isLeft()) {
-			isIdle = false;
-			Log.info("Player Action", "Player moved left");
-			setDx(getDx() - getMovSpeed());
-			if (getDx() < -getMaxSpeed()) {
-				setDx(-getMaxSpeed());
-			}
+			getNextLeftXPosition();
 		} else if (isRight()) {
-			isIdle = false;
-			Log.info("Player Action", "Player moved right");
-			setDx(getDx() + getMovSpeed());
-			if (getDx() > getMaxSpeed()) {
-				setDx(getMaxSpeed());
-			}
+			getNextRightXPosition();
 		} else {
 			isIdle = true;
 			setDx(0);
@@ -294,6 +284,34 @@ public class Player extends MapObject {
 			setFacingRight(true);
 		} else if (getDx() < 0) {
 			setFacingRight(false);
+		}
+	}
+
+	/**
+	 * Gets the next left x position.
+	 *
+	 * @return the next left x position
+	 */
+	private void getNextLeftXPosition() {
+		isIdle = false;
+		Log.info("Player Action", "Player moved left");
+		setDx(getDx() - getMovSpeed());
+		if (getDx() < -getMaxSpeed()) {
+			setDx(-getMaxSpeed());
+		}
+	}
+
+	/**
+	 * Gets the next right x position.
+	 *
+	 * @return the next right x position
+	 */
+	private void getNextRightXPosition() {
+		isIdle = false;
+		Log.info("Player Action", "Player moved right");
+		setDx(getDx() + getMovSpeed());
+		if (getDx() > getMaxSpeed()) {
+			setDx(getMaxSpeed());
 		}
 	}
 
@@ -312,16 +330,25 @@ public class Player extends MapObject {
 			setFalling(true);
 		}
 		if (isFalling()) {
-			setDy(getDy() + getFallSpeed());
-			if (getDy() > 0) {
-				setJumping(false);
-			}
-			if (getDy() < 0 && !isJumping()) {
-				setDy(getDy() + getStopJumpSpeed());
-			}
-			if (getDy() > getMaxFallSpeed()) {
-				setDy(getMaxFallSpeed());
-			}
+			getFallingPosition();
+		}
+	}
+
+	/**
+	 * Gets the falling position.
+	 *
+	 * @return the falling position
+	 */
+	private void getFallingPosition() {
+		setDy(getDy() + getFallSpeed());
+		if (getDy() > 0) {
+			setJumping(false);
+		}
+		if (getDy() < 0 && !isJumping()) {
+			setDy(getDy() + getStopJumpSpeed());
+		}
+		if (getDy() > getMaxFallSpeed()) {
+			setDy(getMaxFallSpeed());
 		}
 	}
 
@@ -329,7 +356,6 @@ public class Player extends MapObject {
 	 * Update function for the animations that are rendered.
 	 */
 	public final void updateAnimation() {
-
 		if (isAttacking) {
 			if (currentAction != ATTACK) {
 				currentAction = ATTACK;
