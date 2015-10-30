@@ -67,7 +67,7 @@ public class Magiron extends Enemy {
 	 * @param ptarget
 	 *            the new target
 	 */
-	public final void setTarget(final MapObject ptarget) {
+	public void setTarget(final MapObject ptarget) {
 		target = ptarget;
 	}
 
@@ -75,7 +75,7 @@ public class Magiron extends Enemy {
 	 * Update, updates the animation moving towards the target.
 	 */
 	@Override
-	public final void update() {
+	public void update() {
 		animation.update();
 		if (target != null) {
 			moveTowards(target);

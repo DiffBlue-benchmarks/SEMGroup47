@@ -41,7 +41,7 @@ public class WaterfallHolder extends MapObject {
 	}
 
 	@Override
-	public final void update() {
+	public void update() {
 		for (int i = 0; i < parts.size(); i++) {
 			Waterfall part = parts.get(i);
 			part.update();
@@ -61,7 +61,7 @@ public class WaterfallHolder extends MapObject {
 	 * @param player
 	 *            the player
 	 */
-	public final void playerInteraction(final Player player) {
+	public void playerInteraction(final Player player) {
 		for (int i = 0; i < parts.size(); i++) {
 			if (parts.get(i).playerInteraction(player)) {
 				return;

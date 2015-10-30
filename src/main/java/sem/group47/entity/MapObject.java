@@ -177,7 +177,7 @@ public abstract class MapObject implements Drawable {
 	 *            the obj
 	 * @return true if they intersect
 	 */
-	public final boolean intersects(final MapObject obj) {
+	public boolean intersects(final MapObject obj) {
 		return this.getRectangle().intersects(obj.getRectangle());
 	}
 
@@ -195,7 +195,7 @@ public abstract class MapObject implements Drawable {
 	 * modifies xposNew and yposNew so that they don't intersect with the
 	 * tileMap.
 	 */
-	public final void checkTileMapCollision() {
+	public void checkTileMapCollision() {
 		currCol = (int) xpos / tileSize;
 		currRow = (int) ypos / tileSize;
 

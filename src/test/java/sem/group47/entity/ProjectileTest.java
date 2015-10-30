@@ -35,6 +35,7 @@ public class ProjectileTest extends MapObjectTest {
 		tileMap = new TileMap(tileSize);
 		tileMap.loadTiles("/test/Test_Tile.gif");
 		tileMap.loadMap("/test/Test_Map.map");
+		projectile = new Projectile(tileMap);
 	}
 
 	/**
@@ -50,10 +51,28 @@ public class ProjectileTest extends MapObjectTest {
 	 * Test update.
 	 */
 	@Test
-	public final void testUpdate() {
-		projectile = new Projectile(tileMap);
+	public final void updateTest() {
+		double prevX = projectile.getx();
 		projectile.update();
-		assertTrue(projectile.getDx() > 0);
+		assertTrue(projectile.getx() != prevX);
+	}
+	
+	@Test
+	public final void floatTest() {
+		double prevY = projectile.getDy();
+		projectile.setFloatDelay(0);
+		projectile.update();
+		assertTrue(projectile.getDy() != prevY);
+	}
+
+	@Override
+	public MapObject supplyMapObject() {
+		return projectile;
+	}
+	
+	@Override
+	public MapObject supplyMapObject() {
+		return projectile;
 	}
 
 	@Override

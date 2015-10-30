@@ -17,33 +17,26 @@ import sem.group47.gamestate.GameStateManager;
 import sem.group47.gamestate.LevelState;
 import sem.group47.main.Level;
 import sem.group47.main.Log;
-import sem.group47.tilemap.TileMap;
 
 /**
  * The Class PlayerTest.
  */
 public class PlayerTest extends MapObjectTest {
 	
-	/** The tile map. */
-	private TileMap tileMap;
-	
-	/** The tile size. */
-	private int tileSize = 30;
-	
 	/** The num of cols. */
-	private int numOfCols = 2;
+	public int numOfCols = 2;
 	
 	/** The num of rows. */
-	private int numOfRows = 2;
+	public int numOfRows = 2;
 	
 	/** The player. */
-	private Player player;
+	public Player player;
 	
 	/** The player save state. */
-	private PlayerSave playerSave;
+	public PlayerSave playerSave;
 	
 	/** The projectile. */
-	private Projectile projectile;
+	public Projectile projectile;
 	
 	/**
 	 * SetUp.
@@ -57,13 +50,10 @@ public class PlayerTest extends MapObjectTest {
 		Log.setLog();
 		AudioPlayer.init();
 		
-		tileMap = new TileMap(tileSize);
-		
 		tileMap.loadTiles("/test/Test_Tile.gif");
 		tileMap.loadMap("/test/Test_Map.map");
 		player = new Player(tileMap);
 		projectile = new Projectile(tileMap);
-		
 	}
 	
 	/**
@@ -74,7 +64,6 @@ public class PlayerTest extends MapObjectTest {
 		player.setDown(true);
 		player.update();
 		assertEquals(player.getProjectiles().getSize(), 1);
-		
 	}
 	
 	/**
