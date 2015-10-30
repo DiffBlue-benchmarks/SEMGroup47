@@ -164,12 +164,11 @@ public class GroundEnemy extends Enemy {
 			if (System.nanoTime() - 1e8 > animationChangeTime) {
 				animationChangeTime = System.nanoTime();
 				currentSprite += 1;
-				if (currentSprite > 2) {
+				if (currentSprite > 2)
 					currentSprite = 1;
 					setSprite(getSpriteSheet().getSubimage(currentSprite * 36,
 							getProperties().getSpriteSheetY() * 36, 36, 36));
 					setInverseDraw(true);
-				}
 			}
 		}
 
@@ -198,12 +197,6 @@ public class GroundEnemy extends Enemy {
 		}
 	}
 
-	/**
-	 * Draws the projectile.
-	 *
-	 * @param gr
-	 *            the graphics
-	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
 		super.draw(gr);
