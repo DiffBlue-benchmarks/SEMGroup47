@@ -5,8 +5,7 @@ public class LevelTest extends DrawCompositeTest {
 	
 	@Override
 	public DrawComposite supplyDrawComposite() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Level();
 	}
 	
 }
