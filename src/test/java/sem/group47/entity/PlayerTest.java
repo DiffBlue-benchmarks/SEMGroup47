@@ -214,4 +214,9 @@ public class PlayerTest extends MapObjectTest {
 		assertFalse(level.getPlayer2().getIsAlive());
 	}
 	
+	@Override
+	public MapObject supplyMapObject() {
+		return player;
+	}
+	
 }
