@@ -1,7 +1,7 @@
 package sem.group47.entity.enemies.property;
 
 /**
- * The base enemy properties.
+ * The class BaseEnemyProperty, contains the base enemy properties.
  *
  * @author Christian
  *
@@ -19,7 +19,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return y coord
 	 */
-	public int getSpriteSheetY() {
+	public final int getSpriteSheetY() {
 		return 0;
 	}
 
@@ -28,7 +28,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return a boolean
 	 */
-	public boolean canFire() {
+	public final boolean canFire() {
 		return false;
 	}
 
@@ -37,7 +37,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return speed
 	 */
-	public float getProjectileSpeed() {
+	public final float getProjectileSpeed() {
 		return 2.5f;
 	}
 
@@ -46,7 +46,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return in seconds
 	 */
-	public int getFireDelay() {
+	public final int getFireDelay() {
 		return 1500;
 	}
 
@@ -55,7 +55,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return the angry movement speed
 	 */
-	public double getAngryMovSpeed() {
+	public final double getAngryMovSpeed() {
 		return 2.0d;
 	}
 
@@ -82,7 +82,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return how much points the enemy is worth
 	 **/
-	public int getPoints() {
+	public final int getPoints() {
 		return 10;
 	}
 
@@ -91,7 +91,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return float speed
 	 **/
-	public double getFloatSpeed() {
+	public final double getFloatSpeed() {
 		return .1;
 	}
 
@@ -100,7 +100,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return the maximum float speed
 	 **/
-	public double getMaxFloatSpeed() {
+	public final double getMaxFloatSpeed() {
 		return -4.5;
 	}
 
@@ -109,7 +109,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return time in seconds
 	 **/
-	public float getBreakFreeTime() {
+	public final float getBreakFreeTime() {
 		return 10;
 	}
 
@@ -118,7 +118,7 @@ public class BaseEnemyProperty implements EnemyProperty {
 	 *
 	 * @return time in seconds
 	 **/
-	public float getAngryTime() {
+	public final float getAngryTime() {
 		return 10;
 	}
 }

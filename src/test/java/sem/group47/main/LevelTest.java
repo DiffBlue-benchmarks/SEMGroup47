@@ -51,7 +51,7 @@ public class LevelTest extends DrawCompositeTest {
 	@Test
 	public void addAaronTest() {
 		Magiron aaron = mock(Magiron.class);
-		level.addAaron(aaron);
+		level.addMagiron(aaron);
 		assertEquals(level.getMagiron(), aaron);
 	}
 	

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
-import sem.group47.entity.Waterfall;
 import sem.group47.entity.WaterfallHolder;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.Magiron;
@@ -15,8 +14,8 @@ import sem.group47.entity.pickups.PickupObject;
 import sem.group47.tilemap.TileMap;
 
 /**
- * Level contains the logic of objects and their interactions. It requires a
- * LevelFactory to initialise it.
+ * The class Level, contains the logic of objects and their interactions. It
+ * requires a LevelFactory to initialize it.
  *
  * @author Karin
  *
@@ -28,7 +27,7 @@ public class Level extends DrawComposite {
 	/** List of pickups in the level. */
 	private ArrayList<PickupObject> pickups;
 	/** The Magiron. */
-	private Magiron aaron;
+	private Magiron magiron;
 	/** The current tileMap. */
 	private TileMap tileMap;
 	/** The player 1. */
@@ -39,20 +38,16 @@ public class Level extends DrawComposite {
 	private Player player2;
 	/** The current level count. */
 	private int levelStepCount;
-	/** Time in seconds before Aaron appears. **/
-	private static int AARON_APPEAR_DELAY = 45;
-
-	/** Waterfall move delay. **/
-	private static int WATERFALL_MOVE_DELAY = 5;
+	/** Time in seconds before magiron appears. */
+	private static int magiron_APPEAR_DELAY = 30;
 
 	/** The Waterfall. */
 	private WaterfallHolder waterfall;
 
 	/**
-	 * Constructor - initialises the lists and level count.
+	 * Constructor - initializes the lists and level count.
 	 */
 	public Level() {
-		PlayerSave.init();
 		multiplayer = PlayerSave.getMultiplayerEnabled();
 		clearComponents();
 		enemies = new ArrayList<Enemy>();
@@ -77,9 +72,9 @@ public class Level extends DrawComposite {
 	 * @param newEnemy
 	 *            - a Magiron
 	 */
-	public final void addAaron(final Magiron newEnemy) {
-		aaron = newEnemy;
-		addComponent(aaron);
+	public final void addMagiron(final Magiron newEnemy) {
+		magiron = newEnemy;
+		addComponent(magiron);
 	}
 
 	/**
@@ -108,6 +103,18 @@ public class Level extends DrawComposite {
 	 * Updates the level and the things it contains.
 	 */
 	public final void update() {
+		updatePlayers();
+		updateMagiron();
+		updateWaterfall();
+		updateEnemies();
+		updatePickups();
+		levelStepCount++;
+	}
+
+	/**
+	 * Updates the Players.
+	 */
+	public final void updatePlayers() {
 		if (player1.getLives() > 0) {
 			player1.update();
 			directEnemyCollision(player1);
@@ -124,36 +131,53 @@ public class Level extends DrawComposite {
 				removeComponent(player2);
 			}
 		}
+	}
 
-		if (levelStepCount == GamePanel.FPS * AARON_APPEAR_DELAY) {
-			targetAaron();
+	/**
+	 * Updates the Magiron.
+	 */
+	public final void updateMagiron() {
+		if (levelStepCount == GamePanel.FPS * magiron_APPEAR_DELAY) {
+			targetmagiron();
 		}
-		aaron.update();
+		magiron.update();
+	}
 
+	/**
+	 * Updates the waterfall.
+	 */
+	public final void updateWaterfall() {
 		if (waterfall != null) {
 			waterfall.update();
 			waterfall.playerInteraction(player1);
-			if(multiplayer) {
+			if (multiplayer) {
 				waterfall.playerInteraction(player2);
 			}
 		}
+	}
 
-		levelStepCount++;
-
+	/**
+	 * Updates the enemies.
+	 */
+	public final void updateEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 			if (enemies.get(i).projectileCollision(player1)) {
 				player1.kill();
 			}
-			if (multiplayer
-					&& enemies.get(i).projectileCollision(player2)) {
+			if (multiplayer && enemies.get(i).projectileCollision(player2)) {
 				player2.kill();
 			}
 		}
+	}
 
+	/**
+	 * Updates the pickups.
+	 */
+	public final void updatePickups() {
 		for (int i = 0; i < pickups.size(); i++) {
-			if (pickups.get(i).checkCollision(player1) || (multiplayer
-					&& pickups.get(i).checkCollision(player2))) {
+			if (pickups.get(i).checkCollision(player1)
+					|| (multiplayer && pickups.get(i).checkCollision(player2))) {
 				AudioPlayer.play("extraLife");
 				removeComponent(pickups.get(i));
 				pickups.remove(i);
@@ -172,9 +196,9 @@ public class Level extends DrawComposite {
 	 *            the Player object to check collisions with
 	 */
 	public final void directEnemyCollision(final Player player) {
-		if (player.intersects(aaron)) {
+		if (player.intersects(magiron)) {
 			player.kill();
-			targetAaron();
+			targetmagiron();
 		}
 
 		for (int i = 0; i < enemies.size(); i++) {
@@ -184,19 +208,18 @@ public class Level extends DrawComposite {
 					Fruit fr = new Fruit(tileMap);
 
 					if (enemies.get(i).getXpos() > 400) {
-						fr.setPosition(enemies.get(i).getXpos() - 72,
-								enemies.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() - 72, enemies
+								.get(i).getYpos());
 						fr.setDx(-4);
 					} else {
-						fr.setPosition(enemies.get(i).getXpos() + 72,
-								enemies.get(i).getYpos());
+						fr.setPosition(enemies.get(i).getXpos() + 72, enemies
+								.get(i).getYpos());
 						fr.setDx(4);
 					}
 					pickups.add(fr);
 					addComponent(fr);
 
-					player.setScore(
-							enemies.get(i).getProperties().getPoints());
+					player.setScore(enemies.get(i).getProperties().getPoints());
 					removeComponent(enemies.get(i));
 					enemies.remove(i);
 
@@ -205,14 +228,12 @@ public class Level extends DrawComposite {
 
 				} else if (player.getLives() > 1) {
 					player.hit(1);
-					Log.info("Player Action",
-							"Player collision with Enemy");
+					Log.info("Player Action", "Player collision with Enemy");
 
 				} else {
 					AudioPlayer.play("crash");
 					player.hit(1);
-					Log.info("Player Action",
-							"Player collision with Enemy");
+					Log.info("Player Action", "Player collision with Enemy");
 				}
 			}
 		}
@@ -220,21 +241,21 @@ public class Level extends DrawComposite {
 	}
 
 	/**
-	 * Target aaron.
+	 * Target magiron.
 	 */
-	private void targetAaron() {
+	private void targetmagiron() {
 		if (multiplayer) {
 			if (player1.getLives() > 0) {
 				if (Math.random() > .5d || player2.getLives() <= 0) {
-					aaron.setTarget(player1);
+					magiron.setTarget(player1);
 				} else {
-					aaron.setTarget(player2);
+					magiron.setTarget(player2);
 				}
 			} else {
-				aaron.setTarget(player2);
+				magiron.setTarget(player2);
 			}
 		} else {
-			aaron.setTarget(player1);
+			magiron.setTarget(player1);
 		}
 	}
 
@@ -249,6 +270,7 @@ public class Level extends DrawComposite {
 			if (!multiplayer || player2.getLives() <= 0) {
 
 				PlayerSave.setScoreP1(player1.getScore());
+
 				if (multiplayer) {
 					PlayerSave.setScoreP2(player2.getScore());
 				}
@@ -333,7 +355,7 @@ public class Level extends DrawComposite {
 	 * @return Magiron object
 	 */
 	public final Magiron getMagiron() {
-		return aaron;
+		return magiron;
 	}
 	
 	/**
@@ -371,7 +393,12 @@ public class Level extends DrawComposite {
 		return tileMap;
 	}
 
-	/** Set a tileMap. */
+	/**
+	 * Set a tileMap.
+	 *
+	 * @param tilemap
+	 *            the new tile map
+	 */
 	public final void setTileMap(final TileMap tilemap) {
 		if (tileMap != null) {
 			removeComponent(tileMap);

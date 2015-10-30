@@ -14,16 +14,16 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.Background;
 
 /**
- * The Class Level1State.
+ * The Class LevelState.
  */
 public class LevelState extends GameState {
 
 	/** level file names. **/
-	private String[] levelFileNames = new String[] {"level1.map",
+	private String[] levelFileNames = new String[] { "level1.map",
 			"level2.map", "level3.map", "level4.map" };
 
 	/** file names of music. **/
-	private String[] musicFileNames = new String[] {"level1", "level2",
+	private String[] musicFileNames = new String[] { "level1", "level2",
 			"level3", "level4" };
 
 	/** Current level. **/
@@ -50,7 +50,7 @@ public class LevelState extends GameState {
 	private BasicLevelFactory levelFactory;
 
 	/**
-	 * Instantiates a new level1 state.
+	 * Instantiates a new level state.
 	 *
 	 * @param gsm
 	 *            the gamestatemanager.
@@ -60,9 +60,6 @@ public class LevelState extends GameState {
 		levelFactory = new BasicLevelFactory();
 	}
 
-	/**
-	 * Init.
-	 */
 	@Override
 	public final void init() {
 		PlayerSave.init();
@@ -78,31 +75,23 @@ public class LevelState extends GameState {
 	 *
 	 * @param plevel
 	 *            number of level to be set
+	 * @param multiplayer
+	 *            the multiplayer
 	 */
-	private void setupLevel(int plevel, final boolean multiplayer) {
+	private void setupLevel(int plevel, final boolean pmultiplayer) {
 
-		if (currentLevel != null) {
-			removeComponent(currentLevel);
-			removeComponent(hud);
-		}
 		if (plevel >= levelFileNames.length) {
 			plevel = 0;
 		}
 		this.level = plevel;
 		currentLevel = levelFactory.makeLevel(levelFileNames[level],
-				multiplayer);
-		addComponent(currentLevel);
+				pmultiplayer);
 
-		hud = new HUD(currentLevel.getPlayer1(),
-				currentLevel.getPlayer2());
-		addComponent(hud);
+		hud = new HUD(currentLevel.getPlayer1(), currentLevel.getPlayer2());
 		AudioPlayer.stopAll();
 		AudioPlayer.loop(musicFileNames[level]);
 	}
 
-	/**
-	 * Update the player and enemies.
-	 */
 	@Override
 	public final void update() {
 		if (!paused) {
@@ -128,59 +117,53 @@ public class LevelState extends GameState {
 		if (currentLevel.hasWon()) {
 			PlayerSave.setLivesP1(currentLevel.getPlayer1().getLives());
 			if (level == 0) {
-				PlayerSave.setScoreP1(
-						currentLevel.getPlayer1().getScore() + 100);
+				PlayerSave
+						.setScoreP1(currentLevel.getPlayer1().getScore() + 100);
 			} else if (level == 1) {
-				PlayerSave.setScoreP1(
-						currentLevel.getPlayer1().getScore() + 200);
+				PlayerSave
+						.setScoreP1(currentLevel.getPlayer1().getScore() + 200);
 			} else if (level == 2) {
-				PlayerSave.setScoreP1(
-						currentLevel.getPlayer1().getScore() + 300);
+				PlayerSave
+						.setScoreP1(currentLevel.getPlayer1().getScore() + 300);
 			} else if (level == 3) {
-				PlayerSave.setScoreP1(
-						currentLevel.getPlayer1().getScore() + 400);
+				PlayerSave
+						.setScoreP1(currentLevel.getPlayer1().getScore() + 400);
 			}
-			PlayerSave.setExtraLiveP1(
-					currentLevel.getPlayer1().getExtraLive());
+			PlayerSave.setExtraLiveP1(currentLevel.getPlayer1().getExtraLive());
 
 			if (multiplayer) {
 
-				PlayerSave
-						.setLivesP2(currentLevel.getPlayer2().getLives());
+				PlayerSave.setLivesP2(currentLevel.getPlayer2().getLives());
 				if (level == 0) {
-					PlayerSave.setScoreP2(
-							currentLevel.getPlayer2().getScore() + 100);
+					PlayerSave
+							.setScoreP2(currentLevel.getPlayer2().getScore() + 100);
 				} else if (level == 1) {
-					PlayerSave.setScoreP2(
-							currentLevel.getPlayer2().getScore() + 200);
+					PlayerSave
+							.setScoreP2(currentLevel.getPlayer2().getScore() + 200);
 				} else if (level == 2) {
-					PlayerSave.setScoreP2(
-							currentLevel.getPlayer2().getScore() + 300);
+					PlayerSave
+							.setScoreP2(currentLevel.getPlayer2().getScore() + 300);
 				} else if (level == 3) {
-					PlayerSave.setScoreP2(
-							currentLevel.getPlayer2().getScore() + 400);
+					PlayerSave
+							.setScoreP2(currentLevel.getPlayer2().getScore() + 400);
 				}
-				PlayerSave.setExtraLiveP2(
-						currentLevel.getPlayer2().getExtraLive());
+				PlayerSave.setExtraLiveP2(currentLevel.getPlayer2()
+						.getExtraLive());
 			}
 			setupLevel(level + 1, multiplayer);
 			Log.info("Player Action", "Player reached next level");
 		}
 	}
 
-	/**
-	 * Draw everything of level 1.
-	 *
-	 * @param gr
-	 *            the gr
-	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
 		gr.setColor(Color.BLACK);
 		gr.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		bg.draw(gr);
 
-		drawComponents(gr);
+		currentLevel.draw(gr);
+		hud.draw(gr);
+		
 
 		if (paused) {
 			gr.setColor(new Color(0, 0, 0, 180));
@@ -200,12 +183,6 @@ public class LevelState extends GameState {
 		return currentLevel;
 	}
 
-	/**
-	 * keyPressed.
-	 *
-	 * @param k
-	 *            the k
-	 */
 	@Override
 	public final void keyPressed(final int k) {
 		switch (k) {
@@ -247,12 +224,6 @@ public class LevelState extends GameState {
 		}
 	}
 
-	/**
-	 * keyReleased.
-	 *
-	 * @param k
-	 *            the k
-	 */
 	@Override
 	public final void keyReleased(final int k) {
 		switch (k) {

@@ -5,20 +5,34 @@ import java.util.ArrayList;
 
 import sem.group47.tilemap.TileMap;
 
+/**
+ * The Class WaterfallHolder, which acts as a holder for multiple Waterfall
+ * objects.
+ */
 public class WaterfallHolder extends MapObject {
 
-	private static final int LENGTH = 15; 
-	ArrayList<Waterfall> parts;
+	/** The Constant LENGTH. */
+	private static final int LENGTH = 15;
+
+	/** The Waterfall object parts. */
+	private ArrayList<Waterfall> parts;
+
 	/**
-	 * Constructor
+	 * Constructor, initializes new ArrayList of Waterfall parts.
+	 *
 	 * @param tm
+	 *            the tileMap.
+	 * @param x
+	 *            the x position.
+	 * @param y
+	 *            the y position.
 	 */
-	public WaterfallHolder(TileMap tm, double x, double y) {
+	public WaterfallHolder(final TileMap tm, final double x, final double y) {
 		super(tm);
 		setPosition(x, y);
 		parts = new ArrayList<Waterfall>();
 		double yy = 0;
-		for(int i = 0; i < LENGTH; i++) {
+		for (int i = 0; i < LENGTH; i++) {
 			Waterfall part = new Waterfall(tm);
 			parts.add(part);
 			part.setPosition(getx(), gety() + yy);
@@ -27,30 +41,31 @@ public class WaterfallHolder extends MapObject {
 	}
 
 	@Override
-	public void update() {
-		for(int i = 0; i < parts.size(); i++) {
+	public final void update() {
+		for (int i = 0; i < parts.size(); i++) {
 			Waterfall part = parts.get(i);
 			part.update();
 		}
 	}
-	
+
 	@Override
-	public void draw(Graphics2D gr) {
+	public final void draw(final Graphics2D gr) {
 		for (int i = 0; i < parts.size(); i++) {
 			parts.get(i).draw(gr);
 		}
 	}
-	
+
 	/**
-	 * Lets the player interact with the waterfall.
-	 * 
+	 * Player interaction.
+	 *
 	 * @param player
-	 *            .
+	 *            the player
 	 */
 	public final void playerInteraction(final Player player) {
 		for (int i = 0; i < parts.size(); i++) {
-			if (parts.get(i).playerInteraction(player))
+			if (parts.get(i).playerInteraction(player)) {
 				return;
+			}
 		}
 	}
 }

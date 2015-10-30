@@ -8,7 +8,7 @@ import sem.group47.main.DrawComposite;
  * The Class GameState. Acts as a Superclass for the separate gamestates e.g.
  * MenuState.
  */
-public abstract class GameState extends DrawComposite {
+public abstract class GameState {
 
 	/** The gamestate manager. */
 	private GameStateManager gsm;
@@ -34,7 +34,6 @@ public abstract class GameState extends DrawComposite {
 	 * @param g
 	 *            the g
 	 */
-	@Override
 	public abstract void draw(java.awt.Graphics2D g);
 
 	/**
@@ -43,7 +42,7 @@ public abstract class GameState extends DrawComposite {
 	 * @param k
 	 *            the k
 	 */
-	public void keyPressed(int k) {
+	public void keyPressed(final int k) {
 	};
 
 	/**
@@ -52,7 +51,7 @@ public abstract class GameState extends DrawComposite {
 	 * @param k
 	 *            the k
 	 */
-	public void keyReleased(int k) {
+	public void keyReleased(final int k) {
 	};
 
 	/**

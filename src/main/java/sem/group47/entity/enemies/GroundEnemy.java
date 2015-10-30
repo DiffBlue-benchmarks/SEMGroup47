@@ -10,7 +10,7 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
- * The Class GroundEnemy.
+ * The Class GroundEnemy, contains the logic for creating a ground enemy object.
  */
 public class GroundEnemy extends Enemy {
 
@@ -18,7 +18,7 @@ public class GroundEnemy extends Enemy {
 	private long lastFireTime;
 
 	/** The projectiles. */
-	ArrayList<EnemyProjectile> projectiles;
+	private ArrayList<EnemyProjectile> projectiles;
 
 	/** The current sprite. */
 	int currentSprite;
@@ -54,6 +54,7 @@ public class GroundEnemy extends Enemy {
 	/**
 	 * Gets the next position.
 	 *
+	 * @return the next x position
 	 */
 	private void getNextXPosition() {
 		if (isLeft()) {
@@ -90,6 +91,7 @@ public class GroundEnemy extends Enemy {
 	/**
 	 * Gets the next y position.
 	 *
+	 * @return the next y position
 	 */
 	private void getNextYPosition() {
 		if (getUp()) {
@@ -142,9 +144,6 @@ public class GroundEnemy extends Enemy {
 		}
 	}
 
-	/*
-	 * Update
-	 */
 	@Override
 	public void update() {
 		movementDice();
@@ -165,14 +164,11 @@ public class GroundEnemy extends Enemy {
 			if (System.nanoTime() - 1e8 > animationChangeTime) {
 				animationChangeTime = System.nanoTime();
 				currentSprite += 1;
-				if (currentSprite > 2) {
+				if (currentSprite > 2)
 					currentSprite = 1;
-					setSprite(getSpriteSheet().getSubimage(
-							currentSprite * 36,
-							getProperties().getSpriteSheetY() * 36, 36,
-							36));
+					setSprite(getSpriteSheet().getSubimage(currentSprite * 36,
+							getProperties().getSpriteSheetY() * 36, 36, 36));
 					setInverseDraw(true);
-				}
 			}
 		}
 
@@ -201,12 +197,6 @@ public class GroundEnemy extends Enemy {
 		}
 	}
 
-	/**
-	 * Draw.
-	 *
-	 * @param gr
-	 *            the graphics
-	 */
 	@Override
 	public final void draw(final Graphics2D gr) {
 		super.draw(gr);
@@ -234,18 +224,16 @@ public class GroundEnemy extends Enemy {
 				&& lastFireTime + getProperties().getFireDelay() < System
 						.currentTimeMillis()) {
 			if (Math.abs(o.gety() - this.gety()) < 30
-					&& ((facingRight && o.getx() > this.getx())
-							|| (!facingRight && o.gety() > this.gety()))) {
+					&& ((facingRight && o.getx() > this.getx()) || (!facingRight && o
+							.gety() > this.gety()))) {
 				AudioPlayer.play("fire");
 				lastFireTime = System.currentTimeMillis();
-				EnemyProjectile projectile = new EnemyProjectile(
-						getTileMap());
+				EnemyProjectile projectile = new EnemyProjectile(getTileMap());
 				projectile.setSprite(getSpriteSheet().getSubimage(9 * 36,
 						getProperties().getSpriteSheetY() * 36, 36, 36));
 				projectile.setPosition(getXpos(), getYpos());
 				if (!isFacingRight()) {
-					projectile.setDx(
-							getProperties().getProjectileSpeed() * -1);
+					projectile.setDx(getProperties().getProjectileSpeed() * -1);
 				} else {
 					projectile.setDx(getProperties().getProjectileSpeed());
 				}
@@ -266,12 +254,13 @@ public class GroundEnemy extends Enemy {
 	 * Update states.
 	 */
 	public final void updateStates() {
-		if (isCaught() && (System.nanoTime() - getTimeCaught())
-				/ 1000000000.0d > getProperties().getBreakFreeTime()) {
+		if (isCaught()
+				&& (System.nanoTime() - getTimeCaught()) / 1000000000.0d > getProperties()
+						.getBreakFreeTime()) {
 			setCaught(false);
 		}
-		if (isAngry() && (System.nanoTime() - getAngryStartTime())
-				/ 1000000000.0d > 10) {
+		if (isAngry()
+				&& (System.nanoTime() - getAngryStartTime()) / 1000000000.0d > 10) {
 			setIsAngry(false);
 		}
 	}

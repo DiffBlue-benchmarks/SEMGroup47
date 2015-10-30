@@ -8,7 +8,7 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
- * Waterfall class.
+ * Waterfall class, creates a waterfall object that moves through the stage.
  *
  * @author Bas
  *
@@ -21,7 +21,7 @@ public class Waterfall extends MapObject {
 	private double xpos, xpos2 = 0;
 
 	/**
-	 * constructor.
+	 * Constructor.
 	 *
 	 * @param tm
 	 *            TileMap
@@ -51,10 +51,9 @@ public class Waterfall extends MapObject {
 	}
 
 	/**
-	 * Gets the next position.
-	 *
+	 * Sets the next X position that the waterfall should move to.
 	 */
-	private void getNextXPosition() {
+	private void setNextXPosition() {
 		if (isLeft()) {
 			if (getDx() == 0.3) {
 				setDx(0.0);
@@ -88,10 +87,9 @@ public class Waterfall extends MapObject {
 	}
 
 	/**
-	 * Gets the next y position.
-	 *
+	 * Sets the next y position that the waterfall should move to.
 	 */
-	private void getNextYPosition() {
+	private void setNextYPosition() {
 		if (isFalling()) {
 			setLeft(true);
 			setDx(0);
@@ -109,12 +107,13 @@ public class Waterfall extends MapObject {
 	 * Lets the player interact with the waterfall.
 	 *
 	 * @param player
-	 *            .
+	 *            the player.
+	 * @return boolean if playerIteraction is allowed
 	 */
 	public final boolean playerInteraction(final Player player) {
 		if (player.intersects(this)) {
 			player.canMove(false);
-			player.setPosition(getx(), gety()-15);
+			player.setPosition(getx(), gety() - 15);
 			return true;
 		} else {
 			player.canMove(true);
@@ -125,8 +124,8 @@ public class Waterfall extends MapObject {
 
 	@Override
 	public final void update() {
-		getNextXPosition();
-		getNextYPosition();
+		setNextXPosition();
+		setNextYPosition();
 		checkTileMapCollision();
 		setPosition(getXposNew(), getYposNew());
 	}

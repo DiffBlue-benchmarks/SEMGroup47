@@ -4,7 +4,7 @@ import sem.group47.entity.Player;
 import sem.group47.tilemap.TileMap;
 
 /**
- * Gives extra points to the player.
+ * The class Fruit, gives extra points to the player when picked up.
  *
  * @author Bas
  *
