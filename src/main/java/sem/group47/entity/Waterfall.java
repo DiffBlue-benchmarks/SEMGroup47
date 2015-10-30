@@ -55,34 +55,52 @@ public class Waterfall extends MapObject {
 	 */
 	private void setNextXPosition() {
 		if (isLeft()) {
-			if (getDx() == 0.3) {
-				setDx(0.0);
-			}
-			xpos2 = 0;
-			setDx(getDx() - getMovSpeed());
-
-			if (xpos == getXpos()) {
-				setLeft(false);
-				setRight(true);
-			}
-			xpos = getXpos();
-
-			if (getDx() < -getMaxSpeed()) {
-				setDx(-getMaxSpeed());
-			}
+			getNextLeftXPosition();
 		} else if (isRight()) {
-			xpos = 0;
-			setDx(getDx() + getMovSpeed());
+			getNextRightXPosition();
+		}
+	}
 
-			if (xpos2 >= getXpos()) {
-				setLeft(true);
-				setRight(false);
-			}
-			xpos2 = getXpos();
+	/**
+	 * Gets the next left x position.
+	 *
+	 * @return the next left x position
+	 */
+	private void getNextLeftXPosition() {
+		if (getDx() == 0.3) {
+			setDx(0.0);
+		}
+		xpos2 = 0;
+		setDx(getDx() - getMovSpeed());
 
-			if (getDx() > getMaxSpeed()) {
-				setDx(getMaxSpeed());
-			}
+		if (xpos == getXpos()) {
+			setLeft(false);
+			setRight(true);
+		}
+		xpos = getXpos();
+
+		if (getDx() < -getMaxSpeed()) {
+			setDx(-getMaxSpeed());
+		}
+	}
+
+	/**
+	 * Gets the next right x position.
+	 *
+	 * @return the next right x position
+	 */
+	private void getNextRightXPosition() {
+		xpos = 0;
+		setDx(getDx() + getMovSpeed());
+
+		if (xpos2 >= getXpos()) {
+			setLeft(true);
+			setRight(false);
+		}
+		xpos2 = getXpos();
+
+		if (getDx() > getMaxSpeed()) {
+			setDx(getMaxSpeed());
 		}
 	}
 

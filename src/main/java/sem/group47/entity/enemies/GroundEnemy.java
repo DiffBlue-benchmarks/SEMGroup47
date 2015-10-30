@@ -58,32 +58,61 @@ public class GroundEnemy extends Enemy {
 	 */
 	private void getNextXPosition() {
 		if (isLeft()) {
-			setDx(getDx() - getMovSpeed());
-			if (getDx() < -getMaxSpeed()) {
-				setDx(-getMaxSpeed());
-			}
+			getNextLeftXPosition();
+
 		} else if (isRight()) {
-			setDx(getDx() + getMovSpeed());
-			if (getDx() > getMaxSpeed()) {
-				setDx(getMaxSpeed());
-			}
+			getNextRightXPosition();
 		} else {
-			if (getDx() > 0) {
-				setDx(getDx() - getStopSpeed());
-				if (getDx() < 0) {
-					setDx(0);
-				}
-			} else if (getDx() < 0) {
-				setDx(getDx() + getStopSpeed());
-				if (getDx() > 0) {
-					setDx(0);
-				}
-			}
+			getSlidePosition();
 		}
 		if (getDx() > 0) {
 			setFacingRight(true);
 		} else if (getDx() < 0) {
 			setFacingRight(false);
+		}
+
+	}
+
+	/**
+	 * Gets the next left x position.
+	 *
+	 * @return the next left x position
+	 */
+	private void getNextLeftXPosition() {
+		setDx(getDx() - getMovSpeed());
+		if (getDx() < -getMaxSpeed()) {
+			setDx(-getMaxSpeed());
+		}
+	}
+
+	/**
+	 * Gets the next right x position.
+	 *
+	 * @return the next right x position
+	 */
+	private void getNextRightXPosition() {
+		setDx(getDx() + getMovSpeed());
+		if (getDx() > getMaxSpeed()) {
+			setDx(getMaxSpeed());
+		}
+	}
+
+	/**
+	 * Gets the slide position.
+	 *
+	 * @return the slide position
+	 */
+	private void getSlidePosition() {
+		if (getDx() > 0) {
+			setDx(getDx() - getStopSpeed());
+			if (getDx() < 0) {
+				setDx(0);
+			}
+		} else if (getDx() < 0) {
+			setDx(getDx() + getStopSpeed());
+			if (getDx() > 0) {
+				setDx(0);
+			}
 		}
 
 	}
@@ -103,24 +132,42 @@ public class GroundEnemy extends Enemy {
 			AudioPlayer.play("jump");
 		}
 		if (isCaught()) {
-			setDy(getDy() - getProperties().getFloatSpeed());
-			if (getDy() < getProperties().getMaxFloatSpeed()) {
-				setDy(getProperties().getMaxFloatSpeed());
-			}
-			setDx(0);
+			getCaughtPosition();
 		} else if (isFalling()) {
-			setDy(getDy() + getFallSpeed());
-			if (getDy() > 0) {
-				setJumping(false);
-			}
-			if (getDy() < 0 && !isJumping()) {
-				setDy(getDy() + getStopJumpSpeed());
-			}
-			if (getDy() > getMaxFallSpeed()) {
-				setDy(getMaxFallSpeed());
-			}
+			getFallingPosition();
 		} else {
 			setDy(0);
+		}
+	}
+
+	/**
+	 * Gets the caught position.
+	 *
+	 * @return the caught position
+	 */
+	private void getCaughtPosition() {
+		setDy(getDy() - getProperties().getFloatSpeed());
+		if (getDy() < getProperties().getMaxFloatSpeed()) {
+			setDy(getProperties().getMaxFloatSpeed());
+		}
+		setDx(0);
+	}
+
+	/**
+	 * Gets the falling position.
+	 *
+	 * @return the falling position
+	 */
+	private void getFallingPosition() {
+		setDy(getDy() + getFallSpeed());
+		if (getDy() > 0) {
+			setJumping(false);
+		}
+		if (getDy() < 0 && !isJumping()) {
+			setDy(getDy() + getStopJumpSpeed());
+		}
+		if (getDy() > getMaxFallSpeed()) {
+			setDy(getMaxFallSpeed());
 		}
 	}
 
@@ -166,9 +213,9 @@ public class GroundEnemy extends Enemy {
 				currentSprite += 1;
 				if (currentSprite > 2)
 					currentSprite = 1;
-					setSprite(getSpriteSheet().getSubimage(currentSprite * 36,
-							getProperties().getSpriteSheetY() * 36, 36, 36));
-					setInverseDraw(true);
+				setSprite(getSpriteSheet().getSubimage(currentSprite * 36,
+						getProperties().getSpriteSheetY() * 36, 36, 36));
+				setInverseDraw(true);
 			}
 		}
 
@@ -206,14 +253,6 @@ public class GroundEnemy extends Enemy {
 		}
 	}
 
-	/**
-	 * Checks if player is in front of us and fires and checks projectile
-	 * collision.
-	 *
-	 * @param o
-	 *            the o
-	 * @return true, if successful
-	 */
 	@Override
 	public final boolean projectileCollision(final MapObject o) {
 		if (getProperties().canFire() == false) {
