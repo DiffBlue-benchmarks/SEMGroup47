@@ -3,7 +3,7 @@ package sem.group47.main;
 import javax.swing.JFrame;
 
 /**
- * The Class Game sets up the JFrame window, in which the game will be played.
+ * The Class Game, sets up the JFrame window, in which the game will be played.
  * The class JFrame is an extended version of java.awt.Frame that adds support
  * for the JFC/Swing component architecture.
  */

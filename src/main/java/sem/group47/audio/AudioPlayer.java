@@ -11,7 +11,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
 /**
- * AudioPlayer, for playing audio in the game.
+ * AudioPlayer, utilityClass for playing audio in the game.
  *
  * @author Bas
  */
@@ -23,7 +23,7 @@ public final class AudioPlayer {
 	private AudioPlayer() {
 	}
 
-	/** The clips. */
+	/** The audio clips. */
 	private static HashMap<String, Clip> clips;
 
 	/** The gap. */
@@ -41,22 +41,23 @@ public final class AudioPlayer {
 	}
 
 	/**
-	 * Loads the audio file.
+	 * Loads the music file.
 	 *
-	 * @param s
-	 *            the s
-	 * @param n
-	 *            the n
+	 * @param musicFileLocation
+	 *            the file path of the music file
+	 * @param musicFileName
+	 *            the name of the music file
 	 */
-	public static void load(final String s, final String n) {
+	public static void load(final String musicFileLocation,
+			final String musicFileName) {
 		try {
-			if (clips.get(n) != null) {
+			if (clips.get(musicFileName) != null) {
 				return;
 			}
 			Clip clip;
 			AudioInputStream ais = AudioSystem
 					.getAudioInputStream(AudioPlayer.class
-							.getResourceAsStream(s));
+							.getResourceAsStream(musicFileLocation));
 			AudioFormat baseFormat = ais.getFormat();
 			AudioFormat decodeFormat = new AudioFormat(
 					AudioFormat.Encoding.PCM_SIGNED,
@@ -68,47 +69,47 @@ public final class AudioPlayer {
 			DataLine.Info info = new DataLine.Info(Clip.class, decodeFormat);
 			clip = (Clip) AudioSystem.getLine(info);
 			clip.open(dais);
-			clips.put(n, clip);
+			clips.put(musicFileName, clip);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Play.
+	 * Calls the overloaded play method, that will play the music file.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 */
-	public static void play(final String s) {
+	public static void play(final String musicFileName) {
 		try {
-			play(s, gap);
+			play(musicFileName, gap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Plays the audio file.
+	 * Plays the music file.
 	 *
-	 * @param s
-	 *            the s
-	 * @param i
-	 *            the i
+	 * @param musicFileName
+	 *            the name of the music file
+	 * @param pGap
+	 *            the gap
 	 */
-	public static void play(final String s, final int i) {
+	public static void play(final String musicFileName, final int pGap) {
 		try {
 			if (mute) {
 				return;
 			}
-			Clip c = clips.get(s);
+			Clip c = clips.get(musicFileName);
 			if (c == null) {
 				return;
 			}
 			if (c.isRunning()) {
 				c.stop();
 			}
-			c.setFramePosition(i);
+			c.setFramePosition(pGap);
 			while (!c.isRunning()) {
 				c.start();
 			}
@@ -118,18 +119,18 @@ public final class AudioPlayer {
 	}
 
 	/**
-	 * Stops the audio file.
+	 * Stops the music file.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 */
-	public static void stop(final String s) {
+	public static void stop(final String musicFileName) {
 		try {
-			if (clips.get(s) == null) {
+			if (clips.get(musicFileName) == null) {
 				return;
 			}
-			if (clips.get(s).isRunning()) {
-				clips.get(s).stop();
+			if (clips.get(musicFileName).isRunning()) {
+				clips.get(musicFileName).stop();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -137,20 +138,20 @@ public final class AudioPlayer {
 	}
 
 	/**
-	 * Resume.
+	 * Resumes the music file.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 */
-	public static void resume(final String s) {
+	public static void resume(final String musicFileName) {
 		try {
 			if (mute) {
 				return;
 			}
-			if (clips.get(s).isRunning()) {
+			if (clips.get(musicFileName).isRunning()) {
 				return;
 			}
-			clips.get(s).start();
+			clips.get(musicFileName).start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -159,93 +160,96 @@ public final class AudioPlayer {
 	/**
 	 * Resumes the loop.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 */
-	public static void resumeLoop(final String s) {
+	public static void resumeLoop(final String musicFileName) {
 		try {
 			if (mute) {
 				return;
 			}
-			if (clips.get(s).isRunning()) {
+			if (clips.get(musicFileName).isRunning()) {
 				return;
 			}
-			loop(s);
+			loop(musicFileName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Loop.
+	 * Calls the overloaded loop method that will loop the music file.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 */
-	public static void loop(final String s) {
+	public static void loop(final String musicFileName) {
 		try {
-			loop(s, gap, gap, clips.get(s).getFrameLength() - 1);
+			loop(musicFileName, gap, gap, clips.get(musicFileName)
+					.getFrameLength() - 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Loop.
+	 * Calls the overloaded loop method that will loop the music file.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 * @param frame
-	 *            the frame
+	 *            the startframe of the loop
 	 */
-	public static void loop(final String s, final int frame) {
+	public static void loop(final String musicFileName, final int frame) {
 		try {
-			loop(s, frame, gap, clips.get(s).getFrameLength() - 1);
+			loop(musicFileName, frame, gap, clips.get(musicFileName)
+					.getFrameLength() - 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Loop.
+	 * Calls the overloaded loop method that will loop the music file.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 * @param start
-	 *            the start
+	 *            the startpoint of the loop
 	 * @param end
-	 *            the end
+	 *            the endpoint of the loop
 	 */
-	public static void loop(final String s, final int start, final int end) {
-		try {
-			loop(s, gap, start, end);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Loop.
-	 *
-	 * @param s
-	 *            the s
-	 * @param frame
-	 *            the frame
-	 * @param start
-	 *            the start
-	 * @param end
-	 *            the end
-	 */
-	public static void loop(final String s, final int frame, final int start,
+	public static void loop(final String musicFileName, final int start,
 			final int end) {
 		try {
-			stop(s);
+			loop(musicFileName, gap, start, end);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Loop.
+	 *
+	 * @param musicFileName
+	 *            the name of the music file
+	 * @param frame
+	 *            the frame
+	 * @param start
+	 *            the startpoint of the loop
+	 * @param end
+	 *            the endpoint of the loop
+	 */
+	public static void loop(final String musicFileName, final int frame,
+			final int start, final int end) {
+		try {
+			stop(musicFileName);
 			if (mute) {
 				return;
 			}
-			clips.get(s).setLoopPoints(start, end);
-			clips.get(s).setFramePosition(frame);
-			clips.get(s).loop(Clip.LOOP_CONTINUOUSLY);
+			clips.get(musicFileName).setLoopPoints(start, end);
+			clips.get(musicFileName).setFramePosition(frame);
+			clips.get(musicFileName).loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -254,14 +258,14 @@ public final class AudioPlayer {
 	/**
 	 * Sets the music frame position.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 * @param frame
-	 *            the frame
+	 *            the startframe of the loop
 	 */
-	public static void setPosition(final String s, final int frame) {
+	public static void setPosition(final String musicFileName, final int frame) {
 		try {
-			clips.get(s).setFramePosition(frame);
+			clips.get(musicFileName).setFramePosition(frame);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -270,13 +274,13 @@ public final class AudioPlayer {
 	/**
 	 * Gets the music frames.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 * @return the frames
 	 */
-	public static int getFrames(final String s) {
+	public static int getFrames(final String musicFileName) {
 		try {
-			return clips.get(s).getFrameLength();
+			return clips.get(musicFileName).getFrameLength();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -286,13 +290,13 @@ public final class AudioPlayer {
 	/**
 	 * Gets the position of the musicframe.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 * @return the position
 	 */
-	public static int getPosition(final String s) {
+	public static int getPosition(final String musicFileName) {
 		try {
-			return clips.get(s).getFramePosition();
+			return clips.get(musicFileName).getFramePosition();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -302,13 +306,13 @@ public final class AudioPlayer {
 	/**
 	 * Closes all music clips.
 	 *
-	 * @param s
-	 *            the s
+	 * @param musicFileName
+	 *            the name of the music file
 	 */
-	public static void close(final String s) {
+	public static void close(final String musicFileName) {
 		try {
-			stop(s);
-			clips.get(s).close();
+			stop(musicFileName);
+			clips.get(musicFileName).close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

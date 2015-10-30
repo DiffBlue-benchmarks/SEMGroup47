@@ -3,7 +3,7 @@ package sem.group47.tilemap;
 import java.awt.image.BufferedImage;
 
 /**
- * The Class Tile.
+ * The Class Tile, contains the logic of a tile object.
  */
 public class Tile {
 

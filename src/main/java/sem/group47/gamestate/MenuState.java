@@ -11,7 +11,6 @@ import sem.group47.audio.AudioPlayer;
 import sem.group47.entity.PlayerSave;
 import sem.group47.main.GamePanel;
 
-@SuppressWarnings("PMD")
 /**
  * The Class MenuState, which extends the super class GameState.
  */
@@ -21,8 +20,8 @@ public class MenuState extends GameState {
 	private int currentChoice = 0;
 
 	/** The options. */
-	private String[] options = {"Start", "2 Player Mode", "Help",
-			"Options", "Quit" };
+	private String[] options = { "Start", "2 Player Mode", "Help", "Options",
+			"Quit" };
 
 	/** The Background. */
 	private String bg = "/backgrounds/BubbleBobble_Logo.gif";
@@ -49,9 +48,6 @@ public class MenuState extends GameState {
 
 	}
 
-	/**
-	 * Draws everything of the menu screen.
-	 */
 	@Override
 	public final void draw(final Graphics2D g) {
 		g.setColor(Color.BLACK);
@@ -98,9 +94,6 @@ public class MenuState extends GameState {
 		}
 	}
 
-	/**
-	 * Lets you scroll through menu options with up and down keys.
-	 */
 	@Override
 	public final void keyPressed(final int k) {
 		if (k == KeyEvent.VK_ENTER) {

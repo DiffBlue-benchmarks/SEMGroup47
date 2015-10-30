@@ -20,7 +20,7 @@ public class OptionsState extends GameState {
 	private Font font, font2;
 
 	/** The options. */
-	private String[] options = {"On", "Off" };
+	private String[] options = { "On", "Off" };
 
 	/**
 	 * Instantiates a new options state.
@@ -33,7 +33,6 @@ public class OptionsState extends GameState {
 		setGsm(gsm);
 
 		try {
-
 			font = new Font("Arial", Font.PLAIN, 30);
 			font2 = new Font("Arial", Font.PLAIN, 40);
 

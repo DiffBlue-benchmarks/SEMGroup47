@@ -22,7 +22,7 @@ public class HelpState extends GameState {
 	private Font font, font2;
 
 	/** The options. */
-	private String[] options = {"Return mkay", "Start mkay" };
+	private String[] options = { "Return mkay", "Start mkay" };
 
 	/** The Background. */
 	private String bg = "/backgrounds/Mr_Mackey.png";
@@ -31,7 +31,7 @@ public class HelpState extends GameState {
 	private BufferedImage image;
 
 	/**
-	 * Instantiates a new menu state.
+	 * Instantiates a new help state.
 	 *
 	 * @param gsm
 	 *            the gamestatemanager
@@ -52,7 +52,7 @@ public class HelpState extends GameState {
 	}
 
 	/**
-	 * Draws everything of the menu screen.
+	 * Draws everything of the help screen.
 	 */
 	@Override
 	public final void draw(final Graphics2D g) {

@@ -61,9 +61,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		requestFocus();
 	}
 
-	/**
-	 * Gamepanel is loaded, so start thread, runs automagically.
-	 */
 	@Override
 	public final void addNotify() {
 		super.addNotify();
@@ -78,8 +75,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * Initializes everything separately from the constructor.
 	 */
 	private void init() {
-		image = new BufferedImage(WIDTH, HEIGHT,
-				BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		gsm = GameStateManager.getInstance();
 		running = true;
@@ -107,30 +103,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		long elapsedTime;
 		long sleepTime;
 
-		// game loop
 		while (running) {
 
-			// save start time
 			beginTime = System.nanoTime();
-
-			// update the game state
 			update();
-			// render state to the screen
 			draw();
-			// draws the canvas on the panel
 			drawToScreen();
 
-			// calculate how long the cycle took
 			elapsedTime = System.nanoTime() - beginTime;
-
-			// calculate sleep time
 			sleepTime = FRAME_PERIOD - elapsedTime / 1000000;
 
 			if (sleepTime < 0) {
 				sleepTime = 5;
 			}
 
-			// send the thread to sleep for a short period
 			try {
 				Thread.sleep(sleepTime);
 			} catch (Exception e) {

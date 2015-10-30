@@ -155,7 +155,7 @@ public abstract class MapObject implements Drawable {
 	protected BufferedImage sprite;
 
 	/**
-	 * Constructor.
+	 * Constructor, initializes the tileMap and tileSize.
 	 *
 	 * @param tm
 	 *            TileMap in which this object lives
@@ -187,8 +187,8 @@ public abstract class MapObject implements Drawable {
 	 * @return Rectangle
 	 */
 	public final Rectangle getRectangle() {
-		return new Rectangle((int) xpos - cwidth / 2,
-				(int) ypos - cheight / 2, cwidth, cheight);
+		return new Rectangle((int) xpos - cwidth / 2, (int) ypos - cheight / 2,
+				cwidth, cheight);
 	}
 
 	/**
@@ -282,8 +282,7 @@ public abstract class MapObject implements Drawable {
 	 * @param yin
 	 *            yposition to check
 	 */
-	public final void calculateCorners(final double xin,
-			final double yin) {
+	public final void calculateCorners(final double xin, final double yin) {
 		int leftTile = (int) ((xin - cwidth / 2) / tileSize);
 		int rightTile = (int) ((xin - cwidth / 2 + cwidth - 1) / tileSize);
 		int topTile = (int) ((yin - cheight / 2) / tileSize);
@@ -317,14 +316,12 @@ public abstract class MapObject implements Drawable {
 						null);
 			} else {
 				gr.drawImage(sprite, (int) (xpos - width / (double) 2),
-						(int) (ypos - height / (double) 2), width, height,
-						null);
+						(int) (ypos - height / (double) 2), width, height, null);
 			}
 		} else {
 			if (inverseDraw) {
 				gr.drawImage(sprite, (int) (xpos - width / (double) 2),
-						(int) (ypos - height / (double) 2), width, height,
-						null);
+						(int) (ypos - height / (double) 2), width, height, null);
 			} else {
 				gr.drawImage(sprite, (int) (xpos + width / (double) 2),
 						(int) (ypos - height / (double) 2), -width, height,

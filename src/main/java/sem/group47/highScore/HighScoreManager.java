@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * The Class HighScoreManager.
+ * The Class HighScoreManager, acts as a manager for the highscore.
  */
 public class HighScoreManager {
 
@@ -80,8 +80,8 @@ public class HighScoreManager {
 	public final void loadScoreFile() {
 
 		try {
-			inputStream = new ObjectInputStream(
-					new FileInputStream(HIGH_SCORE_FILE));
+			inputStream = new ObjectInputStream(new FileInputStream(
+					HIGH_SCORE_FILE));
 			scores = (ArrayList<Score>) inputStream.readObject();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -99,8 +99,8 @@ public class HighScoreManager {
 	 */
 	public final void updateScoreFile() {
 		try {
-			outputStream = new ObjectOutputStream(
-					new FileOutputStream(HIGH_SCORE_FILE));
+			outputStream = new ObjectOutputStream(new FileOutputStream(
+					HIGH_SCORE_FILE));
 			outputStream.writeObject(scores);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
