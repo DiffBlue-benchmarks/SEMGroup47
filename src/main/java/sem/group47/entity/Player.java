@@ -360,7 +360,7 @@ public class Player extends MapObject {
 	 *            the g
 	 */
 	@Override
-	public final void draw(final Graphics2D g) {
+	public void draw(final Graphics2D g) {
 		if (!flinching || Math.round(Math.random() * 1) == 0) {
 			if (facingRight) {
 				g.drawImage(animation.getImage(), (int) (getXpos() - getWidth()

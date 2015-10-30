@@ -187,4 +187,35 @@ public class LevelTest extends DrawCompositeTest {
 		verify(waterfall).update();
 	}
 	
+	@Test
+	public void getTilemapTest() {
+		assertEquals(level.getTileMap(), tm);
+	}
+	
+	@Test
+	public void setTileMapTest() {
+		TileMap newTM = mock(TileMap.class);
+		level.setTileMap(newTM);
+		level.draw(gr);
+		verify(tm, never()).draw(gr);
+	}
+	
+	@Test
+	public void setNewPlayer1Test() {
+		Player newPlayer = mock(Player.class);
+		level.setPlayer1(newPlayer);
+		level.draw(gr);
+		verify(player, never()).draw(gr);
+	}
+	
+	@Test
+	public void setNewPlayer2Test() {
+		Player player2 = mock(Player.class);
+		level.setPlayer2(player2);
+		Player newPlayer = mock(Player.class);
+		level.setPlayer2(newPlayer);
+		level.draw(gr);
+		verify(player2, never()).draw(gr);
+	}
+	
 }
