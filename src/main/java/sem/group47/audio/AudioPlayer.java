@@ -114,7 +114,7 @@ public final class AudioPlayer {
 				c.start();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			// No stacktrace printing to keep tests clean
 		}
 	}
 

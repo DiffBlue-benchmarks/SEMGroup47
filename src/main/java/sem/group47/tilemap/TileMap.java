@@ -251,7 +251,7 @@ public class TileMap implements Drawable {
 	 * @param g
 	 *           the g
 	 */
-	public final void draw(final Graphics2D g) {
+	public void draw(final Graphics2D g) {
 		
 		for (int row = 0; row < numRowsToDraw; row++) {
 			if (row >= numRows) {

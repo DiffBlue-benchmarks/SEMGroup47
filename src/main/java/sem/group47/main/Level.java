@@ -336,7 +336,7 @@ public class Level extends DrawComposite {
 	 */
 	public final void setPlayer2(final Player player) {
 		if (player2 != null) {
-			removeComponent(player1);
+			removeComponent(player2);
 		}
 		player2 = player;
 		addComponent(player);

@@ -145,7 +145,7 @@ public class Player extends MapObject {
 	 * and then puts the player in the new position
 	 */
 	@Override
-	public final void update() {
+	public void update() {
 		projectileList.update();
 		if (canMove) {
 			getNextXPosition();
@@ -166,7 +166,7 @@ public class Player extends MapObject {
 	 * @param enemies
 	 *            enemies
 	 */
-	public final void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
+	public void indirectEnemyCollision(final ArrayList<Enemy> enemies) {
 		projectileList.indirectEnemyCollision(enemies);
 	}
 
@@ -203,7 +203,7 @@ public class Player extends MapObject {
 	/**
 	 * takes a life, or ends the game.
 	 */
-	public final void kill() {
+	public void kill() {
 		if (getLives() > 1) {
 			hit(1);
 			Log.info("Player Action", "Player collision with Enemy");
@@ -242,7 +242,7 @@ public class Player extends MapObject {
 	 * @param damage
 	 *            the damage
 	 */
-	public final void hit(final int damage) {
+	public void hit(final int damage) {
 		if (flinching) {
 			return;
 		}
@@ -360,7 +360,7 @@ public class Player extends MapObject {
 	 *            the g
 	 */
 	@Override
-	public final void draw(final Graphics2D g) {
+	public void draw(final Graphics2D g) {
 		if (!flinching || Math.round(Math.random() * 1) == 0) {
 			if (facingRight) {
 				g.drawImage(animation.getImage(), (int) (getXpos() - getWidth()
@@ -392,7 +392,7 @@ public class Player extends MapObject {
 	 * @param points
 	 *            the new score
 	 */
-	public final void setScore(final int points) {
+	public void setScore(final int points) {
 
 		score += points;
 
