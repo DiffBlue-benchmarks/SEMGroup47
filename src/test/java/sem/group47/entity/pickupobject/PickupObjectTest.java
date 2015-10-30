@@ -1,10 +1,6 @@
 package sem.group47.entity.pickupobject;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
-import org.junit.Test;
 
 import sem.group47.entity.MapObject;
 import sem.group47.entity.MapObjectTest;
@@ -26,12 +22,6 @@ public abstract class PickupObjectTest extends MapObjectTest {
 	@Before
 	public void setup() {
 		player = new Player(tileMap);
-	}
-	
-	@Test
-	public void CheckCollisionTest() {
-		assertFalse(pickupObject.checkCollision(player));
-		player.intersects(pickupObject);
-		assertTrue(pickupObject.checkCollision(player));
+		super.setup();
 	}
 }

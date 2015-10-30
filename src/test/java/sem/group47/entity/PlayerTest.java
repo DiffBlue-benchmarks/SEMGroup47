@@ -54,6 +54,7 @@ public class PlayerTest extends MapObjectTest {
 		tileMap.loadMap("/test/Test_Map.map");
 		player = new Player(tileMap);
 		projectile = new Projectile(tileMap);
+		super.setup();
 	}
 	
 	/**
@@ -102,7 +103,7 @@ public class PlayerTest extends MapObjectTest {
 	public final void hitFlinchTest() {
 		player.setFlinch(true);
 		player.hit(1);
-		assertEquals(playerSave.getLivesP1(), 3);
+		assertEquals(playerSave.getLivesP1(), 2);
 	}
 	
 	/**

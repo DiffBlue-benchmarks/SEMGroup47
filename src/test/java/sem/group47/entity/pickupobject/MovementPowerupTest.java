@@ -15,6 +15,7 @@ public class MovementPowerupTest extends PickupObjectTest {
 	@Before
 	public void setup() {
 		movement = new MovementSpeedPowerup(tileMap);
+		super.setup();
 	}
 	
 	@Override

@@ -1,6 +1,6 @@
 package sem.group47.entity.pickupobject;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +15,7 @@ public class BubbleSpeedPowerupTest extends PickupObjectTest {
 	@Before
 	public void setup() {
 		bubblespeed = new BubbleSpeedPowerup(tileMap);
+		super.setup();
 	}
 	
 	@Override
@@ -23,7 +24,7 @@ public class BubbleSpeedPowerupTest extends PickupObjectTest {
 	}
 	
 	@Test
-	public void OnPickupTest(){
+	public void OnPickupTest() {
 		bubblespeed.onPickup(player);
 		int bs = (int) player.getBubbleSpeed() * 10;
 		assertEquals(bs, 90);

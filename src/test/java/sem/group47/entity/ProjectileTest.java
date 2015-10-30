@@ -14,21 +14,21 @@ import sem.group47.tilemap.TileMap;
  * The Class ProjectileTest.
  */
 public class ProjectileTest extends MapObjectTest {
-
+	
 	/** The tile map. */
 	private TileMap tileMap;
-
+	
 	/** The tile size. */
 	private int tileSize = 30;
-
+	
 	/** The projectile. */
 	private Projectile projectile;
-
+	
 	/**
 	 * Sets the up.
 	 * 
 	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 *            Signals that an I/O exception has occurred.
 	 */
 	@Before
 	public final void setUp() throws IOException {
@@ -36,8 +36,9 @@ public class ProjectileTest extends MapObjectTest {
 		tileMap.loadTiles("/test/Test_Tile.gif");
 		tileMap.loadMap("/test/Test_Map.map");
 		projectile = new Projectile(tileMap);
+		super.setup();
 	}
-
+	
 	/**
 	 * Test constructor.
 	 */
@@ -46,7 +47,7 @@ public class ProjectileTest extends MapObjectTest {
 		projectile = new Projectile(tileMap);
 		assertEquals(projectile.getIsAlive(), true);
 	}
-
+	
 	/**
 	 * Test update.
 	 */
@@ -64,21 +65,10 @@ public class ProjectileTest extends MapObjectTest {
 		projectile.update();
 		assertTrue(projectile.getDy() != prevY);
 	}
-
-	@Override
-	public MapObject supplyMapObject() {
-		return projectile;
-	}
 	
 	@Override
 	public MapObject supplyMapObject() {
 		return projectile;
 	}
-
-	@Override
-	public MapObject supplyMapObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }

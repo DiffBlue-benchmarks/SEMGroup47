@@ -15,6 +15,7 @@ public class FruitTest extends PickupObjectTest {
 	@Before
 	public void setup() {
 		fruit = new Fruit(tileMap);
+		super.setup();
 	}
 	
 	@Override

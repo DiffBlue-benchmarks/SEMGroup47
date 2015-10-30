@@ -14,6 +14,7 @@ public class WaterfallTest extends MapObjectTest {
 	@Before
 	public void setup() {
 		waterfall = new Waterfall(tileMap);
+		super.setup();
 	}
 	
 }

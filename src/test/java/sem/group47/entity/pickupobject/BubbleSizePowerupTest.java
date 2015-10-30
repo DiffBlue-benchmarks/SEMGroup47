@@ -15,6 +15,7 @@ public class BubbleSizePowerupTest extends PickupObjectTest {
 	@Before
 	public void setup() {
 		bubblesize = new BubbleSizePowerup(tileMap);
+		super.setup();
 	}
 	
 	@Override

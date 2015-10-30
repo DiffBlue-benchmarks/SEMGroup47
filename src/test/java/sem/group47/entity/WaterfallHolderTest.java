@@ -9,6 +9,7 @@ public class WaterfallHolderTest extends MapObjectTest {
 	@Before
 	public void setup() {
 		waterfallholder = new WaterfallHolder(tileMap, 10, 10);
+		super.setup();
 	}
 	
 	@Override
