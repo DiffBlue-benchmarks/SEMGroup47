@@ -3,7 +3,7 @@ package sem.group47.entity;
 import java.awt.image.BufferedImage;
 
 /**
- * The Class Animation.
+ * The Class Animation, which adds animations to the entities.
  */
 public class Animation {
 
@@ -19,13 +19,12 @@ public class Animation {
 	/** The delay period between frames. */
 	private long delay;
 
-	/** Whether the animation has playced once or not. */
+	/** Whether the animation has played once or not. */
 	private boolean playedOnce;
 
 	/**
 	 * Constructor.
 	 */
-
 	public final void animation() {
 		playedOnce = false;
 	}
@@ -96,7 +95,7 @@ public class Animation {
 	/**
 	 * Gets the animation frames.
 	 *
-	 * @return the framens of the current animation
+	 * @return the frames of the current animation
 	 */
 	public final BufferedImage getImage() {
 		return frames[currentFrame];

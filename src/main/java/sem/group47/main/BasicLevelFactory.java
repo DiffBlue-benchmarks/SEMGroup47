@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import sem.group47.entity.Player;
 import sem.group47.entity.PlayerSave;
-import sem.group47.entity.Waterfall;
 import sem.group47.entity.WaterfallHolder;
 import sem.group47.entity.enemies.Enemy;
 import sem.group47.entity.enemies.GroundEnemy;
@@ -22,7 +21,7 @@ import sem.group47.entity.pickups.PickupObject;
 import sem.group47.tilemap.TileMap;
 
 /**
- * The basicLevelFactory initialises a standard level.
+ * The class BasicLevelFactory, initializes a standard level.
  *
  * @author Karin
  *
@@ -31,26 +30,30 @@ public class BasicLevelFactory implements LevelFactory {
 
 	/** The tileMap being used. */
 	private TileMap tileMap;
+
+	/** The enemy properties. */
 	private EnemyProperty[] enemyProperties;
 
+	/**
+	 * Instantiates a new basic level factory.
+	 */
 	public BasicLevelFactory() {
 		enemyProperties = new EnemyProperty[5];
 		enemyProperties[0] = new BaseEnemyProperty();
-		enemyProperties[1] = new CanFireProperty(
-				new SpriteProperty(new BaseEnemyProperty(), 3));
+		enemyProperties[1] = new CanFireProperty(new SpriteProperty(
+				new BaseEnemyProperty(), 3));
 		enemyProperties[2] = new FasterProperty(new CanFireProperty(
 				new SpriteProperty(new BaseEnemyProperty(), 1)));
-		enemyProperties[3] = new BonusPointsProperty(
-				new FasterProperty(new CanFireProperty(
-						new SpriteProperty(new BaseEnemyProperty(), 7))));
+		enemyProperties[3] = new BonusPointsProperty(new FasterProperty(
+				new CanFireProperty(new SpriteProperty(new BaseEnemyProperty(),
+						7))));
 		enemyProperties[4] = new FasterProperty(new FasterProperty(
-				new BonusPointsProperty(new FasterProperty(
-						new CanFireProperty(new SpriteProperty(
-								new BaseEnemyProperty(), 2))))));
+				new BonusPointsProperty(new FasterProperty(new CanFireProperty(
+						new SpriteProperty(new BaseEnemyProperty(), 2))))));
 	}
 
 	/**
-	 * method used to make the level.
+	 * Makes the level.
 	 *
 	 * @param filename
 	 *            - the filename for the tilemap.
@@ -76,8 +79,7 @@ public class BasicLevelFactory implements LevelFactory {
 	 * @param level
 	 *            - the level to add it to.
 	 */
-	private void loadTileMap(final String levelFileName,
-			final Level level) {
+	private void loadTileMap(final String levelFileName, final Level level) {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/tiles/Bubble_Tile.gif");
 		tileMap.loadMap("/maps/" + levelFileName);
@@ -107,29 +109,29 @@ public class BasicLevelFactory implements LevelFactory {
 
 			}
 			enemy.setPosition((points.get(i)[0] + .5d) * 30,
-					(points.get(i)[1] + 1) * 30
-							- .5d * enemy.getCHeight());
+					(points.get(i)[1] + 1) * 30 - .5d * enemy.getCHeight());
 			level.addEnemy(enemy);
 		}
 
-		Magiron aaron = new Magiron(tileMap);
-		aaron.setPosition(GamePanel.WIDTH / 2, -150);
-		level.addAaron(aaron);
+		Magiron magiron = new Magiron(tileMap);
+		magiron.setPosition(GamePanel.WIDTH / 2, -150);
+		level.addMagiron(magiron);
 
-		WaterfallHolder waterfall = new WaterfallHolder(tileMap, GamePanel.WIDTH / 2, 0);
+		WaterfallHolder waterfall = new WaterfallHolder(tileMap,
+				GamePanel.WIDTH / 2, 0);
 		level.addWaterfall(waterfall);
 
 	};
 
 	/**
-	 * Loads te players. Two if it is a multiplayer game, one otherwise.
+	 * Loads the players. Two if it is a multiplayer game, one otherwise.
 	 *
 	 * @param level
 	 *            - the level to add them to.
 	 * @param multiplayer
 	 *            - true if two players are required.
 	 */
-	public void loadPlayers(Level level, boolean multiplayer) {
+	public final void loadPlayers(final Level level, final boolean multiplayer) {
 		Player player1 = new Player(tileMap);
 		player1.setPosition(tileMap.getTileSize() * (2d + .5d) + 5,
 				tileMap.getTileSize() * (tileMap.getNumRows() - 2 + .5d));
@@ -141,11 +143,9 @@ public class BasicLevelFactory implements LevelFactory {
 
 		if (multiplayer) {
 			Player player2 = new Player(tileMap);
-			player2.setPosition(
-					tileMap.getTileSize()
-							* (tileMap.getNumCols() - 3 + .5d) - 5,
-					tileMap.getTileSize()
-							* (tileMap.getNumRows() - 2 + .5d));
+			player2.setPosition(tileMap.getTileSize()
+					* (tileMap.getNumCols() - 3 + .5d) - 5,
+					tileMap.getTileSize() * (tileMap.getNumRows() - 2 + .5d));
 			player2.setLives(PlayerSave.getLivesP2());
 			player2.setExtraLive(PlayerSave.getExtraLiveP2());
 			player2.setScore(PlayerSave.getScoreP2());

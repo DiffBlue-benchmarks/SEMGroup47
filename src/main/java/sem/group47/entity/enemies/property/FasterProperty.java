@@ -1,28 +1,32 @@
 package sem.group47.entity.enemies.property;
 
+/**
+ * The Class FasterProperty.
+ */
 public class FasterProperty extends EnemyPropertyDecorator {
 
-	public FasterProperty(EnemyProperty newProperty) {
+	/**
+	 * Instantiates a new faster property.
+	 *
+	 * @param newProperty
+	 *            the new property
+	 */
+	public FasterProperty(final EnemyProperty newProperty) {
 		super(newProperty);
 	}
 
-	public double getAngryMovSpeed() {
+	@Override
+	public final double getAngryMovSpeed() {
 		return tempProperty.getAngryMovSpeed() + 2f;
 	}
 
-	/**
-	 *
-	 * @return
-	 */
-	public double getNormalMovSpeed() {
+	@Override
+	public final double getNormalMovSpeed() {
 		return tempProperty.getNormalMovSpeed() + .4f;
 	}
 
-	/**
-	 *
-	 * @return
-	 */
-	public double getMaxMovSpeed() {
+	@Override
+	public final double getMaxMovSpeed() {
 		return tempProperty.getMaxMovSpeed() + 3f;
 	}
 

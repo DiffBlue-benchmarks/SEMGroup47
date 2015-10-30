@@ -1,21 +1,25 @@
 package sem.group47.entity.enemies.property;
 
 /**
- * changes the sprite.
+ * The class SpriteProperty, changes the sprite.
  *
  * @author Christian
  *
  */
 public class SpriteProperty extends EnemyPropertyDecorator {
+
+	/** The y. */
 	private int y;
 
 	/**
 	 * Constructor.
 	 *
+	 * @param newProperty
+	 *            the new property
 	 * @param spriteY
 	 *            y coordinate of sprite to use in monster_sprite.png
 	 */
-	public SpriteProperty(EnemyProperty newProperty, int spriteY) {
+	public SpriteProperty(final EnemyProperty newProperty, final int spriteY) {
 		super(newProperty);
 		y = spriteY;
 	}
@@ -26,7 +30,7 @@ public class SpriteProperty extends EnemyPropertyDecorator {
 	 * @return y coord
 	 */
 	@Override
-	public int getSpriteSheetY() {
+	public final int getSpriteSheetY() {
 		return y;
 	}
 }

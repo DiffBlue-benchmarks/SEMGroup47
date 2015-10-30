@@ -7,9 +7,17 @@ package sem.group47.entity.enemies.property;
  *
  */
 public abstract class EnemyPropertyDecorator implements EnemyProperty {
+
+	/** The temp property. */
 	protected EnemyProperty tempProperty;
 
-	public EnemyPropertyDecorator(EnemyProperty newProperty) {
+	/**
+	 * Instantiates a new enemy property decorator.
+	 *
+	 * @param newProperty
+	 *            the new property
+	 */
+	public EnemyPropertyDecorator(final EnemyProperty newProperty) {
 		tempProperty = newProperty;
 	}
 

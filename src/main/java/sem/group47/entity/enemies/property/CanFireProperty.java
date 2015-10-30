@@ -1,18 +1,22 @@
 package sem.group47.entity.enemies.property;
 
+/**
+ * The Class CanFireProperty.
+ */
 public class CanFireProperty extends EnemyPropertyDecorator {
 
-	public CanFireProperty(EnemyProperty newProperty) {
+	/**
+	 * Instantiates a new can fire property.
+	 *
+	 * @param newProperty
+	 *            the new property
+	 */
+	public CanFireProperty(final EnemyProperty newProperty) {
 		super(newProperty);
 	}
 
-	/**
-	 * Whether the enemy can fire.
-	 * @return
-	 * a boolean
-	 */
 	@Override
-	public boolean canFire() {
+	public final boolean canFire() {
 		return true;
 	}
 }

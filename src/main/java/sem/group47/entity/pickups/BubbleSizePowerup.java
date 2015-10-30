@@ -9,7 +9,7 @@ import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
- * Speeds up the player movement when picked up.
+ * The class BubbleSizePowerup, speeds up the player movement when picked up.
  *
  * @author Christian
  *
