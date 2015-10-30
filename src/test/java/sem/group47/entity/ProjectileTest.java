@@ -72,4 +72,9 @@ public class ProjectileTest extends MapObjectTest {
 		return projectile;
 	}
 	
+	@Override
+	public MapObject supplyMapObject() {
+		return projectile;
+	}
+	
 }

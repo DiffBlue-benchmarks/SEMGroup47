@@ -12,7 +12,7 @@ import sem.group47.tilemap.TileMap;
 
 public abstract class MapObjectTest {
 	
-	protected TileMap tm = new TileMap(30);
+	protected TileMap tileMap = new TileMap(30);
 	protected MapObject mapobject;
 	
 	public abstract MapObject supplyMapObject();
@@ -43,7 +43,6 @@ public abstract class MapObjectTest {
 		assertTrue(r1.intersects(r3));
 	}
 	
-	// Doet het niet
 	// @Test
 	// public void calculateCornersTest() {
 	// TileMap tilemap = Mockito.mock(TileMap.class);
