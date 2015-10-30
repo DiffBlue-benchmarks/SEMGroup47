@@ -440,7 +440,7 @@ public class Player extends MapObject {
 	 *
 	 *@return the lives
 	 */
-	public final int getLives() {
+	public int getLives() {
 		return lives;
 	}
 
