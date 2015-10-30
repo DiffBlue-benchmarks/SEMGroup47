@@ -8,8 +8,6 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import sem.group47.audio.AudioPlayer;
-import sem.group47.main.Log;
 import sem.group47.tilemap.TileMap;
 
 /**
@@ -54,9 +52,9 @@ public class ProjectileTest extends MapObjectTest {
 	 */
 	@Test
 	public final void updateTest() {
-		double prevX = projectile.getDx();
+		double prevX = projectile.getx();
 		projectile.update();
-		assertTrue(projectile.getDx() != prevX);
+		assertTrue(projectile.getx() != prevX);
 	}
 	
 	@Test
