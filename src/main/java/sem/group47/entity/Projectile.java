@@ -20,9 +20,6 @@ public class Projectile extends MapObject {
 	/** The last update time. */
 	private long lastUpdateTime;
 	
-	/** The floating. */
-	private boolean floating;
-	
 	/** The float speed. */
 	private double floatSpeed;
 	
@@ -44,7 +41,6 @@ public class Projectile extends MapObject {
 		lifeTime = 7500;
 		floatDelay = 700;
 		lastUpdateTime = System.currentTimeMillis();
-		floating = false;
 		floatSpeed = .02;
 		
 		try {
